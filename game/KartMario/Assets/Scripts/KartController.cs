@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.Rendering.PostProcessing;
 using Cinemachine;
 
-public class KartController : MonoBehaviour
+public class KartController : BasicPlayer
 {
     // Para los efectos (el bloom sobre todo vaya)
     private PostProcessVolume postVolume;
@@ -83,6 +83,10 @@ public class KartController : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             speed = acceleration;
+        }
+        else if(Input.GetButton("Fire2"))
+        {
+            speed = -acceleration;
         }
         else
         {
