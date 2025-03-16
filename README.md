@@ -8,3 +8,10 @@
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
+
+# DIARIO DE DESARROLLO
+### Semana de preparativos (10/03 - 16/03)
+    Miércoles --> Votamos y sale adelante esta idea.
+    Viernes --> Mauricio empieza con el movimiento básico del coche sin mucho éxito, y María investiga el multijugador. Nos familiarizamos con Unity.
+    Sábado --> Mauricio termina el movimiento básico (derrape y movimiento hacia delante y a los lados).
+    Domingo --> Mauricio agrega la posibilidad de chocar con otros coches y quitarles vida en función de la velocidad al impactar.
