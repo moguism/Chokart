@@ -5,6 +5,8 @@
 - **Texturas y materiales:** https://www.youtube.com/watch?v=yuLcssPwGLc&t=355s
 - **Tutorial genérico:** https://www.youtube.com/watch?v=x3FbFa843Pw&t=171s
 - **Colisiones:** https://www.youtube.com/watch?v=mkErt53EEFY
+- **Botones:** https://www.youtube.com/watch?v=0y719UVB7jQ
+- **Exportar a Android:** https://www.youtube.com/watch?v=RIYIcAcS5IA
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Cinemachine;
 using DG.Tweening;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-using Cinemachine;
 
 public class KartController : BasicPlayer
 {
@@ -46,8 +46,22 @@ public class KartController : BasicPlayer
     public Transform flashParticles;
     public Color[] turboColors;
 
+    // Para el giroscopio
+    public bool isMobile;
+    public float horizontalInput;
+
+    public int direction = 0;
+    public bool jumping = false;
+
     void Start()
     {
+        isMobile = Application.isMobilePlatform;
+        if (isMobile)
+        {
+            Input.gyro.enabled = true;
+            //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+        }
+
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
 
@@ -62,7 +76,7 @@ public class KartController : BasicPlayer
             primaryParticles.Add(wheelParticles.GetChild(1).GetChild(i).GetComponent<ParticleSystem>());
         }
 
-        foreach(ParticleSystem p in flashParticles.GetComponentsInChildren<ParticleSystem>())
+        foreach (ParticleSystem p in flashParticles.GetComponentsInChildren<ParticleSystem>())
         {
             secondaryParticles.Add(p);
         }
@@ -76,15 +90,25 @@ public class KartController : BasicPlayer
             Time.timeScale = time;
         }*/
 
+        if (isMobile)
+        {
+            float gyroGravityX = Input.gyro.gravity.x;
+            horizontalInput = Mathf.Clamp(gyroGravityX * 2f, -1f, 1f);
+        }
+        else
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
+
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (Input.GetButton("Fire1"))
+        if (direction == 1 || Input.GetButton("Fire1"))
         {
             speed = acceleration;
         }
-        else if(Input.GetButton("Fire2"))
+        else if (direction == -1 || Input.GetButton("Fire2"))
         {
             speed = -acceleration;
         }
@@ -94,21 +118,21 @@ public class KartController : BasicPlayer
         }
 
         // Para girar el modelo a la izquierda o la derecha
-        if (Input.GetAxis("Horizontal") != 0)
+        if (horizontalInput != 0)
         {
-            int dir = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
-            float amount = Mathf.Abs((Input.GetAxis("Horizontal")));
+            int dir = horizontalInput > 0 ? 1 : -1;
+            float amount = Mathf.Abs(horizontalInput);
             Steer(dir, amount);
         }
 
         // AY MI MADRE EL DERRAPE
-        if (Input.GetButtonDown("Jump") && !drifting)
+        if ((Input.GetButtonDown("Jump") && !drifting) || (jumping && !drifting))
         {
             // En el tutorial no viene, pero yo quiero que pueda dar saltitos :(
-            if(Input.GetAxis("Horizontal") != 0 && speed != 0)
+            if (horizontalInput != 0 && speed != 0)
             {
                 drifting = true;
-                driftDirection = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
+                driftDirection = horizontalInput > 0 ? 1 : -1;
 
                 foreach (ParticleSystem p in primaryParticles)
                 {
@@ -123,19 +147,18 @@ public class KartController : BasicPlayer
 
         }
 
-
         if (drifting)
         {
             // El pavo del vídeo quería tener un rango entre 0 y 2 para controlar la fuerza del derrape
-            float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 0, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, 0);
-            float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .2f, 1) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 1, .2f);
+            float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, 0, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, 0);
+            float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .2f, 1) : ExtensionMethods.Remap(horizontalInput, -1, 1, 1, .2f);
             Steer(driftDirection, control);
             driftPower += powerControl;
 
             ColorDrift();
         }
 
-        if (Input.GetButtonUp("Jump") && drifting)
+        if ((jumping || Input.GetButtonUp("Jump")) && drifting)
         {
             Boost();
         }
@@ -147,20 +170,20 @@ public class KartController : BasicPlayer
         // Para rotar el modelo con y sin derrape (qué coño es un Quaternion 😭)
         if (!drifting)
         {
-            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (Input.GetAxis("Horizontal") * 15), kartModel.localEulerAngles.z), .2f);
+            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
-            float control = (driftDirection == 1) ? ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, .5f, 2) : ExtensionMethods.Remap(Input.GetAxis("Horizontal"), -1, 1, 2, .5f);
-            kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y,(control * 15) * driftDirection, .2f), 0);
+            float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .5f, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, .5f);
+            kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
         // Lo mismo pero con las ruedas y el volante
-        frontWheels.localEulerAngles = new Vector3(0, (Input.GetAxis("Horizontal") * 15), frontWheels.localEulerAngles.z);
-        frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude/2);
-        backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude/2);
+        frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
+        frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+        backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
 
-        steeringWheel.localEulerAngles = new Vector3(-25, 90, ((Input.GetAxis("Horizontal") * 45)));
+        steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
 
     }
 
@@ -169,7 +192,7 @@ public class KartController : BasicPlayer
     private void FixedUpdate()
     {
         // Aceleración, gravedad y rotación, respectivamente
-        if(!drifting)
+        if (!drifting)
             sphere.AddForce(-kartModel.transform.right * currentSpeed, ForceMode.Acceleration);
         else
             sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
@@ -182,8 +205,8 @@ public class KartController : BasicPlayer
         RaycastHit hitOn;
         RaycastHit hitNear;
 
-        Physics.Raycast(transform.position + (transform.up*.1f), Vector3.down, out hitOn, 1.1f,layerMask);
-        Physics.Raycast(transform.position + (transform.up * .1f)   , Vector3.down, out hitNear, 2.0f, layerMask);
+        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitOn, 1.1f, layerMask);
+        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitNear, 2.0f, layerMask);
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
@@ -192,6 +215,7 @@ public class KartController : BasicPlayer
     public void Boost()
     {
         drifting = false;
+        jumping = false;
 
         if (driftMode > 0)
         {
@@ -226,10 +250,10 @@ public class KartController : BasicPlayer
     // Para definir el color de las partículas
     public void ColorDrift()
     {
-        if(!first)
+        if (!first)
             c = Color.clear;
 
-        if (driftPower > 50 && driftPower < 100-1 && !first)
+        if (driftPower > 50 && driftPower < 100 - 1 && !first)
         {
             first = true;
             c = turboColors[0];
@@ -238,7 +262,7 @@ public class KartController : BasicPlayer
             PlayFlashParticle(c);
         }
 
-        if (driftPower > 100 && driftPower < 150- 1 && !second)
+        if (driftPower > 100 && driftPower < 150 - 1 && !second)
         {
             second = true;
             c = turboColors[1];
@@ -262,7 +286,7 @@ public class KartController : BasicPlayer
             pmain.startColor = c;
         }
 
-        foreach(ParticleSystem p in secondaryParticles)
+        foreach (ParticleSystem p in secondaryParticles)
         {
             var pmain = p.main;
             pmain.startColor = c;
@@ -296,4 +320,30 @@ public class KartController : BasicPlayer
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position + transform.up, transform.position - (transform.up * 2));
     //}
+
+    // PARA MÓVILES
+    public void Accelerate()
+    {
+        direction = 1;
+    }
+
+    public void GoBackwards()
+    {
+        direction = -1;
+    }
+
+    public void NotMoveKart()
+    {
+        direction = 0;
+    }
+
+    public void Jump()
+    {
+        jumping = true;
+    }
+
+    public void StopJumping()
+    {
+        jumping = false;
+    }
 }
