@@ -104,11 +104,11 @@ public class KartController : BasicPlayer
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || Input.GetButton("Fire1"))
+        if (direction == 1 || Input.GetButton("Fire1") || Input.GetKey(KeyCode.W))
         {
             speed = acceleration;
         }
-        else if (direction == -1 || Input.GetButton("Fire2"))
+        else if (direction == -1 || Input.GetButton("Fire2") || Input.GetKey(KeyCode.W))
         {
             speed = -acceleration;
         }
@@ -125,9 +125,10 @@ public class KartController : BasicPlayer
             Steer(dir, amount);
         }
 
+
         // AY MI MADRE EL DERRAPE
         if ((Input.GetButtonDown("Jump") && !drifting) || (jumping && !drifting))
-        {
+        {        
             // En el tutorial no viene, pero yo quiero que pueda dar saltitos :(
             if (horizontalInput != 0 && speed != 0)
             {
@@ -149,6 +150,8 @@ public class KartController : BasicPlayer
 
         if (drifting)
         {
+            print("derrapandoooo222" + jumping); // aqui llega con el boton
+
             // El pavo del vídeo quería tener un rango entre 0 y 2 para controlar la fuerza del derrape
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, 0, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, 0);
             float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .2f, 1) : ExtensionMethods.Remap(horizontalInput, -1, 1, 1, .2f);
