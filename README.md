@@ -18,4 +18,4 @@
     Sábado --> Mauricio termina el movimiento básico (derrape y movimiento hacia delante y a los lados).
     Domingo --> Mauricio agrega la posibilidad de chocar con otros coches y quitarles vida en función de la velocidad al impactar.
 ### Semana de preparativos (17/03 - 23/03)
-    Lunes --> 
+    Lunes --> María agrega movimiento de coche con W y S, mostrar salud en pantalla e intenta arreglar fallo de derrape con botón.
