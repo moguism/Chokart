@@ -353,14 +353,14 @@ public class KartController : BasicPlayer
 
     public async void Jump()
     {
-        if (isGrounded)
-        {
+        //if (isGrounded)
+        //{
             jumping = true;
             
             kartModel.parent.DOComplete();
             kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
             await Task.Delay(1);
-        }
+        //}
     }
 
     public void StopJumping()
