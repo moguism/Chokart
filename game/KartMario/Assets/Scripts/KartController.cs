@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -52,6 +53,7 @@ public class KartController : BasicPlayer
 
     public int direction = 0;
     public bool jumping = false;
+    public bool isGrounded = true;
 
     void Start()
     {
@@ -60,6 +62,10 @@ public class KartController : BasicPlayer
         {
             Input.gyro.enabled = true;
             //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+        }
+        else
+        {
+            Destroy(GameObject.Find("Canvas"));
         }
 
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
@@ -108,7 +114,7 @@ public class KartController : BasicPlayer
         {
             speed = acceleration;
         }
-        else if (direction == -1 || Input.GetButton("Fire2") || Input.GetKey(KeyCode.W))
+        else if (direction == -1 || Input.GetButton("Fire2") || Input.GetKey(KeyCode.S))
         {
             speed = -acceleration;
         }
@@ -125,10 +131,12 @@ public class KartController : BasicPlayer
             Steer(dir, amount);
         }
 
-
         // AY MI MADRE EL DERRAPE
         if ((Input.GetButtonDown("Jump") && !drifting) || (jumping && !drifting))
-        {        
+        {
+            print("SPEED: " + speed);
+            print("Horizontal: " + horizontalInput);
+
             // En el tutorial no viene, pero yo quiero que pueda dar saltitos :(
             if (horizontalInput != 0 && speed != 0)
             {
@@ -143,15 +151,17 @@ public class KartController : BasicPlayer
                 }
             }
 
-            kartModel.parent.DOComplete();
-            kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
+            if (!isMobile)
+            {
+
+                kartModel.parent.DOComplete();
+                kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
+            }
 
         }
 
         if (drifting)
         {
-            print("derrapandoooo222" + jumping); // aqui llega con el boton
-
             // El pavo del vídeo quería tener un rango entre 0 y 2 para controlar la fuerza del derrape
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, 0, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, 0);
             float powerControl = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .2f, 1) : ExtensionMethods.Remap(horizontalInput, -1, 1, 1, .2f);
@@ -161,8 +171,10 @@ public class KartController : BasicPlayer
             ColorDrift();
         }
 
-        if ((jumping || Input.GetButtonUp("Jump")) && drifting)
+        // Solución un poquito rata pero bueno xD
+        if ((isMobile && !jumping && drifting) || (!isMobile && Input.GetButtonUp("Jump") && drifting))
         {
+            print("HOLA: " + isMobile);
             Boost();
         }
 
@@ -218,7 +230,6 @@ public class KartController : BasicPlayer
     public void Boost()
     {
         drifting = false;
-        jumping = false;
 
         if (driftMode > 0)
         {
@@ -340,13 +351,21 @@ public class KartController : BasicPlayer
         direction = 0;
     }
 
-    public void Jump()
+    public async void Jump()
     {
-        jumping = true;
+        if (isGrounded)
+        {
+            jumping = true;
+            
+            kartModel.parent.DOComplete();
+            kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
+            await Task.Delay(1);
+        }
     }
 
     public void StopJumping()
     {
+        print("DEJO DE SALTAR");
         jumping = false;
     }
 }
