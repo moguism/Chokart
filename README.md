@@ -1,3 +1,6 @@
+# DOCUMENTACIÓN:
+- [Anteproyecto](Anteproyecto.md)
+
 # BIBLIOGRAFÍA:
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
 - **Movimiento del coche:** https://www.youtube.com/watch?v=Ki-tWT50cEQ&list=PL1R2qsKCcUCKY1p7URUct96O0dorgQnO6
@@ -8,10 +11,10 @@
 - **Botones:** https://www.youtube.com/watch?v=0y719UVB7jQ
 - **Exportar a Android:** https://www.youtube.com/watch?v=RIYIcAcS5IA
 
-# INSTRUCCIONES PARA EL DESARROLLO
+# INSTRUCCIONES PARA EL DESARROLLO:
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
 
-# DIARIO DE DESARROLLO
+# DIARIO DE DESARROLLO:
 ### Semana de preparativos (10/03 - 16/03)
     Miércoles --> Votamos y sale adelante esta idea.
     Viernes --> Mauricio empieza con el movimiento básico del coche sin mucho éxito, y María investiga el multijugador. Nos familiarizamos con Unity.
