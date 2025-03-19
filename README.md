@@ -10,6 +10,7 @@
 - **Colisiones:** https://www.youtube.com/watch?v=mkErt53EEFY
 - **Botones:** https://www.youtube.com/watch?v=0y719UVB7jQ
 - **Exportar a Android:** https://www.youtube.com/watch?v=RIYIcAcS5IA
+- **Websockets:** https://github.com/endel/NativeWebSocket
 
 # INSTRUCCIONES PARA EL DESARROLLO:
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -23,3 +24,4 @@
 ### Semana de preparativos (17/03 - 23/03)
     Lunes --> María agrega movimiento de coche con W y S, mostrar salud en pantalla e intenta arreglar fallo de derrape con botón.
     Martes --> Mauricio termina el derrape, que fallaba en móvil al implementar el giroscopio, y crea el servidor básico.
+    Miércoles --> Mauricio prepara los websockets y se pone con el sistema de lobbies.
