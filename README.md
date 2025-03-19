@@ -23,3 +23,4 @@
 ### Semana de preparativos (17/03 - 23/03)
     Lunes --> María agrega movimiento de coche con W y S, mostrar salud en pantalla e intenta arreglar fallo de derrape con botón.
     Martes --> Mauricio termina el derrape, que fallaba en móvil al implementar el giroscopio, y crea el servidor básico.
+    Miércoles --> María implementa la conexión UDP con socket en servidor.
