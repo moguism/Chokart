@@ -1,6 +1,6 @@
-using UnityEngine;
+using Unity.Netcode;
 
-public class BasicPlayer : MonoBehaviour
+public class BasicPlayer : NetworkBehaviour
 {
     public float health = 0;
     public static readonly float damageMultiplier = 1; // Al ser estático no se muestra en el editor :(

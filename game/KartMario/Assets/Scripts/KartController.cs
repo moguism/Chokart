@@ -55,6 +55,18 @@ public class KartController : BasicPlayer
     public bool jumping = false;
     public bool isGrounded = true;
 
+    public bool canMove = true;
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>(); ;
+            camera.Follow = gameObject.transform;
+            camera.LookAt = gameObject.transform;
+        }
+    }
+
     void Start()
     {
         isMobile = Application.isMobilePlatform;
@@ -95,6 +107,16 @@ public class KartController : BasicPlayer
             float time = Time.timeScale == 1 ? .2f : 1;
             Time.timeScale = time;
         }*/
+
+        if(!IsOwner)
+        {
+            return;
+        }
+
+        if(!canMove)
+        {
+            return;
+        }
 
         if (isMobile)
         {
@@ -206,6 +228,16 @@ public class KartController : BasicPlayer
     // Es la esfera la que hace todo
     private void FixedUpdate()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        if (!canMove)
+        {
+            return;
+        }
+
         // Aceleración, gravedad y rotación, respectivamente
         if (!drifting)
             sphere.AddForce(-kartModel.transform.right * currentSpeed, ForceMode.Acceleration);
@@ -355,11 +387,11 @@ public class KartController : BasicPlayer
     {
         //if (isGrounded)
         //{
-            jumping = true;
-            
-            kartModel.parent.DOComplete();
-            kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
-            await Task.Delay(1);
+        jumping = true;
+
+        kartModel.parent.DOComplete();
+        kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
+        await Task.Delay(1);
         //}
     }
 

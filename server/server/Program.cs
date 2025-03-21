@@ -1,7 +1,9 @@
 ﻿
 using server.Models.Entities;
 using server.Repositories;
-using System.Threading.Tasks;
+using server.Sockets;
+using server.Sockets.Game;
+using System.Text.Json.Serialization;
 
 namespace server
 {
@@ -14,9 +16,17 @@ namespace server
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<UnitOfWork>();
 
+            builder.Services.AddSingleton<WebSocketHandler>();
+            builder.Services.AddSingleton<GameNetwork>();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
