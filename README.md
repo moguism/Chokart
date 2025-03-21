@@ -16,6 +16,7 @@
 
 # INSTRUCCIONES PARA EL DESARROLLO:
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
+- Para spawnear un coche sin peer to peer y que le siga la cámara, poner un "NotNetworkPlayer" (comentando las líneas con "IsOwner") y la cámara, en las propiedades "Look At" y "Follow", asignarle el Kart
 
 # DIARIO DE DESARROLLO:
 ### Semana de preparativos (10/03 - 16/03)
