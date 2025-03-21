@@ -30,3 +30,4 @@
     Martes --> Mauricio termina el derrape, que fallaba en móvil al implementar el giroscopio, y crea el servidor básico.
     Miércoles --> María implementa servidor UDP con socket en back. Mauricio prepara los websockets y se pone con el sistema de lobbies.
     Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador.
+    Viernes --> Mauricio termina el P2P básico.
