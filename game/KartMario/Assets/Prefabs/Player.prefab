@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2383088364143901592}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DashParticles_Right (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3982961059097306695}
   - component: {fileID: 3743518707143532846}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 17322729261697841}
   - component: {fileID: 2513524855746541114}
   - component: {fileID: 6809147008044306810}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 1654436109572107649}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.405, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -336,7 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1501520650536006198}
   - component: {fileID: 667426762492492130}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Front_Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 5707428148478948142}
   - component: {fileID: 1905848456941406697}
   - component: {fileID: 448229267391939470}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5253,7 +5253,7 @@ GameObject:
   - component: {fileID: 1290569888246723793}
   - component: {fileID: 5562366804877150991}
   - component: {fileID: 3648921600567446565}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10099,7 +10099,7 @@ GameObject:
   - component: {fileID: 2350342456476891672}
   - component: {fileID: 3827698517157319312}
   - component: {fileID: 2773595408781997753}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14945,7 +14945,7 @@ GameObject:
   - component: {fileID: 6958340921759905184}
   - component: {fileID: 6030425962056397708}
   - component: {fileID: 2858726711242207404}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19789,7 +19789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2837413282412538936}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: KartModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19830,7 +19830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1431613146037458307}
   - component: {fileID: 38165819463732199}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Back_Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19901,7 +19901,7 @@ GameObject:
   - component: {fileID: 879918218980970528}
   - component: {fileID: 9504826656827531}
   - component: {fileID: 6072388176243490343}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24748,7 +24748,7 @@ GameObject:
   - component: {fileID: 2250711151573828472}
   - component: {fileID: 4177690252849554732}
   - component: {fileID: 3052316508687433710}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24868,7 +24868,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2481028435176070160}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24902,7 +24902,7 @@ GameObject:
   - component: {fileID: 1260212217778370140}
   - component: {fileID: 1198686949965468156}
   - component: {fileID: 7021403324474685691}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29748,7 +29748,7 @@ GameObject:
   - component: {fileID: 8415650124991807546}
   - component: {fileID: 5697130421628379105}
   - component: {fileID: 3170253387122151421}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Kart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29764,7 +29764,7 @@ Transform:
   m_GameObject: {fileID: 4736102366237070151}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29810,7 +29810,8 @@ MonoBehaviour:
   horizontalInput: 0
   direction: 0
   jumping: 0
-  isGrounded: 1
+  isGrounded: 0
+  canMove: 1
 --- !u!135 &3170253387122151421
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -29830,7 +29831,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.41
+  m_Radius: 0.85
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4743390076326792228
 GameObject:
@@ -29843,7 +29844,7 @@ GameObject:
   - component: {fileID: 5903951132738743896}
   - component: {fileID: 640705702181445669}
   - component: {fileID: 2428302616589820061}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34689,7 +34690,7 @@ GameObject:
   - component: {fileID: 5452208370014222845}
   - component: {fileID: 8131930995752749840}
   - component: {fileID: 8786886710531883066}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cylinder002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34775,7 +34776,7 @@ GameObject:
   - component: {fileID: 2352505698868967124}
   - component: {fileID: 6804389988018800238}
   - component: {fileID: 1947047846710461457}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39677,7 +39678,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3123652009872604015}
-  m_Layer: 2
+  - component: {fileID: 4347298440567510880}
+  m_Layer: 0
   m_Name: WheelParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39701,6 +39703,42 @@ Transform:
   - {fileID: 2383088364143901592}
   m_Father: {fileID: 2837413282412538936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4347298440567510880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5842961129468566753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &5965053970818727450
 GameObject:
   m_ObjectHideFlags: 0
@@ -39712,7 +39750,7 @@ GameObject:
   - component: {fileID: 4586935647154018459}
   - component: {fileID: 3741694823836442071}
   - component: {fileID: 5722446901722684309}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44558,7 +44596,7 @@ GameObject:
   - component: {fileID: 7310139826744787190}
   - component: {fileID: 544078784374584366}
   - component: {fileID: 7157242409886979617}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49462,7 +49500,7 @@ GameObject:
   - component: {fileID: 3677004655956555101}
   - component: {fileID: 381109933688615980}
   - component: {fileID: 2354656964358762717}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54306,7 +54344,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2663385665217053667}
-  m_Layer: 2
+  - component: {fileID: 4467290895419761052}
+  m_Layer: 0
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54332,6 +54371,42 @@ Transform:
   - {fileID: 6042278398417954292}
   m_Father: {fileID: 2837413282412538936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4467290895419761052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6922748356953828988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &7016611300602416788
 GameObject:
   m_ObjectHideFlags: 0
@@ -54341,7 +54416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 276985516657012875}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DashParticles_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54380,8 +54455,8 @@ GameObject:
   - component: {fileID: 2141479015402252911}
   - component: {fileID: 7753161288022728360}
   - component: {fileID: 6304158369429116016}
-  - component: {fileID: 6527697756075234212}
-  m_Layer: 2
+  - component: {fileID: 6632705746336649402}
+  m_Layer: 0
   m_Name: Tube002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54457,7 +54532,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6527697756075234212
+--- !u!114 &6632705746336649402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54466,11 +54541,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7138764642333892120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -54504,7 +54579,7 @@ GameObject:
   - component: {fileID: 3624030805726164068}
   - component: {fileID: 8776178217509184787}
   - component: {fileID: 6854798497509982014}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59347,7 +59422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7002653077785774816}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59380,6 +59455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9193125234719358039}
   - component: {fileID: 77989067485063235}
+  - component: {fileID: 5779985427747944214}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -59429,6 +59505,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5779985427747944214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468548331436223440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87048449baee9a4db04cb9a6a0e2018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collision1: {fileID: 5157537988344369135}
+  collision2: {fileID: 3170253387122151421}
 --- !u!1 &7701443917528791362
 GameObject:
   m_ObjectHideFlags: 0
@@ -59440,7 +59530,7 @@ GameObject:
   - component: {fileID: 4000658711263934311}
   - component: {fileID: 3081933978347792876}
   - component: {fileID: 9130061018831642849}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64286,7 +64376,7 @@ GameObject:
   - component: {fileID: 207094554716823966}
   - component: {fileID: 6826645054817780277}
   - component: {fileID: 7155351599989893944}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69133,7 +69223,7 @@ GameObject:
   - component: {fileID: 1490296529806652032}
   - component: {fileID: 2591339757275151201}
   - component: {fileID: 5200691389842688507}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cylinder001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69255,7 +69345,7 @@ GameObject:
   - component: {fileID: 8880186692111199365}
   - component: {fileID: 8970508902261929605}
   - component: {fileID: 70147438624929383}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74159,7 +74249,7 @@ GameObject:
   - component: {fileID: 3268537147278407592}
   - component: {fileID: 2373167605204797890}
   - component: {fileID: 5245543434103494832}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cylinder004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74245,7 +74335,7 @@ GameObject:
   - component: {fileID: 8291665316808601834}
   - component: {fileID: 3709980886451518081}
   - component: {fileID: 4669872352031742522}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79100,7 +79190,7 @@ GameObject:
   - component: {fileID: 6042278398417954292}
   - component: {fileID: 7206612787872979414}
   - component: {fileID: 8561062262399026092}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84004,7 +84094,7 @@ GameObject:
   - component: {fileID: 3013789569617576593}
   - component: {fileID: 6765846670954898875}
   - component: {fileID: 8352060162857992017}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cylinder003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84090,7 +84180,7 @@ GameObject:
   - component: {fileID: 4538575528338624284}
   - component: {fileID: 2881215064959375613}
   - component: {fileID: 5250035531427882519}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Cylinder005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84176,8 +84266,8 @@ GameObject:
   - component: {fileID: 6030283894535280167}
   - component: {fileID: 8619425265625275111}
   - component: {fileID: 2911437297688531470}
-  - component: {fileID: 5295556692015888439}
-  m_Layer: 2
+  - component: {fileID: 4206052289058934677}
+  m_Layer: 0
   m_Name: Tube001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84253,7 +84343,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5295556692015888439
+--- !u!114 &4206052289058934677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84262,11 +84352,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8985799194757701286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -84300,7 +84390,7 @@ GameObject:
   - component: {fileID: 1629029873829762805}
   - component: {fileID: 3230709562282953495}
   - component: {fileID: 1536626037554640284}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
