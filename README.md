@@ -14,10 +14,12 @@
 - **Servidor UDP:** https://www.youtube.com/watch?v=8w97YdWNLHA&ab_channel=v11tv
 - **Servidor UDP:** https://gist.github.com/darkguy2008/413a6fea3a5b4e67e5e0d96f750088a9
 - **Multijugador P2P:** https://www.youtube.com/watch?v=dUqLShvBIsM, https://www.youtube.com/watch?v=2OLUdPkkQPI, https://www.youtube.com/watch?v=3yuBOB3VrCk&t=198s
+- **Cálculo de posiciones:** https://www.youtube.com/watch?v=fdWjR652Fs4
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
 - Para spawnear un coche sin peer to peer y que le siga la cámara, poner un "NotNetworkPlayer" (comentando las líneas con "IsOwner") y la cámara, en las propiedades "Look At" y "Follow", asignarle el Kart
+- Cuando se cree un clon, poner dentro de la carpeta de este un ".gitignore" con un asterisco
 
 # DIARIO DE DESARROLLO
 ### Semana de preparativos (10/03 - 16/03)
@@ -31,3 +33,4 @@
     Miércoles --> María implementa servidor UDP con socket en back. Mauricio prepara los websockets y se pone con el sistema de lobbies.
     Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador.
     Viernes --> Mauricio termina el P2P básico.
+    Sábado --> Mauricio programa el cálculo de las posiciones.
