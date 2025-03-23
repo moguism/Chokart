@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 6809147008044306810}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Kart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29747,10 +29747,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8415650124991807546}
   - component: {fileID: 5697130421628379105}
-  - component: {fileID: 3170253387122151421}
   m_Layer: 0
   m_Name: Kart
-  m_TagString: Untagged
+  m_TagString: Kart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29812,27 +29811,6 @@ MonoBehaviour:
   jumping: 0
   isGrounded: 0
   canMove: 1
---- !u!135 &3170253387122151421
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4736102366237070151}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.85
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4743390076326792228
 GameObject:
   m_ObjectHideFlags: 0
@@ -59455,10 +59433,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9193125234719358039}
   - component: {fileID: 77989067485063235}
-  - component: {fileID: 5779985427747944214}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Kart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59505,20 +59482,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &5779985427747944214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7468548331436223440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c87048449baee9a4db04cb9a6a0e2018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collision1: {fileID: 5157537988344369135}
-  collision2: {fileID: 3170253387122151421}
 --- !u!1 &7701443917528791362
 GameObject:
   m_ObjectHideFlags: 0
