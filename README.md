@@ -20,6 +20,8 @@
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
 - Para spawnear un coche sin peer to peer y que le siga la cámara, poner un "NotNetworkPlayer" (comentando las líneas con "IsOwner") y la cámara, en las propiedades "Look At" y "Follow", asignarle el Kart
 - Cuando se cree un clon, poner dentro de la carpeta de este un ".gitignore" con un asterisco
+- Para mandar objetos a través de RPCs, hay que definir campos con \[SerializableField\]
+- **IMPORTANTE (BORRAR MÁS TARDE):** Tal y como está ahora (a 23/03) las posiciones parece que las pone mal, pero es porque no hay suficientes triggers (ahora mismo hay 2) y piensa que la distancia hasta el siguiente (que es la línea de meta) es menor dando marcha atrás (obviamente) en lugar de seguir para adelante. Lo que quiero decir con esto es que las posiciones funcionan xD
 
 # DIARIO DE DESARROLLO
 ### Semana de preparativos (10/03 - 16/03)
@@ -34,3 +36,4 @@
     Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador.
     Viernes --> Mauricio termina el P2P básico.
     Sábado --> Mauricio programa el cálculo de las posiciones.
+    Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas.
