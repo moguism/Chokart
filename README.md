@@ -36,4 +36,4 @@
     Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador.
     Viernes --> Mauricio termina el P2P básico.
     Sábado --> Mauricio programa el cálculo de las posiciones.
-    Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas.
+    Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas. Rocío implementa el login y registro de usuarios.
