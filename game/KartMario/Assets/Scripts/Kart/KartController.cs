@@ -125,6 +125,8 @@ public class KartController : BasicPlayer
         }
     }
 
+
+    // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
     void InformServerKartCreatedServerRpc(ServerRpcParams rpcParams = default)
     {
@@ -141,16 +143,15 @@ public class KartController : BasicPlayer
     }
 
     [ServerRpc]
-    void InformServerKartStatusServerRpc(ServerRpcParams rpcParams = default)
+    void InformServerKartStatusServerRpc(Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
     {
-        print("me cago en la puta :c");
         PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
 
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
         if (kart != null)
         {
             print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
-            kart.currentPosition = currentPosition;
+            kart.currentPosition = currentPositionToUpdate;
         }
     }
 
@@ -278,9 +279,9 @@ public class KartController : BasicPlayer
 
         currentPosition = transform.position;
 
-        print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+        //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
 
-        InformServerKartStatusServerRpc();
+        InformServerKartStatusServerRpc(currentPosition);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)

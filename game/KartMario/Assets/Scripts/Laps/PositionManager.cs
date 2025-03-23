@@ -11,56 +11,57 @@ public class PositionManager : NetworkBehaviour
 
     void LateUpdate()
     {
-        if(!IsHost)
+        if (!IsHost)
         {
             //print("No soy host");
             return;
         }
 
-        foreach(KartController kart in karts)
+        foreach (KartController kart in karts)
         {
             finishLine.CalculateDistanceToNextTrigger(kart);
         }
 
-        karts = karts.Where(k => k != null).Distinct().ToList();
+        // Primero los ordena por las vueltas, luego por el último trigger que hayan visitado y finalmente por la distancia al siguiente trigger
+        karts = karts
+            .Where(k => k != null)
+            .Distinct()
+            .OrderByDescending(k => k.totalLaps)
+            .ThenByDescending(k => k.lastTriggerIndex)
+            .ThenBy(k => k.distanceToNextTrigger)
+            .ToList();
 
-        // Primero los ordena por las vueltas, luego por el último trigger que hayan visitado (la meta es el 0, y así van subiendo) y finalmente por la distancia al siguiente trigger
-        var orderedKarts = karts.OrderByDescending(k => k.totalLaps).ThenByDescending(k => k.lastTriggerIndex).ThenBy(k => k.distanceToNextTrigger);
-
-        if (IsHost)
+        for (int i = 0; i < karts.Count(); i++)
         {
-            //print("Soy host");
-            for (int i = 0; i < orderedKarts.Count(); i++)
+            //print("i vale " + i);
+            KartController kart = karts.ElementAt(i);
+
+            //print("EL COCHE " + kart.NetworkObjectId + " ESTÁ EN " + kart.currentPosition);
+
+            int newPosition = i + 1;
+
+            NetworkObject networkObject = kart.gameObject.transform.parent.GetComponent<NetworkObject>();
+            ulong ownerClient = networkObject.OwnerClientId;
+
+            // Si es el 0 es el servidor
+            if (ownerClient == 0)
             {
-                print("i vale " + i);
-                KartController kart = orderedKarts.ElementAt(i);
-
-                print("EL COCHE " + kart.NetworkObjectId + " ESTÁ EN " + kart.transform.position);
-
-                int newPosition = i + 1;
-
-                NetworkObject networkObject = kart.gameObject.transform.parent.GetComponent<NetworkObject>();
-                ulong ownerClient = networkObject.OwnerClientId;
-
-                // Si es el 0 es el servidor
-                if (ownerClient == 0)
+                AssignNewPosition(newPosition, kart);
+            }
+            else
+            {
+                var parameters = new ClientRpcParams
                 {
-                    AssignNewPosition(newPosition, kart);
-                }
-                else
-                {
-                    var parameters = new ClientRpcParams
+                    Send = new ClientRpcSendParams
                     {
-                        Send = new ClientRpcSendParams
-                        {
-                            TargetClientIds = new ulong[] { kart.OwnerClientId }
-                        }
-                    };
+                        TargetClientIds = new ulong[] { kart.OwnerClientId }
+                    }
+                };
 
-                    NotifyPositionChangedClientRpc(newPosition, parameters);
-                }                
+                NotifyPositionChangedClientRpc(newPosition, parameters);
             }
         }
+
     }
 
     [ClientRpc]
@@ -73,7 +74,7 @@ public class PositionManager : NetworkBehaviour
         {
             print("La nueva posición es: " + newPosition);
             AssignNewPosition(newPosition, kart);
-            
+
         }
     }
 

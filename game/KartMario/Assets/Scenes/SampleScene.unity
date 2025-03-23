@@ -2012,8 +2012,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   triggers:
-  - {fileID: 1100688653}
   - {fileID: 380740407}
+  - {fileID: 1100688653}
 --- !u!23 &380740410
 MeshRenderer:
   m_ObjectHideFlags: 0

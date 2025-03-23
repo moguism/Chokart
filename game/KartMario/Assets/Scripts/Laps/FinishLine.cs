@@ -9,29 +9,36 @@ public class FinishLine : MapTrigger
 
     public new void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         var parent = other.gameObject.transform.parent;
+
         if (parent == null || !parent.CompareTag("Kart")) return;
 
         var kart = parent.GetComponentInChildren<KartController>();
 
         if (kart == null) return;
 
-        ChangeIndexAndCalculatePosition(kart);
+        //ChangeIndexAndCalculatePosition(kart);
+
+        int requiredTriggers = triggers.Count;
 
         if (!kart.passedThroughFinishLine)
         {
             kart.passedThroughFinishLine = true;
         }
 
-        // Solo cuenta una vuelta si ha activado todos los triggers antes de cruzar la meta
-        if (kart.triggers.Count == triggers.Count)
+        // Solo cuenta una vuelta si ha activado todos los triggers (en orden, que es lo que hace "SequenceEqual") antes de cruzar la meta
+        if (kart.triggers.SequenceEqual(triggers))
         {
-            kart.triggers.Clear();
+            kart.triggers = new List<MapTrigger>() { this };
             kart.totalLaps++;
+            Debug.LogWarning("El coche " + kart.NetworkObjectId + " ha dado " + kart.totalLaps + " vueltas");
 
             if (IsOwner)
             {
                 NotifyLapCompletedServerRpc(kart.NetworkObjectId, kart.totalLaps);
+                ChangeIndexAndCalculatePosition(kart);
             }
         }
     }
