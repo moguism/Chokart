@@ -37,3 +37,5 @@
     Viernes --> Mauricio termina el P2P básico.
     Sábado --> Mauricio programa el cálculo de las posiciones.
     Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas. Rocío implementa el login y registro de usuarios.
+### Semana de preparativos (24/03 - 30/03)
+    Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
