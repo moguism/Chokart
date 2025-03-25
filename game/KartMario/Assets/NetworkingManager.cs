@@ -1,7 +1,4 @@
-using DG.Tweening.Plugins.Core.PathCore;
-using System;
 using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -17,13 +14,28 @@ public class NetworkingManager : MonoBehaviour
     // Inicio de sesión
     public InputField loginEmailOrNicknameInput;
     public InputField loginPasswordInput;
+    public Toggle rememberMeToggle; // Recuérdame
+
 
     void Start()
     {
         instance = this;
+
+        // Intentar cargar el token guardado
+
+        if (PlayerPrefs.HasKey("AccessToken"))
+        {
+            string savedToken = PlayerPrefs.GetString("AccessToken");
+            Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
+            Debug.Log("Usuario autenticado automáticamente >:)");
+        }
+        else
+        {
+            Debug.Log("No se ha encontrado el token. Debes iniciar sesión. Porfi inicia sesión. :c");
+        }
     }
 
-    void Update() {}
+    void Update() { }
 
     public void OnRegButton()
     {
@@ -51,7 +63,6 @@ public class NetworkingManager : MonoBehaviour
         StartCoroutine(Register(tempReg));
     }
 
-
     public void OnLogInButton()
     {
         string emailOrNickname = loginEmailOrNicknameInput.text.Trim();
@@ -70,7 +81,7 @@ public class NetworkingManager : MonoBehaviour
     public IEnumerator Register(RegisterRequest register)
     {
         // Hace la petición, convierte los datos del registro a JSON y posteriormente a bytes y lo envía.
-        UnityWebRequest unityWebRequest = new UnityWebRequest(Singleton.API_URL+ "Auth/register","POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest(Singleton.API_URL + "Auth/register", "POST");
         string jsonData = JsonUtility.ToJson(register);
         Debug.Log("Datos registro: " + jsonData);
 
@@ -116,7 +127,19 @@ public class NetworkingManager : MonoBehaviour
             LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse); // Obtiene únicamente el token del JSON response
             Debug.Log("Token extraído: " + response.accessToken);
 
-            SaveTokenToFile(response.accessToken); // Guarda el token
+            // Guardar el token en PlayerPrefs si el "recuérdame" está activado
+            if (rememberMeToggle.isOn)
+            {
+                PlayerPrefs.SetString("AccessToken", response.accessToken);
+                PlayerPrefs.Save();
+                Debug.Log("Token guardado en PlayerPrefs.");
+            }
+            else
+            {
+                Debug.Log("El token no se ha guardado en PlayerPrefs.");
+            }
+
+            //SaveTokenToFile(response.accessToken); // Guarda el token en un txt
         }
         else
         {
@@ -125,11 +148,26 @@ public class NetworkingManager : MonoBehaviour
         }
     }
 
-    public void SaveTokenToFile(string token)
+    //public void SaveTokenToFile(string token)
+    //{
+    //    string filePath = Application.dataPath + "/AccessToken.txt";
+    //    File.WriteAllText(filePath, token);
+    //    Debug.Log("Token guardado en: " + filePath); // Por si me desubico xd
+    //}
+
+    // Cerrar sesión
+    public void Logout()
     {
-        string filePath = Application.dataPath + "/AccessToken.txt";
-        File.WriteAllText(filePath, token);
-        Debug.Log("Token guardado en: " + filePath); // Por si me desubico xd
+        if (PlayerPrefs.HasKey("AccessToken"))
+        {
+            PlayerPrefs.DeleteKey("AccessToken");
+            Debug.Log("A chuparla el token >:) ; Sesión cerrada.");
+        }
+        else
+        {
+            Debug.Log("No se encontró ningún token. No hay sesión para cerrar :c");
+        }
     }
+
 
 }
