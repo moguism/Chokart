@@ -15,7 +15,7 @@ public class UserMapper
             Email = user.Email,
             Role = user.Role,
             AvatarPath = user.AvatarPath,
-            IsInQueue = user.IsInQueue,
+            //IsInQueue = user.IsInQueue,
             Banned = user.Banned,
             StateId = user.StateId,
             Friendships = user.Friendships,
