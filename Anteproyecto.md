@@ -23,4 +23,5 @@ Además, cada vez que se produzca esta última situación, se hará énfasis en 
 
 Hemos realizado el siguiente diagrama de nuestra base de datos:  
 
-![Captura de pantalla 2025-03-18 145650](https://github.com/user-attachments/assets/1ec232f2-d9e2-4224-ab56-4d52e99d15a7)
+![UML](https://github.com/user-attachments/assets/9b807af6-62e1-4082-9750-b7d1153e6871)
+
