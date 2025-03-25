@@ -91,7 +91,7 @@ public class UserService
                 //AvatarPath = "",
                 Role = "User", // Rol por defecto
                 Password = PasswordHelper.Hash(model.Password),
-                IsInQueue = false,  // por defecto al crearse
+                //IsInQueue = false,  // por defecto al crearse
                 StateId = state.Id,
                 State = state
             };

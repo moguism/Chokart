@@ -27,6 +27,8 @@ public class WebSocketController : ControllerBase
     [ApiExplorerSettings(IgnoreApi = true)]
     public async Task ConnectAsync(string jwt)
     {
+        //Console.WriteLine("IP: " + HttpContext.Connection.RemoteIpAddress?.ToString());
+
         // Si la petición es de tipo websocket la aceptamos
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
