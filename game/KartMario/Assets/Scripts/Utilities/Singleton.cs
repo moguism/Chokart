@@ -2,6 +2,8 @@ using NativeWebSocket;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -76,7 +78,7 @@ public class Singleton : MonoBehaviour
             SceneManager.LoadScene(0);
         };
 
-        webSocket.OnMessage += (bytes) =>
+        webSocket.OnMessage += async (bytes) =>
         {
             Debug.Log("OnMessage!");
             Debug.Log(bytes);
@@ -118,14 +120,16 @@ public class Singleton : MonoBehaviour
                     SceneManager.LoadScene(1);
                     break;
                 case MessageType.PlayerDisconnected:
-                    print("a");
                     // Si aún estoy en la lobbie simplemente recargo la lista de jugadores
                     GameObject manager = GameObject.Find("MANAGER");
                     if(manager != null)
                     {
-                        print("b");
                         manager.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
                     }
+                    break;
+                case MessageType.GameStarted:
+                    await SceneManager.LoadSceneAsync(2); // Quizás no hace falta hacerlo asíncrono, pero lo hago por si las moscas para que carguen todos los objetos
+                    GameObject.Find("NetworkManager").GetComponent<GameStarter>().StartClient(dict["ip"].ToString());
                     break;
             }
         };
