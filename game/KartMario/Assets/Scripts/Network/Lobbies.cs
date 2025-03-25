@@ -9,6 +9,7 @@ public class Lobbies : MonoBehaviour
     public Canvas playerList;
     public TMP_Text players;
     public GameObject buttonObject;
+    public bool isHost = false;
 
     private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
     {
@@ -23,6 +24,7 @@ public class Lobbies : MonoBehaviour
 
     public async void HostGame()
     {
+        isHost = true;
         dict["messageType"] = MessageType.HostGame;
         await CustomSerializer.Serialize(dict, true);
     }
@@ -31,6 +33,7 @@ public class Lobbies : MonoBehaviour
     // El host de esa partida puede invitar a amigos si quiere
     public async void JoinGame()
     {
+        isHost = false;
         dict["messageType"] = MessageType.JoinGame;
         dict["host"] = "";
         await CustomSerializer.Serialize(dict, true);
@@ -68,8 +71,12 @@ public class Lobbies : MonoBehaviour
     {
         playerList.gameObject.SetActive(playerListBool);
         
-        // Paraque un cliente normal no pueda empezar la partida
-        if(!Singleton.Instance.isHost && playerListBool)
+        // Para que un cliente normal no pueda empezar la partida
+        if(isHost && playerListBool)
+        {
+            buttonObject.SetActive(true);
+        }
+        else
         {
             buttonObject.SetActive(false);
         }
