@@ -8,11 +8,12 @@ public class Lobbies : MonoBehaviour
     public Canvas playerOptions;
     public Canvas playerList;
     public TMP_Text players;
-    public bool isHost = false;
+    public GameObject buttonObject;
 
     private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
     {
-        { "messageType", -1 }
+        { "messageType", -1 },
+        { "host", "" }
     };
 
     void Start()
@@ -31,7 +32,7 @@ public class Lobbies : MonoBehaviour
     public async void JoinGame()
     {
         dict["messageType"] = MessageType.JoinGame;
-        dict.Add("host", "");
+        dict["host"] = "";
         await CustomSerializer.Serialize(dict, true);
     }
 
@@ -45,9 +46,11 @@ public class Lobbies : MonoBehaviour
 
     public void HostingComplete(string participant)
     {
-        isHost = true;
-        players.text = participant;
-        SetObjectsActive(true, false);
+        if(!playerList.gameObject.activeSelf)
+        {
+            players.text = participant;
+            SetObjectsActive(true, false);
+        }
     }
 
     public void JoinedComplete(Dictionary<object, object> dict)
@@ -66,9 +69,9 @@ public class Lobbies : MonoBehaviour
         playerList.gameObject.SetActive(playerListBool);
         
         // Paraque un cliente normal no pueda empezar la partida
-        if(!isHost && playerListBool)
+        if(!Singleton.Instance.isHost && playerListBool)
         {
-            GameObject.Find("StartGame").SetActive(false);
+            buttonObject.SetActive(false);
         }
 
         playerOptions.gameObject.SetActive(playerOptionsBool);

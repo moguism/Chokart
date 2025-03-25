@@ -15,10 +15,11 @@
 - **Servidor UDP:** https://gist.github.com/darkguy2008/413a6fea3a5b4e67e5e0d96f750088a9
 - **Multijugador P2P:** https://www.youtube.com/watch?v=dUqLShvBIsM, https://www.youtube.com/watch?v=2OLUdPkkQPI, https://www.youtube.com/watch?v=3yuBOB3VrCk&t=198s
 - **Cálculo de posiciones:** https://www.youtube.com/watch?v=fdWjR652Fs4
+- **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
-- Cuando se cree un clon, poner dentro de la carpeta de este un ".gitignore" con un asterisco
+- Cuando se cree un clon, poner dentro de la carpeta de este un ".gitignore" con un asterisco. LOS CLONES COMPARTEN PREFERENCIAS (aparantemente)
 - Para mandar objetos a través de RPCs, hay que definir campos con \[SerializableField\]
 - **IMPORTANTE (BORRAR MÁS TARDE):** Tal y como está ahora (a 23/03) las posiciones parece que las pone mal, pero es porque no hay suficientes triggers (ahora mismo hay 2) y piensa que la distancia hasta el siguiente (que es la línea de meta) es menor dando marcha atrás (obviamente) en lugar de seguir para adelante. Lo que quiero decir con esto es que las posiciones funcionan xD
 
@@ -38,4 +39,4 @@
     Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas. Rocío implementa el login y registro de usuarios.
 ### Semana de preparativos (24/03 - 30/03)
     Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
-    Martes --> Mauricio interconecta todo lo que está hecho hasta el momento.
+    Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio.
