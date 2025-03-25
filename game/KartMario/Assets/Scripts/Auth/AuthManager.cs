@@ -175,17 +175,6 @@ public class AuthManager : MonoBehaviour
     {
         Task connectTask = Singleton.Instance.ConnectToSocket(token);
         yield return new WaitUntil(() => connectTask.IsCompleted);
-
-        if (connectTask.IsFaulted)
-        {
-            SceneManager.LoadScene(0);
-            Debug.LogError("Error al conectar al WebSocket :c");
-        }
-        else
-        {
-            SceneManager.LoadScene(1);
-            Debug.Log("Conexión WebSocket establecida :D");
-        }
     }
 
     // Cerrar sesión

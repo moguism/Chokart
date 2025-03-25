@@ -62,11 +62,11 @@ public class UserSocket
                     switch (messageType)
                     {
                         case MessageType.HostGame:
-                            GameNetwork.HostLobby(User);
+                            await GameNetwork.HostLobby(User);
                             dict.Add("participants", User.Nickname);
                             break;
                         case MessageType.JoinGame:
-                            dict["joined"] = await GameNetwork.JoinLobby(User, dict["host"].ToString());
+                            dict["joined"] = await GameNetwork.JoinLobby(User, dictInput["host"].ToString());
                             break;
                         case MessageType.StartGame:
                             dict["joined"] = GameNetwork.StartGame(User.Nickname);
@@ -121,6 +121,9 @@ public class UserSocket
 
             MessageType messageType = (MessageType)elem.GetProperty("messageType").GetInt32();
             dict["messageType"] = messageType;
+
+            string host = elem.GetProperty("host").ToString();
+            dict.Add("host", host);
         }
         catch {}
 

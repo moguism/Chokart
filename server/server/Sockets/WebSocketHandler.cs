@@ -57,7 +57,6 @@ public class WebSocketHandler
         // Sección crítica
         // Nos desuscribimos de los eventos y eliminamos el WebSocketHandler de la lista
         disconnectedHandler.Disconnected -= OnDisconnectedAsync;
-        USER_SOCKETS.Remove(disconnectedHandler);
 
         // TODO: Guardar en la base de datos
         GameHandler handler = GameNetwork.handlers.FirstOrDefault(h => h.participants.Any(p => p.UserId == disconnectedHandler.User.Id));
@@ -87,9 +86,11 @@ public class WebSocketHandler
 
             foreach (UserBattle otherParticipant in handler.participants)
             {
-                await NotifyOneUser(JsonSerializer.Serialize(dict, options), participant.UserId);
+                await NotifyOneUser(JsonSerializer.Serialize(dict, options), otherParticipant.UserId);
             }
         }
+
+        USER_SOCKETS.Remove(disconnectedHandler);
 
         // Liberamos el semáforo
         _semaphore.Release();

@@ -14,7 +14,7 @@ public class Singleton : MonoBehaviour
     public static readonly string SOCKET_URL = "wss://localhost:7048/socket/";
 
     public WebSocket webSocket;
-    public bool connecting = false;
+    public bool delete = true;
 
     public bool isHost = false;
 
@@ -45,6 +45,7 @@ public class Singleton : MonoBehaviour
     {
         if (webSocket != null)
         {
+            delete = false;
             await webSocket.Close();
         }
     }
@@ -52,27 +53,25 @@ public class Singleton : MonoBehaviour
     public async Task ConnectToSocket(string token)
     {
         webSocket = new WebSocket(SOCKET_URL + token);
-        connecting = true;
 
         webSocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
-            connecting = false;
+            SceneManager.LoadScene(1);
         };
 
         webSocket.OnError += (e) =>
         {
             Debug.Log("Error! " + e);
-            PlayerPrefs.DeleteKey("AccessToken");
-            SceneManager.LoadScene(0);
         };
 
         webSocket.OnClose += (e) =>
         {
             Debug.Log("Connection closed!");
-            if(connecting)
+            if (delete)
             {
                 PlayerPrefs.DeleteKey("AccessToken");
+                PlayerPrefs.Save();
             }
             SceneManager.LoadScene(0);
         };
@@ -101,14 +100,11 @@ public class Singleton : MonoBehaviour
                     GameObject.Find("MANAGER").GetComponentInChildren<Lobbies>().HostingComplete(dict["participants"].ToString());
                     break;
                 case MessageType.PlayerJoined:
-                    joined = bool.Parse(dict["joined"].ToString());
-                    if (joined)
-                    {
-                        GameObject.Find("MANAGER").GetComponentInChildren<Lobbies>().JoinedComplete(dict);
-                    }
+                    GameObject.Find("MANAGER").GetComponentInChildren<Lobbies>().SetObjectsActive(true, false);
+                    GameObject.Find("MANAGER").GetComponentInChildren<Lobbies>().JoinedComplete(dict);
                     break;
                 case MessageType.JoinGame:
-                    GameObject.Find("MANAGER").GetComponentInChildren<Lobbies>().SetObjectsActive(true, false);
+                    Debug.LogWarning("Esperando partida...");
                     break;
                 case MessageType.StartGame:
                     joined = bool.Parse(dict["joined"].ToString());
@@ -122,10 +118,12 @@ public class Singleton : MonoBehaviour
                     SceneManager.LoadScene(1);
                     break;
                 case MessageType.PlayerDisconnected:
+                    print("a");
                     // Si aún estoy en la lobbie simplemente recargo la lista de jugadores
                     GameObject manager = GameObject.Find("MANAGER");
                     if(manager != null)
                     {
+                        print("b");
                         manager.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
                     }
                     break;
