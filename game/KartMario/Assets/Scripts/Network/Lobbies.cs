@@ -1,0 +1,76 @@
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class Lobbies : MonoBehaviour
+{
+    public Canvas playerOptions;
+    public Canvas playerList;
+    public TMP_Text players;
+    public bool isHost = false;
+
+    private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
+    {
+        { "messageType", -1 }
+    };
+
+    void Start()
+    {
+        playerList.gameObject.SetActive(false);
+    }
+
+    public async void HostGame()
+    {
+        dict["messageType"] = MessageType.HostGame;
+        await CustomSerializer.Serialize(dict, true);
+    }
+    
+    // LA IDEA SERÍA QUE TU TE UNAS AL PRIMER JUEGO QUE ESTÉ DISPONIBLE, COMO EN EL MARIO KART
+    // El host de esa partida puede invitar a amigos si quiere
+    public async void JoinGame()
+    {
+        dict["messageType"] = MessageType.JoinGame;
+        dict.Add("host", "");
+        await CustomSerializer.Serialize(dict, true);
+    }
+
+    public async void StartGame()
+    {
+        dict["messageType"] = MessageType.StartGame;
+        await CustomSerializer.Serialize(dict, true);
+    }
+
+    // Cuando recibe mensaje del socket
+
+    public void HostingComplete(string participant)
+    {
+        isHost = true;
+        players.text = participant;
+        SetObjectsActive(true, false);
+    }
+
+    public void JoinedComplete(Dictionary<object, object> dict)
+    {
+        List<string> participants = JsonConvert.DeserializeObject<List<string>>(dict["participants"].ToString());
+        players.text = "";
+
+        foreach (string participant in participants)
+        {
+            players.text += "\n" + participant;
+        }
+    }
+
+    public void SetObjectsActive(bool playerListBool, bool playerOptionsBool)
+    {
+        playerList.gameObject.SetActive(playerListBool);
+        
+        // Paraque un cliente normal no pueda empezar la partida
+        if(!isHost && playerListBool)
+        {
+            GameObject.Find("StartGame").SetActive(false);
+        }
+
+        playerOptions.gameObject.SetActive(playerOptionsBool);
+    }
+}
