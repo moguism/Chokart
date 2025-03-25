@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class NetworkingManager : MonoBehaviour
+
+public class AuthManager : MonoBehaviour
 {
-    public static NetworkingManager instance;
+    public static AuthManager instance;
 
     // Registro
     public InputField emailInput;
@@ -15,6 +18,9 @@ public class NetworkingManager : MonoBehaviour
     public InputField loginEmailOrNicknameInput;
     public InputField loginPasswordInput;
     public Toggle rememberMeToggle; // Recuérdame
+
+    public GameObject loginPanel;
+    public GameObject registerPanel;
 
 
     void Start()
@@ -28,14 +34,13 @@ public class NetworkingManager : MonoBehaviour
             string savedToken = PlayerPrefs.GetString("AccessToken");
             Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
             Debug.Log("Usuario autenticado automáticamente >:)");
+            StartCoroutine(ConnectToSocketCoroutine(savedToken));
         }
         else
         {
             Debug.Log("No se ha encontrado el token. Debes iniciar sesión. Porfi inicia sesión. :c");
         }
     }
-
-    void Update() { }
 
     public void OnRegButton()
     {
@@ -55,9 +60,9 @@ public class NetworkingManager : MonoBehaviour
 
         RegisterRequest tempReg = new RegisterRequest()
         {
-            Email = emailInput.text.Trim(),
-            Nickname = nicknameInput.text.Trim(),
-            Password = passwordInput.text
+            Email = email,
+            Nickname = nickname,
+            Password = password
         };
 
         StartCoroutine(Register(tempReg));
@@ -74,7 +79,7 @@ public class NetworkingManager : MonoBehaviour
             Password = password
         };
 
-        StartCoroutine(Login(tempLog));
+        StartCoroutine(LoginAsync(tempLog));
     }
 
     // Registro
@@ -89,13 +94,20 @@ public class NetworkingManager : MonoBehaviour
 
         unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
         unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
-        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
+        unityWebRequest.SetRequestHeader("Content-Type", "application/json"); // Este Content-Type no sirve para cuando subamos avatares
 
         yield return unityWebRequest.SendWebRequest();
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Registro exitoso: " + unityWebRequest.downloadHandler.text);
+            StartCoroutine(
+                LoginAsync(new LoginRequest()
+                {
+                    EmailOrNickname = register.Nickname,
+                    Password = register.Password
+                }
+            ));
         }
         else
         {
@@ -105,7 +117,7 @@ public class NetworkingManager : MonoBehaviour
     }
 
     // Inicio de sesión
-    public IEnumerator Login(LoginRequest loginRequest)
+    public IEnumerator LoginAsync(LoginRequest loginRequest)
     {
         UnityWebRequest unityWebRequest = new UnityWebRequest(Singleton.API_URL + "Auth/login", "POST");
         string jsonData = JsonUtility.ToJson(loginRequest);
@@ -133,6 +145,9 @@ public class NetworkingManager : MonoBehaviour
                 PlayerPrefs.SetString("AccessToken", response.accessToken);
                 PlayerPrefs.Save();
                 Debug.Log("Token guardado en PlayerPrefs.");
+
+                StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
+                SceneManager.LoadScene(1); // Las lobbies
             }
             else
             {
@@ -154,6 +169,24 @@ public class NetworkingManager : MonoBehaviour
     //    File.WriteAllText(filePath, token);
     //    Debug.Log("Token guardado en: " + filePath); // Por si me desubico xd
     //}
+
+    // Pereza las corrutinas tu xD
+    private IEnumerator ConnectToSocketCoroutine(string token)
+    {
+        Task connectTask = Singleton.Instance.ConnectToSocket(token);
+        yield return new WaitUntil(() => connectTask.IsCompleted);
+
+        if (connectTask.IsFaulted)
+        {
+            SceneManager.LoadScene(0);
+            Debug.LogError("Error al conectar al WebSocket :c");
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+            Debug.Log("Conexión WebSocket establecida :D");
+        }
+    }
 
     // Cerrar sesión
     public void Logout()

@@ -25,6 +25,8 @@ namespace server
             builder.Services.AddSingleton<WebSocketHandler>();
             builder.Services.AddSingleton<GameNetwork>();
 
+            builder.Services.AddTransient<PreAuthMiddleware>();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -74,10 +76,11 @@ namespace server
             }
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            
             app.UseWebSockets();
+            app.UseMiddleware<PreAuthMiddleware>();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
