@@ -6,129 +6,134 @@ using server.Models.Mappers;
 using server.Repositories;
 using System.Text.RegularExpressions;
 
-namespace server.Services
+namespace server.Services;
+
+public class UserService
 {
-    public class UserService
+    private readonly UnitOfWork _unitOfWork;
+    private readonly UserMapper _userMapper;
+
+    Regex emailRegex = new(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+    public UserService(UnitOfWork unitOfWork, UserMapper userMapper)
     {
-        private readonly UnitOfWork _unitOfWork;
-        private readonly UserMapper _userMapper;
+        _unitOfWork = unitOfWork;
+        _userMapper = userMapper;
+    }
 
-        Regex emailRegex = new(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
-        public UserService(UnitOfWork unitOfWork, UserMapper userMapper)
+    public async Task<UserDto> GetUserByNicknameAsync(string nickname)
+    {
+        var user = await _unitOfWork.UserRepository.GetByNicknameAsync(nickname);
+        if (user == null)
         {
-            _unitOfWork = unitOfWork;
-            _userMapper = userMapper;
+            return null;
+        }
+        return _userMapper.ToDto(user);
+    }
+
+    public async Task<User> GetBasicUserByIdAsync(int id)
+    {
+        User user = await _unitOfWork.UserRepository.GetByIdAsync(id);
+        return user;
+    }
+
+    public async Task<UserDto> GetUserByEmailAsync(string email)
+    {
+        var user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
+        if (user == null)
+        {
+            return null;
+        }
+        return _userMapper.ToDto(user);
+    }
+
+    // REGISTRO 
+    public async Task<User> RegisterAsync(RegisterDto model)
+    {
+        var state = await _unitOfWork.StateRepositoty.GetByIdAsync(2);
+
+        if (state == null)
+        {
+            throw new Exception("El estado con ID 2 no existe en la base de datos.");
         }
 
-        public async Task<UserDto> GetUserByNicknameAsync(string nickname)
+        model.Email = model.Email?.Trim().ToLower();
+        Console.WriteLine("Email recibido: " + model.Email);
+
+        // validacion email
+
+        if (string.IsNullOrEmpty(model.Email) || !emailRegex.IsMatch(model.Email))
         {
-            var user = await _unitOfWork.UserRepository.GetByNicknameAsync(nickname);
-            if (user == null)
-            {
-                return null;
-            }
-            return _userMapper.ToDto(user);
+            throw new Exception("Email no valido.");
         }
 
-        public async Task<UserDto> GetUserByEmailAsync(string email)
+        if (model.Password == null || model.Password.Length < 6)
         {
-            var user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
-            if (user == null)
-            {
-                return null;
-            }
-            return _userMapper.ToDto(user);
+            throw new Exception("Contraseña no válida");
         }
 
-        // REGISTRO 
-        public async Task<User> RegisterAsync(RegisterDto model)
+        try
         {
-            var state = await _unitOfWork.StateRepositoty.GetByIdAsync(2);
 
-            if (state == null)
+            // Verifica si el usuario ya existe
+            var existingUser = await GetUserByEmailAsync(model.Email.ToLower());
+
+            if (existingUser != null)
             {
-                throw new Exception("El estado con ID 2 no existe en la base de datos.");
+                throw new Exception("El usuario ya existe.");
             }
 
-            model.Email = model.Email?.Trim().ToLower();
-            Console.WriteLine("Email recibido: " + model.Email);
+            //ImageService imageService = new ImageService();
 
-            // validacion email
-
-            if (string.IsNullOrEmpty(model.Email) || !emailRegex.IsMatch(model.Email))
+            var newUser = new User
             {
-                throw new Exception("Email no valido.");
-            }
+                Email = model.Email.ToLower(),
+                Nickname = model.Nickname.ToLower(),
+                //AvatarPath = "",
+                Role = "User", // Rol por defecto
+                Password = PasswordHelper.Hash(model.Password),
+                IsInQueue = false,  // por defecto al crearse
+                StateId = state.Id,
+                State = state
+            };
 
-            if (model.Password == null || model.Password.Length < 6)
-            {
-                throw new Exception("Contraseña no válida");
-            }
+            //if (model.Image != null)
+            //{
+            //    newUser.AvatarPath = "/" + await imageService.InsertAsync(model.Image);
+            //}
+            //else
+            //{
+            //    newUser.AvatarPath = "/avatar/user.png";
+            //}
 
-            try
-            {
+            await _unitOfWork.UserRepository.InsertAsync(newUser);
+            await _unitOfWork.SaveAsync();
 
-                // Verifica si el usuario ya existe
-                var existingUser = await GetUserByEmailAsync(model.Email.ToLower());
+            return newUser;
 
-                if (existingUser != null)
-                {
-                    throw new Exception("El usuario ya existe.");
-                }
+        }
+        catch (DbUpdateException ex)
+        {
+            // Log más detallado del error
+            Console.WriteLine($"Error al guardar el usuario: {ex.InnerException?.Message}");
+            throw new Exception("Error al registrar el usuario. Verifica los datos ingresados.");
+        }
+    }
 
-                //ImageService imageService = new ImageService();
+    // INICIO DE SESION
+    public async Task<User> LoginAsync(LoginRequest loginRequest)
+    {
+        var user = await _unitOfWork.UserRepository.GetByEmailOrNickname(loginRequest.EmailOrNickname.ToLower());
 
-                var newUser = new User
-                {
-                    Email = model.Email.ToLower(),
-                    Nickname = model.Nickname.ToLower(),
-                    //AvatarPath = "",
-                    Role = "User", // Rol por defecto
-                    Password = PasswordHelper.Hash(model.Password),
-                    IsInQueue = false,  // por defecto al crearse
-                    StateId = state.Id,
-                    State = state
-                };
-
-                //if (model.Image != null)
-                //{
-                //    newUser.AvatarPath = "/" + await imageService.InsertAsync(model.Image);
-                //}
-                //else
-                //{
-                //    newUser.AvatarPath = "/avatar/user.png";
-                //}
-
-                await _unitOfWork.UserRepository.InsertAsync(newUser);
-                await _unitOfWork.SaveAsync();
-
-                return newUser;
-
-            }
-            catch (DbUpdateException ex)
-            {
-                // Log más detallado del error
-                Console.WriteLine($"Error al guardar el usuario: {ex.InnerException?.Message}");
-                throw new Exception("Error al registrar el usuario. Verifica los datos ingresados.");
-            }
+        if (user == null || user.Password != PasswordHelper.Hash(loginRequest.Password))
+        {
+            return null;
         }
 
-        // INICIO DE SESION
-        public async Task<User> LoginAsync(LoginRequest loginRequest)
-        {
-            var user = await _unitOfWork.UserRepository.GetByEmailOrNickname(loginRequest.EmailOrNickname.ToLower());
+        return user;
+    }
 
-            if (user == null || user.Password != PasswordHelper.Hash(loginRequest.Password))
-            {
-                return null;
-            }
-
-            return user;
-        }
-
-        public UserDto ToDto(User user)
-        {
-            return _userMapper.ToDto(user);
-        }
+    public UserDto ToDto(User user)
+    {
+        return _userMapper.ToDto(user);
     }
 }

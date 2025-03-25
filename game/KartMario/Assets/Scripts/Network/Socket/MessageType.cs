@@ -1,5 +1,3 @@
-﻿namespace server.Sockets;
-
 public enum MessageType
 {
     HostGame,
