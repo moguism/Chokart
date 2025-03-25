@@ -16,6 +16,7 @@
 - **Multijugador P2P:** https://www.youtube.com/watch?v=dUqLShvBIsM, https://www.youtube.com/watch?v=2OLUdPkkQPI, https://www.youtube.com/watch?v=3yuBOB3VrCk&t=198s
 - **Cálculo de posiciones:** https://www.youtube.com/watch?v=fdWjR652Fs4
 - **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
+- **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)

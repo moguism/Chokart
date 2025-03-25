@@ -37,7 +37,13 @@ public class GameNetwork
 
         handlers.Add(handler);
 
-        await SendParticipants(handler.participants);
+        Dictionary<object, object> dict = new Dictionary<object, object>()
+        {
+            { "messageType", MessageType.PlayerJoined },
+            { "participants", handler.participants.Select(p => p.User.Nickname) }
+        };
+
+        await SendParticipants(handler.participants, dict);
 
         _semaphore.Release();
     }
@@ -76,7 +82,13 @@ public class GameNetwork
         UserBattle userBattle = CreateUserBattle(user, false);
         handler.participants.Add(userBattle);
 
-        await SendParticipants(handler.participants);
+        Dictionary<object, object> dict = new Dictionary<object, object>()
+        {
+            { "messageType", MessageType.PlayerJoined },
+            { "participants", handler.participants.Select(p => p.User.Nickname) }
+        };
+
+        await SendParticipants(handler.participants, dict);
 
         _semaphore.Release();
 
@@ -95,6 +107,24 @@ public class GameNetwork
         return true;
     }
 
+    public static async Task StartGameForClients(string hostName, string ip)
+    {
+        GameHandler handler = handlers.FirstOrDefault(h => h.Started == true && h.participants.Any(p => p.User.Nickname.Equals(hostName)));
+        if (handler == null)
+        {
+            return;
+        }
+
+        Dictionary<object, object> dict = new Dictionary<object, object>()
+        {
+            { "messageType", MessageType.GameStarted },
+            { "ip", ip }
+        };
+
+        // Notifico a todos menos al host porque ya está conectado
+        await SendParticipants(handler.participants.Where(p => p.User.Nickname != hostName).ToList(), dict);
+    }
+
     private static UserBattle CreateUserBattle(User user, bool isHost)
     {
         return new UserBattle()
@@ -105,16 +135,10 @@ public class GameNetwork
         };
     }
 
-    private static async Task SendParticipants(List<UserBattle> participants)
+    private static async Task SendParticipants(List<UserBattle> participants, Dictionary<object, object> dict)
     {
         JsonSerializerOptions options = new JsonSerializerOptions();
         options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-
-        Dictionary<object, object> dict = new Dictionary<object, object>()
-        {
-            { "messageType", MessageType.PlayerJoined },
-            { "participants", participants.Select(p => p.User.Nickname) }
-        };
 
         foreach (UserBattle participant in participants)
         {

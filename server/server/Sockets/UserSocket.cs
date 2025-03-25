@@ -15,12 +15,14 @@ public class UserSocket
     public User User { get; set; }
 
     public event Func<UserSocket, Task> Disconnected;
+    public string IpAddress { get; set; }
 
-    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user)
+    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user, string ipAddress)
     {
         _serviceProvider = serviceProvider;
         Socket = socket;
         User = user;
+        IpAddress = ipAddress;
     }
 
     public async Task ProcessWebSocket()
@@ -58,6 +60,8 @@ public class UserSocket
                         { "joined", false }
                     };
 
+                    bool send = true;
+
                     // En función del switch, obtengo unos datos u otros, y los envío en JSON
                     switch (messageType)
                     {
@@ -72,20 +76,20 @@ public class UserSocket
                             dict["joined"] = GameNetwork.StartGame(User.Nickname);
                             break;
                         case MessageType.GameStarted:
-                            // TODO: Agregar que notifique al resto de usuarios
+                            send = false;
+                            await GameNetwork.StartGameForClients(User.Nickname, IpAddress);
                             break;
                     }
 
-                    //if (dict.Values.Count > 1)
-                    //{
-
+                    if (send)
+                    {
                         string outMessage = System.Text.Json.JsonSerializer.Serialize(dict, options);
                         // Procesamos el mensaje
                         //string outMessage = $"[{string.Join(", ", message as IEnumerable<char>)}]";
 
                         // Enviamos respuesta al cliente
                         await SendAsync(outMessage);
-                    //}
+                    }
 
                     scope.Dispose();
                 }
