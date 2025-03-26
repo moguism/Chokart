@@ -7,10 +7,10 @@ public class Speedometer : MonoBehaviour
     public RectTransform pointer;
     public TMP_Text speedText;
 
-    public float maxKmH = 80f;
-    public float maxSpeed = 8f;
-    public float minRotation = -261.4f;
-    public float maxRotation = 0f;
+    public float maxKmH = 140f;
+    public float maxSpeed = 140f;
+    public float minRotation = -316.3f;
+    public float maxRotation = -45.1f;
     public float smoothSpeed = 5f; // esto lo que hace es que la aguja gire progresivamente y no de golpe
 
     public float speed = 0f;
@@ -35,7 +35,7 @@ public class Speedometer : MonoBehaviour
         //la aguja gira suavemente
         speed = Mathf.Lerp(speed, kart.currentSpeed, Time.deltaTime * smoothSpeed);
 
-        // velocidad entre 0 y 8 como el velocimetro
+        // velocidad entre 0 y 140 como el velocimetro
         float visualSpeed = Mathf.Clamp(speed * maxSpeed / maxKmH, 0, maxSpeed);
         float rotationZ = Mathf.Lerp(maxRotation, minRotation, visualSpeed / maxSpeed);
 
