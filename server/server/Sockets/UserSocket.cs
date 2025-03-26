@@ -1,4 +1,5 @@
-﻿using server.Sockets.Game;
+﻿using server.Models.Entities;
+using server.Sockets.Game;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -11,15 +12,17 @@ public class UserSocket
     private static IServiceProvider _serviceProvider;
 
     public WebSocket Socket;
-    public string User { get; set; }
+    public User User { get; set; }
 
     public event Func<UserSocket, Task> Disconnected;
+    public string IpAddress { get; set; }
 
-    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, string user)
+    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user, string ipAddress)
     {
         _serviceProvider = serviceProvider;
         Socket = socket;
         User = user;
+        IpAddress = ipAddress;
     }
 
     public async Task ProcessWebSocket()
@@ -54,29 +57,39 @@ public class UserSocket
                     Dictionary<object, object> dict = new Dictionary<object, object>
                     {
                         { "messageType", messageType },
+                        { "joined", false }
                     };
+
+                    bool send = true;
 
                     // En función del switch, obtengo unos datos u otros, y los envío en JSON
                     switch (messageType)
                     {
                         case MessageType.HostGame:
-                            GameNetwork.HostLobby(User);
+                            await GameNetwork.HostLobby(User);
+                            dict.Add("participants", User.Nickname);
                             break;
                         case MessageType.JoinGame:
-                            await GameNetwork.JoinLobby(User);
+                            dict["joined"] = await GameNetwork.JoinLobby(User, dictInput["host"].ToString());
+                            break;
+                        case MessageType.StartGame:
+                            dict["joined"] = GameNetwork.StartGame(User.Nickname);
+                            break;
+                        case MessageType.GameStarted:
+                            send = false;
+                            await GameNetwork.StartGameForClients(User.Nickname, IpAddress);
                             break;
                     }
 
-                    //if (dict.Values.Count > 1)
-                    //{
-
+                    if (send)
+                    {
                         string outMessage = System.Text.Json.JsonSerializer.Serialize(dict, options);
                         // Procesamos el mensaje
                         //string outMessage = $"[{string.Join(", ", message as IEnumerable<char>)}]";
 
                         // Enviamos respuesta al cliente
                         await SendAsync(outMessage);
-                    //}
+                    }
 
                     scope.Dispose();
                 }
@@ -89,8 +102,6 @@ public class UserSocket
                 }
                 Console.WriteLine($"Error: {e}");
             }
-            // Leemos el mensaje
-
         }
 
         // Si hay suscriptores al evento Disconnected, gestionamos el evento
@@ -107,13 +118,18 @@ public class UserSocket
             { "messageType", -1 }
         };
 
-        JsonSerializerOptions options = new JsonSerializerOptions();
+        try
+        {
+            JsonDocument dxoc = JsonDocument.Parse(message);
+            JsonElement elem = dxoc.RootElement;
 
-        JsonDocument dxoc = JsonDocument.Parse(message);
-        JsonElement elem = dxoc.RootElement;
+            MessageType messageType = (MessageType)elem.GetProperty("messageType").GetInt32();
+            dict["messageType"] = messageType;
 
-        MessageType messageType = (MessageType)elem.GetProperty("messageType").GetInt32();
-        dict["messageType"] = messageType;
+            string host = elem.GetProperty("host").ToString();
+            dict.Add("host", host);
+        }
+        catch {}
 
         return dict;
     }
