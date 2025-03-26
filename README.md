@@ -34,10 +34,12 @@
     Lunes --> María agrega movimiento de coche con W y S, mostrar salud en pantalla e intenta arreglar fallo de derrape con botón.
     Martes --> Mauricio termina el derrape, que fallaba en móvil al implementar el giroscopio, y crea el servidor básico.
     Miércoles --> María implementa servidor UDP con socket en back. Mauricio prepara los websockets y se pone con el sistema de lobbies.
-    Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador.
-    Viernes --> Mauricio termina el P2P básico.
+    Jueves --> Mauricio implementa un sistema P2P de prueba para el multijugador. 
+    Viernes --> Mauricio termina el P2P básico. Tutoría y reunión del proyecto.
     Sábado --> Mauricio programa el cálculo de las posiciones.
     Domingo --> Mauricio termina las posiciones de los coches y el número de vueltas. Rocío implementa el login y registro de usuarios.
 ### Semana de preparativos (24/03 - 30/03)
     Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
-    Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio.
+    Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio. María busca documentación para hacer la degradación del coche.
+    Miércoles --> 
+    
