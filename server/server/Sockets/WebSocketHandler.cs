@@ -1,4 +1,8 @@
-﻿using System.Net.WebSockets;
+﻿using server.Models.Entities;
+using server.Sockets.Game;
+using System.Net.WebSockets;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace server.Sockets;
 
@@ -15,27 +19,27 @@ public class WebSocketHandler
         _serviceProvider = serviceProvider;
     }
 
-    public async Task HandleWebsocketAsync(WebSocket webSocket, string user)
+    public async Task HandleWebsocketAsync(WebSocket webSocket, User user, string ip)
     {
         // Creamos un nuevo WebSocketHandler a partir del WebSocket recibido y lo añadimos a la lista
-        UserSocket handler = await AddWebsocketAsync(webSocket, user);
+        UserSocket handler = await AddWebsocketAsync(webSocket, user, ip);
         await handler.ProcessWebSocket();
     }
 
-    private async Task<UserSocket> AddWebsocketAsync(WebSocket webSocket, string user)
+    private async Task<UserSocket> AddWebsocketAsync(WebSocket webSocket, User user, string ip)
     {
         // Esperamos a que haya un hueco disponible
         await _semaphore.WaitAsync();
 
         // Sección crítica
 
-        UserSocket existingSocket = USER_SOCKETS.FirstOrDefault(u => u.User.Equals(user));
+        UserSocket existingSocket = USER_SOCKETS.FirstOrDefault(u => u.User.Id == user.Id);
         if (existingSocket != null)
         {
             USER_SOCKETS.Remove(existingSocket);
         }
 
-        UserSocket handler = new UserSocket(_serviceProvider, webSocket, user);
+        UserSocket handler = new UserSocket(_serviceProvider, webSocket, user, ip);
         handler.Disconnected += OnDisconnectedAsync;
         USER_SOCKETS.Add(handler);
 
@@ -53,15 +57,48 @@ public class WebSocketHandler
         // Sección crítica
         // Nos desuscribimos de los eventos y eliminamos el WebSocketHandler de la lista
         disconnectedHandler.Disconnected -= OnDisconnectedAsync;
+
+        // TODO: Guardar en la base de datos
+        GameHandler handler = GameNetwork.handlers.FirstOrDefault(h => h.participants.Any(p => p.UserId == disconnectedHandler.User.Id));
+        if (handler != null)
+        {
+            Dictionary<object, object> dict = new Dictionary<object, object>()
+            {
+                { "messageType", MessageType.PlayerDisconnected }
+            };
+
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+
+            UserBattle participant = handler.participants.FirstOrDefault(p => p.UserId == disconnectedHandler.User.Id);
+            
+            if (participant.IsHost)
+            {
+                // Si es el host termino la partida directamente
+                dict["messageType"] = MessageType.EndGame;
+                GameNetwork.handlers.Remove(handler);
+            }
+            else
+            {
+                handler.participants.Remove(participant);
+                dict.Add("participants", handler.participants.Select(p => p.User.Nickname));
+            }
+
+            foreach (UserBattle otherParticipant in handler.participants)
+            {
+                await NotifyOneUser(JsonSerializer.Serialize(dict, options), otherParticipant.UserId);
+            }
+        }
+
         USER_SOCKETS.Remove(disconnectedHandler);
 
         // Liberamos el semáforo
         _semaphore.Release();
     }
 
-    public static async Task NotifyOneUser(string jsonToSend, string nickname)
+    public static async Task NotifyOneUser(string jsonToSend, int id)
     {
-        var userSocket = USER_SOCKETS.FirstOrDefault(userSocket => userSocket.User == nickname);
+        var userSocket = USER_SOCKETS.FirstOrDefault(userSocket => userSocket.User.Id == id);
         if (userSocket != null && userSocket.Socket.State == WebSocketState.Open)
         {
             await userSocket.SendAsync(jsonToSend);

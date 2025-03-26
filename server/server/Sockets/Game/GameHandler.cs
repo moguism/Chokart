@@ -1,11 +1,15 @@
-﻿namespace server.Sockets.Game;
+﻿using server.Models.Entities;
+
+namespace server.Sockets.Game;
 
 public class GameHandler
 {
-    public readonly List<string> participants = new List<string>();
+    public readonly List<UserBattle> participants = new List<UserBattle>();
+    public bool Started { get; set; } = false;
+    public static readonly int MaxPlayers = 8;
 
-    public GameHandler(string hostName)
+    public GameHandler(UserBattle host)
     {
-        participants.Add(hostName);
+        participants.Add(host);
     }
 }

@@ -2,8 +2,11 @@
 
 public enum MessageType
 {
-    PendingBattle,
     HostGame,
     JoinGame,
-    PlayerJoined
+    PlayerJoined,
+    StartGame,
+    GameStarted,
+    PlayerDisconnected,
+    EndGame
 }
