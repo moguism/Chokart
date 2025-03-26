@@ -7365,6 +7365,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8837112396901257070, guid: 383526ca99e35db4491c325f7a9f9b9e,
+        type: 3}
+      propertyPath: positionManager
+      value: 
+      objectReference: {fileID: 276881112}
     - target: {fileID: 8973181910166717641, guid: 383526ca99e35db4491c325f7a9f9b9e,
         type: 3}
       propertyPath: GlobalObjectIdHash

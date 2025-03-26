@@ -1,18 +1,35 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ObjectSpawner : NetworkBehaviour
+public class ObjectSpawner : MonoBehaviour
 {
+    #region Prefabs
+    // Aquí irían los distintos prefabs
     public GameObject GreenShell;
+    #endregion
 
-    // Probablemente esto se pueda hacer mejor
-    public readonly List<string> possibleObjects = new List<string>()
+    // Aquí van los distintos objetos (un poco fullero I know xD)
+    #region Lista de objetos
+
+    [System.Serializable] // Para que salgan en el inspector
+    public class ObjectWithPositionRange
     {
-        "greenShell"
+        public string objectName;
+        public int minPosition;
+        public int maxPosition;
+    }
+
+    public List<ObjectWithPositionRange> objectSpawnRanges = new List<ObjectWithPositionRange>()
+    {
+        new ObjectWithPositionRange() { objectName = "greenShell", minPosition = 1, maxPosition = 12 },
     };
 
+    #endregion
+
+    public readonly List<BasicObject> objectsSpawned = new List<BasicObject>();
     private readonly System.Random _random = new System.Random();
         
     private void OnTriggerEnter(Collider other)
@@ -27,32 +44,31 @@ public class ObjectSpawner : NetworkBehaviour
                 return;
             }
 
-            string selectedObject = possibleObjects.ElementAt(_random.Next(0, possibleObjects.Count));
+            string selectedObject = GetObjectBasedOnPosition(kart.position);
 
             print("Ha tocado el objeto: " + selectedObject);
             kart.currentObject = selectedObject;
         }
     }
 
-    public void SpawnObject(string objectName, Vector3 position, KartController kart)
+    private string GetObjectBasedOnPosition(int kartPosition)
     {
-        print("Spawneando...");
-        if (IsOwner)
-        {
-            print("v");
-            SpawnObjectServerRpc(objectName, position, kart.transform.forward);
-        }
+        var availableObjects = objectSpawnRanges
+            .Where(o => kartPosition >= o.minPosition && kartPosition <= o.maxPosition)
+            .Select(o => o.objectName)
+            .ToList();
+
+        return availableObjects[_random.Next(0, availableObjects.Count)];
     }
 
-    [ServerRpc]
-    private void SpawnObjectServerRpc(string objectName, Vector3 position, Vector3 desiredPosition)
+    public void SpawnObjectServerRpc(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, float ownerId, ServerRpcParams rpcParams = default)
     {
         GameObject spawnedObject = null;
         switch (objectName)
         {
             case "greenShell":
                 print("Spawneando green shell");
-                spawnedObject = Instantiate(GreenShell, position, Quaternion.identity);
+                spawnedObject = Instantiate(GreenShell, spawnPosition, Quaternion.identity);
                 break;
         }
 
@@ -65,9 +81,26 @@ public class ObjectSpawner : NetworkBehaviour
                 
                 GreenShell shell = spawnedObject.GetComponentInChildren<GreenShell>();
                 shell.direction = desiredPosition;
-                shell.direction.x += 20;
+                //shell.direction.x += 20;
+                shell.owner = ownerId;
                 shell.UseObject();
+                
+                objectsSpawned.Add(shell);
             }
         }
+    }
+
+    public void DespawnObjectServerRpc(ulong objectId)
+    {
+        BasicObject basicObject = objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
+        if (basicObject != null)
+        { 
+            basicObject.networkObject.Despawn(true);
+        }
+    }
+
+    public void DespawnObjectServerRpc(BasicObject basicObject)
+    {
+        objectsSpawned.Remove(basicObject);
     }
 }

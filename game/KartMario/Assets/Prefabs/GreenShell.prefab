@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1633527398810059022}
   m_Layer: 0
   m_Name: Shell
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,8 +123,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   owner: {fileID: 0}
+  networkObject: {fileID: 5892217538899386661}
+  spawner: {fileID: 0}
   damageOutput: 10
-  targetTime: 60
+  targetTime: 5
   direction: {x: 0, y: 0, z: 0}
   parent: {fileID: 3262044357405134002}
   speed: 10
@@ -141,7 +143,7 @@ GameObject:
   - component: {fileID: 2486303674367932685}
   m_Layer: 0
   m_Name: GreenShell
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
