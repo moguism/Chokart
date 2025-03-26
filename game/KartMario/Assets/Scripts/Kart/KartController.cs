@@ -126,6 +126,10 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
+
+        // cronometro en marcha
+        Chronometer.instance.startTimer();
+
     }
 
 
@@ -166,12 +170,12 @@ public class KartController : BasicPlayer
             Time.timeScale = time;
         }*/
 
-        if(!IsOwner)
+        if (!IsOwner)
         {
             return;
         }
 
-        if(!canMove)
+        if (!canMove)
         {
             return;
         }
@@ -284,7 +288,7 @@ public class KartController : BasicPlayer
 
         //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
 
-        if(Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown("Fire3"))
         {
             if (currentObject != "")
             {

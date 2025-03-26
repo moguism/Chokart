@@ -17,6 +17,8 @@ public class GameStarter : MonoBehaviour
             GetComponentInParent<NetworkManager>().StartHost();
             await CustomSerializer.Serialize(dict, true);
         }
+
+        
     }
 
     public void StartClient(string ip)
