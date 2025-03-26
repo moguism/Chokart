@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affbc058f865e1741b0b5c7153e7cb56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   kart: {fileID: 5697130421628379105}
 --- !u!114 &2513524855746541114
 MonoBehaviour:
@@ -29811,6 +29812,16 @@ MonoBehaviour:
   jumping: 0
   isGrounded: 0
   canMove: 1
+  totalLaps: 0
+  position: 0
+  passedThroughFinishLine: 0
+  triggers: []
+  lastTriggerIndex: 0
+  distanceToNextTrigger: 0
+  positionText: {fileID: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
+  currentObject: 
+  forward: {fileID: 0}
 --- !u!1 &4743390076326792228
 GameObject:
   m_ObjectHideFlags: 0

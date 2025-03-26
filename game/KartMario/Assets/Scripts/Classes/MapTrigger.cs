@@ -85,7 +85,7 @@ public class MapTrigger : NetworkBehaviour
         kart.distanceToNextTrigger = distance;
 
         //print("El coche " + kart.NetworkObjectId + " está en " + kart.currentPosition);
-        print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
+        //print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
 
         if (IsOwner)
         {
