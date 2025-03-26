@@ -1,24 +1,50 @@
-using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Speedometer : MonoBehaviour
 {
-    public float speed;
+    public KartController kart;
+    public RectTransform pointer;
+    public TMP_Text speedText;
 
-    void Start()
+    public float maxKmH = 80f;
+    public float maxSpeed = 8f;
+    public float minRotation = -261.4f;
+    public float maxRotation = 0f;
+    public float smoothSpeed = 5f; // esto lo que hace es que la aguja gire progresivamente y no de golpe
+
+    public float speed = 0f;
+
+
+    private void Awake()
     {
-        StartCoroutine(CalcSpeed());
+        pointer = GameObject.Find("Pointer").GetComponent<RectTransform>();
+        speedText = GameObject.Find("SpeedText").GetComponent<TMP_Text>();
+        speedText.text = "0 km/h";
+
+        if (kart == null)
+        {
+            kart = FindFirstObjectByType<KartController>();
+        }
     }
 
-    // Calcula la velocidad de un objeto (los coche)
-    IEnumerator CalcSpeed()
+    private void Update()
     {
-        bool isPlaying = true;
-        while (isPlaying)
+        if (kart == null) return;
+
+        //la aguja gira suavemente
+        speed = Mathf.Lerp(speed, kart.currentSpeed, Time.deltaTime * smoothSpeed);
+
+        // velocidad entre 0 y 8 como el velocimetro
+        float visualSpeed = Mathf.Clamp(speed * maxSpeed / maxKmH, 0, maxSpeed);
+        float rotationZ = Mathf.Lerp(maxRotation, minRotation, visualSpeed / maxSpeed);
+
+        pointer.rotation = Quaternion.Euler(0, 0, rotationZ);
+
+        // texto de velocidad cada 1 segundo para q no pete mucho
+        if (speedText != null)
         {
-            Vector3 prevPos = transform.position;
-            yield return new WaitForFixedUpdate();
-            speed = Mathf.RoundToInt(Vector3.Distance(transform.position, prevPos) / Time.fixedDeltaTime);
+            speedText.text = Mathf.RoundToInt(speed).ToString() + " km/h";
         }
     }
 }
