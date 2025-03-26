@@ -29748,6 +29748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8415650124991807546}
   - component: {fileID: 5697130421628379105}
+  - component: {fileID: 3255239343157649172}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -29790,6 +29791,8 @@ MonoBehaviour:
   sphere: {fileID: 8533267132228075681}
   primaryParticles: []
   secondaryParticles: []
+  speed: 0
+  currentSpeed: 0
   drifting: 0
   acceleration: 65
   steering: 15
@@ -29821,7 +29824,27 @@ MonoBehaviour:
   positionText: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
-  forward: {fileID: 0}
+--- !u!114 &3255239343157649172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736102366237070151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb9290e2040efc40915d021e9fce952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kart: {fileID: 0}
+  pointer: {fileID: 0}
+  speedText: {fileID: 0}
+  maxKmH: 140
+  maxSpeed: 140
+  minRotation: -316.3
+  maxRotation: -45.1
+  smoothSpeed: 5
+  speed: 0
 --- !u!1 &4743390076326792228
 GameObject:
   m_ObjectHideFlags: 0
