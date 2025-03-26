@@ -23,20 +23,15 @@ public class DetectCollision : NetworkBehaviour
 
             if (kartSpeed > otherKartSpeed)
             {
-                //Debug.LogError("a");
-
                 CheckAndRemoveObject(otherKart, kartSpeed);
             }
             else if (otherKartSpeed > kartSpeed)
             {
-                //Debug.LogError("b");
 
                 CheckAndRemoveObject(kart, otherKartSpeed);
             }
             else
             {
-                //Debug.LogError("c");
-
                 // Quito vida a los dos por igual
                 CheckAndRemoveObject(kart, otherKartSpeed);
                 CheckAndRemoveObject(otherKart, kartSpeed);
@@ -46,21 +41,35 @@ public class DetectCollision : NetworkBehaviour
         {
             kart.isGrounded = true;
         }
+        else if(collision.gameObject.CompareTag("Object"))
+        {
+            BasicObject basicObject = collision.gameObject.GetComponentInChildren<BasicObject>();
+            if(IsOwner)
+            {
+                CheckCollisionWithObjectServerRpc(kart.NetworkObjectId, basicObject.NetworkObjectId);
+            }
+        }
+    }
+
+    [ServerRpc]
+    private void CheckCollisionWithObjectServerRpc(ulong kartId, ulong objectId)
+    {
+        ObjectSpawner spawner = FindAnyObjectByType<ObjectSpawner>();
+        BasicObject basicObject = spawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
+        if(basicObject && basicObject.owner != kartId)
+        {
+            if(basicObject is GreenShell)
+            {
+                NotifyServerAboutChangeServerRpc(kart.NetworkObjectId, (basicObject as GreenShell).damageOutput);
+                spawner.DespawnObjectServerRpc(basicObject);
+            }
+        }
     }
 
     private void CheckAndRemoveObject(KartController kartController, float speed)
     {
         if (IsOwner)
         {
-            //Debug.LogError("d");
-            /*kartController.health -= damage;
-            Debug.LogWarning("La nueva vida es: " + kartController.health + ". El id es: " + kartController.NetworkObjectId);
-            if (kartController.health <= 0)
-            {
-                kartController.gameObject.SetActive(false);
-            }
-            NotifyHealthChangedClientRpc(damage, kartController.NetworkObjectId);*/
-
             var damage = speed * BasicPlayer.damageMultiplier;
             NotifyServerAboutChangeServerRpc(kartController.NetworkObjectId, damage);
         }
@@ -69,13 +78,14 @@ public class DetectCollision : NetworkBehaviour
     [ClientRpc]
     private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ClientRpcParams clientRpcParams = default)
     {
-        //Debug.LogError("E");
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         kart.health -= damage;
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
+        
+        // TODO: No hacer desaparecer, sino darlo como Game Over
         if (kart.health <= 0)
         {
-            Destroy(kart.gameObject);
+            kart.GetComponentInParent<NetworkObject>().Despawn(true);
         }
 
     }
@@ -83,7 +93,6 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ServerRpcParams rpcParams = default)
     {
-        //Debug.LogError("G");
         PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
 
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);

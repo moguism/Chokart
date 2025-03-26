@@ -286,16 +286,30 @@ public class KartController : BasicPlayer
 
         if(Input.GetButtonDown("Fire3"))
         {
-            //print("owo");
             if (currentObject != "")
             {
-                //print("uwu");
-                GameObject.Find("ObjectSpawner").GetComponentInChildren<ObjectSpawner>().SpawnObject(currentObject, currentPosition, this);
+                SpawnObject();
                 currentObject = "";
             }
         }
 
         InformServerKartStatusServerRpc(currentPosition);
+    }
+
+    private void SpawnObject()
+    {
+        print("Spawneando...");
+
+        if (IsOwner)
+        {
+            SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
+        }
+    }
+
+    [ServerRpc]
+    private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
+    {
+        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)

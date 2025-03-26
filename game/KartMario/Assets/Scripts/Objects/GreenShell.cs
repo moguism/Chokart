@@ -1,37 +1,41 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class GreenShell : BasicObject
 {
     public float damageOutput = 10;
-    public float targetTime = 60;
+    public float targetTime;
     public Vector3 direction;
     public GameObject parent;
     public float speed = 10;
 
     private void Update()
     {
-        targetTime -= Time.deltaTime;
-        if(targetTime <= 0.0f)
+        if (direction != null)
         {
-            Destroy(parent);
+            targetTime -= Time.deltaTime;
+            //print("Queda: " + targetTime);
+            if (targetTime <= 0.0f)
+            {
+                if (IsOwner)
+                {
+                    DespawnOnTimeServerRpc(NetworkObjectId);
+                }
+            }
         }
+    }
+
+    [ServerRpc]
+    private void DespawnOnTimeServerRpc(ulong id)
+    {
+        FindAnyObjectByType<ObjectSpawner>().DespawnObjectServerRpc(id);
     }
 
     private void FixedUpdate()
     {
         if (direction != null)
         {
-            Vector3 moveDirection = direction.normalized;
-            parent.transform.Translate(speed * Time.deltaTime * moveDirection);
-        }
-    }
-
-    protected new void DoObjectConsequences(KartController kart)
-    {
-        base.DoObjectConsequences(kart);
-        if (IsOwner)
-        {
-            NotifyServerAboutChangeServerRpc(kart.NetworkObjectId, damageOutput);
+            parent.transform.Translate(speed * Time.deltaTime * direction.normalized);
         }
     }
 
