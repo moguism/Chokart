@@ -21,7 +21,7 @@ public class KartController : BasicPlayer
     public List<ParticleSystem> primaryParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
 
-    float speed, currentSpeed;
+    public float speed, currentSpeed;
     float rotate, currentRotate;
     int driftDirection;
     float driftPower;
