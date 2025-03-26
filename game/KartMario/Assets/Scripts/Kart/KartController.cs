@@ -70,6 +70,9 @@ public class KartController : BasicPlayer
     public TMP_Text positionText;
     public Vector3 currentPosition;
 
+    // Objetos
+    public string currentObject;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -280,6 +283,17 @@ public class KartController : BasicPlayer
         currentPosition = transform.position;
 
         //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+
+        if(Input.GetButtonDown("Fire3"))
+        {
+            //print("owo");
+            if (currentObject != "")
+            {
+                //print("uwu");
+                GameObject.Find("ObjectSpawner").GetComponentInChildren<ObjectSpawner>().SpawnObject(currentObject, currentPosition, this);
+                currentObject = "";
+            }
+        }
 
         InformServerKartStatusServerRpc(currentPosition);
     }
