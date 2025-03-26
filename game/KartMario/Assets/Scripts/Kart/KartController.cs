@@ -70,6 +70,9 @@ public class KartController : BasicPlayer
     public TMP_Text positionText;
     public Vector3 currentPosition;
 
+    // Objetos
+    public string currentObject;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -281,7 +284,32 @@ public class KartController : BasicPlayer
 
         //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
 
+        if(Input.GetButtonDown("Fire3"))
+        {
+            if (currentObject != "")
+            {
+                SpawnObject();
+                currentObject = "";
+            }
+        }
+
         InformServerKartStatusServerRpc(currentPosition);
+    }
+
+    private void SpawnObject()
+    {
+        print("Spawneando...");
+
+        if (IsOwner)
+        {
+            SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
+        }
+    }
+
+    [ServerRpc]
+    private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
+    {
+        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)

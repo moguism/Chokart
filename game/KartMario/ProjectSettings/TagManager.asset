@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Ground
   - Kart
+  - Object
   layers:
   - Default
   - TransparentFX
