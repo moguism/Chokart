@@ -12,7 +12,7 @@ public class GameStarter : MonoBehaviour
 
     async void Start()
     {
-        if(Singleton.Instance != null && Singleton.Instance.isHost)
+        if(WebsocketSingleton.Instance != null && WebsocketSingleton.Instance.isHost)
         {
             GetComponentInParent<NetworkManager>().StartHost();
             await CustomSerializer.Serialize(dict, true);
