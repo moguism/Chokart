@@ -9,7 +9,7 @@ public static class CustomSerializer
         var json = JsonConvert.SerializeObject(dict);
         if(send)
         {
-            await Singleton.Instance.webSocket.SendText(json);
+            await WebsocketSingleton.Instance.webSocket.SendText(json);
         }
         return json;
     }

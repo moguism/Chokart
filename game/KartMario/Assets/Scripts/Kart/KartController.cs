@@ -58,8 +58,6 @@ public class KartController : BasicPlayer
     public bool jumping = false;
     public bool isGrounded = true;
 
-    public bool canMove = true;
-
     // Para las posiciones
     public int totalLaps = 0;
     public int position = 0;
@@ -73,6 +71,9 @@ public class KartController : BasicPlayer
     // Objetos
     public string currentObject;
 
+    // UI
+    public TMP_Text healthText;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -82,6 +83,11 @@ public class KartController : BasicPlayer
             camera.LookAt = gameObject.transform;
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
+
+            Speedometer speedometer = FindFirstObjectByType<Speedometer>();
+            speedometer.kart = this;
+
+            healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
         }
     }
 
@@ -175,11 +181,6 @@ public class KartController : BasicPlayer
             return;
         }
 
-        if (!canMove)
-        {
-            return;
-        }
-
         if (isMobile)
         {
             float gyroGravityX = Input.gyro.gravity.x;
@@ -208,7 +209,7 @@ public class KartController : BasicPlayer
         }
 
         // Para girar el modelo a la izquierda o la derecha
-        if (horizontalInput != 0)
+        if (horizontalInput != 0 && speed != 0)
         {
             int dir = horizontalInput > 0 ? 1 : -1;
             float amount = Mathf.Abs(horizontalInput);
@@ -237,7 +238,6 @@ public class KartController : BasicPlayer
 
             if (!isMobile)
             {
-
                 kartModel.parent.DOComplete();
                 kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
             }
@@ -325,11 +325,6 @@ public class KartController : BasicPlayer
             return;
         }
 
-        if (!canMove)
-        {
-            return;
-        }
-
         // Aceleración, gravedad y rotación, respectivamente
         if (!drifting)
             sphere.AddForce(-kartModel.transform.right * currentSpeed, ForceMode.Acceleration);
@@ -358,7 +353,7 @@ public class KartController : BasicPlayer
 
         if (driftMode > 0)
         {
-            DOVirtual.Float(currentSpeed * 3, currentSpeed, .3f * driftMode, Speed); // Para aumentar la velocidad
+            DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
             DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
             kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
             kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
