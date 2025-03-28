@@ -1,6 +1,6 @@
 # **TÍTULO DEL PROYECTO Y AUTORES**
 
-Mario Kart Battle Royale (nombre aún por determinar), desarrollado por **Rocío Gonfaus Luengo**, **María Rosales Román** y **Mauricio Rosso Aboy.**
+Mario Kart Battle Royale (nombre aún por determinar), desarrollado por **María Rosales Román** y **Mauricio Rosso Aboy.**
 
 # **TEMÁTICA**
 
