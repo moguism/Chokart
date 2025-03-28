@@ -4,10 +4,10 @@ using UnityEngine;
 public class ProjectInstaller : MonoInstaller
 {
     [SerializeField]
-    private WebsocketSingleton singleton;
+    private WebsocketSingleton websocketSingleton;
 
     public override void InstallBindings()
     {
-        Container.BindInstance(singleton);
+        Container.BindInstance(websocketSingleton);
     }
 }
