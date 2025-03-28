@@ -42,4 +42,4 @@
 ### Semana de preparativos (24/03 - 30/03)
     Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
     Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio. María busca documentación para hacer la degradación del coche.
-    Miércoles --> Mauricio hace el sistema de objetos en función de la posición y el choque con otros coches.
+    Miércoles --> Mauricio hace el sistema de objetos en función de la posición y el choque con otros coches. María termina de implementar el velocímetro y el cronómetro.
