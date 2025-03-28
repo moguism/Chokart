@@ -71,6 +71,9 @@ public class KartController : BasicPlayer
     // Objetos
     public string currentObject;
 
+    // UI
+    public TMP_Text healthText;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -80,6 +83,11 @@ public class KartController : BasicPlayer
             camera.LookAt = gameObject.transform;
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
+
+            Speedometer speedometer = FindFirstObjectByType<Speedometer>();
+            speedometer.kart = this;
+
+            healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
         }
     }
 
