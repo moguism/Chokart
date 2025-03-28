@@ -1,7 +1,10 @@
 ﻿using Cinemachine;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -18,7 +21,7 @@ public class KartController : BasicPlayer
     public List<ParticleSystem> primaryParticles = new List<ParticleSystem>();
     public List<ParticleSystem> secondaryParticles = new List<ParticleSystem>();
 
-    float speed, currentSpeed;
+    public float speed, currentSpeed;
     float rotate, currentRotate;
     int driftDirection;
     float driftPower;
@@ -57,18 +60,43 @@ public class KartController : BasicPlayer
 
     public bool canMove = true;
 
+    // Para las posiciones
+    public int totalLaps = 0;
+    public int position = 0;
+    public bool passedThroughFinishLine = false;
+    public List<MapTrigger> triggers = new List<MapTrigger>();
+    public int lastTriggerIndex;
+    public float distanceToNextTrigger;
+    public TMP_Text positionText;
+    public Vector3 currentPosition;
+
+    // Objetos
+    public string currentObject;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
-            CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>(); ;
+            CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
             camera.Follow = gameObject.transform;
             camera.LookAt = gameObject.transform;
+
+            positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
         }
     }
 
     void Start()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        InformServerKartCreatedServerRpc();
+
+        var positionManager = GameObject.Find("Triggers");
+        positionManager.GetComponent<PositionManager>().karts.Add(this);
+
         isMobile = Application.isMobilePlatform;
         if (isMobile)
         {
@@ -77,7 +105,7 @@ public class KartController : BasicPlayer
         }
         else
         {
-            Destroy(GameObject.Find("Canvas"));
+            Destroy(GameObject.Find("Buttons"));
         }
 
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
@@ -98,6 +126,40 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
+
+        // cronometro en marcha
+        Chronometer.instance.startTimer();
+
+    }
+
+
+    // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
+    [ServerRpc]
+    void InformServerKartCreatedServerRpc(ServerRpcParams rpcParams = default)
+    {
+        // El servidor agrega el kart a la lista
+        print("Holaaaa");
+        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        if (kart == null)
+        {
+            print("Agregando");
+            positionManager.karts.Add(this);
+        }
+    }
+
+    [ServerRpc]
+    void InformServerKartStatusServerRpc(Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
+    {
+        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        if (kart != null)
+        {
+            print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
+            kart.currentPosition = currentPositionToUpdate;
+        }
     }
 
     void Update()
@@ -108,12 +170,12 @@ public class KartController : BasicPlayer
             Time.timeScale = time;
         }*/
 
-        if(!IsOwner)
+        if (!IsOwner)
         {
             return;
         }
 
-        if(!canMove)
+        if (!canMove)
         {
             return;
         }
@@ -132,11 +194,11 @@ public class KartController : BasicPlayer
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || Input.GetButton("Fire1") || Input.GetKey(KeyCode.W))
+        if (direction == 1 || Input.GetButton("Fire1"))
         {
             speed = acceleration;
         }
-        else if (direction == -1 || Input.GetButton("Fire2") || Input.GetKey(KeyCode.S))
+        else if (direction == -1 || Input.GetButton("Fire2"))
         {
             speed = -acceleration;
         }
@@ -222,6 +284,36 @@ public class KartController : BasicPlayer
 
         steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
 
+        currentPosition = transform.position;
+
+        //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            if (currentObject != "")
+            {
+                SpawnObject();
+                currentObject = "";
+            }
+        }
+
+        InformServerKartStatusServerRpc(currentPosition);
+    }
+
+    private void SpawnObject()
+    {
+        print("Spawneando...");
+
+        if (IsOwner)
+        {
+            SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
+        }
+    }
+
+    [ServerRpc]
+    private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
+    {
+        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
@@ -257,6 +349,7 @@ public class KartController : BasicPlayer
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
+
     }
 
     public void Boost()

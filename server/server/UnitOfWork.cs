@@ -1,6 +1,4 @@
-﻿using server.Repositories;
-
-namespace server.Repositories;
+﻿namespace server.Repositories;
 
 public class UnitOfWork
 {

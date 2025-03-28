@@ -1,8 +1,12 @@
 ﻿
+using Microsoft.IdentityModel.Tokens;
 using server.Models.Entities;
+using server.Models.Mappers;
 using server.Repositories;
+using server.Services;
 using server.Sockets;
 using server.Sockets.Game;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace server
@@ -15,9 +19,13 @@ namespace server
 
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<UnitOfWork>();
+            builder.Services.AddScoped<UserMapper>();
+            builder.Services.AddScoped<UserService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();
             builder.Services.AddSingleton<GameNetwork>();
+
+            builder.Services.AddTransient<PreAuthMiddleware>();
 
             // Add services to the container.
 
@@ -26,6 +34,21 @@ namespace server
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
+
+            // CONFIGURANDO JWT
+            builder.Services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    string key = Environment.GetEnvironmentVariable("JwtKey");
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+
+                        // INDICAMOS LA CLAVE
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+                    };
+                });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -53,10 +76,11 @@ namespace server
             }
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            
             app.UseWebSockets();
+            app.UseMiddleware<PreAuthMiddleware>();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
@@ -79,8 +103,8 @@ namespace server
             // Si no existe la base de datos, la creamos y ejecutamos el seeder
             if (dbContext.Database.EnsureCreated())
             {
-                //Seeder seeder = new Seeder(dbContext);
-                //await seeder.SeedAsync();
+                Seeder seeder = new Seeder(dbContext);
+                await seeder.SeedAsync();
             }
 
             // Por si se va la luz 😎
