@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -30,6 +31,13 @@ public class Speedometer : MonoBehaviour
 
     private void Update()
     {
+        print("velosidad : " + speed);
+        // cuando va marcha atras
+        if (speed < 0)
+        {
+            speed = -speed;
+        }
+
         if (kart == null) return;
 
         //la aguja gira suavemente

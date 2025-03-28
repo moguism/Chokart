@@ -1,3 +1,4 @@
+using Injecta;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -22,9 +23,13 @@ public class AuthManager : MonoBehaviour
     public GameObject loginPanel;
     public GameObject registerPanel;
 
+    [Inject]
+    private Singleton Singleton { get; set; }
 
     void Start()
     {
+        Debug.Log(Singleton);
+
         instance = this;
 
         // Intentar cargar el token guardado
@@ -173,7 +178,7 @@ public class AuthManager : MonoBehaviour
     // Pereza las corrutinas tu xD
     private IEnumerator ConnectToSocketCoroutine(string token)
     {
-        Task connectTask = Singleton.Instance.ConnectToSocket(token);
+        Task connectTask = Singleton.ConnectToSocket(token);
         yield return new WaitUntil(() => connectTask.IsCompleted);
     }
 
