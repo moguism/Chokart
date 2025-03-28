@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "1d8b49b3fee41c09a98141f1f1a5e4db47e14229"
     },
+    "com.josago97.injecta": {
+      "version": "https://github.com/josago97/Injecta.git?path=/Assets/Injecta",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "35d647ddf77fb4cc57991715666432c8baf65eec"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
