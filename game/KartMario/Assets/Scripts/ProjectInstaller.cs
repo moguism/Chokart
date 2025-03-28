@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectInstaller : MonoInstaller
 {
     [SerializeField]
-    private Singleton singleton;
+    private WebsocketSingleton singleton;
 
     public override void InstallBindings()
     {
