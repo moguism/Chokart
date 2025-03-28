@@ -1513,7 +1513,7 @@ GameObject:
   - component: {fileID: 495166279}
   - component: {fileID: 495166280}
   m_Layer: 0
-  m_Name: NetworkingManager
+  m_Name: AuthManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1554,6 +1554,7 @@ MonoBehaviour:
   rememberMeToggle: {fileID: 211482030}
   loginPanel: {fileID: 1936772454}
   registerPanel: {fileID: 428402454}
+  websocketSingleton: {fileID: 0}
 --- !u!1 &523658474
 GameObject:
   m_ObjectHideFlags: 0
