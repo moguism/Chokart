@@ -29824,7 +29824,8 @@ MonoBehaviour:
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
   healthText: {fileID: 0}
-  disableAI: 1
+  enableAI: 0
+  ai: {fileID: 1905256064562825202}
 --- !u!114 &3255239343157649172
 MonoBehaviour:
   m_ObjectHideFlags: 0

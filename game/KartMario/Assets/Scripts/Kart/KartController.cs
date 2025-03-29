@@ -67,6 +67,7 @@ public class KartController : BasicPlayer
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
+    private PositionManager positionManager;
 
     // Objetos
     public string currentObject;
@@ -74,7 +75,9 @@ public class KartController : BasicPlayer
     // UI
     public TMP_Text healthText;
 
+    // AI
     public bool enableAI = false;
+    public KartAI ai;
 
     public override void OnNetworkSpawn()
     {
@@ -82,7 +85,7 @@ public class KartController : BasicPlayer
         {
             if(enableAI)
             {
-                GetComponentInParent<KartAI>().enabled = true;
+                ai.enabled = true;
                 return;
             }
 
@@ -97,6 +100,8 @@ public class KartController : BasicPlayer
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
 
+            // cronometro en marcha
+            FindFirstObjectByType<Chronometer>().StartTimer();
         }
     }
 
@@ -107,7 +112,7 @@ public class KartController : BasicPlayer
             return;
         }
 
-        InformServerKartCreatedServerRpc();
+        InformServerKartCreatedServerRpc(NetworkObjectId);
 
         var positionManager = GameObject.Find("Triggers");
         positionManager.GetComponent<PositionManager>().karts.Add(this);
@@ -141,21 +146,17 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
-
-        // cronometro en marcha
-        FindFirstObjectByType<Chronometer>().StartTimer();
     }
 
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
-    void InformServerKartCreatedServerRpc(ServerRpcParams rpcParams = default)
+    void InformServerKartCreatedServerRpc(ulong kartId, ServerRpcParams rpcParams = default)
     {
         // El servidor agrega el kart a la lista
-        print("Holaaaa");
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
 
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart == null)
         {
             print("Agregando");
@@ -164,11 +165,9 @@ public class KartController : BasicPlayer
     }
 
     [ServerRpc]
-    void InformServerKartStatusServerRpc(Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
+    void InformServerKartStatusServerRpc(ulong kartId, Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
     {
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
             print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
@@ -201,6 +200,13 @@ public class KartController : BasicPlayer
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
+        currentPosition = transform.position;
+
+        if (enableAI)
+        {
+            InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
+            return;
+        }
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
         if (direction == 1 || Input.GetButton("Fire1"))
@@ -291,9 +297,6 @@ public class KartController : BasicPlayer
         backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
 
         steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
-
-        currentPosition = transform.position;
-
         //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
 
         if (Input.GetButtonDown("Fire3"))
@@ -305,7 +308,7 @@ public class KartController : BasicPlayer
             }
         }
 
-        InformServerKartStatusServerRpc(currentPosition);
+        InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
     }
 
     private void SpawnObject()

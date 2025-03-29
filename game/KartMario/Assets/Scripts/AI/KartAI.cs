@@ -11,7 +11,15 @@ public class KartAI : MonoBehaviour
     [SerializeField]
     private SphereCollider sphereCollider;
 
+    /*[SerializeField]
+    private KartController kart;*/
+
     public float speed = 2000;
+
+    private void Start()
+    {
+        destination = FindFirstObjectByType<FinishLine>().transform;
+    }
 
     private void Update()
     {

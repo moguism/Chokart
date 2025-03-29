@@ -26,7 +26,7 @@ public class Speedometer : MonoBehaviour
 
     private void Update()
     {
-        print("velosidad : " + speed);
+        //print("velosidad : " + speed);
         // cuando va marcha atras
         if (speed < 0)
         {
