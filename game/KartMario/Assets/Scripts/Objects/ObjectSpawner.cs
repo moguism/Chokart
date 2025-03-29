@@ -58,7 +58,8 @@ public class ObjectSpawner : MonoBehaviour
             .Select(o => o.objectName)
             .ToList();
 
-        return availableObjects[_random.Next(0, availableObjects.Count)];
+        int index = _random.Next(0, availableObjects.Count);
+        return availableObjects[index];
     }
 
     public void SpawnObjectServerRpc(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, float ownerId, ServerRpcParams rpcParams = default)

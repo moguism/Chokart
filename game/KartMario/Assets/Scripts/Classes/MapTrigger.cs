@@ -74,12 +74,7 @@ public class MapTrigger : NetworkBehaviour
     {
         if (kart == null) return;
 
-        int nextIndex = 0;
-        if (kart.passedThroughFinishLine)
-        {
-            nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
-        }
-        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+        MapTrigger nextTrigger = GetNextTrigger(kart);
 
         float distance = Vector3.Distance(kart.currentPosition, nextTrigger.transform.position);
         kart.distanceToNextTrigger = distance;
@@ -91,6 +86,25 @@ public class MapTrigger : NetworkBehaviour
         {
             NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
         }
+    }
+
+    private MapTrigger GetNextTrigger(KartController kart)
+    {
+        int nextIndex = 0;
+        if (kart.passedThroughFinishLine)
+        {
+            nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
+        }
+        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+
+        var ai = kart.GetComponentInParent<KartAI>();
+        print(ai);
+        if (ai != null)
+        {
+            ai.destination = nextTrigger.transform;
+        }
+
+        return nextTrigger;
     }
 
     [ServerRpc]

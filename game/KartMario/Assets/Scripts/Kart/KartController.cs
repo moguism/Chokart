@@ -74,10 +74,18 @@ public class KartController : BasicPlayer
     // UI
     public TMP_Text healthText;
 
+    public bool enableAI = false;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
+            if(enableAI)
+            {
+                GetComponentInParent<KartAI>().enabled = true;
+                return;
+            }
+
             CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
             camera.Follow = gameObject.transform;
             camera.LookAt = gameObject.transform;
@@ -88,6 +96,7 @@ public class KartController : BasicPlayer
             speedometer.kart = this;
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
+
         }
     }
 
@@ -134,8 +143,7 @@ public class KartController : BasicPlayer
         }
 
         // cronometro en marcha
-        Chronometer.instance.startTimer();
-
+        FindFirstObjectByType<Chronometer>().StartTimer();
     }
 
 

@@ -25,7 +25,7 @@ public class Chronometer : MonoBehaviour
         timerOn = false;
     }
 
-    public void startTimer()
+    public void StartTimer()
     {
         timerOn = true;
         timePass = 0f;
