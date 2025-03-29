@@ -80,7 +80,12 @@ public class DetectCollision : NetworkBehaviour
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         kart.health -= damage;
-        kart.healthText.text = "Salud: \n" + kart.health;
+
+        if (kart.healthText != null)
+        {
+            kart.healthText.text = "Salud: \n" + kart.health;
+        }
+
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
         
         // TODO: No hacer desaparecer, sino darlo como Game Over
