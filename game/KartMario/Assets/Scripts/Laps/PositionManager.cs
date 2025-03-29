@@ -87,7 +87,7 @@ public class PositionManager : NetworkBehaviour
             kart.positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
         }
 
-        if (kart.totalLaps >= 1)
+        if (kart.totalLaps >= 1 && !kart.enableAI)
         {
             kart.positionText.text = newPosition.ToString();
         }

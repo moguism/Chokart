@@ -29814,7 +29814,6 @@ MonoBehaviour:
   direction: 0
   jumping: 0
   isGrounded: 0
-  canMove: 1
   totalLaps: 0
   position: 0
   passedThroughFinishLine: 0
@@ -29824,6 +29823,9 @@ MonoBehaviour:
   positionText: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
+  healthText: {fileID: 0}
+  enableAI: 0
+  ai: {fileID: 1905256064562825202}
 --- !u!114 &3255239343157649172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59467,7 +59469,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9193125234719358039}
   - component: {fileID: 77989067485063235}
-  - component: {fileID: 5685611588485392785}
+  - component: {fileID: 1905256064562825202}
+  - component: {fileID: 3073240497499352717}
   m_Layer: 0
   m_Name: Player
   m_TagString: Kart
@@ -59517,7 +59520,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &5685611588485392785
+--- !u!114 &1905256064562825202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59526,10 +59529,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 7468548331436223440}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9e6593e7914c304a93acfed507ec7a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 0}
+  destination: {fileID: 0}
+  agent: {fileID: 3073240497499352717}
+  sphereCollider: {fileID: 5157537988344369135}
+  speed: 2000
+--- !u!195 &3073240497499352717
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468548331436223440}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7701443917528791362
 GameObject:
   m_ObjectHideFlags: 0
