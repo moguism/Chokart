@@ -47,3 +47,4 @@
     Miércoles --> Mauricio hace el sistema de objetos en función de la posición y el choque con otros coches. María termina de implementar el velocímetro y el cronómetro.
     Jueves --> Turoría de seguimiento y primera llamada con el animador.
     Viernes --> Mauricio mejora el turbo, el movimiento del coche y varios códigos en general, al igual que empieza con la IA de los contrincantes.
+    Sábado --> Mauricio continua con la IA de los bots, sin mucho resultado.
