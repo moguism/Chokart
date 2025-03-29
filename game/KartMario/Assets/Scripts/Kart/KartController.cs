@@ -304,14 +304,13 @@ public class KartController : BasicPlayer
             if (currentObject != "")
             {
                 SpawnObject();
-                currentObject = "";
             }
         }
 
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
     }
 
-    private void SpawnObject()
+    public void SpawnObject()
     {
         print("Spawneando...");
 
@@ -319,6 +318,8 @@ public class KartController : BasicPlayer
         {
             SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
         }
+
+        currentObject = "";
     }
 
     [ServerRpc]

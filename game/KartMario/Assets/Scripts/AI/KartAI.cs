@@ -11,6 +11,11 @@ public class KartAI : MonoBehaviour
     [SerializeField]
     private SphereCollider sphereCollider;
 
+    [SerializeField]
+    public KartController parent;
+
+    public KartController enemyKart;
+
     /*[SerializeField]
     private KartController kart;*/
 
@@ -21,9 +26,21 @@ public class KartAI : MonoBehaviour
         destination = FindFirstObjectByType<FinishLine>().transform;
     }
 
+    // Básicamente el comportamiento es que en cuanto algún coche entra en su rango de visión, le persigue hasta que acaba con él, usando objetos también
+    // Una vez acaba con él, va hacia el siguiente trigger del mapa
     private void Update()
     {
+        if (enemyKart != null)
+        {
+            if (parent.currentObject != "")
+            {
+                parent.SpawnObject();
+            }
+
+            destination = enemyKart.transform;
+        }
+
         agent.destination = destination.position;
-        sphereCollider.transform.position = agent.transform.position;
+        parent.sphere.transform.position = agent.transform.position;
     }
 }
