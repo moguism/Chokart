@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -72,7 +74,11 @@ public class MapTrigger : NetworkBehaviour
 
     public void CalculateDistanceToNextTrigger(KartController kart)
     {
-        if (kart == null) return;
+        if (kart == null)
+        {
+
+            return;
+        }
 
         MapTrigger nextTrigger = GetNextTrigger(kart);
 
@@ -96,12 +102,11 @@ public class MapTrigger : NetworkBehaviour
             nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
         }
         MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+        print(nextTrigger);
 
-        var ai = kart.GetComponentInParent<KartAI>();
-        print(ai);
-        if (ai != null)
+        if (kart.enableAI && kart.lastTriggerIndex != nextIndex)
         {
-            ai.destination = nextTrigger.transform;
+            kart.ai.destination = nextTrigger.transform;
         }
 
         return nextTrigger;

@@ -46,7 +46,7 @@ public class Chronometer : MonoBehaviour
             timeChronometer = TimeSpan.FromSeconds(timePass);
             timerText.text = string.Format("{0:D2}:{1:D2}:{2:D3}", timeChronometer.Minutes, timeChronometer.Seconds, timeChronometer.Milliseconds);
 
-            Debug.Log("segundos cronometro: "+ timeChronometer.Seconds);
+            //Debug.Log("segundos cronometro: "+ timeChronometer.Seconds);
 
 
             yield return null;
