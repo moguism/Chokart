@@ -1,5 +1,6 @@
 using NativeWebSocket;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class WebsocketSingleton : MonoBehaviour
 
     // Objetos relevantes
     public GameObject managerObject;
-    public GameObject networkManager;
+    public GameObject gameStarter;
 
     public static int kartModelIndex = -1;
 
@@ -90,11 +91,11 @@ public class WebsocketSingleton : MonoBehaviour
         {
             case MessageType.HostGame:
                 isHost = true;
-                FindObjectByName("MANAGER", managerObject);
+                managerObject = FindObjectByName("MANAGER", managerObject);
                 managerObject.GetComponentInChildren<Lobbies>().HostingComplete(dict["participants"].ToString());
                 break;
             case MessageType.PlayerJoined:
-                FindObjectByName("MANAGER", managerObject);
+                managerObject = FindObjectByName("MANAGER", managerObject);
                 managerObject.GetComponentInChildren<Lobbies>().SetObjectsActive(true, false);
                 managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
                 break;
@@ -114,7 +115,7 @@ public class WebsocketSingleton : MonoBehaviour
                 break;
             case MessageType.PlayerDisconnected:
                 // Si aún estoy en la lobbie simplemente recargo la lista de jugadores
-                FindObjectByName("MANAGER", managerObject);
+                managerObject = FindObjectByName("MANAGER", managerObject);
                 if (managerObject != null)
                 {
                     managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
@@ -122,17 +123,19 @@ public class WebsocketSingleton : MonoBehaviour
                 break;
             case MessageType.GameStarted:
                 await SceneManager.LoadSceneAsync(2); // Quizás no hace falta hacerlo asíncrono, pero lo hago por si las moscas para que carguen todos los objetos
-                FindObjectByName("NetworkManager", networkManager);
-                networkManager.GetComponent<GameStarter>().StartClient(dict["ip"].ToString());
+                gameStarter = FindObjectByName("GameStarter", gameStarter);
+                gameStarter.GetComponent<GameStarter>().StartClient(dict["ip"].ToString());
                 break;
         }
     }
 
-    private void FindObjectByName(string name, GameObject destination)
+    private GameObject FindObjectByName(string name, GameObject destination)
     {
         if(destination == null)
         {
-            destination = GameObject.Find(name);
+            return GameObject.Find(name);
         }
+
+        return destination;
     }
 }

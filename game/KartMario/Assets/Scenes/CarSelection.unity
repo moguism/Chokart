@@ -1965,7 +1965,7 @@ MonoBehaviour:
     speed: 200
   speedText: {fileID: 2129844028}
   kartBase: {fileID: 450116724}
-  testing: 1
+  testing: 0
 --- !u!4 &1786565791
 Transform:
   m_ObjectHideFlags: 0
