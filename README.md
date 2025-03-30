@@ -1,5 +1,5 @@
 # DOCUMENTACIÓN
-- [Anteproyecto](Anteproyecto.md)
+- [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 
 # BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
