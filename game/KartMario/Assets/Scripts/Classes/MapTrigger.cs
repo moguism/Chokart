@@ -1,6 +1,4 @@
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -101,12 +99,16 @@ public class MapTrigger : NetworkBehaviour
         {
             nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
         }
-        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
-        print(nextTrigger);
 
-        if (kart.enableAI && kart.lastTriggerIndex != nextIndex)
+        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+
+        if (kart.enableAI)
         {
-            kart.ai.destination = nextTrigger.transform;
+            print(nextTrigger);
+            if (kart.lastTriggerIndex != nextIndex)
+            {
+                kart.ai.destination = nextTrigger.transform;
+            }
         }
 
         return nextTrigger;
