@@ -7,29 +7,16 @@ using UnityEngine.SceneManagement;
 
 public class WebsocketSingleton : MonoBehaviour
 {
-    public static WebsocketSingleton Instance { get; private set; }
-
     public WebSocket webSocket;
-    public bool delete = true;
 
+    public bool delete = true;
     public bool isHost = false;
 
     // Objetos relevantes
     public GameObject managerObject;
     public GameObject networkManager;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Para que no se destruya
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public static int kartModelIndex = -1;
 
     void Update()
     {
@@ -55,7 +42,7 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
         };
 
         webSocket.OnError += (e) =>
@@ -123,7 +110,7 @@ public class WebsocketSingleton : MonoBehaviour
                 break;
             case MessageType.EndGame:
                 Debug.LogWarning("El host se ha desconectado");
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(1); // Esto habrá que cambiarlo, probablemente
                 break;
             case MessageType.PlayerDisconnected:
                 // Si aún estoy en la lobbie simplemente recargo la lista de jugadores
@@ -148,5 +135,4 @@ public class WebsocketSingleton : MonoBehaviour
             destination = GameObject.Find(name);
         }
     }
-
 }

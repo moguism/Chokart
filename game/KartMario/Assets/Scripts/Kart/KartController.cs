@@ -79,6 +79,11 @@ public class KartController : BasicPlayer
     public bool enableAI = false;
     public KartAI ai;
 
+    // Selección
+    [SerializeField]
+    private int kartIndex;
+    private GameStarter starter;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -86,6 +91,11 @@ public class KartController : BasicPlayer
             if(enableAI)
             {
                 ai.enabled = true;
+                return;
+            }
+
+            if (kartIndex != WebsocketSingleton.kartModelIndex)
+            {
                 return;
             }
 
@@ -113,6 +123,13 @@ public class KartController : BasicPlayer
         }
 
         InformServerKartCreatedServerRpc(NetworkObjectId);
+
+        // Si me han asignado un modelo que no es
+        if (kartIndex != WebsocketSingleton.kartModelIndex)
+        {
+            InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
+            return;
+        }
 
         var positionManager = GameObject.Find("Triggers");
         positionManager.GetComponent<PositionManager>().karts.Add(this);
@@ -153,9 +170,12 @@ public class KartController : BasicPlayer
     [ServerRpc]
     void InformServerKartCreatedServerRpc(ulong kartId, ServerRpcParams rpcParams = default)
     {
-        // El servidor agrega el kart a la lista
-        positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        if (positionManager == null)
+        {
+            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        }
 
+        // El servidor agrega el kart a la lista
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart == null)
         {
@@ -173,6 +193,25 @@ public class KartController : BasicPlayer
             print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
             kart.currentPosition = currentPositionToUpdate;
         }
+    }
+
+    [ServerRpc]
+    void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
+    {
+        if(starter == null)
+        {
+            starter = FindFirstObjectByType<GameStarter>();
+        }
+
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        kart.GetComponentInParent<NetworkObject>().Despawn(true);
+
+        //NetworkManager.Singleton.NetworkConfig.PlayerPrefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
+
+        GameObject prefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
+        GameObject gameObject = Instantiate(prefab, position, Quaternion.identity);
+
+        gameObject.GetComponent<NetworkObject>().SpawnWithOwnership(ownerId);
     }
 
     void Update()
@@ -291,13 +330,17 @@ public class KartController : BasicPlayer
             kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
-        // Lo mismo pero con las ruedas y el volante
-        frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
-        frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
-        backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+        // Pongo esto en un try-catch porque para testing he puesto un modelo sin nada de esto
+        try
+        {
+            // Lo mismo pero con las ruedas y el volante
+            frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
+            frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+            backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
 
-        steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
-        //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+            steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
+            //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+        } catch { }
 
         if (Input.GetButtonDown("Fire3"))
         {
@@ -367,8 +410,13 @@ public class KartController : BasicPlayer
         {
             DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
             DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
-            kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
-            kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+
+            try
+            {
+                kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
+                kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+            }
+            catch { }
         }
 
         // Una vez que ha hecho toda la pesca pone todo a sus valores por defecto
