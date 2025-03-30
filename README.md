@@ -18,6 +18,7 @@
 - **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
 - **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
+- **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -45,3 +46,7 @@
     Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
     Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio. María busca documentación para hacer la degradación del coche.
     Miércoles --> Mauricio hace el sistema de objetos en función de la posición y el choque con otros coches. María termina de implementar el velocímetro y el cronómetro.
+    Jueves --> Turoría de seguimiento y primera llamada con el animador.
+    Viernes --> Mauricio mejora el turbo, el movimiento del coche y varios códigos en general, al igual que empieza con la IA de los contrincantes.
+    Sábado --> Mauricio continua con la IA de los bots, sin mucho resultado.
+    Domingo --> Mauricio hace el menú de selección.
