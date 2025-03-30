@@ -23,13 +23,15 @@ public class GameStarter : MonoBehaviour
     [SerializeField]
     private UnityTransport unityTransport;
 
-
     [SerializeField]
     private GameObject DefaultPlayerPrefab;
-    
 
+    private CustomSerializer customSerializer;
+    
     async void Start()
     {
+        customSerializer = new CustomSerializer(websocketSingleton);
+
         print(websocketSingleton);
 
         // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
@@ -40,7 +42,7 @@ public class GameStarter : MonoBehaviour
             if (websocketSingleton.isHost)
             {
                 networkManager.StartHost();
-                await CustomSerializer.Serialize(dict, true);            
+                await customSerializer.Serialize(dict, true);            
             }
         }
         else
