@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 17322729261697841}
   - component: {fileID: 2513524855746541114}
   - component: {fileID: 6809147008044306810}
+  - component: {fileID: 8126174577184865094}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Kart
@@ -327,6 +328,27 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &8126174577184865094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654436109572107649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53746bb65e494e4da58a12b73d96eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoveDelta: 1
+  maxCollisionStrength: 50
+  YforceDamp: 0.1
+  demolutionRange: 0.5
+  impactDirManipulator: 0
+  damageFactor: 0.1
+  MeshList:
+  - {fileID: 2250711151573828472}
+  kart: {fileID: 5697130421628379105}
 --- !u!1 &1737724209657309420
 GameObject:
   m_ObjectHideFlags: 0
@@ -19819,6 +19841,7 @@ Transform:
   - {fileID: 2141479015402252911}
   - {fileID: 3123652009872604015}
   - {fileID: 2663385665217053667}
+  - {fileID: 2754756094962308082}
   m_Father: {fileID: 2481028435176070160}
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: -3.897}
 --- !u!1 &2684848596675439713
@@ -24748,7 +24771,7 @@ GameObject:
   - component: {fileID: 8830230678675524060}
   - component: {fileID: 2250711151573828472}
   - component: {fileID: 4177690252849554732}
-  - component: {fileID: 3052316508687433710}
+  - component: {fileID: 1246300241980019606}
   m_Layer: 0
   m_Name: Box001
   m_TagString: Untagged
@@ -24824,7 +24847,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3052316508687433710
+--- !u!114 &1246300241980019606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24833,11 +24856,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4234609392260825819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -29749,6 +29772,7 @@ GameObject:
   - component: {fileID: 8415650124991807546}
   - component: {fileID: 5697130421628379105}
   - component: {fileID: 3255239343157649172}
+  - component: {fileID: 7236909429488122507}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -29826,6 +29850,7 @@ MonoBehaviour:
   healthText: {fileID: 0}
   enableAI: 0
   ai: {fileID: 1905256064562825202}
+  kartIndex: 0
 --- !u!114 &3255239343157649172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29847,6 +29872,42 @@ MonoBehaviour:
   maxRotation: -45.1
   smoothSpeed: 5
   speed: 0
+--- !u!114 &7236909429488122507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736102366237070151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ca2b506d90fc4c9bfa5f068c8a62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &4743390076326792228
 GameObject:
   m_ObjectHideFlags: 0
@@ -54525,6 +54586,37 @@ Transform:
   - {fileID: 2350342456476891672}
   m_Father: {fileID: 3123652009872604015}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &7107780607713999052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2754756094962308082}
+  m_Layer: 0
+  m_Name: Smoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2754756094962308082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107780607713999052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.024040574, y: -0.706698, z: 0.024040567, w: 0.706698}
+  m_LocalPosition: {x: -0.031668283, y: 0.4649227, z: 0.024000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2837413282412538936}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7138764642333892120
 GameObject:
   m_ObjectHideFlags: 0
@@ -59600,6 +59692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   destination: {fileID: 0}
   agent: {fileID: 3073240497499352717}
   sphereCollider: {fileID: 5157537988344369135}
