@@ -19453,6 +19453,7 @@ GameObject:
   - component: {fileID: 17322729261697841}
   - component: {fileID: 2513524855746541114}
   - component: {fileID: 6809147008044306810}
+  - component: {fileID: 5431898246911114782}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Kart
@@ -19590,6 +19591,27 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &5431898246911114782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654436109572107649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53746bb65e494e4da58a12b73d96eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoveDelta: 1
+  maxCollisionStrength: 50
+  YforceDamp: 0.1
+  demolutionRange: 0.5
+  impactDirManipulator: 0
+  damageFactor: 0.1
+  MeshList:
+  - {fileID: 6746203120944533341}
+  kart: {fileID: 5697130421628379105}
 --- !u!1 &2055441535998315633
 GameObject:
   m_ObjectHideFlags: 0
@@ -68808,6 +68830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   destination: {fileID: 0}
   agent: {fileID: 8919845309904657296}
   sphereCollider: {fileID: 5157537988344369135}

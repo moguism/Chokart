@@ -91,9 +91,15 @@ public class DetectCollision : NetworkBehaviour
         // TODO: No hacer desaparecer, sino darlo como Game Over
         if (kart.health <= 0)
         {
-            kart.GetComponentInParent<NetworkObject>().Despawn(true);
+            DispawnKartServerRpc(kart.NetworkObjectId);
         }
 
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DispawnKartServerRpc(ulong kartId)
+    {
+        FindAnyObjectByType<PositionManager>().karts.FirstOrDefault(k => k.NetworkObjectId == kartId).GetComponent<NetworkObject>().Despawn(true);
     }
 
     [ServerRpc]
