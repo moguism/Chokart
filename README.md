@@ -19,6 +19,7 @@
 - **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
 - **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
+- **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -50,3 +51,5 @@
     Viernes --> Mauricio mejora el turbo, el movimiento del coche y varios códigos en general, al igual que empieza con la IA de los contrincantes.
     Sábado --> Mauricio continua con la IA de los bots, sin mucho resultado.
     Domingo --> Mauricio hace el menú de selección.
+### Primera semana oficial (31/03 - 06/04)
+    Lunes --> Mauricio hace la deformación del coche.
