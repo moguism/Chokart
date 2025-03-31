@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class KartAI : MonoBehaviour
+public class KartAI : NetworkBehaviour
 {
     public Transform destination;
 
@@ -28,8 +29,15 @@ public class KartAI : MonoBehaviour
 
     // Básicamente el comportamiento es que en cuanto algún coche entra en su rango de visión, le persigue hasta que acaba con él, usando objetos también
     // Una vez acaba con él, va hacia el siguiente trigger del mapa
-    private void Update()
+    private void LateUpdate()
     {
+        if(!IsOwner)
+        {
+            return;
+        }
+
+        parent.sphere.isKinematic = true;
+
         if (enemyKart != null)
         {
             if (parent.currentObject != "")
@@ -42,5 +50,7 @@ public class KartAI : MonoBehaviour
 
         agent.destination = destination.position;
         parent.sphere.transform.position = agent.transform.position;
+
+        parent.sphere.isKinematic = false;
     }
 }

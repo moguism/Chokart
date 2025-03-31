@@ -34,11 +34,11 @@ public class GameStarter : MonoBehaviour
 
         print(websocketSingleton);
 
-        // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
-        networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
-
-        if (websocketSingleton != null)
+        if (WebsocketSingleton.kartModelIndex != -1)
         {
+            // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
+            networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
+
             if (websocketSingleton.isHost)
             {
                 networkManager.StartHost();
@@ -47,6 +47,7 @@ public class GameStarter : MonoBehaviour
         }
         else
         {
+            return; 
             // Para testing únicamente (TODO: Borrar después)
             if(!Application.dataPath.Contains("clone"))
             {
