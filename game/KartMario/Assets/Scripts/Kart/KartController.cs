@@ -94,7 +94,7 @@ public class KartController : BasicPlayer
                 return;
             }
 
-            if (kartIndex != WebsocketSingleton.kartModelIndex)
+            if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
             {
                 return;
             }
@@ -125,7 +125,7 @@ public class KartController : BasicPlayer
         InformServerKartCreatedServerRpc(NetworkObjectId);
 
         // Si me han asignado un modelo que no es
-        if (kartIndex != WebsocketSingleton.kartModelIndex)
+        if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
         {
             InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
             return;
@@ -187,6 +187,11 @@ public class KartController : BasicPlayer
     [ServerRpc]
     void InformServerKartStatusServerRpc(ulong kartId, Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
     {
+        if(positionManager == null)
+        {
+            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        }
+
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {

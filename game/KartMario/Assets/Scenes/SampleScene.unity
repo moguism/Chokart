@@ -335,7 +335,7 @@ MonoBehaviour:
   delete: 1
   isHost: 0
   managerObject: {fileID: 0}
-  networkManager: {fileID: 0}
+  gameStarter: {fileID: 0}
 --- !u!114 &27049105
 MonoBehaviour:
   m_ObjectHideFlags: 0
