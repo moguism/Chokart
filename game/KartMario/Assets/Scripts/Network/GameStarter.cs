@@ -45,20 +45,6 @@ public class GameStarter : MonoBehaviour
                 await customSerializer.Serialize(dict, true);            
             }
         }
-        else
-        {
-            return; 
-            // Para testing únicamente (TODO: Borrar después)
-            if(!Application.dataPath.Contains("clone"))
-            {
-                networkManager.StartHost();
-                //networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(0);
-            }
-            else
-            {
-                networkManager.StartClient();
-            }
-        }
     }
 
     public void StartClient(string ip)
