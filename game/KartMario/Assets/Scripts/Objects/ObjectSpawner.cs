@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -58,7 +57,8 @@ public class ObjectSpawner : MonoBehaviour
             .Select(o => o.objectName)
             .ToList();
 
-        return availableObjects[_random.Next(0, availableObjects.Count)];
+        int index = _random.Next(0, availableObjects.Count);
+        return availableObjects[index];
     }
 
     public void SpawnObjectServerRpc(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, float ownerId, ServerRpcParams rpcParams = default)
@@ -74,8 +74,7 @@ public class ObjectSpawner : MonoBehaviour
 
         if (spawnedObject != null)
         {
-            NetworkObject networkObject = spawnedObject.GetComponent<NetworkObject>();
-            if (networkObject != null)
+            if (spawnedObject.TryGetComponent<NetworkObject>(out var networkObject))
             {
                 networkObject.Spawn(); // Para que lo vean todos los clientes
                 

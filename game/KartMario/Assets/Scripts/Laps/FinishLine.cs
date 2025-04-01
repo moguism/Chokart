@@ -35,6 +35,10 @@ public class FinishLine : MapTrigger
                 ChangeIndexAndCalculatePosition(kart);
             }
         }
+        else
+        {
+            kart.triggers = new List<MapTrigger>() { this };
+        }
     }
 
     [ServerRpc]

@@ -58,8 +58,6 @@ public class KartController : BasicPlayer
     public bool jumping = false;
     public bool isGrounded = true;
 
-    public bool canMove = true;
-
     // Para las posiciones
     public int totalLaps = 0;
     public int position = 0;
@@ -69,19 +67,51 @@ public class KartController : BasicPlayer
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
+    private PositionManager positionManager;
 
     // Objetos
     public string currentObject;
+
+    // UI
+    public TMP_Text healthText;
+
+    // AI
+    public bool enableAI = false;
+    public KartAI ai;
+
+    // Selección
+    [SerializeField]
+    private int kartIndex;
+    private GameStarter starter;
 
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
+            if(enableAI)
+            {
+                ai.enabled = true;
+                return;
+            }
+
+            if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+            {
+                return;
+            }
+
             CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
             camera.Follow = gameObject.transform;
             camera.LookAt = gameObject.transform;
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
+
+            Speedometer speedometer = FindFirstObjectByType<Speedometer>();
+            speedometer.kart = this;
+
+            healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
+
+            // cronometro en marcha
+            FindFirstObjectByType<Chronometer>().StartTimer();
         }
     }
 
@@ -92,7 +122,14 @@ public class KartController : BasicPlayer
             return;
         }
 
-        InformServerKartCreatedServerRpc();
+        InformServerKartCreatedServerRpc(NetworkObjectId);
+
+        // Si me han asignado un modelo que no es
+        if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+        {
+            InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
+            return;
+        }
 
         var positionManager = GameObject.Find("Triggers");
         positionManager.GetComponent<PositionManager>().karts.Add(this);
@@ -126,22 +163,20 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
-
-        // cronometro en marcha
-        Chronometer.instance.startTimer();
-
     }
 
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
-    void InformServerKartCreatedServerRpc(ServerRpcParams rpcParams = default)
+    void InformServerKartCreatedServerRpc(ulong kartId, ServerRpcParams rpcParams = default)
     {
-        // El servidor agrega el kart a la lista
-        print("Holaaaa");
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        if (positionManager == null)
+        {
+            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        }
 
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        // El servidor agrega el kart a la lista
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart == null)
         {
             print("Agregando");
@@ -150,16 +185,38 @@ public class KartController : BasicPlayer
     }
 
     [ServerRpc]
-    void InformServerKartStatusServerRpc(Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
+    void InformServerKartStatusServerRpc(ulong kartId, Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
     {
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        if(positionManager == null)
+        {
+            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        }
 
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
             print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
             kart.currentPosition = currentPositionToUpdate;
         }
+    }
+
+    [ServerRpc]
+    void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
+    {
+        if(starter == null)
+        {
+            starter = FindFirstObjectByType<GameStarter>();
+        }
+
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        kart.GetComponentInParent<NetworkObject>().Despawn(true);
+
+        //NetworkManager.Singleton.NetworkConfig.PlayerPrefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
+
+        GameObject prefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
+        GameObject gameObject = Instantiate(prefab, position, Quaternion.identity);
+
+        gameObject.GetComponent<NetworkObject>().SpawnWithOwnership(ownerId);
     }
 
     void Update()
@@ -171,11 +228,6 @@ public class KartController : BasicPlayer
         }*/
 
         if (!IsOwner)
-        {
-            return;
-        }
-
-        if (!canMove)
         {
             return;
         }
@@ -192,6 +244,13 @@ public class KartController : BasicPlayer
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
+        currentPosition = transform.position;
+
+        if (enableAI)
+        {
+            InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
+            return;
+        }
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
         if (direction == 1 || Input.GetButton("Fire1"))
@@ -208,7 +267,7 @@ public class KartController : BasicPlayer
         }
 
         // Para girar el modelo a la izquierda o la derecha
-        if (horizontalInput != 0)
+        if (horizontalInput != 0 && speed != 0)
         {
             int dir = horizontalInput > 0 ? 1 : -1;
             float amount = Mathf.Abs(horizontalInput);
@@ -237,7 +296,6 @@ public class KartController : BasicPlayer
 
             if (!isMobile)
             {
-
                 kartModel.parent.DOComplete();
                 kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
             }
@@ -277,30 +335,30 @@ public class KartController : BasicPlayer
             kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
-        // Lo mismo pero con las ruedas y el volante
-        frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
-        frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
-        backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+        // Pongo esto en un try-catch porque para testing he puesto un modelo sin nada de esto
+        try
+        {
+            // Lo mismo pero con las ruedas y el volante
+            frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
+            frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+            backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
 
-        steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
-
-        currentPosition = transform.position;
-
-        //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+            steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
+            //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+        } catch { }
 
         if (Input.GetButtonDown("Fire3"))
         {
             if (currentObject != "")
             {
                 SpawnObject();
-                currentObject = "";
             }
         }
 
-        InformServerKartStatusServerRpc(currentPosition);
+        InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
     }
 
-    private void SpawnObject()
+    public void SpawnObject()
     {
         print("Spawneando...");
 
@@ -308,6 +366,8 @@ public class KartController : BasicPlayer
         {
             SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
         }
+
+        currentObject = "";
     }
 
     [ServerRpc]
@@ -321,11 +381,6 @@ public class KartController : BasicPlayer
     private void FixedUpdate()
     {
         if (!IsOwner)
-        {
-            return;
-        }
-
-        if (!canMove)
         {
             return;
         }
@@ -358,10 +413,15 @@ public class KartController : BasicPlayer
 
         if (driftMode > 0)
         {
-            DOVirtual.Float(currentSpeed * 3, currentSpeed, .3f * driftMode, Speed); // Para aumentar la velocidad
+            DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
             DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
-            kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
-            kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+
+            try
+            {
+                kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
+                kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+            }
+            catch { }
         }
 
         // Una vez que ha hecho toda la pesca pone todo a sus valores por defecto

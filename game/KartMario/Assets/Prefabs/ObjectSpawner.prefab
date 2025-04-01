@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2565343979101035042}
   - component: {fileID: 1168798421078387405}
+  - component: {fileID: 6451468871130737856}
   m_Layer: 0
   m_Name: ObjectSpawner
   m_TagString: Untagged
@@ -58,6 +59,26 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &6451468871130737856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420614126294137431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5540884920468820559
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   GreenShell: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
     type: 3}
-  positionManager: {fileID: 0}
+  objectSpawnRanges:
+  - objectName: greenShell
+    minPosition: 1
+    maxPosition: 12

@@ -1,5 +1,5 @@
 # DOCUMENTACIÓN
-- [Anteproyecto](Anteproyecto.md)
+- [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 
 # BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
@@ -17,6 +17,9 @@
 - **Cálculo de posiciones:** https://www.youtube.com/watch?v=fdWjR652Fs4
 - **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
 - **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
+- **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
+- **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
+- **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -24,6 +27,7 @@
 - Para mandar objetos a través de RPCs, hay que definir campos con \[SerializableField\]
 - **IMPORTANTE (BORRAR MÁS TARDE):** Tal y como está ahora (a 23/03) las posiciones parece que las pone mal, pero es porque no hay suficientes triggers (ahora mismo hay 2) y piensa que la distancia hasta el siguiente (que es la línea de meta) es menor dando marcha atrás (obviamente) en lugar de seguir para adelante. Lo que quiero decir con esto es que las posiciones funcionan xD
 - El host es el encargado de hacer todo. ¿Spawnear un objeto? Host ¿Borrar un objeto? Host ¿Modificar objetos? Host. Por tanto los clientes invocan, con previa verificación de IsOwner, a un método ServerRPC, y este comunica a otros clientes si hace falta. Recomiendo ver tutoriales de esto porque es muy importante
+- Para la IA de los contrincantes, bajar el objeto "grass" un poco antes de darle a "Bake", y luego volverlo a subir con Ctrl + Z
 
 # DIARIO DE DESARROLLO
 ### Semana de preparativos (10/03 - 16/03)
@@ -43,3 +47,9 @@
     Lunes --> Rocío implementa el recuérdame del login, cerrar sesión y el cálculo de velocidad de los coches para el velocímetro.
     Martes --> Mauricio interconecta todo lo que está hecho hasta el momento y hace el matchmaking aleatorio. María busca documentación para hacer la degradación del coche.
     Miércoles --> Mauricio hace el sistema de objetos en función de la posición y el choque con otros coches. María termina de implementar el velocímetro y el cronómetro.
+    Jueves --> Turoría de seguimiento y primera llamada con el animador.
+    Viernes --> Mauricio mejora el turbo, el movimiento del coche y varios códigos en general, al igual que empieza con la IA de los contrincantes.
+    Sábado --> Mauricio continua con la IA de los bots, sin mucho resultado.
+    Domingo --> Mauricio hace el menú de selección.
+### Primera semana oficial (31/03 - 06/04)
+    Lunes --> Mauricio hace la deformación del coche.

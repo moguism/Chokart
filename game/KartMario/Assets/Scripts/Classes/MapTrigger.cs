@@ -72,14 +72,13 @@ public class MapTrigger : NetworkBehaviour
 
     public void CalculateDistanceToNextTrigger(KartController kart)
     {
-        if (kart == null) return;
-
-        int nextIndex = 0;
-        if (kart.passedThroughFinishLine)
+        if (kart == null)
         {
-            nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
+
+            return;
         }
-        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+
+        MapTrigger nextTrigger = GetNextTrigger(kart);
 
         float distance = Vector3.Distance(kart.currentPosition, nextTrigger.transform.position);
         kart.distanceToNextTrigger = distance;
@@ -91,6 +90,28 @@ public class MapTrigger : NetworkBehaviour
         {
             NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
         }
+    }
+
+    private MapTrigger GetNextTrigger(KartController kart)
+    {
+        int nextIndex = 0;
+        if (kart.passedThroughFinishLine)
+        {
+            nextIndex = (kart.lastTriggerIndex + 1) % finishLine.triggers.Count;
+        }
+
+        MapTrigger nextTrigger = finishLine.triggers[nextIndex];
+
+        if (kart.enableAI)
+        {
+            print(nextTrigger);
+            if (kart.lastTriggerIndex != nextIndex)
+            {
+                kart.ai.destination = nextTrigger.transform;
+            }
+        }
+
+        return nextTrigger;
     }
 
     [ServerRpc]
