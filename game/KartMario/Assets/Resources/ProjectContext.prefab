@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134fe03459edb554e8371003808d7ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singleton: {fileID: 7574927874596328143}
+  websocketSingleton: {fileID: 7574927874596328143}
 --- !u!114 &7574927874596328143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,3 +77,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delete: 1
   isHost: 0
+  managerObject: {fileID: 0}
+  networkManager: {fileID: 0}

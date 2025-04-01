@@ -22,16 +22,11 @@ public class Speedometer : MonoBehaviour
         pointer = GameObject.Find("Pointer").GetComponent<RectTransform>();
         speedText = GameObject.Find("SpeedText").GetComponent<TMP_Text>();
         speedText.text = "0 km/h";
-
-        if (kart == null)
-        {
-            kart = FindFirstObjectByType<KartController>();
-        }
     }
 
     private void Update()
     {
-        print("velosidad : " + speed);
+        //print("velosidad : " + speed);
         // cuando va marcha atras
         if (speed < 0)
         {

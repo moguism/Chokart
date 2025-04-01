@@ -1,3 +1,4 @@
+using Injecta;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,10 @@ public class Lobbies : MonoBehaviour
     public TMP_Text players;
     public GameObject buttonObject;
     public bool isHost = false;
+    private CustomSerializer customSerializer;
+
+    [Inject]
+    public WebsocketSingleton websocketSingleton;
 
     private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
     {
@@ -19,6 +24,8 @@ public class Lobbies : MonoBehaviour
 
     void Start()
     {
+        customSerializer = new CustomSerializer(websocketSingleton);
+        print(websocketSingleton);
         playerList.gameObject.SetActive(false);
     }
 
@@ -26,7 +33,7 @@ public class Lobbies : MonoBehaviour
     {
         isHost = true;
         dict["messageType"] = MessageType.HostGame;
-        await CustomSerializer.Serialize(dict, true);
+        await customSerializer.Serialize(dict, true);
     }
     
     // LA IDEA SERÍA QUE TU TE UNAS AL PRIMER JUEGO QUE ESTÉ DISPONIBLE, COMO EN EL MARIO KART
@@ -36,13 +43,13 @@ public class Lobbies : MonoBehaviour
         isHost = false;
         dict["messageType"] = MessageType.JoinGame;
         dict["host"] = "";
-        await CustomSerializer.Serialize(dict, true);
+        await customSerializer.Serialize(dict, true);
     }
 
     public async void StartGame()
     {
         dict["messageType"] = MessageType.StartGame;
-        await CustomSerializer.Serialize(dict, true);
+        await customSerializer.Serialize(dict, true);
     }
 
     // Cuando recibe mensaje del socket

@@ -1,4 +1,6 @@
+using Injecta;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -10,15 +12,39 @@ public class GameStarter : MonoBehaviour
         { "messageType", MessageType.GameStarted }
     };
 
+    public List<GameObject> PossiblePrefabs = new List<GameObject>();
+
+    [Inject]
+    public WebsocketSingleton websocketSingleton;
+
+    [SerializeField]
+    private NetworkManager networkManager;
+
+    [SerializeField]
+    private UnityTransport unityTransport;
+
+    [SerializeField]
+    private GameObject DefaultPlayerPrefab;
+
+    private CustomSerializer customSerializer;
+    
     async void Start()
     {
-        if(Singleton.Instance != null && Singleton.Instance.isHost)
-        {
-            GetComponentInParent<NetworkManager>().StartHost();
-            await CustomSerializer.Serialize(dict, true);
-        }
+        customSerializer = new CustomSerializer(websocketSingleton);
 
-        
+        print(websocketSingleton);
+
+        if (WebsocketSingleton.kartModelIndex != -1)
+        {
+            // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
+            networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
+
+            if (websocketSingleton.isHost)
+            {
+                networkManager.StartHost();
+                await customSerializer.Serialize(dict, true);            
+            }
+        }
     }
 
     public void StartClient(string ip)
@@ -28,7 +54,7 @@ public class GameStarter : MonoBehaviour
         {
             ip = "127.0.0.1";
         }
-        GetComponentInParent<UnityTransport>().SetConnectionData(ip, 7777); // El puerto no debería cambiar
-        GetComponentInParent<NetworkManager>().StartClient();
+        unityTransport.SetConnectionData(ip, 7777); // El puerto no debería cambiar
+        networkManager.StartClient();
     }
 }
