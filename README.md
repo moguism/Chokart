@@ -53,3 +53,4 @@
     Domingo --> Mauricio hace el menú de selección.
 ### Primera semana oficial (31/03 - 06/04)
     Lunes --> Mauricio hace la deformación del coche.
+    Martes --> María arregla giro coche marcha atrás.
