@@ -88,7 +88,7 @@ public class KartController : BasicPlayer
     {
         if (IsOwner)
         {
-            if(enableAI)
+            if (enableAI)
             {
                 ai.enabled = true;
                 return;
@@ -187,7 +187,7 @@ public class KartController : BasicPlayer
     [ServerRpc]
     void InformServerKartStatusServerRpc(ulong kartId, Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
     {
-        if(positionManager == null)
+        if (positionManager == null)
         {
             positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
         }
@@ -203,7 +203,7 @@ public class KartController : BasicPlayer
     [ServerRpc]
     void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
     {
-        if(starter == null)
+        if (starter == null)
         {
             starter = FindFirstObjectByType<GameStarter>();
         }
@@ -332,6 +332,7 @@ public class KartController : BasicPlayer
         else
         {
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .5f, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, .5f);
+
             kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
@@ -345,7 +346,8 @@ public class KartController : BasicPlayer
 
             steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
             //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
-        } catch { }
+        }
+        catch { }
 
         if (Input.GetButtonDown("Fire3"))
         {
@@ -443,6 +445,10 @@ public class KartController : BasicPlayer
     // Para controlar cuánto tiene que girar en función de la "fuerza" del input
     public void Steer(int direction, float amount)
     {
+        if (speed < 0)
+        {
+            direction *= -1 ;
+        }
         rotate = (steering * direction) * amount;
     }
 
