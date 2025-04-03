@@ -15,14 +15,12 @@ public class UserSocket
     public User User { get; set; }
 
     public event Func<UserSocket, Task> Disconnected;
-    public string IpAddress { get; set; }
 
-    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user, string ipAddress)
+    public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user)
     {
         _serviceProvider = serviceProvider;
         Socket = socket;
         User = user;
-        IpAddress = ipAddress;
     }
 
     public async Task ProcessWebSocket()
@@ -66,7 +64,7 @@ public class UserSocket
                     switch (messageType)
                     {
                         case MessageType.HostGame:
-                            await GameNetwork.HostLobby(User);
+                            await GameNetwork.HostLobby(User, dictInput["ip"].ToString());
                             dict.Add("participants", User.Nickname);
                             break;
                         case MessageType.JoinGame:
@@ -77,7 +75,7 @@ public class UserSocket
                             break;
                         case MessageType.GameStarted:
                             send = false;
-                            await GameNetwork.StartGameForClients(User.Nickname, IpAddress);
+                            await GameNetwork.StartGameForClients(User.Nickname);
                             break;
                     }
 
@@ -128,6 +126,9 @@ public class UserSocket
 
             string host = elem.GetProperty("host").ToString();
             dict.Add("host", host);
+
+            string ip = elem.GetProperty("ip").ToString();
+            dict.Add("ip", ip);
         }
         catch {}
 

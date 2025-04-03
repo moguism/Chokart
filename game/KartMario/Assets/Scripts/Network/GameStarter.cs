@@ -41,7 +41,9 @@ public class GameStarter : MonoBehaviour
 
             if (websocketSingleton.isHost)
             {
+                unityTransport.SetConnectionData(Lobbies.Ip, 7777);
                 networkManager.StartHost();
+
                 await customSerializer.Serialize(dict, true);            
             }
         }
@@ -50,10 +52,6 @@ public class GameStarter : MonoBehaviour
     public void StartClient(string ip)
     {
         print("IP: " + ip);
-        if (ip.Equals("::1"))
-        {
-            ip = "127.0.0.1";
-        }
         unityTransport.SetConnectionData(ip, 7777); // El puerto no debería cambiar
         networkManager.StartClient();
     }
