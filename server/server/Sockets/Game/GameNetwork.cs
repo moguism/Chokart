@@ -10,12 +10,12 @@ public class GameNetwork
     public static readonly List<User> usersWaiting = new List<User>();
     private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
-    public static async Task HostLobby(User user)
+    public static async Task HostLobby(User user, string ip)
     {
         await _semaphore.WaitAsync();
 
         UserBattle userBattle = CreateUserBattle(user, true);
-        GameHandler handler = new GameHandler(userBattle);
+        GameHandler handler = new GameHandler(userBattle, ip);
 
         User[] waitingCopy = usersWaiting.ToArray();
 
@@ -107,7 +107,7 @@ public class GameNetwork
         return true;
     }
 
-    public static async Task StartGameForClients(string hostName, string ip)
+    public static async Task StartGameForClients(string hostName)
     {
         GameHandler handler = handlers.FirstOrDefault(h => h.Started == true && h.participants.Any(p => p.User.Nickname.Equals(hostName)));
         if (handler == null)
@@ -118,7 +118,7 @@ public class GameNetwork
         Dictionary<object, object> dict = new Dictionary<object, object>()
         {
             { "messageType", MessageType.GameStarted },
-            { "ip", ip }
+            { "ip", handler.Ip }
         };
 
         // Notifico a todos menos al host porque ya está conectado
