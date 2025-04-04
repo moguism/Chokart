@@ -7,7 +7,7 @@ using System.Net;
 using TMPro;
 using UnityEngine;
 
-public class Lobbies : MonoBehaviour
+public class CustomLobbies : MonoBehaviour
 {
     public Canvas playerOptions;
     public Canvas playerList;

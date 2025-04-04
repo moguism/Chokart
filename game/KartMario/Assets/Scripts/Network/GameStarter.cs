@@ -41,7 +41,7 @@ public class GameStarter : MonoBehaviour
 
             if (websocketSingleton.isHost)
             {
-                unityTransport.SetConnectionData(Lobbies.Ip, 7777);
+                unityTransport.SetConnectionData(CustomLobbies.Ip, 7777);
                 networkManager.StartHost();
 
                 await customSerializer.Serialize(dict, true);            
