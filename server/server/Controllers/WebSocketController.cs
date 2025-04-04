@@ -23,15 +23,21 @@ public class WebSocketController : ControllerBase
     // TODO: Cambiar el nickname por el JWT, poner el Authorize, y cambiar todo lo relativo a username por User, como en Mixdrop
 
     [Authorize]
-    [Route("{jwt}")]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public async Task ConnectAsync(string jwt)
+    [HttpGet]
+    public async Task ConnectAsync()
     {
+        Console.WriteLine("entro en el controlador");
+
         // Si la petición es de tipo websocket la aceptamos
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
+            Console.WriteLine("es peticion de websocket");
+
             // Aceptamos la solicitud
             WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+
+            Console.WriteLine("acepto peticion");
+
 
             User user = await GetAuthorizedUser();
 
@@ -39,6 +45,9 @@ public class WebSocketController : ControllerBase
             {
                 return;
             }
+
+            Console.WriteLine("usuario no nulo " + user.Nickname);
+
 
             string ip = HttpContext.Connection.RemoteIpAddress?.ToString();
             Console.WriteLine("IP: " + ip);

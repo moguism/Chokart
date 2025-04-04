@@ -54,18 +54,6 @@ namespace server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddCors(
-                options =>
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                        ;
-                    })
-                );
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -75,7 +63,7 @@ namespace server
                 app.UseSwaggerUI();
             }
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             
             app.UseWebSockets();
             app.UseMiddleware<PreAuthMiddleware>();

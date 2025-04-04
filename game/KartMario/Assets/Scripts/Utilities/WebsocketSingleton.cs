@@ -37,17 +37,24 @@ public class WebsocketSingleton : MonoBehaviour
 
     public async Task ConnectToSocket(string token)
     {
-        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + token);
+        await Task.Delay(5000);
+        Dictionary<string, string> dict = new() 
+        {
+            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" }
+        };
+
+        // webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
+        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=", dict);
 
         webSocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
-            SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
+            //SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
         };
 
         webSocket.OnError += (e) =>
         {
-            Debug.Log("Error! " + e);
+            Debug.LogError("Error! " + e);
         };
 
         webSocket.OnClose += (e) =>
