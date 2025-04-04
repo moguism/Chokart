@@ -1,18 +1,28 @@
-﻿namespace server;
+﻿using Microsoft.Extensions.Primitives;
+
+namespace server;
 
 public class PreAuthMiddleware : IMiddleware
 {
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        string pathValue = context.Request.Path.Value;
-
-        if (pathValue.Contains("socket"))
+        Console.WriteLine("entra middleware " + context.Request.Path);
+        if (context.WebSockets.IsWebSocketRequest) 
         {
-            int index = pathValue.IndexOf("/", 2); // En la segunda barra se encontraría el JWT (espero xD)
-            string jwt = pathValue.Substring(index + 1);
-            context.Request.Headers.Append("Authorization", "Bearer " + jwt);
+            Console.WriteLine("es peticion socket");
+
+            context.Request.Method = HttpMethods.Get;
+
+            if (context.Request.Query.TryGetValue("token", out StringValues jwt))
+            {
+                Console.WriteLine("tiene token " + jwt);
+
+                context.Request.Headers.Authorization = $"Bearer {jwt}";
+
+            
+            }
         }
 
-        await next(context);
+        return next(context);
     }
 }
