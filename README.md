@@ -54,5 +54,6 @@
 ### Primera semana oficial (31/03 - 06/04)
     Lunes --> Mauricio hace la deformación del coche.
     Martes --> María arregla giro coche marcha atrás.
+    Miercoles --> Reunión de trabajo con animador, haciendo el GDD.
     Jueves --> Después de trabajar en el GDD el miércoles y esperando a la tutoría del seguimiento, Mauricio mejora el sistema de envío y recibimiento de las IP.
     Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
