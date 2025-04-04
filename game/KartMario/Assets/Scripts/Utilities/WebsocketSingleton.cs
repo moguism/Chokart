@@ -98,12 +98,12 @@ public class WebsocketSingleton : MonoBehaviour
             case MessageType.HostGame:
                 isHost = true;
                 managerObject = FindObjectByName("MANAGER", managerObject);
-                managerObject.GetComponentInChildren<Lobbies>().HostingComplete(dict["participants"].ToString());
+                managerObject.GetComponentInChildren<CustomLobbies>().HostingComplete(dict["participants"].ToString());
                 break;
             case MessageType.PlayerJoined:
                 managerObject = FindObjectByName("MANAGER", managerObject);
-                managerObject.GetComponentInChildren<Lobbies>().SetObjectsActive(true, false);
-                managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
+                managerObject.GetComponentInChildren<CustomLobbies>().SetObjectsActive(true, false);
+                managerObject.GetComponentInChildren<CustomLobbies>().JoinedComplete(dict);
                 break;
             case MessageType.JoinGame:
                 Debug.LogWarning("Esperando partida...");
@@ -124,7 +124,7 @@ public class WebsocketSingleton : MonoBehaviour
                 managerObject = FindObjectByName("MANAGER", managerObject);
                 if (managerObject != null)
                 {
-                    managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
+                    managerObject.GetComponentInChildren<CustomLobbies>().JoinedComplete(dict);
                 }
                 break;
             case MessageType.GameStarted:

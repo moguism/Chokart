@@ -20,6 +20,7 @@
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
 - **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
 - **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
+- **UGS (Unity Game Services): https://www.youtube.com/watch?v=bNCzpKX4frg**
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
