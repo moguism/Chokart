@@ -20,7 +20,7 @@
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
 - **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
 - **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
-- **UGS (Unity Game Services): https://www.youtube.com/watch?v=bNCzpKX4frg**
+- **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=bNCzpKX4frg 
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -57,3 +57,4 @@
     Martes --> María arregla giro coche marcha atrás.
     Jueves --> Después de trabajar en el GDD el miércoles y esperando a la tutoría del seguimiento, Mauricio mejora el sistema de envío y recibimiento de las IP.
     Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
+    Sábado --> Mauricio empieza a implementar UGS (Unity Game Services) para el multijugador.

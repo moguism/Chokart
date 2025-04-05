@@ -11,6 +11,7 @@ public class ProjectInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.BindInstances(new object[] { websocketSingleton, hostManager });
+        Container.BindInstance(websocketSingleton);
+        Container.BindInstance(hostManager);
     }
 }
