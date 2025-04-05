@@ -6,14 +6,14 @@ using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
     private string lobbyName;
 
-    [SerializeField]
-    private int maxPlayers;
+    public static int maxPlayers = 8;
 
     [SerializeField]
     private TMP_InputField lobbyCodeInput;
@@ -30,10 +30,27 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     private GameObject afterLobbyOptions;
 
+    [SerializeField]
+    private GameObject startGameButton;
+
     private Lobby currentLobby;
 
     private float heartBeatTimer;
     private float lobbyUpdateTimer;
+
+    public static bool isHost = false;
+
+    async void Start()
+    {
+        await UnityServices.InitializeAsync();
+
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
+        };
+
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
 
     private void Update()
     {
@@ -62,8 +79,19 @@ public class LobbyManager : MonoBehaviour
             if (lobbyUpdateTimer < 0f)
             {
                 lobbyUpdateTimer = 1.1f;
+                
                 Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
                 currentLobby = lobby;
+
+                if (currentLobby.Data["RELAY_CODE"].Value != "0")
+                {
+                    if(!isHost)
+                    {
+                        RelayManager.JoinRelay(currentLobby.Data["RELAY_CODE"].Value);
+                        SceneManager.LoadScene(2);
+                    }
+                }
+
                 PrintPlayersInLobby();
             }
         }
@@ -79,18 +107,6 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    async void Start()
-    {
-        await UnityServices.InitializeAsync();
-
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
-        };
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-
     public async void CreateLobby()
     {
         try
@@ -98,11 +114,16 @@ public class LobbyManager : MonoBehaviour
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = false,
-                Player = CreateNewPlayer()
+                Player = CreateNewPlayer(),
+                Data = new Dictionary<string, DataObject>
+                {
+                    { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, "0") }
+                }
             };
 
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createLobbyOptions);
             currentLobby = lobby;
+            isHost = true;
             SetOptionsAvailability(false, true);
 
             Debug.Log("Lobby creada: " + lobby + ". Código: " + lobby.LobbyCode);
@@ -157,15 +178,10 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
-            {
-                Player = CreateNewPlayer()
-            };
-
-            string code = lobbyCodeInput.text;
+            Lobby lobby;
 
             // Si no ha puesto código, se une a la primera que haya disponible
-            if (code == "" || lobbyCodeInput.text == null)
+            if (lobbyCodeInput.text == "" || lobbyCodeInput.text == null)
             {
                 QueryResponse result = await ListLobbiesAsync();
 
@@ -174,13 +190,24 @@ public class LobbyManager : MonoBehaviour
                     Debug.LogWarning("No hay ninguna lobby disponible");
                     return;
                 }
-                else
+
+                JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
                 {
-                    code = result.Results[0].LobbyCode;
-                }
+                    Player = CreateNewPlayer()
+                };
+
+                lobby = await LobbyService.Instance.JoinLobbyByIdAsync(result.Results[0].Id, joinLobbyByIdOptions);
+            }
+            else
+            {
+                JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
+                {
+                    Player = CreateNewPlayer()
+                };
+
+                lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text, joinLobbyByCodeOptions);
             }
 
-            Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text, joinLobbyByCodeOptions);
             currentLobby = lobby;
             SetOptionsAvailability(false, true);
             Debug.Log("Unido a la lobby :D");
@@ -192,11 +219,32 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+    public async void StartGame()
+    {
+        if(isHost)
+        {
+            string relayCode = await RelayManager.CreateRelay();
+
+            Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions 
+            { 
+                Data = new Dictionary<string, DataObject>
+                {
+                    { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
+                }
+            });
+
+            currentLobby = lobby;
+
+            SceneManager.LoadScene(2); // La del coche
+        }
+    }
+
     public void LeaveLobby()
     {
         KickPlayer(AuthenticationService.Instance.PlayerId);
         SetOptionsAvailability(true, false);
         currentLobby = null;
+        isHost = false;
     }
 
     private async void KickPlayer(string playerId)
@@ -235,5 +283,14 @@ public class LobbyManager : MonoBehaviour
     {
         preLobbyOptions.SetActive(preOptions);
         afterLobbyOptions.SetActive(inOptions);
+        
+        if(isHost)
+        {
+            startGameButton.SetActive(true);
+        }
+        else
+        {
+            startGameButton.SetActive(false);
+        }
     }
 }
