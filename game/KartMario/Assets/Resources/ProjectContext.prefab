@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4683433207052924967}
   - component: {fileID: -1785096461884067188}
   - component: {fileID: 7574927874596328143}
-  - component: {fileID: 7880403550995671713}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -64,7 +63,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   websocketSingleton: {fileID: 7574927874596328143}
-  hostManager: {fileID: 7880403550995671713}
 --- !u!114 &7574927874596328143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,21 +76,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delete: 1
-  isHost: 0
-  managerObject: {fileID: 0}
-  gameStarter: {fileID: 0}
---- !u!114 &7880403550995671713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 688360839623361399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27f3a192dd17e6141a5c231c88ff79a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxConnections: 8
-  JoinCode: 
-  LobbyId: 
