@@ -7,11 +7,6 @@ using UnityEngine;
 
 public class GameStarter : MonoBehaviour
 {
-    private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
-    {
-        { "messageType", MessageType.GameStarted }
-    };
-
     public List<GameObject> PossiblePrefabs = new List<GameObject>();
 
     [Inject]
@@ -26,27 +21,22 @@ public class GameStarter : MonoBehaviour
     [SerializeField]
     private GameObject DefaultPlayerPrefab;
 
-    private CustomSerializer customSerializer;
+    private CustomSerializer customSerializer; // Para mandar mensajes por el socket (por ahora inutil)
     
-    async void Start()
+    void Start()
     {
         customSerializer = new CustomSerializer(websocketSingleton);
 
-        print(websocketSingleton);
-
         if (WebsocketSingleton.kartModelIndex != -1)
         {
-            // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
-            networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
-
-            if (websocketSingleton.isHost)
+            if (LobbyManager.isHost)
             {
-                unityTransport.SetConnectionData(Lobbies.Ip, 7777);
-                networkManager.StartHost();
-
-                await customSerializer.Serialize(dict, true);            
+                // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
+                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);    
             }
         }
+
+        RelayManager.StartGame();
     }
 
     public void StartClient(string ip)

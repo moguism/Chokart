@@ -76,6 +76,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delete: 1
-  isHost: 0
-  managerObject: {fileID: 0}
-  gameStarter: {fileID: 0}
