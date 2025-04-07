@@ -18,6 +18,8 @@
 - **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
 - **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
+- **IA de Bots** https://www.youtube.com/watch?v=1gKhLpzk_3g&ab_channel=git-amend
+- **IA bots** https://www.youtube.com/watch?v=n5rY9ffqryU&ab_channel=SebastianSchuchmann 
 - **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
 - **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 - **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
@@ -61,4 +63,4 @@
     Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
     Sábado --> Mauricio implementa UGS (Unity Game Services) para el multijugador de forma completa.
 ### Segunda semana (07/04 - 13/04)
-    Lunes --> Mauricio prepara el sistema de traducción.
+    Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots.
