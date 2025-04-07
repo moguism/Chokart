@@ -244,6 +244,14 @@ public class KartController : BasicPlayer
             float gyroGravityX = Input.gyro.gravity.x;
             horizontalInput = Mathf.Clamp(gyroGravityX * 2f, -1f, 1f);
         }
+
+        // MOVIMIENTO DE IA
+        if (enableAI && ai != null)
+        {
+            horizontalInput = ai.HorizontalInput;
+            direction = ai.MoveDirection;
+            Debug.Log("es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
+        }
         else
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
@@ -255,11 +263,12 @@ public class KartController : BasicPlayer
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
         currentPosition = transform.position;
 
+        /*
         if (enableAI)
         {
             InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
             return;
-        }
+        }*/
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
         if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
