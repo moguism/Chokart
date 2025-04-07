@@ -59,3 +59,5 @@
     Jueves --> Después de trabajar en el GDD el miércoles y esperando a la tutoría del seguimiento, Mauricio mejora el sistema de envío y recibimiento de las IP.
     Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
     Sábado --> Mauricio implementa UGS (Unity Game Services) para el multijugador de forma completa.
+### Segunda semana (07/04 - 13/04)
+    Lunes --> Mauricio prepara el sistema de traducción.
