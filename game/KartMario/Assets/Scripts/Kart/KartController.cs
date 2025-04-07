@@ -84,6 +84,10 @@ public class KartController : BasicPlayer
     private int kartIndex;
     private GameStarter starter;
 
+    // Controles
+    private InputSystem_Actions playerControls;
+    private float jumpValueLastFrame;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -130,6 +134,9 @@ public class KartController : BasicPlayer
             InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
             return;
         }
+
+        playerControls = new InputSystem_Actions();
+        playerControls.Enable();
 
         var positionManager = GameObject.Find("Triggers");
         positionManager.GetComponent<PositionManager>().karts.Add(this);
@@ -239,7 +246,9 @@ public class KartController : BasicPlayer
         }
         else
         {
-            horizontalInput = Input.GetAxis("Horizontal");
+            horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
+            print(horizontalInput);
+            //horizontalInput = Input.GetAxis("Horizontal");
         }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
@@ -253,11 +262,11 @@ public class KartController : BasicPlayer
         }
 
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || Input.GetButton("Fire1"))
+        if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
         {
             speed = acceleration;
         }
-        else if (direction == -1 || Input.GetButton("Fire2"))
+        else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
         {
             speed = -acceleration;
         }
@@ -274,9 +283,12 @@ public class KartController : BasicPlayer
             Steer(dir, amount);
         }
 
+        float jumpValue = playerControls.Player.Jump.ReadValue<float>();
+
         // AY MI MADRE EL DERRAPE
-        if ((Input.GetButtonDown("Jump") && !drifting) || (jumping && !drifting))
+        if ((jumpValue == 1 && !drifting && jumpValueLastFrame == 0) || (jumping && !drifting))
         {
+
             print("SPEED: " + speed);
             print("Horizontal: " + horizontalInput);
 
@@ -314,7 +326,7 @@ public class KartController : BasicPlayer
         }
 
         // Solución un poquito rata pero bueno xD
-        if ((isMobile && !jumping && drifting) || (!isMobile && Input.GetButtonUp("Jump") && drifting))
+        if ((isMobile && !jumping && drifting) || (!isMobile && jumpValue == 0 && drifting))
         {
             print("HOLA: " + isMobile);
             Boost();
@@ -349,7 +361,7 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        if (Input.GetButtonDown("Fire3"))
+        if (playerControls.Player.Fire3.ReadValue<float>() == 1)
         {
             if (currentObject != "")
             {
@@ -358,6 +370,8 @@ public class KartController : BasicPlayer
         }
 
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
+
+        jumpValueLastFrame = jumpValue;
     }
 
     public void SpawnObject()
