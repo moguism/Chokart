@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Locales_en-US
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en-US
+  m_SharedData: {fileID: 11400000, guid: ce09af175614af74bac9118bcbab45b0, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 28384301056
+    m_Localized: Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3675474235392
+    m_Localized: Email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710567976960
+    m_Localized: Nickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3746806763520
+    m_Localized: Password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3842873102336
+    m_Localized: Log out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3911051513856
+    m_Localized: Go to Login
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4073488519168
+    m_Localized: Register
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4137170636800
+    m_Localized: Login
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188076904448
+    m_Localized: Remember me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269685477376
+    m_Localized: Go to Registration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5253832773632
+    m_Localized: Nickname or email
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
