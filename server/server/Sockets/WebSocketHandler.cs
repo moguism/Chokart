@@ -22,11 +22,11 @@ public class WebSocketHandler
     public async Task HandleWebsocketAsync(WebSocket webSocket, User user, string ip)
     {
         // Creamos un nuevo WebSocketHandler a partir del WebSocket recibido y lo añadimos a la lista
-        UserSocket handler = await AddWebsocketAsync(webSocket, user, ip);
+        UserSocket handler = await AddWebsocketAsync(webSocket, user);
         await handler.ProcessWebSocket();
     }
 
-    private async Task<UserSocket> AddWebsocketAsync(WebSocket webSocket, User user, string ip)
+    private async Task<UserSocket> AddWebsocketAsync(WebSocket webSocket, User user)
     {
         // Esperamos a que haya un hueco disponible
         await _semaphore.WaitAsync();
@@ -39,7 +39,7 @@ public class WebSocketHandler
             USER_SOCKETS.Remove(existingSocket);
         }
 
-        UserSocket handler = new UserSocket(_serviceProvider, webSocket, user, ip);
+        UserSocket handler = new UserSocket(_serviceProvider, webSocket, user);
         handler.Disconnected += OnDisconnectedAsync;
         USER_SOCKETS.Add(handler);
 

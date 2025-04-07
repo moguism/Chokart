@@ -20,6 +20,7 @@
 - **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
 - **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
 - **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
+- **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -28,6 +29,7 @@
 - **IMPORTANTE (BORRAR MÁS TARDE):** Tal y como está ahora (a 23/03) las posiciones parece que las pone mal, pero es porque no hay suficientes triggers (ahora mismo hay 2) y piensa que la distancia hasta el siguiente (que es la línea de meta) es menor dando marcha atrás (obviamente) en lugar de seguir para adelante. Lo que quiero decir con esto es que las posiciones funcionan xD
 - El host es el encargado de hacer todo. ¿Spawnear un objeto? Host ¿Borrar un objeto? Host ¿Modificar objetos? Host. Por tanto los clientes invocan, con previa verificación de IsOwner, a un método ServerRPC, y este comunica a otros clientes si hace falta. Recomiendo ver tutoriales de esto porque es muy importante
 - Para la IA de los contrincantes, bajar el objeto "grass" un poco antes de darle a "Bake", y luego volverlo a subir con Ctrl + Z
+- Para las lobbies no vale usar ParrelSync, sino el nuevo sistema de Multiplayer Player (o algo así) oficial de Unity, dentro de Window/Multiplayer
 
 # DIARIO DE DESARROLLO
 ### Semana de preparativos (10/03 - 16/03)
@@ -53,3 +55,10 @@
     Domingo --> Mauricio hace el menú de selección.
 ### Primera semana oficial (31/03 - 06/04)
     Lunes --> Mauricio hace la deformación del coche.
+    Martes --> María arregla giro coche marcha atrás.
+    Miercoles --> Reunión de trabajo con animador, haciendo el GDD.
+    Jueves --> Después de trabajar en el GDD el miércoles y esperando a la tutoría del seguimiento, Mauricio mejora el sistema de envío y recibimiento de las IP.
+    Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
+    Sábado --> Mauricio implementa UGS (Unity Game Services) para el multijugador de forma completa.
+### Segunda semana (07/04 - 13/04)
+    Lunes --> Mauricio prepara el sistema de traducción.

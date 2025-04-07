@@ -1,6 +1,5 @@
 using NativeWebSocket;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -11,11 +10,6 @@ public class WebsocketSingleton : MonoBehaviour
     public WebSocket webSocket;
 
     public bool delete = true;
-    public bool isHost = false;
-
-    // Objetos relevantes
-    public GameObject managerObject;
-    public GameObject gameStarter;
 
     public static int kartModelIndex = -1;
 
@@ -38,17 +32,23 @@ public class WebsocketSingleton : MonoBehaviour
 
     public async Task ConnectToSocket(string token)
     {
-        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + token);
+        Dictionary<string, string> dict = new() 
+        {
+            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" }
+        };
+
+        // webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
+        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
 
         webSocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
-            SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
+            //SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
         };
 
         webSocket.OnError += (e) =>
         {
-            Debug.Log("Error! " + e);
+            Debug.LogError("Error! " + e);
         };
 
         webSocket.OnClose += (e) =>
@@ -62,15 +62,15 @@ public class WebsocketSingleton : MonoBehaviour
             SceneManager.LoadScene(0);
         };
 
-        webSocket.OnMessage += async (bytes) =>
+        webSocket.OnMessage += (bytes) =>
         {
-            await ProcessMessage(bytes);
+            ProcessMessage(bytes);
         };
 
         await webSocket.Connect();
     }
 
-    private async Task ProcessMessage(byte[] bytes)
+    private void ProcessMessage(byte[] bytes)
     {
         Debug.Log("OnMessage!");
         Debug.Log(bytes);
@@ -85,51 +85,13 @@ public class WebsocketSingleton : MonoBehaviour
         int messageTypeInt = int.Parse(dict["messageType"].ToString());
         MessageType messageType = (MessageType)messageTypeInt;
 
-        bool joined = false;
-
-        switch (messageType)
+        /*switch (messageType)
         {
-            case MessageType.HostGame:
-                isHost = true;
-                managerObject = FindObjectByName("MANAGER", managerObject);
-                managerObject.GetComponentInChildren<Lobbies>().HostingComplete(dict["participants"].ToString());
-                break;
-            case MessageType.PlayerJoined:
-                managerObject = FindObjectByName("MANAGER", managerObject);
-                managerObject.GetComponentInChildren<Lobbies>().SetObjectsActive(true, false);
-                managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
-                break;
-            case MessageType.JoinGame:
-                Debug.LogWarning("Esperando partida...");
-                break;
-            case MessageType.StartGame:
-                joined = bool.Parse(dict["joined"].ToString());
-                if (joined)
-                {
-                    SceneManager.LoadScene(2); // La del coche
-                }
-                break;
-            case MessageType.EndGame:
-                Debug.LogWarning("El host se ha desconectado");
-                SceneManager.LoadScene(1); // Esto habrá que cambiarlo, probablemente
-                break;
-            case MessageType.PlayerDisconnected:
-                // Si aún estoy en la lobbie simplemente recargo la lista de jugadores
-                managerObject = FindObjectByName("MANAGER", managerObject);
-                if (managerObject != null)
-                {
-                    managerObject.GetComponentInChildren<Lobbies>().JoinedComplete(dict);
-                }
-                break;
-            case MessageType.GameStarted:
-                await SceneManager.LoadSceneAsync(2); // Quizás no hace falta hacerlo asíncrono, pero lo hago por si las moscas para que carguen todos los objetos
-                gameStarter = FindObjectByName("GameStarter", gameStarter);
-                gameStarter.GetComponent<GameStarter>().StartClient(dict["ip"].ToString());
-                break;
-        }
+            
+        }*/
     }
 
-    private GameObject FindObjectByName(string name, GameObject destination)
+    /*private GameObject FindObjectByName(string name, GameObject destination)
     {
         if(destination == null)
         {
@@ -137,5 +99,5 @@ public class WebsocketSingleton : MonoBehaviour
         }
 
         return destination;
-    }
+    }*/
 }
