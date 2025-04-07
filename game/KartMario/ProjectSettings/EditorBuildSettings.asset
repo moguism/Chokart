@@ -18,6 +18,10 @@ EditorBuildSettings:
     path: Assets/Scenes/CarSelection.unity
     guid: f7d396c54cf2551478a234c2ef180e44
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 5a57bf569ddd6774d8ee4ac276b18d32,
+      type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 65a39786e50935349a7010a19dc1ec3e,
       type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 905518a0006e83844b66d0043aee0a24,
+      type: 2}
   m_UseUCBPForAssetBundles: 0

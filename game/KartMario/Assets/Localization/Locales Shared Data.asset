@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Locales Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Locales
+  m_TableCollectionNameGuidString: ce09af175614af74bac9118bcbab45b0
+  m_Entries:
+  - m_Id: 28384301056
+    m_Key: HOST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3675474235392
+    m_Key: EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710567976960
+    m_Key: NICKNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3746806763520
+    m_Key: PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3842873102336
+    m_Key: LOGOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3911051513856
+    m_Key: GO_TO_LOG_IN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4073488519168
+    m_Key: REGISTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4137170636800
+    m_Key: LOGIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188076904448
+    m_Key: REMEMBER_ME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269685477376
+    m_Key: GO_TO_REGISTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5253832773632
+    m_Key: NICK_OR_EMAIL
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2373127791036596442
+  references:
+    version: 2
+    RefIds:
+    - rid: 2373127791036596442
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1744019407166
