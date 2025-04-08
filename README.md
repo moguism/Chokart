@@ -63,4 +63,5 @@
     Viernes --> Mauricio adapta todo al nuevo sistema de inputs.
     Sábado --> Mauricio implementa UGS (Unity Game Services) para el multijugador de forma completa.
 ### Segunda semana (07/04 - 13/04)
-    Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots.
+    Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots y comienza a implentarla.
+    Martes --> María continua con la IA de los bots.
