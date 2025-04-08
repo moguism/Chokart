@@ -221,5 +221,20 @@ MonoBehaviour:
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
       type: 3}
+  - objectName: invencibility
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: invisibility
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: bomb
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
   positionManager: {fileID: 0}
   healthChanger: {fileID: 0}

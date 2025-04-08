@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6694385032060208195}
-  - component: {fileID: 8792658081002171032}
+  - component: {fileID: 7783598417835532587}
   m_Layer: 0
   m_Name: Object
   m_TagString: Object
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3508389886152507965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8792658081002171032
+--- !u!114 &7783598417835532587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,15 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1165638070218997958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5469f6b10d401584b9659c0b1ddbfa12, type: 3}
+  m_Script: {fileID: 11500000, guid: 90ffe545b03745d4683e45b9e913446d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   owner: 0
   networkObject: {fileID: 5892217538899386661}
   parent: {fileID: 0}
-  positionManager: {fileID: 0}
-  boostTimer: 20
+  timer: 5
 --- !u!1 &3262044357405134002
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +61,7 @@ GameObject:
   - component: {fileID: 5892217538899386661}
   - component: {fileID: 2486303674367932685}
   m_Layer: 0
-  m_Name: Invulnerability
+  m_Name: Invisibility
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2857230639
+  GlobalObjectIdHash: 1114002513
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

@@ -70,9 +70,12 @@ public class KartController : BasicPlayer
     private PositionManager positionManager;
 
     // Objetos
+    [Header("Objetos")]
     public string currentObject;
     private ObjectSpawner objectSpawner;
     public bool canBeHurt = true;
+    public List<Renderer> renders;
+    public ulong lastBombId;
 
     // UI
     public TMP_Text healthText;
