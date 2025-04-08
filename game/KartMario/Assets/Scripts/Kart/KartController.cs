@@ -248,12 +248,14 @@ public class KartController : BasicPlayer
         // MOVIMIENTO DE IA
         if (enableAI && ai != null)
         {
+        // esto no lo pilla bien 
             horizontalInput = ai.HorizontalInput;
             direction = ai.MoveDirection;
-            Debug.Log("es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
+            Debug.Log("COCHE " + kartIndex +  "es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
         else
         {
+            Debug.Log("COCHE " + kartIndex + " no es ia y se mueve con botones");
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             print(horizontalInput);
             //horizontalInput = Input.GetAxis("Horizontal");
@@ -269,7 +271,7 @@ public class KartController : BasicPlayer
             InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
             return;
         }*/
-
+        
         // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
         if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
         {

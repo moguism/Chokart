@@ -1,6 +1,5 @@
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class KartAI : NetworkBehaviour
 {
@@ -9,7 +8,7 @@ public class KartAI : NetworkBehaviour
     public float steerSensitivity = 1.0f;
 
     public float HorizontalInput { get; private set; }
-    public int MoveDirection { get; private set; } 
+    public int MoveDirection { get; private set; }
 
     /*[SerializeField]
     private NavMeshAgent agent;*/
@@ -30,13 +29,13 @@ public class KartAI : NetworkBehaviour
     private void Awake()
     {
         kart = GetComponent<KartController>();
-        Debug.Log("el coche es " , kart);
+        Debug.Log("el coche es ", kart); // esto lo pilla bien
     }
-        
+
     private void Start()
     {
         destination = FindFirstObjectByType<FinishLine>().transform;
-        Debug.Log("el destino de la ia es ", destination);
+        Debug.Log("el destino de la ia es ", destination); // lo pilla bien
     }
 
     private void Update()
@@ -48,8 +47,9 @@ public class KartAI : NetworkBehaviour
 
         MoveDirection = (localTarget.z > 0.5f) ? 1 : (localTarget.z < -0.5f ? -1 : 0);
 
-        if (parent != null)
+        if (parent != null && parent.enableAI) // si quitas lo de enableIA el jugador con el que hostees FUNCIONA COMO BOT y el bot que pongas NO :(((
         {
+            Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); // entra bien
             parent.horizontalInput = HorizontalInput;
             parent.direction = MoveDirection;
         }
@@ -63,8 +63,8 @@ public class KartAI : NetworkBehaviour
         {
             Debug.LogError("NO ES DUEÑO DE SU PROPIO COCHE");
             return;
-        }/*
-
+        }
+        /*
         parent.sphere.isKinematic = true;
 
         if (enemyKart != null)
