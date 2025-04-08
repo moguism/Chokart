@@ -29851,7 +29851,7 @@ MonoBehaviour:
   currentObject: 
   healthText: {fileID: 0}
   enableAI: 0
-  ai: {fileID: 1905256064562825202}
+  ai: {fileID: 0}
   kartIndex: 0
 --- !u!114 &3255239343157649172
 MonoBehaviour:
@@ -34841,7 +34841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c5b0bb237a91f40b9d019ff07b1d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ai: {fileID: 1905256064562825202}
+  ai: {fileID: 0}
 --- !u!1 &5355703932657722504
 GameObject:
   m_ObjectHideFlags: 0
@@ -59649,7 +59649,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9193125234719358039}
   - component: {fileID: 77989067485063235}
-  - component: {fileID: 1905256064562825202}
   - component: {fileID: 3073240497499352717}
   m_Layer: 0
   m_Name: Player
@@ -59701,25 +59700,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &1905256064562825202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7468548331436223440}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  destination: {fileID: 0}
-  steerSensitivity: 1
-  sphereCollider: {fileID: 5157537988344369135}
-  parent: {fileID: 5697130421628379105}
-  enemyKart: {fileID: 0}
-  speed: 2000
 --- !u!195 &3073240497499352717
 NavMeshAgent:
   m_ObjectHideFlags: 0
