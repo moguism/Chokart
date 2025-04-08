@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    #region Prefabs
-    // Aquí irían los distintos prefabs
-    public GameObject GreenShell;
-    #endregion
-
     // Aquí van los distintos objetos (un poco fullero I know xD)
     #region Lista de objetos
 
@@ -19,18 +14,19 @@ public class ObjectSpawner : MonoBehaviour
         public string objectName;
         public int minPosition;
         public int maxPosition;
+        public GameObject prefab;
     }
 
-    public List<ObjectWithPositionRange> objectSpawnRanges = new List<ObjectWithPositionRange>()
-    {
-        new ObjectWithPositionRange() { objectName = "greenShell", minPosition = 1, maxPosition = 12 },
-    };
+    public List<ObjectWithPositionRange> objectSpawnRanges = new List<ObjectWithPositionRange>();
 
     #endregion
 
-    public readonly List<BasicObject> objectsSpawned = new List<BasicObject>();
+    public static readonly List<BasicObject> objectsSpawned = new List<BasicObject>();
     private readonly System.Random _random = new System.Random();
-        
+
+    [SerializeField]
+    private PositionManager positionManager;
+
     private void OnTriggerEnter(Collider other)
     {
         var parent = other.gameObject.transform.parent;
@@ -43,18 +39,17 @@ public class ObjectSpawner : MonoBehaviour
                 return;
             }
 
-            string selectedObject = GetObjectBasedOnPosition(kart.position);
+            ObjectWithPositionRange selectedObject = GetObjectBasedOnPosition(kart.position);
 
-            print("Ha tocado el objeto: " + selectedObject);
-            kart.currentObject = selectedObject;
+            print("Ha tocado el objeto: " + selectedObject.objectName);
+            kart.currentObject = selectedObject.objectName;
         }
     }
 
-    private string GetObjectBasedOnPosition(int kartPosition)
+    private ObjectWithPositionRange GetObjectBasedOnPosition(int kartPosition)
     {
         var availableObjects = objectSpawnRanges
             .Where(o => kartPosition >= o.minPosition && kartPosition <= o.maxPosition)
-            .Select(o => o.objectName)
             .ToList();
 
         int index = _random.Next(0, availableObjects.Count);
@@ -63,43 +58,54 @@ public class ObjectSpawner : MonoBehaviour
 
     public void SpawnObjectServerRpc(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, float ownerId, ServerRpcParams rpcParams = default)
     {
-        GameObject spawnedObject = null;
-        switch (objectName)
-        {
-            case "greenShell":
-                print("Spawneando green shell");
-                spawnedObject = Instantiate(GreenShell, spawnPosition, Quaternion.identity);
-                break;
-        }
+        GameObject spawnedObject = Instantiate(objectSpawnRanges.FirstOrDefault(o => o.objectName == objectName).prefab, spawnPosition, Quaternion.identity);
 
         if (spawnedObject != null)
         {
             if (spawnedObject.TryGetComponent<NetworkObject>(out var networkObject))
             {
                 networkObject.Spawn(); // Para que lo vean todos los clientes
-                
+
+                BasicObject basic = spawnedObject.GetComponentInChildren<BasicObject>();
+                basic.owner = ownerId;
+
                 GreenShell shell = spawnedObject.GetComponentInChildren<GreenShell>();
-                shell.direction = desiredPosition;
-                //shell.direction.x += 20;
-                shell.owner = ownerId;
-                shell.UseObject();
-                
-                objectsSpawned.Add(shell);
+
+                if (shell != null)
+                {
+                    shell.direction = desiredPosition;
+                    shell.UseObject();
+                }
+                else
+                {
+                    SpeedBoost speedBoost = spawnedObject.GetComponentInChildren<SpeedBoost>();
+
+                    if (speedBoost != null)
+                    {
+                        speedBoost.parent = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == ownerId);
+                        speedBoost.UseObject();
+                    }
+                }
+
+                objectsSpawned.Add(basic);
             }
         }
     }
 
-    public void DespawnObjectServerRpc(ulong objectId)
+    public void DespawnObjectServerRpc(ulong id)
     {
-        BasicObject basicObject = objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
-        if (basicObject != null)
-        { 
-            basicObject.networkObject.Despawn(true);
-        }
+        BasicObject basicObject = objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == id);
+        RemoveObject(basicObject);
     }
 
     public void DespawnObjectServerRpc(BasicObject basicObject)
     {
+        RemoveObject(basicObject);
+    }
+
+    private void RemoveObject(BasicObject basicObject)
+    {
+        basicObject.networkObject.Despawn(true);
         objectsSpawned.Remove(basicObject);
     }
 }

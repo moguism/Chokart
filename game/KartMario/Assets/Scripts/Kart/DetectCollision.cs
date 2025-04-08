@@ -6,6 +6,15 @@ public class DetectCollision : NetworkBehaviour
 {
     public KartController kart;
 
+    private PositionManager positionManager;
+    private ObjectSpawner spawner;
+
+    private void Start()
+    {
+        positionManager = FindFirstObjectByType<PositionManager>();
+        spawner = FindFirstObjectByType<ObjectSpawner>();
+    }
+
     // Seguramente haya que cambiar el DamageMultiplier porque la vida se va a quitar dos veces: el que choca (que pide que se quite vida) y el que recibe el choque (que calcula que tiene que restarse vida) 
     private void OnCollisionEnter(Collision collision)
     {
@@ -54,8 +63,7 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc]
     private void CheckCollisionWithObjectServerRpc(ulong kartId, ulong objectId)
     {
-        ObjectSpawner spawner = FindAnyObjectByType<ObjectSpawner>();
-        BasicObject basicObject = spawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
+        BasicObject basicObject = ObjectSpawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
         if(basicObject && basicObject.owner != kartId)
         {
             if(basicObject is GreenShell)
@@ -99,14 +107,12 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DispawnKartServerRpc(ulong kartId)
     {
-        FindAnyObjectByType<PositionManager>().karts.FirstOrDefault(k => k.NetworkObjectId == kartId).GetComponent<NetworkObject>().Despawn(true);
+        positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).GetComponent<NetworkObject>().Despawn(true);
     }
 
     [ServerRpc]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ServerRpcParams rpcParams = default)
     {
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
 
         var parameters = new ClientRpcParams

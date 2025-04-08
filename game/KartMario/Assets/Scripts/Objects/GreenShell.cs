@@ -25,12 +25,6 @@ public class GreenShell : BasicObject
         }
     }
 
-    [ServerRpc]
-    private void DespawnOnTimeServerRpc(ulong id)
-    {
-        FindAnyObjectByType<ObjectSpawner>().DespawnObjectServerRpc(id);
-    }
-
     private void FixedUpdate()
     {
         if (direction != null)
