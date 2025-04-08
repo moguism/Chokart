@@ -1,3 +1,4 @@
+using Injecta;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -27,6 +28,14 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField]
     private PositionManager positionManager;
 
+    [Inject]
+    public HealthChanger healthChanger;
+
+    private void Start()
+    {
+        print(healthChanger);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var parent = other.gameObject.transform.parent;
@@ -40,34 +49,61 @@ public class ObjectSpawner : MonoBehaviour
             }
 
             ObjectWithPositionRange selectedObject = GetObjectBasedOnPosition(kart.position);
+            if(selectedObject == null)
+            {
+                return;
+            }
 
             print("Ha tocado el objeto: " + selectedObject.objectName);
             kart.currentObject = selectedObject.objectName;
+            NotifyAboutNewObjectClientRpc(kart.NetworkObjectId, kart.currentObject);
+        }
+    }
+
+    [ClientRpc]
+    private void NotifyAboutNewObjectClientRpc(ulong kartId, string newObject)
+    {
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        if(kart != null)
+        {
+            kart.currentObject = newObject;
         }
     }
 
     private ObjectWithPositionRange GetObjectBasedOnPosition(int kartPosition)
     {
-        var availableObjects = objectSpawnRanges
-            .Where(o => kartPosition >= o.minPosition && kartPosition <= o.maxPosition)
-            .ToList();
+        try
+        {
+            var availableObjects = objectSpawnRanges
+                .Where(o => kartPosition >= o.minPosition && kartPosition <= o.maxPosition)
+                .ToList();
 
-        int index = _random.Next(0, availableObjects.Count);
-        return availableObjects[index];
+            print("Objetos disponibles: " + availableObjects.Count);
+
+            int index = _random.Next(0, availableObjects.Count);
+            return availableObjects[index];
+        }
+        catch
+        {
+            return null;
+        }
     }
 
-    public void SpawnObjectServerRpc(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, float ownerId, ServerRpcParams rpcParams = default)
+    public void SpawnObject(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, ulong ownerId)
     {
         GameObject spawnedObject = Instantiate(objectSpawnRanges.FirstOrDefault(o => o.objectName == objectName).prefab, spawnPosition, Quaternion.identity);
 
         if (spawnedObject != null)
         {
+            KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == ownerId);
+
             if (spawnedObject.TryGetComponent<NetworkObject>(out var networkObject))
             {
                 networkObject.Spawn(); // Para que lo vean todos los clientes
 
                 BasicObject basic = spawnedObject.GetComponentInChildren<BasicObject>();
                 basic.owner = ownerId;
+                basic.networkObject = networkObject;
 
                 GreenShell shell = spawnedObject.GetComponentInChildren<GreenShell>();
 
@@ -82,8 +118,36 @@ public class ObjectSpawner : MonoBehaviour
 
                     if (speedBoost != null)
                     {
-                        speedBoost.parent = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == ownerId);
+                        speedBoost.parent = kart;
                         speedBoost.UseObject();
+                    }
+                    else
+                    {
+                        PositionChanger positionChanger = spawnedObject.GetComponentInChildren<PositionChanger>();
+                        if(positionChanger != null)
+                        {
+                            positionChanger.parent = kart;
+                            positionChanger.UseObject();
+                        }
+                        else
+                        {
+                            HealthPotion healthPotion = spawnedObject.GetComponentInChildren<HealthPotion>();
+                            if(healthPotion != null)
+                            {
+                                healthPotion.healthChanger = healthChanger;
+                                healthPotion.UseObject();
+                            }
+                            else
+                            {
+                                Invulnerability invulnerability = spawnedObject.GetComponentInChildren<Invulnerability>();
+                                if(invulnerability != null)
+                                {
+                                    invulnerability.parent = kart;
+                                    invulnerability.positionManager = positionManager;
+                                    invulnerability.UseObject();
+                                }
+                            }
+                        }
                     }
                 }
 

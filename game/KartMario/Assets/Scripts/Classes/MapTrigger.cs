@@ -7,6 +7,8 @@ public class MapTrigger : NetworkBehaviour
     public static FinishLine finishLine;
     public static PositionManager positionManager;
 
+    public int index;
+
     private void Start()
     {
         if (finishLine == null)
@@ -14,6 +16,8 @@ public class MapTrigger : NetworkBehaviour
 
         if (positionManager == null)
             positionManager = gameObject.transform.parent.GetComponent<PositionManager>();
+
+        index = finishLine.triggers.IndexOf(this);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -25,9 +29,9 @@ public class MapTrigger : NetworkBehaviour
             bool alreadyAdded = false;
             bool shouldContinue = true;
 
-            if (kart.triggers.Contains(this))
+            if (kart.triggers.Contains(index))
             {
-                kart.triggers.Remove(this);
+                kart.triggers.Remove(index);
 
                 // Recalcula quién es el próximo trigger
                 if (IsOwner)
@@ -40,13 +44,13 @@ public class MapTrigger : NetworkBehaviour
             else
             {
                 alreadyAdded = true;
-                kart.triggers.Add(this);
+                kart.triggers.Add(index);
             }
 
             // Si es la línea de meta, la agrego si no lo he hecho ya
             if (Equals(finishLine) && !alreadyAdded && kart.triggers.Count != 0)
             {
-                kart.triggers.Insert(0, this);
+                kart.triggers.Insert(0, index);
                 shouldContinue = true;
             }
 
@@ -64,7 +68,7 @@ public class MapTrigger : NetworkBehaviour
 
     protected void ChangeIndexAndCalculatePosition(KartController kart)
     {
-        int index = finishLine.triggers.IndexOf(this);
+        index = finishLine.triggers.IndexOf(this);
         kart.lastTriggerIndex = index;
 
         CalculateDistanceToNextTrigger(kart);

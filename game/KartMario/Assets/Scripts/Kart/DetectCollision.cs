@@ -36,7 +36,6 @@ public class DetectCollision : NetworkBehaviour
             }
             else if (otherKartSpeed > kartSpeed)
             {
-
                 CheckAndRemoveObject(kart, otherKartSpeed);
             }
             else
@@ -87,12 +86,17 @@ public class DetectCollision : NetworkBehaviour
     private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ClientRpcParams clientRpcParams = default)
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
-        kart.health -= damage;
-
-        if (kart.healthText != null)
+        
+        // Si no es un objeto de curación y no pueden herir al coche
+        if(damage > 0)
         {
-            kart.healthText.text = "Salud: \n" + kart.health;
+            if(!kart.canBeHurt)
+            {
+                return;
+            }
         }
+
+        kart.health -= damage;
 
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
         
