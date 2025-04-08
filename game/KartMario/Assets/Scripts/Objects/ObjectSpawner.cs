@@ -164,6 +164,19 @@ public class ObjectSpawner : MonoBehaviour
                                         invisibility.parent = kart;
                                         invisibility.UseObject();
                                     }
+                                    else
+                                    {
+                                        DistorsionObject screenDistorsion = spawnedObject.GetComponentInChildren<DistorsionObject>();
+                                        if(screenDistorsion != null)
+                                        {
+                                            screenDistorsion.owner = ownerId;
+                                            screenDistorsion.positionManager = positionManager;
+                                            screenDistorsion.UseObject();
+
+                                            objectsSpawned.Add(screenDistorsion);
+                                            alreadyAdded = true;
+                                        }
+                                    }
                                 }
                             }
                         }
