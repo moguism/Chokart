@@ -29842,12 +29842,22 @@ MonoBehaviour:
   totalLaps: 0
   position: 0
   passedThroughFinishLine: 0
-  triggers: []
+  triggers: 
   lastTriggerIndex: 0
   distanceToNextTrigger: 0
   positionText: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
+  canBeHurt: 1
+  renders:
+  - {fileID: 4177690252849554732}
+  - {fileID: 2591339757275151201}
+  - {fileID: 8786886710531883066}
+  - {fileID: 8352060162857992017}
+  - {fileID: 5245543434103494832}
+  - {fileID: 5250035531427882519}
+  - {fileID: 2911437297688531470}
+  - {fileID: 6304158369429116016}
   healthText: {fileID: 0}
   enableAI: 0
   ai: {fileID: 1905256064562825202}

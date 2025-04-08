@@ -22,10 +22,10 @@ public class FinishLine : MapTrigger
         //ChangeIndexAndCalculatePosition(kart);
 
         // Solo cuenta una vuelta si ha activado todos los triggers (en orden, que es lo que hace "SequenceEqual") antes de cruzar la meta
-        if (kart.triggers.SequenceEqual(triggers) ||!kart.passedThroughFinishLine)
+        if (kart.triggers.SequenceEqual(triggers.Select(t => t.index).ToList()) ||!kart.passedThroughFinishLine)
         {
             kart.passedThroughFinishLine = true;
-            kart.triggers = new List<MapTrigger>() { this };
+            kart.triggers = new List<int>() { 0 };
             kart.totalLaps++;
             Debug.LogWarning("El coche " + kart.NetworkObjectId + " ha dado " + kart.totalLaps + " vueltas");
 
@@ -37,7 +37,7 @@ public class FinishLine : MapTrigger
         }
         else
         {
-            kart.triggers = new List<MapTrigger>() { this };
+            kart.triggers = new List<int>() { 0 };
         }
     }
 
