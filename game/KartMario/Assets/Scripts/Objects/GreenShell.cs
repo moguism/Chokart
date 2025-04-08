@@ -19,7 +19,7 @@ public class GreenShell : BasicObject
             {
                 if (IsOwner)
                 {
-                    DespawnOnTimeServerRpc(NetworkObjectId);
+                    DespawnOnTimeServerRpc();
                 }
             }
         }
