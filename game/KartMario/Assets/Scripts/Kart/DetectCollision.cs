@@ -63,12 +63,42 @@ public class DetectCollision : NetworkBehaviour
     private void CheckCollisionWithObjectServerRpc(ulong kartId, ulong objectId)
     {
         BasicObject basicObject = ObjectSpawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
-        if(basicObject && basicObject.owner != kartId)
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+
+        bool isBomb = false;
+
+        if(basicObject != null)
         {
+            if(basicObject.owner == kartId)
+            {
+                if(basicObject is Bomb)
+                {
+                    isBomb = true;
+
+                    if ((basicObject as Bomb).exploded == false || kart.lastBombId == objectId)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             if(basicObject is GreenShell)
             {
-                NotifyServerAboutChangeServerRpc(kart.NetworkObjectId, (basicObject as GreenShell).damageOutput);
-                spawner.DespawnObjectServerRpc(basicObject);
+                float damageOutput = isBomb ? (basicObject as GreenShell).damageOutput : (basicObject as GreenShell).damageOutput;
+                NotifyServerAboutChangeServerRpc(kartId, damageOutput);
+
+                if (!isBomb)
+                {
+                    spawner.DespawnObjectServerRpc(basicObject);
+                }
+                else
+                {
+                    kart.lastBombId = objectId;
+                }
             }
         }
     }
@@ -86,16 +116,6 @@ public class DetectCollision : NetworkBehaviour
     private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ClientRpcParams clientRpcParams = default)
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
-        
-        // Si no es un objeto de curación y no pueden herir al coche
-        if(damage > 0)
-        {
-            if(!kart.canBeHurt)
-            {
-                return;
-            }
-        }
-
         kart.health -= damage;
 
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
@@ -111,13 +131,17 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DispawnKartServerRpc(ulong kartId)
     {
-        positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).GetComponent<NetworkObject>().Despawn(true);
+        positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).NetworkObject.Despawn(true);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ServerRpcParams rpcParams = default)
     {
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        if(!kart.canBeHurt)
+        {
+            return;
+        }
 
         var parameters = new ClientRpcParams
         {

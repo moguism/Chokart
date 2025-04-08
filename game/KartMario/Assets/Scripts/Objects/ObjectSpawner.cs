@@ -28,14 +28,6 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField]
     private PositionManager positionManager;
 
-    [Inject]
-    public HealthChanger healthChanger;
-
-    private void Start()
-    {
-        print(healthChanger);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         var parent = other.gameObject.transform.parent;
@@ -92,6 +84,7 @@ public class ObjectSpawner : MonoBehaviour
     public void SpawnObject(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, ulong ownerId)
     {
         GameObject spawnedObject = Instantiate(objectSpawnRanges.FirstOrDefault(o => o.objectName == objectName).prefab, spawnPosition, Quaternion.identity);
+        bool alreadyAdded = false;
 
         if (spawnedObject != null)
         {
@@ -109,8 +102,21 @@ public class ObjectSpawner : MonoBehaviour
 
                 if (shell != null)
                 {
-                    shell.direction = desiredPosition;
-                    shell.UseObject();
+                    Bomb bomb = spawnedObject.GetComponentInChildren<Bomb>();
+                    if (bomb != null)
+                    {
+                        bomb.direction = desiredPosition;
+                        bomb.owner = ownerId;
+                        bomb.UseObject();
+
+                        objectsSpawned.Add(bomb);
+                        alreadyAdded = true;
+                    }
+                    else
+                    {
+                        shell.direction = desiredPosition;
+                        shell.UseObject();
+                    }
                 }
                 else
                 {
@@ -134,8 +140,12 @@ public class ObjectSpawner : MonoBehaviour
                             HealthPotion healthPotion = spawnedObject.GetComponentInChildren<HealthPotion>();
                             if(healthPotion != null)
                             {
-                                healthPotion.healthChanger = healthChanger;
+                                healthPotion.owner = ownerId;
+                                healthPotion.positionManager = positionManager;
                                 healthPotion.UseObject();
+
+                                objectsSpawned.Add(healthPotion);
+                                alreadyAdded = true;
                             }
                             else
                             {
@@ -146,12 +156,21 @@ public class ObjectSpawner : MonoBehaviour
                                     invulnerability.positionManager = positionManager;
                                     invulnerability.UseObject();
                                 }
+                                else
+                                {
+                                    Invisibility invisibility = spawnedObject.GetComponentInChildren<Invisibility>();
+                                    if(invisibility != null)
+                                    {
+                                        invisibility.parent = kart;
+                                        invisibility.UseObject();
+                                    }
+                                }
                             }
                         }
                     }
                 }
 
-                objectsSpawned.Add(basic);
+                if (!alreadyAdded) { objectsSpawned.Add(basic); }
             }
         }
     }
