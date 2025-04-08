@@ -29,13 +29,13 @@ public class KartAI : NetworkBehaviour
     private void Awake()
     {
         kart = GetComponent<KartController>();
-        Debug.Log("el coche es ", kart); // esto lo pilla bien
+        Debug.Log("el coche es ", kart);
     }
 
     private void Start()
     {
-        destination = FindFirstObjectByType<FinishLine>().transform;
-        Debug.Log("el destino de la ia es ", destination); // lo pilla bien
+        destination = FindFirstObjectByType<MapTrigger>().transform;
+        Debug.Log("el destino de la ia es ", destination); 
     }
 
     private void Update()
@@ -47,9 +47,9 @@ public class KartAI : NetworkBehaviour
 
         MoveDirection = (localTarget.z > 0.5f) ? 1 : (localTarget.z < -0.5f ? -1 : 0);
 
-        if (parent != null && parent.enableAI) // si quitas lo de enableIA el jugador con el que hostees FUNCIONA COMO BOT y el bot que pongas NO :(((
+        if (parent != null && parent.enableAI)
         {
-            Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); // entra bien
+            Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); 
             parent.horizontalInput = HorizontalInput;
             parent.direction = MoveDirection;
         }

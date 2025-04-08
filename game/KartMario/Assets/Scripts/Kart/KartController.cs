@@ -248,10 +248,10 @@ public class KartController : BasicPlayer
         // MOVIMIENTO DE IA
         if (enableAI && ai != null)
         {
-        // esto no lo pilla bien 
+            // esto no lo pilla bien 
             horizontalInput = ai.HorizontalInput;
             direction = ai.MoveDirection;
-            Debug.Log("COCHE " + kartIndex +  "es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
+            Debug.Log("COCHE " + kartIndex + "es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
         else
         {
@@ -271,28 +271,48 @@ public class KartController : BasicPlayer
             InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
             return;
         }*/
-        
-        // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+
+        if (enableAI)
         {
-            speed = acceleration;
-        }
-        else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-        {
-            speed = -acceleration;
+            if (direction == 1)
+            {
+                speed = acceleration;
+            }
+            else if (direction == -1)
+            {
+                speed = -acceleration;
+            }
+            else
+            {
+                speed = 0;
+            }
         }
         else
         {
-            speed = 0;
+            // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+            if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+            {
+                speed = acceleration;
+            }
+            else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+            {
+                speed = -acceleration;
+            }
+            else
+            {
+                speed = 0;
+            }
         }
 
+
         // Para girar el modelo a la izquierda o la derecha
-        if (horizontalInput != 0 && speed != 0)
+        if (horizontalInput != 0 && speed != 0 && !enableAI)
         {
             int dir = horizontalInput > 0 ? 1 : -1;
             float amount = Mathf.Abs(horizontalInput);
             Steer(dir, amount);
         }
+
 
         float jumpValue = playerControls.Player.Jump.ReadValue<float>();
 
@@ -472,7 +492,7 @@ public class KartController : BasicPlayer
     {
         if (speed < 0)
         {
-            direction *= -1 ;
+            direction *= -1;
         }
         rotate = (steering * direction) * amount;
     }
