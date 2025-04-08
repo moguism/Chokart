@@ -5,6 +5,8 @@ public class KartAI : NetworkBehaviour
 {
     public Transform destination; // proximo trigger al que va a ir
 
+    private int currentTriggerIndex = 0; // indice del trigeer por el que va
+
     public float steerSensitivity = 1.0f;
 
     public float HorizontalInput { get; private set; }
@@ -29,18 +31,23 @@ public class KartAI : NetworkBehaviour
     private void Awake()
     {
         kart = GetComponent<KartController>();
+        if (kart != null)
+        {
+            kart.ai = this;
+        }
+
         Debug.Log("el coche es ", kart);
     }
 
     private void Start()
     {
-        destination = FindFirstObjectByType<MapTrigger>().transform;
-        Debug.Log("el destino de la ia es ", destination); 
+        UpdateDestination();
+        Debug.Log("IA empieza con destino: " + destination.name);
     }
 
     private void Update()
     {
-        if (!destination || !kart) return;
+        if (!destination || !kart || !kart.enableAI) return;
 
         Vector3 localTarget = kart.transform.InverseTransformPoint(destination.position);
         HorizontalInput = Mathf.Clamp(localTarget.x, -1f, 1f) * steerSensitivity;
@@ -49,10 +56,24 @@ public class KartAI : NetworkBehaviour
 
         if (parent != null && parent.enableAI)
         {
-            Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); 
+            // Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); 
             parent.horizontalInput = HorizontalInput;
             parent.direction = MoveDirection;
         }
+
+        UpdateDestination();
+    }
+
+
+
+    public void UpdateDestination()
+    {
+        if (MapTrigger.finishLine == null || MapTrigger.finishLine.triggers.Count == 0) return;
+
+        currentTriggerIndex = (kart.lastTriggerIndex + 1);
+        destination = MapTrigger.finishLine.triggers[currentTriggerIndex].transform;
+
+        Debug.Log("IA actualiza destino a: " + destination.name);
     }
 
     // Básicamente el comportamiento es que en cuanto algún coche entra en su rango de visión, le persigue hasta que acaba con él, usando objetos también
