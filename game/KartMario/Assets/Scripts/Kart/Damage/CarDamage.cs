@@ -113,47 +113,51 @@ public class CarDamage : NetworkBehaviour
 
     public void OnMeshForce(Vector3 originPos, float force, bool isKart)
     {
-        // force should be between 0.0 and 1.0
-        force = Mathf.Clamp01(force);
-
-        for (int j = 0; j < meshfilters.Length; ++j)
+        try
         {
-            Vector3[] verts = meshfilters[j].mesh.vertices;
+            // force should be between 0.0 and 1.0
+            force = Mathf.Clamp01(force);
 
-            for (int i = 0; i < verts.Length; ++i)
+            for (int j = 0; j < meshfilters.Length; ++j)
             {
-                Vector3 scaledVert = Vector3.Scale(verts[i], transform.localScale);
-                Vector3 vertWorldPos = meshfilters[j].transform.position + (meshfilters[j].transform.rotation * scaledVert);
-                Vector3 originToMeDir = vertWorldPos - originPos;
-                Vector3 flatVertToCenterDir = transform.position - vertWorldPos;
-                flatVertToCenterDir.y = 0.0f;
+                Vector3[] verts = meshfilters[j].mesh.vertices;
 
-                // 0.5 - 1 => 45° to 0°  / current vertice is nearer to exploPos than center of bounds
-
-                float dist = 1; // Empieza en 0 para que luego si no es coche y no entra en el if, acabe siendo 0 la multiplicación de abajo
-
-                if (!isKart)
+                for (int i = 0; i < verts.Length; ++i)
                 {
-                    if (originToMeDir.sqrMagnitude < sqrDemRange) //dot > 0.8f )
+                    Vector3 scaledVert = Vector3.Scale(verts[i], transform.localScale);
+                    Vector3 vertWorldPos = meshfilters[j].transform.position + (meshfilters[j].transform.rotation * scaledVert);
+                    Vector3 originToMeDir = vertWorldPos - originPos;
+                    Vector3 flatVertToCenterDir = transform.position - vertWorldPos;
+                    flatVertToCenterDir.y = 0.0f;
+
+                    // 0.5 - 1 => 45° to 0°  / current vertice is nearer to exploPos than center of bounds
+
+                    float dist = 1; // Empieza en 0 para que luego si no es coche y no entra en el if, acabe siendo 0 la multiplicación de abajo
+
+                    if (!isKart)
                     {
-                        dist = Mathf.Clamp01(originToMeDir.sqrMagnitude / sqrDemRange);
+                        if (originToMeDir.sqrMagnitude < sqrDemRange) //dot > 0.8f )
+                        {
+                            dist = Mathf.Clamp01(originToMeDir.sqrMagnitude / sqrDemRange);
+                        }
                     }
+                    else
+                    {
+                        dist = Mathf.Clamp01(sqrDemRange / originToMeDir.sqrMagnitude);
+                    }
+
+                    float moveDelta = force * (1.0f - dist) * maxMoveDelta;
+
+                    Vector3 moveDir = Vector3.Slerp(originToMeDir, flatVertToCenterDir, impactDirManipulator).normalized * moveDelta;
+
+                    verts[i] += Quaternion.Inverse(transform.rotation) * moveDir;
+
                 }
-                else
-                {
-                    dist = Mathf.Clamp01(sqrDemRange / originToMeDir.sqrMagnitude);
-                }
 
-                float moveDelta = force * (1.0f - dist) * maxMoveDelta;
-
-                Vector3 moveDir = Vector3.Slerp(originToMeDir, flatVertToCenterDir, impactDirManipulator).normalized * moveDelta;
-
-                verts[i] += Quaternion.Inverse(transform.rotation) * moveDir;
-
+                meshfilters[j].mesh.vertices = verts;
+                meshfilters[j].mesh.RecalculateBounds();
             }
-
-            meshfilters[j].mesh.vertices = verts;
-            meshfilters[j].mesh.RecalculateBounds();
         }
+        catch { }
     }
 }

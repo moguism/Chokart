@@ -6,6 +6,15 @@ public class DetectCollision : NetworkBehaviour
 {
     public KartController kart;
 
+    private PositionManager positionManager;
+    private ObjectSpawner spawner;
+
+    private void Start()
+    {
+        positionManager = FindFirstObjectByType<PositionManager>();
+        spawner = FindFirstObjectByType<ObjectSpawner>();
+    }
+
     // Seguramente haya que cambiar el DamageMultiplier porque la vida se va a quitar dos veces: el que choca (que pide que se quite vida) y el que recibe el choque (que calcula que tiene que restarse vida) 
     private void OnCollisionEnter(Collision collision)
     {
@@ -27,7 +36,6 @@ public class DetectCollision : NetworkBehaviour
             }
             else if (otherKartSpeed > kartSpeed)
             {
-
                 CheckAndRemoveObject(kart, otherKartSpeed);
             }
             else
@@ -54,14 +62,43 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc]
     private void CheckCollisionWithObjectServerRpc(ulong kartId, ulong objectId)
     {
-        ObjectSpawner spawner = FindAnyObjectByType<ObjectSpawner>();
-        BasicObject basicObject = spawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
-        if(basicObject && basicObject.owner != kartId)
+        BasicObject basicObject = ObjectSpawner.objectsSpawned.FirstOrDefault(o => o.NetworkObjectId == objectId);
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+
+        bool isBomb = false;
+
+        if(basicObject != null)
         {
+            if(basicObject.owner == kartId)
+            {
+                if(basicObject is Bomb)
+                {
+                    isBomb = true;
+
+                    if ((basicObject as Bomb).exploded == false || kart.lastBombId == objectId)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             if(basicObject is GreenShell)
             {
-                NotifyServerAboutChangeServerRpc(kart.NetworkObjectId, (basicObject as GreenShell).damageOutput);
-                spawner.DespawnObjectServerRpc(basicObject);
+                float damageOutput = isBomb ? (basicObject as GreenShell).damageOutput : (basicObject as GreenShell).damageOutput;
+                NotifyServerAboutChangeServerRpc(kartId, damageOutput);
+
+                if (!isBomb)
+                {
+                    spawner.DespawnObjectServerRpc(basicObject);
+                }
+                else
+                {
+                    kart.lastBombId = objectId;
+                }
             }
         }
     }
@@ -81,11 +118,6 @@ public class DetectCollision : NetworkBehaviour
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         kart.health -= damage;
 
-        if (kart.healthText != null)
-        {
-            kart.healthText.text = "Salud: \n" + kart.health;
-        }
-
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
         
         // TODO: No hacer desaparecer, sino darlo como Game Over
@@ -99,15 +131,17 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DispawnKartServerRpc(ulong kartId)
     {
-        FindAnyObjectByType<PositionManager>().karts.FirstOrDefault(k => k.NetworkObjectId == kartId).GetComponent<NetworkObject>().Despawn(true);
+        positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).NetworkObject.Despawn(true);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ServerRpcParams rpcParams = default)
     {
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        if(!kart.canBeHurt)
+        {
+            return;
+        }
 
         var parameters = new ClientRpcParams
         {
