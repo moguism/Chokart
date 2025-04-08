@@ -16,13 +16,14 @@
 - **Multijugador P2P:** https://www.youtube.com/watch?v=dUqLShvBIsM, https://www.youtube.com/watch?v=2OLUdPkkQPI, https://www.youtube.com/watch?v=3yuBOB3VrCk&t=198s
 - **Cálculo de posiciones:** https://www.youtube.com/watch?v=fdWjR652Fs4
 - **Login y registro:** https://youtu.be/H_WDhi8oXpg?si=z-ryro65byue_6yT
-- **Extraer IP del cliente** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
-- **IA de los contrincantes** https://www.youtube.com/watch?v=SMWxCpLvrcc
-- **IA de Bots** https://www.youtube.com/watch?v=1gKhLpzk_3g&ab_channel=git-amend
-- **IA bots** https://www.youtube.com/watch?v=n5rY9ffqryU&ab_channel=SebastianSchuchmann 
-- **Menú de selección** https://www.youtube.com/watch?v=tYK-rbuMF1k
-- **Deformación del coche** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
+- **Extraer IP del cliente:** https://blog.elmah.io/how-to-get-the-client-ip-in-asp-net-core-even-behind-a-proxy/
+- **IA de los contrincantes:** https://www.youtube.com/watch?v=SMWxCpLvrcc
+- **IA de Bots:** https://www.youtube.com/watch?v=1gKhLpzk_3g&ab_channel=git-amend
+- **IA bots:** https://www.youtube.com/watch?v=n5rY9ffqryU&ab_channel=SebastianSchuchmann 
+- **Menú de selección:** https://www.youtube.com/watch?v=tYK-rbuMF1k
+- **Deformación del coche:** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 - **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
+- **Traducción:** https://youtu.be/lku7f4KNFEo?si=3Ysd8tw9SoK-RY73
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -64,3 +65,4 @@
     Sábado --> Mauricio implementa UGS (Unity Game Services) para el multijugador de forma completa.
 ### Segunda semana (07/04 - 13/04)
     Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots.
+    Martes --> Mauricio refactoriza el sistema de objetos e implementa unos cuantos.

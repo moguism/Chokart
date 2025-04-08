@@ -7,5 +7,11 @@ public class BasicObject : NetworkBehaviour
 
     // Este es el método que hay que hacerle override
     public void UseObject(){}
-  
+
+    [ServerRpc]
+    public void DespawnOnTimeServerRpc(ulong id)
+    {
+        FindAnyObjectByType<ObjectSpawner>().DespawnObjectServerRpc(id);
+    }
+
 }

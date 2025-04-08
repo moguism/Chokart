@@ -71,6 +71,7 @@ public class KartController : BasicPlayer
 
     // Objetos
     public string currentObject;
+    private ObjectSpawner objectSpawner;
 
     // UI
     public TMP_Text healthText;
@@ -170,6 +171,8 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
+
+        objectSpawner = FindFirstObjectByType<ObjectSpawner>();
     }
 
 
@@ -247,7 +250,6 @@ public class KartController : BasicPlayer
         else
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
-            print(horizontalInput);
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
@@ -389,7 +391,12 @@ public class KartController : BasicPlayer
     [ServerRpc]
     private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
     {
-        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
+        if(objectSpawner == null)
+        {
+            objectSpawner = FindFirstObjectByType<ObjectSpawner>();
+        }
+
+        objectSpawner.SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
