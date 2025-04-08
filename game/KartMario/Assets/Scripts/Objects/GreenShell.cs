@@ -9,7 +9,7 @@ public class GreenShell : BasicObject
     public GameObject parent;
     public float speed = 10;
 
-    public void Update()
+    protected virtual void Update()
     {
         if (direction != null)
         {
@@ -25,7 +25,7 @@ public class GreenShell : BasicObject
         }
     }
 
-    public void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (direction != null)
         {

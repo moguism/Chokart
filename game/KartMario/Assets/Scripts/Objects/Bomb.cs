@@ -26,6 +26,8 @@ public class Bomb : GreenShell
                 canMove = false;
                 exploded = true;
 
+                print("Ha explotado");
+
                 // Si se agota el tiempo normal, explota
                 radiusTimer -= Time.deltaTime;
 
