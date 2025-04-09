@@ -19603,6 +19603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53746bb65e494e4da58a12b73d96eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxMoveDelta: 1
   maxCollisionStrength: 50
   YforceDamp: 0.1
@@ -48986,12 +48987,15 @@ MonoBehaviour:
   totalLaps: 0
   position: 0
   passedThroughFinishLine: 0
-  triggers: []
+  triggers: 
   lastTriggerIndex: 0
   distanceToNextTrigger: 0
   positionText: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
+  canBeHurt: 1
+  renders:
+  - {fileID: 8825829001530915735}
   healthText: {fileID: 0}
   enableAI: 0
   ai: {fileID: 1905256064562825202}

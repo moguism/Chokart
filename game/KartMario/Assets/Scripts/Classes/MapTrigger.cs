@@ -7,6 +7,8 @@ public class MapTrigger : NetworkBehaviour
     public static FinishLine finishLine;
     public static PositionManager positionManager;
 
+    public int index;
+
     private void Start()
     {
         if (finishLine == null)
@@ -14,6 +16,8 @@ public class MapTrigger : NetworkBehaviour
 
         if (positionManager == null)
             positionManager = gameObject.transform.parent.GetComponent<PositionManager>();
+
+        index = finishLine.triggers.IndexOf(this);
 
     }
 
@@ -27,12 +31,12 @@ public class MapTrigger : NetworkBehaviour
             bool alreadyAdded = false;
             bool shouldContinue = true;
 
-            if (kart.triggers.Contains(this))
+            if (kart.triggers.Contains(index))
             {
-                kart.triggers.Remove(this);
+                kart.triggers.Remove(index);
 
                
-                // Recalcula quiÈn es el prÛximo trigger
+                // Recalcula qui√©n es el pr√≥ximo trigger
                 if (IsOwner || kart.enableAI)
                 {
                     MapTrigger lastTrigger = finishLine.triggers.TakeWhile(x => x != this).DefaultIfEmpty(finishLine.triggers[^1]).LastOrDefault();
@@ -43,13 +47,13 @@ public class MapTrigger : NetworkBehaviour
             else
             {
                 alreadyAdded = true;
-                kart.triggers.Add(this);
+                kart.triggers.Add(index);
             }
 
-            // Si es la lÌnea de meta, la agrego si no lo he hecho ya
+            // Si es la l√≠nea de meta, la agrego si no lo he hecho ya
             if (Equals(finishLine) && !alreadyAdded && kart.triggers.Count != 0)
             {
-                kart.triggers.Insert(0, this);
+                kart.triggers.Insert(0, index);
                 shouldContinue = true;
             }
 
@@ -69,14 +73,14 @@ public class MapTrigger : NetworkBehaviour
 
     protected void ChangeIndexAndCalculatePosition(KartController kart)
     {
-        int index = finishLine.triggers.IndexOf(this);
+        index = finishLine.triggers.IndexOf(this);
         kart.lastTriggerIndex = index;
 
         CalculateDistanceToNextTrigger(kart);
 
         if (kart.enableAI && kart.ai != null)
         {
-            kart.ai.UpdateDestination(); // usa el Ìndice nuevo para calcular el siguiente
+            kart.ai.UpdateDestination(); // usa el √≠ndice nuevo para calcular el siguiente
         }
 
         Debug.Log("Se actualiza lastTriggerIndex para " + kart.name + " a " + index);
@@ -95,7 +99,7 @@ public class MapTrigger : NetworkBehaviour
         float distance = Vector3.Distance(kart.currentPosition, nextTrigger.transform.position);
         kart.distanceToNextTrigger = distance;
 
-        //print("El coche " + kart.NetworkObjectId + " est· en " + kart.currentPosition);
+        //print("El coche " + kart.NetworkObjectId + " est√° en " + kart.currentPosition);
         //print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
 
         if (IsOwner || kart.enableAI)
