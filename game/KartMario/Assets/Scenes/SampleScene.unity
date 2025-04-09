@@ -2386,6 +2386,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 380740405}
   - {fileID: 1100688652}
   - {fileID: 1246957821}
   - {fileID: 200936884}
@@ -2403,7 +2404,6 @@ Transform:
   - {fileID: 1362588063}
   - {fileID: 2078158804}
   - {fileID: 1419329212}
-  - {fileID: 380740405}
   m_Father: {fileID: 1198075366}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &276881112
@@ -3026,7 +3026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   triggers:
-  - {fileID: 380740407}
   - {fileID: 1100688653}
   - {fileID: 1246957822}
   - {fileID: 200936885}
@@ -3044,6 +3043,7 @@ MonoBehaviour:
   - {fileID: 1362588064}
   - {fileID: 2078158805}
   - {fileID: 1419329213}
+  - {fileID: 380740407}
 --- !u!23 &380740410
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class MapTrigger : NetworkBehaviour
 
         if (positionManager == null)
             positionManager = gameObject.transform.parent.GetComponent<PositionManager>();
+
     }
 
     public void OnTriggerEnter(Collider other)
@@ -58,7 +59,8 @@ public class MapTrigger : NetworkBehaviour
 
             if (IsOwner || kart.enableAI)
             {
-                Debug.Log("ENTRA EN CAMBIAR INDICE Y CALCUAR POSICION");
+                Debug.Log("Trigger IA activado por : " + kart.name );
+
                 ChangeIndexAndCalculatePosition(kart);
             }
         }
@@ -70,6 +72,12 @@ public class MapTrigger : NetworkBehaviour
         kart.lastTriggerIndex = index;
 
         CalculateDistanceToNextTrigger(kart);
+
+        if (kart.enableAI && kart.ai != null)
+        {
+            kart.ai.UpdateDestination(); // usa el índice nuevo para calcular el siguiente
+        }
+
         Debug.Log("Se actualiza lastTriggerIndex para " + kart.name + " a " + index);
     }
 

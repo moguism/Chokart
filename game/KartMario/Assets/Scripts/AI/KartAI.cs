@@ -60,8 +60,6 @@ public class KartAI : NetworkBehaviour
             parent.horizontalInput = HorizontalInput;
             parent.direction = MoveDirection;
         }
-
-        UpdateDestination();
     }
 
 
@@ -70,7 +68,7 @@ public class KartAI : NetworkBehaviour
     {
         if (MapTrigger.finishLine == null || MapTrigger.finishLine.triggers.Count == 0) return;
 
-        currentTriggerIndex = (kart.lastTriggerIndex + 1);
+        currentTriggerIndex = (kart.lastTriggerIndex + 1) % MapTrigger.finishLine.triggers.Count;
         destination = MapTrigger.finishLine.triggers[currentTriggerIndex].transform;
 
         Debug.Log("IA actualiza destino a: " + destination.name);
