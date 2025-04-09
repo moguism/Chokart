@@ -9,6 +9,7 @@ public class KartAI : NetworkBehaviour
 
     public float steerSensitivity = 1.0f;
 
+   
     public float HorizontalInput { get; private set; }
     public int MoveDirection { get; private set; }
 
@@ -18,8 +19,8 @@ public class KartAI : NetworkBehaviour
     [SerializeField]
     private SphereCollider sphereCollider;
 
-    [SerializeField]
-    public KartController parent;
+    /* [SerializeField]
+     public KartController parent;*/
 
     public KartController enemyKart;
 
@@ -54,12 +55,10 @@ public class KartAI : NetworkBehaviour
 
         MoveDirection = (localTarget.z > 0.5f) ? 1 : (localTarget.z < -0.5f ? -1 : 0);
 
-        if (parent != null && parent.enableAI)
-        {
-            // Debug.Log("COCHE " + parent.GetComponentIndex() + "IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection); 
-            parent.horizontalInput = HorizontalInput;
-            parent.direction = MoveDirection;
-        }
+        // Debug.Log("COCHE " + kart.GetComponentIndex() + " IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
+        kart.horizontalInput = HorizontalInput;
+        kart.direction = MoveDirection;
+
     }
 
 
