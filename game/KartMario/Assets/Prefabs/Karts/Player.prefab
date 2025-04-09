@@ -29859,9 +29859,10 @@ MonoBehaviour:
   - {fileID: 5250035531427882519}
   - {fileID: 2911437297688531470}
   - {fileID: 6304158369429116016}
+  lastBombId: 0
   healthText: {fileID: 0}
   enableAI: 0
-  ai: {fileID: 0}
+  ai: {fileID: 1583639820755335427}
   kartIndex: 0
 --- !u!114 &3255239343157649172
 MonoBehaviour:
@@ -29936,7 +29937,6 @@ MonoBehaviour:
   destination: {fileID: 0}
   steerSensitivity: 1
   sphereCollider: {fileID: 5157537988344369135}
-  parent: {fileID: 5697130421628379105}
   enemyKart: {fileID: 0}
   speed: 2000
 --- !u!1 &4743390076326792228
@@ -34851,7 +34851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c5b0bb237a91f40b9d019ff07b1d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ai: {fileID: 0}
+  ai: {fileID: 1583639820755335427}
 --- !u!1 &5355703932657722504
 GameObject:
   m_ObjectHideFlags: 0
