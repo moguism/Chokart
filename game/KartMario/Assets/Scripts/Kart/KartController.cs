@@ -259,7 +259,7 @@ public class KartController : BasicPlayer
             // esto no lo pilla bien 
             horizontalInput = ai.HorizontalInput;
             direction = ai.MoveDirection;
-            Debug.Log("COCHE " + kartIndex + "es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
+            Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
         else
         {
@@ -267,7 +267,10 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        healthText.text = "Salud: \n" + health;
+        if (healthText)
+        {
+            healthText.text = "Salud: \n" + health;
+        }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
@@ -324,6 +327,10 @@ public class KartController : BasicPlayer
         if (!enableAI)
         {
             jumpValue = playerControls.Player.Jump.ReadValue<float>();
+        }
+        else
+        {
+            jumpValue = jumping ? 1f : 0f;
         }
 
         // AY MI MADRE EL DERRAPE
@@ -430,7 +437,7 @@ public class KartController : BasicPlayer
     [ServerRpc]
     private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
     {
-        if(objectSpawner == null)
+        if (objectSpawner == null)
         {
             objectSpawner = FindFirstObjectByType<ObjectSpawner>();
         }
