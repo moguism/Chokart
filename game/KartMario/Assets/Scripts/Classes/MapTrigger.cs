@@ -18,6 +18,7 @@ public class MapTrigger : NetworkBehaviour
             positionManager = gameObject.transform.parent.GetComponent<PositionManager>();
 
         index = finishLine.triggers.IndexOf(this);
+
     }
 
     public void OnTriggerEnter(Collider other)
@@ -25,6 +26,7 @@ public class MapTrigger : NetworkBehaviour
         var parent = other.gameObject.transform.parent;
         if (parent && parent.CompareTag("Kart"))
         {
+            // Debug.Log("Ha entrado en el trigger  " + parent.name);
             var kart = parent.GetComponentInChildren<KartController>();
             bool alreadyAdded = false;
             bool shouldContinue = true;
@@ -33,8 +35,9 @@ public class MapTrigger : NetworkBehaviour
             {
                 kart.triggers.Remove(index);
 
-                // Recalcula quién es el próximo trigger
-                if (IsOwner)
+               
+                // Recalcula quiÃ©n es el prÃ³ximo trigger
+                if (IsOwner || kart.enableAI)
                 {
                     MapTrigger lastTrigger = finishLine.triggers.TakeWhile(x => x != this).DefaultIfEmpty(finishLine.triggers[^1]).LastOrDefault();
                     lastTrigger.ChangeIndexAndCalculatePosition(kart);
@@ -47,7 +50,7 @@ public class MapTrigger : NetworkBehaviour
                 kart.triggers.Add(index);
             }
 
-            // Si es la línea de meta, la agrego si no lo he hecho ya
+            // Si es la lÃ­nea de meta, la agrego si no lo he hecho ya
             if (Equals(finishLine) && !alreadyAdded && kart.triggers.Count != 0)
             {
                 kart.triggers.Insert(0, index);
@@ -59,8 +62,10 @@ public class MapTrigger : NetworkBehaviour
                 return;
             }
 
-            if (IsOwner)
+            if (IsOwner || kart.enableAI)
             {
+                Debug.Log("Trigger IA activado por " + kart + "QUE ES OWNER : " + IsOwner);
+
                 ChangeIndexAndCalculatePosition(kart);
             }
         }
@@ -72,6 +77,13 @@ public class MapTrigger : NetworkBehaviour
         kart.lastTriggerIndex = index;
 
         CalculateDistanceToNextTrigger(kart);
+
+        if (kart.enableAI && kart.ai != null)
+        {
+            kart.ai.UpdateDestination(); // usa el Ã­ndice nuevo para calcular el siguiente
+        }
+
+        Debug.Log("Se actualiza lastTriggerIndex para " + kart.name + " a " + index);
     }
 
     public void CalculateDistanceToNextTrigger(KartController kart)
@@ -87,10 +99,10 @@ public class MapTrigger : NetworkBehaviour
         float distance = Vector3.Distance(kart.currentPosition, nextTrigger.transform.position);
         kart.distanceToNextTrigger = distance;
 
-        //print("El coche " + kart.NetworkObjectId + " está en " + kart.currentPosition);
+        //print("El coche " + kart.NetworkObjectId + " estÃ¡ en " + kart.currentPosition);
         //print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
 
-        if (IsOwner)
+        if (IsOwner || kart.enableAI)
         {
             NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
         }
@@ -106,7 +118,7 @@ public class MapTrigger : NetworkBehaviour
 
         MapTrigger nextTrigger = finishLine.triggers[nextIndex];
 
-        if (kart.enableAI)
+        if (kart.enableAI && kart.ai != null)
         {
             print(nextTrigger);
             if (kart.lastTriggerIndex != nextIndex)
@@ -121,6 +133,7 @@ public class MapTrigger : NetworkBehaviour
     [ServerRpc]
     private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, ServerRpcParams rpcParams = default)
     {
+        // Debug.Log($"ServerRpc coche {kartId} actualizando a index {newTriggerIndex} distancia {distanceToNextTrigger}");
         var kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
