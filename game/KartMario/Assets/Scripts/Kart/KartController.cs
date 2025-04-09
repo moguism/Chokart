@@ -256,7 +256,6 @@ public class KartController : BasicPlayer
         }
         else
         {
-            Debug.Log("COCHE " + kartIndex + " no es ia y se mueve con botones");
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             print(horizontalInput);
             //horizontalInput = Input.GetAxis("Horizontal");
