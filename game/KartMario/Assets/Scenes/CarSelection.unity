@@ -1789,6 +1789,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600706536}
   m_CullTransparentMesh: 1
+--- !u!1 &1634069203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634069205}
+  - component: {fileID: 1634069204}
+  m_Layer: 0
+  m_Name: Video Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!328 &1634069204
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634069203}
+  m_Enabled: 0
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 1970610965}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 0
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
+--- !u!4 &1634069205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634069203}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.47, y: 6.4799995, z: 9.44}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1756109436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,6 +2007,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1786565791}
   - component: {fileID: 1786565790}
+  - component: {fileID: 1786565792}
   m_Layer: 0
   m_Name: CarSelection
   m_TagString: Untagged
@@ -1963,17 +2032,38 @@ MonoBehaviour:
     speed: 100
   - car: {fileID: 919132147612707287}
     speed: 200
+  _characters:
+  - character: {fileID: 0}
+    name: Jinx
+    clip: {fileID: 32900000, guid: 2efa230451da3fa4080de15df40006e1, type: 3}
+  - character: {fileID: 0}
+    name: Spamton
+    clip: {fileID: 32900000, guid: b91e93ec935ba5a45921c408460387dc, type: 3}
+  - character: {fileID: 0}
+    name: Six
+    clip: {fileID: 0}
+  - character: {fileID: 0}
+    name: Shrek
+    clip: {fileID: 0}
+  - character: {fileID: 0}
+    name: Doraemon
+    clip: {fileID: 0}
+  - character: {fileID: 0}
+    name: Pingu
+    clip: {fileID: 0}
+  - character: {fileID: 0}
+    name: Alastor
+    clip: {fileID: 0}
   speedText: {fileID: 2129844028}
   kartBase: {fileID: 450116724}
-  testing: 0
---- !u!4 &1786565791
-Transform:
+  videoPlayer: {fileID: 1634069204}
+--- !u!224 &1786565791
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786565789}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1981,6 +2071,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1786565792
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786565789}
+  m_CullTransparentMesh: 1
 --- !u!1 &1855992786
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,3 +2672,4 @@ SceneRoots:
   - {fileID: 1331269658}
   - {fileID: 2083935429}
   - {fileID: 1786565791}
+  - {fileID: 1634069205}
