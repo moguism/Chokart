@@ -62,7 +62,7 @@ public class KartController : BasicPlayer
     public int totalLaps = 0;
     public int position = 0;
     public bool passedThroughFinishLine = false;
-    public List<MapTrigger> triggers = new List<MapTrigger>();
+    public List<int> triggers = new List<int>();
     public int lastTriggerIndex;
     public float distanceToNextTrigger;
     public TMP_Text positionText;
@@ -70,7 +70,12 @@ public class KartController : BasicPlayer
     private PositionManager positionManager;
 
     // Objetos
+    [Header("Objetos")]
     public string currentObject;
+    private ObjectSpawner objectSpawner;
+    public bool canBeHurt = true;
+    public List<Renderer> renders;
+    public ulong lastBombId;
 
     // UI
     public TMP_Text healthText;
@@ -171,6 +176,8 @@ public class KartController : BasicPlayer
         {
             secondaryParticles.Add(p);
         }
+
+        objectSpawner = FindFirstObjectByType<ObjectSpawner>();
     }
 
 
@@ -257,9 +264,10 @@ public class KartController : BasicPlayer
         else
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
-            print(horizontalInput);
             //horizontalInput = Input.GetAxis("Horizontal");
         }
+
+        healthText.text = "Salud: \n" + health;
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
@@ -422,7 +430,12 @@ public class KartController : BasicPlayer
     [ServerRpc]
     private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
     {
-        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
+        if(objectSpawner == null)
+        {
+            objectSpawner = FindFirstObjectByType<ObjectSpawner>();
+        }
+
+        objectSpawner.SpawnObject(currentObject, currentPosition, destination, kartId);
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
