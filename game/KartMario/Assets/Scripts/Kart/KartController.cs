@@ -306,7 +306,7 @@ public class KartController : BasicPlayer
 
 
         // Para girar el modelo a la izquierda o la derecha
-        if (horizontalInput != 0 && speed != 0 && !enableAI)
+        if (horizontalInput != 0 && speed != 0)
         {
             int dir = horizontalInput > 0 ? 1 : -1;
             float amount = Mathf.Abs(horizontalInput);
