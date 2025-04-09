@@ -2,13 +2,19 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class CarSelection : MonoBehaviour
 {
     public static KartModel[] cars;
+    public static CharacterModel[] characters;
 
     [SerializeField]
     private KartModel[] _cars;
+
+    [SerializeField]
+    private CharacterModel[] _characters;
 
     [SerializeField]
     private TMP_Text speedText;
@@ -16,15 +22,21 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private GameObject kartBase;
 
-    private int index;
-
     [SerializeField]
-    private bool testing = false;
+    private VideoPlayer videoPlayer;
+
+    private int index;
+    private static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
+
+    private bool showingCharacters = false;
 
     private void Start()
     {
         cars = _cars.ToArray(); // Para que haga una copia
+        characters = _characters.ToArray();
+
         index = PlayerPrefs.GetInt("carIndex");
+        characterIndex = PlayerPrefs.GetInt("characterIndex");
         ManageCarVisibility();
     }
 
@@ -35,36 +47,73 @@ public class CarSelection : MonoBehaviour
 
     public void Next()
     {
-        index++;
-        if(index >= _cars.Length)
+        if (!showingCharacters)
         {
-            index = 0;
+            index++;
+            if (index >= _cars.Length)
+            {
+                index = 0;
+            }
         }
-        ManageCarVisibilityAndSave();
+        else
+        {
+            characterIndex++;
+            if(characterIndex >= _characters.Length)
+            {
+                characterIndex = 0;
+            }
+        }
+        ManageVisibilityAndSave();
     }
 
     public void Prev()
     {
-        index--;
-        if(index < 0)
+        if (!showingCharacters)
         {
-            index = _cars.Length - 1;
+            index--;
+            if (index < 0)
+            {
+                index = _cars.Length - 1;
+            }
         }
-        ManageCarVisibilityAndSave();
+        else
+        {
+            characterIndex--;
+            if(characterIndex < 0)
+            {
+                characterIndex = _characters.Length - 1;
+            }
+        }
+        ManageVisibilityAndSave();
     }
 
     public void GoToGame()
     {
         WebsocketSingleton.kartModelIndex = index;
 
-        // TODO: BORRAR DESPUÉS Y PONER ÚNICAMENTE LAS LOBBIES (1)
-        int sceneNumber = testing ? 2 : 1;
-        SceneManager.LoadScene(sceneNumber);
+        if (showingCharacters)
+        {
+            SceneManager.LoadScene(1);   
+        }
+        else
+        {
+            videoPlayer.enabled = true;
+            showingCharacters = true;
+            ManageVisibilityAndSave();
+        }
     }
 
-    private void ManageCarVisibilityAndSave()
+    private void ManageVisibilityAndSave()
     {
-        ManageCarVisibility();
+        if(showingCharacters)
+        {
+            ManageCharacterVisibility();
+        }
+        else
+        {
+            ManageCarVisibility();
+        }
+
         SaveIndex();
     }
 
@@ -79,9 +128,32 @@ public class CarSelection : MonoBehaviour
         speedText.text = "Speed: " + _cars[index].speed;
     }
 
+    private void ManageCharacterVisibility()
+    {
+        for(int i = 0; i < _characters.Length; i++)
+        {
+            //_characters[i].character.SetActive(false);
+        }
+
+        //_characters[characterIndex].character.SetActive(true);
+        speedText.text = _characters[characterIndex].name;
+
+        VideoClip clip = _characters[characterIndex].clip;
+        if(clip == null)
+        {
+            Debug.LogWarning("No hay video :(");
+            videoPlayer.Stop();
+            return;
+        }
+
+        videoPlayer.clip = clip;
+        videoPlayer.Play();
+    }
+
     private void SaveIndex()
     {
         PlayerPrefs.SetInt("carIndex", index);
+        PlayerPrefs.SetInt("characterIndex", characterIndex);
         PlayerPrefs.Save();
     }
 }
@@ -91,4 +163,12 @@ public class KartModel
 {
     public GameObject car; // Por ahora esto es una referencia al modelo (digo por ahora porque probablemente se puede hacer mejor)
     public float speed;
+}
+
+[System.Serializable]
+public class CharacterModel
+{
+    public GameObject character;
+    public string name;
+    public VideoClip clip;
 }

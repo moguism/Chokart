@@ -24,6 +24,7 @@
 - **Deformación del coche:** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 - **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
 - **Traducción:** https://youtu.be/lku7f4KNFEo?si=3Ysd8tw9SoK-RY73
+- **Vídeos:** https://www.youtube.com/watch?v=-XzVq7qIuys
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -66,4 +67,4 @@
 ### Segunda semana (07/04 - 13/04)
     Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots y comienza a implentarla.
     Martes --> María continua con la IA de los bots. Mauricio refactoriza el sistema de objetos y los programa todos.
-    Miercoles --> María termina la ia de los bots.
+    Miercoles --> María termina la ia de los bots. Mauricio mejora el sistema de selección para incluir personajes y vídeos.
