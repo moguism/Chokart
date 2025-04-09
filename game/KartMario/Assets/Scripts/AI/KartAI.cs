@@ -9,7 +9,11 @@ public class KartAI : NetworkBehaviour
 
     public float steerSensitivity = 1.0f;
 
-   
+    private bool isDrifting = false;
+    private float driftTimer; // lo que van a durar los derrapes 
+
+    private bool botDrift; // esto marca si el bot va a derrapar o no durante la partida, 
+
     public float HorizontalInput { get; private set; }
     public int MoveDirection { get; private set; }
 
@@ -37,6 +41,8 @@ public class KartAI : NetworkBehaviour
             kart.ai = this;
         }
 
+        botDrift = Random.value < 0.5f;
+
         Debug.Log("el coche bot es ", kart);
     }
 
@@ -54,8 +60,37 @@ public class KartAI : NetworkBehaviour
         HorizontalInput = Mathf.Clamp(localTarget.x, -1f, 1f) * steerSensitivity;
 
         MoveDirection = (localTarget.z > 0.5f) ? 1 : (localTarget.z < -0.5f ? -1 : 0);
+        /*
+        // derrapes automaticos en curvas pronunciadas
+        float angle = Vector3.Angle(kart.transform.forward, (destination.position - kart.transform.position).normalized);
 
-        // Debug.Log("COCHE " + kart.GetComponentIndex() + " IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
+        // 50% de probabilidad de que un bot que derrape, para que no todos lo hagan igual
+        if (!isDrifting && angle > 20f && Mathf.Abs(HorizontalInput) >= 1f && Random.value < 0.5f && botDrift)
+        {
+            isDrifting = true;
+            driftTimer = Random.Range(0.5f, 3f);
+            kart.jumping = true;
+        }
+
+        // derrapa x tiempo
+        if (isDrifting)
+        {
+            driftTimer -= Time.deltaTime;
+            kart.jumping = true;
+
+            if (driftTimer <= 0)
+            {
+                isDrifting = false;
+                kart.jumping = false;
+            }
+        }
+        else
+        {
+            kart.jumping = false;
+        }*/
+
+
+        Debug.Log("COCHE " + kart.GetComponentIndex() + " IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
         kart.horizontalInput = HorizontalInput;
         kart.direction = MoveDirection;
 
