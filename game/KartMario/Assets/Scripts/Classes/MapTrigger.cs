@@ -64,8 +64,7 @@ public class MapTrigger : NetworkBehaviour
 
             if (IsOwner || kart.enableAI)
             {
-                Debug.Log("Trigger IA activado por " + kart + "QUE ES OWNER : " + IsOwner);
-
+                // Debug.Log("Trigger IA activado por " + kart + "  ES OWNER : " + IsOwner);
                 ChangeIndexAndCalculatePosition(kart);
             }
         }
@@ -83,7 +82,7 @@ public class MapTrigger : NetworkBehaviour
             kart.ai.UpdateDestination(); // usa el índice nuevo para calcular el siguiente
         }
 
-        Debug.Log("Se actualiza lastTriggerIndex para " + kart.name + " a " + index);
+       //  Debug.Log("Se actualiza lastTriggerIndex para " + kart.name + " a " + index);
     }
 
     public void CalculateDistanceToNextTrigger(KartController kart)
