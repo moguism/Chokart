@@ -10,9 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
-    [SerializeField]
-    private string lobbyName;
-
     public static int maxPlayers = 8;
 
     [SerializeField]
@@ -32,6 +29,15 @@ public class LobbyManager : MonoBehaviour
 
     [SerializeField]
     private GameObject startGameButton;
+
+    [SerializeField]
+    private GameObject lobbyItemPrefab;
+
+    [SerializeField]
+    private GameObject containerCanvas;
+
+    [SerializeField]
+    private GameObject container;
 
     private Lobby currentLobby;
 
@@ -83,6 +89,14 @@ public class LobbyManager : MonoBehaviour
                 Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
                 currentLobby = lobby;
 
+                bool wasHostBefore = isHost;
+
+                if(!wasHostBefore && currentLobby.HostId == AuthenticationService.Instance.PlayerId)
+                {
+                    isHost = true;
+                    SetOptionsAvailability(false, true, false);
+                }
+
                 if (currentLobby.Data["RELAY_CODE"].Value != "0")
                 {
                     if(!isHost)
@@ -103,6 +117,7 @@ public class LobbyManager : MonoBehaviour
 
         foreach(Player player in currentLobby.Players)
         {
+            print(player);
             playersList.text += "\n" + player.Data["PlayerName"].Value;
         }
     }
@@ -111,20 +126,21 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            Player player = CreateNewPlayer();
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = false,
-                Player = CreateNewPlayer(),
+                Player = player,
                 Data = new Dictionary<string, DataObject>
                 {
                     { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, "0") }
                 }
             };
 
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createLobbyOptions);
+            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync("Lobby de " + player.Data["PlayerName"].Value, maxPlayers, createLobbyOptions);
             currentLobby = lobby;
             isHost = true;
-            SetOptionsAvailability(false, true);
+            SetOptionsAvailability(false, true, false);
 
             Debug.Log("Lobby creada: " + lobby + ". Código: " + lobby.LobbyCode);
         }
@@ -136,10 +152,11 @@ public class LobbyManager : MonoBehaviour
 
     public async void ListLobbiesButton()
     {
-        await ListLobbiesAsync();
+        containerCanvas.SetActive(true);
+        await ListLobbiesAsync(true);
     }
 
-    public async Task<QueryResponse> ListLobbiesAsync()
+    public async Task<QueryResponse> ListLobbiesAsync(bool show)
     {
         try
         {
@@ -158,9 +175,32 @@ public class LobbyManager : MonoBehaviour
 
             Debug.Log("Lobbies encontradas: " + queryResponse.Results.Count);
 
+            bool alreadyDeletedLobbies = false;
+
             foreach (Lobby lobby in queryResponse.Results)
             {
                 Debug.Log(lobby.Name + " " + lobby.MaxPlayers);
+                if(show)
+                {
+                    if(!alreadyDeletedLobbies)
+                    {
+                        foreach(Transform lobbyTransform in container.transform)
+                        {
+                            Destroy(lobbyTransform.gameObject);
+                        }
+
+                        alreadyDeletedLobbies = true;
+                    }
+
+                    GameObject lobbyItem = Instantiate(lobbyItemPrefab, container.transform);
+                    //lobbyItem.transform.SetParent(container.transform);
+
+                    LobbyItem item = lobbyItem.GetComponentInChildren<LobbyItem>();
+                    item.LobbyName.text = lobby.Name;
+                    item.TotalPlayers.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
+                    item.LobbyId = lobby.Id;
+                    item.LobbyManager = this;
+                }
             }
 
             return queryResponse;
@@ -174,42 +214,44 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
-    public async void JoinLobbyByCode()
+    public async void JoinLobbyByCode(string lobbyId = null)
     {
         try
         {
             Lobby lobby;
 
-            // Si no ha puesto código, se une a la primera que haya disponible
-            if (lobbyCodeInput.text == "" || lobbyCodeInput.text == null)
+            if (lobbyId != null)
             {
-                QueryResponse result = await ListLobbiesAsync();
-
-                if(result.Results.Count == 0)
-                {
-                    Debug.LogWarning("No hay ninguna lobby disponible");
-                    return;
-                }
-
-                JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
-                {
-                    Player = CreateNewPlayer()
-                };
-
-                lobby = await LobbyService.Instance.JoinLobbyByIdAsync(result.Results[0].Id, joinLobbyByIdOptions);
+                lobby = await JoinLobbyById(lobbyId);
             }
             else
             {
-                JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
+                // Si no ha puesto código, se une a la primera que haya disponible
+                if (lobbyCodeInput.text == "" || lobbyCodeInput.text == null)
                 {
-                    Player = CreateNewPlayer()
-                };
+                    QueryResponse result = await ListLobbiesAsync(false);
 
-                lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text, joinLobbyByCodeOptions);
+                    if (result.Results.Count == 0)
+                    {
+                        Debug.LogWarning("No hay ninguna lobby disponible");
+                        return;
+                    }
+
+                    lobby = await JoinLobbyById(result.Results[0].Id);
+                }
+                else
+                {
+                    JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
+                    {
+                        Player = CreateNewPlayer()
+                    };
+
+                    lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text, joinLobbyByCodeOptions);
+                }
             }
 
             currentLobby = lobby;
-            SetOptionsAvailability(false, true);
+            SetOptionsAvailability(false, true, false);
             Debug.Log("Unido a la lobby :D");
 
         }
@@ -217,6 +259,16 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.LogError(e);
         }
+    }
+
+    private async Task<Lobby> JoinLobbyById(string id)
+    {
+        JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
+        {
+            Player = CreateNewPlayer()
+        };
+
+        return await LobbyService.Instance.JoinLobbyByIdAsync(id, joinLobbyByIdOptions);
     }
 
     public async void StartGame()
@@ -242,7 +294,7 @@ public class LobbyManager : MonoBehaviour
     public void LeaveLobby()
     {
         KickPlayer(AuthenticationService.Instance.PlayerId);
-        SetOptionsAvailability(true, false);
+        SetOptionsAvailability(true, false, false);
         currentLobby = null;
         isHost = false;
     }
@@ -279,12 +331,13 @@ public class LobbyManager : MonoBehaviour
         };
     }
 
-    private void SetOptionsAvailability(bool preOptions, bool inOptions)
+    public void SetOptionsAvailability(bool preOptions, bool inOptions, bool containerCanvasOptions)
     {
         preLobbyOptions.SetActive(preOptions);
         afterLobbyOptions.SetActive(inOptions);
-        
-        if(isHost)
+        containerCanvas.SetActive(containerCanvasOptions);
+
+        if (isHost)
         {
             startGameButton.SetActive(true);
         }
