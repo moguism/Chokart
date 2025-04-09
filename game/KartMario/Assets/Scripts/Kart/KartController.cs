@@ -92,6 +92,7 @@ public class KartController : BasicPlayer
     // Controles
     private InputSystem_Actions playerControls;
     private float jumpValueLastFrame;
+    private float jumpValue;
 
     public override void OnNetworkSpawn()
     {
@@ -251,6 +252,15 @@ public class KartController : BasicPlayer
             float gyroGravityX = Input.gyro.gravity.x;
             horizontalInput = Mathf.Clamp(gyroGravityX * 2f, -1f, 1f);
         }
+
+        // MOVIMIENTO DE IA
+        if (enableAI && ai != null)
+        {
+            // esto no lo pilla bien 
+            horizontalInput = ai.HorizontalInput;
+            direction = ai.MoveDirection;
+            Debug.Log("COCHE " + kartIndex + "es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
+        }
         else
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
@@ -263,25 +273,45 @@ public class KartController : BasicPlayer
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
         currentPosition = transform.position;
 
+        /*
         if (enableAI)
         {
             InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
             return;
-        }
+        }*/
 
-        // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+        if (enableAI)
         {
-            speed = acceleration;
-        }
-        else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-        {
-            speed = -acceleration;
+            if (direction == 1)
+            {
+                speed = acceleration;
+            }
+            else if (direction == -1)
+            {
+                speed = -acceleration;
+            }
+            else
+            {
+                speed = 0;
+            }
         }
         else
         {
-            speed = 0;
+            // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+            if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+            {
+                speed = acceleration;
+            }
+            else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+            {
+                speed = -acceleration;
+            }
+            else
+            {
+                speed = 0;
+            }
         }
+
 
         // Para girar el modelo a la izquierda o la derecha
         if (horizontalInput != 0 && speed != 0)
@@ -291,7 +321,10 @@ public class KartController : BasicPlayer
             Steer(dir, amount);
         }
 
-        float jumpValue = playerControls.Player.Jump.ReadValue<float>();
+        if (!enableAI)
+        {
+            jumpValue = playerControls.Player.Jump.ReadValue<float>();
+        }
 
         // AY MI MADRE EL DERRAPE
         if ((jumpValue == 1 && !drifting && jumpValueLastFrame == 0) || (jumping && !drifting))
@@ -474,7 +507,7 @@ public class KartController : BasicPlayer
     {
         if (speed < 0)
         {
-            direction *= -1 ;
+            direction *= -1;
         }
         rotate = (steering * direction) * amount;
     }

@@ -29774,6 +29774,7 @@ GameObject:
   - component: {fileID: 5697130421628379105}
   - component: {fileID: 3255239343157649172}
   - component: {fileID: 7236909429488122507}
+  - component: {fileID: 1583639820755335427}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -29860,7 +29861,7 @@ MonoBehaviour:
   - {fileID: 6304158369429116016}
   healthText: {fileID: 0}
   enableAI: 0
-  ai: {fileID: 1905256064562825202}
+  ai: {fileID: 0}
   kartIndex: 0
 --- !u!114 &3255239343157649172
 MonoBehaviour:
@@ -29919,6 +29920,25 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &1583639820755335427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736102366237070151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  destination: {fileID: 0}
+  steerSensitivity: 1
+  sphereCollider: {fileID: 5157537988344369135}
+  parent: {fileID: 5697130421628379105}
+  enemyKart: {fileID: 0}
+  speed: 2000
 --- !u!1 &4743390076326792228
 GameObject:
   m_ObjectHideFlags: 0
@@ -34831,7 +34851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c5b0bb237a91f40b9d019ff07b1d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ai: {fileID: 1905256064562825202}
+  ai: {fileID: 0}
 --- !u!1 &5355703932657722504
 GameObject:
   m_ObjectHideFlags: 0
@@ -59639,7 +59659,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9193125234719358039}
   - component: {fileID: 77989067485063235}
-  - component: {fileID: 1905256064562825202}
   - component: {fileID: 3073240497499352717}
   m_Layer: 0
   m_Name: Player
@@ -59691,25 +59710,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &1905256064562825202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7468548331436223440}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06d390f42982fb14d86acac3c5ab6301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  destination: {fileID: 0}
-  agent: {fileID: 3073240497499352717}
-  sphereCollider: {fileID: 5157537988344369135}
-  parent: {fileID: 5697130421628379105}
-  enemyKart: {fileID: 0}
-  speed: 2000
 --- !u!195 &3073240497499352717
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -59717,7 +59717,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7468548331436223440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
