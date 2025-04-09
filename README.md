@@ -66,3 +66,4 @@
 ### Segunda semana (07/04 - 13/04)
     Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots y comienza a implentarla.
     Martes --> María continua con la IA de los bots. Mauricio refactoriza el sistema de objetos y los programa todos.
+    Miercoles --> María termina la ia de los bots.
