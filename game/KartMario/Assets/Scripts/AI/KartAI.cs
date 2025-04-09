@@ -36,7 +36,7 @@ public class KartAI : NetworkBehaviour
             kart.ai = this;
         }
 
-        Debug.Log("el coche es ", kart);
+        Debug.Log("el coche bot es ", kart);
     }
 
     private void Start()
@@ -61,7 +61,6 @@ public class KartAI : NetworkBehaviour
             parent.direction = MoveDirection;
         }
     }
-
 
 
     public void UpdateDestination()

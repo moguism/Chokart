@@ -22,7 +22,7 @@ public class MapTrigger : NetworkBehaviour
         var parent = other.gameObject.transform.parent;
         if (parent && parent.CompareTag("Kart"))
         {
-            Debug.Log("Ha entrado en el trigger  " + parent.name);
+            // Debug.Log("Ha entrado en el trigger  " + parent.name);
             var kart = parent.GetComponentInChildren<KartController>();
             bool alreadyAdded = false;
             bool shouldContinue = true;
@@ -129,7 +129,7 @@ public class MapTrigger : NetworkBehaviour
     [ServerRpc]
     private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, ServerRpcParams rpcParams = default)
     {
-        Debug.Log($"ServerRpc coche  {kartId} actualizando a index {newTriggerIndex} con distancia {distanceToNextTrigger}");
+        // Debug.Log($"ServerRpc coche {kartId} actualizando a index {newTriggerIndex} distancia {distanceToNextTrigger}");
         var kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
