@@ -31,8 +31,9 @@ public class MapTrigger : NetworkBehaviour
             {
                 kart.triggers.Remove(this);
 
+               
                 // Recalcula quién es el próximo trigger
-                if (IsOwner)
+                if (IsOwner || kart.enableAI)
                 {
                     MapTrigger lastTrigger = finishLine.triggers.TakeWhile(x => x != this).DefaultIfEmpty(finishLine.triggers[^1]).LastOrDefault();
                     lastTrigger.ChangeIndexAndCalculatePosition(kart);
@@ -59,7 +60,7 @@ public class MapTrigger : NetworkBehaviour
 
             if (IsOwner || kart.enableAI)
             {
-                Debug.Log("Trigger IA activado por : " + kart.name );
+                Debug.Log("Trigger IA activado por " + kart + "QUE ES OWNER : " + IsOwner);
 
                 ChangeIndexAndCalculatePosition(kart);
             }
@@ -128,6 +129,7 @@ public class MapTrigger : NetworkBehaviour
     [ServerRpc]
     private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, ServerRpcParams rpcParams = default)
     {
+        Debug.Log($"ServerRpc coche  {kartId} actualizando a index {newTriggerIndex} con distancia {distanceToNextTrigger}");
         var kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {

@@ -87,6 +87,7 @@ public class KartController : BasicPlayer
     // Controles
     private InputSystem_Actions playerControls;
     private float jumpValueLastFrame;
+    private float jumpValue;
 
     public override void OnNetworkSpawn()
     {
@@ -313,8 +314,10 @@ public class KartController : BasicPlayer
             Steer(dir, amount);
         }
 
-
-        float jumpValue = playerControls.Player.Jump.ReadValue<float>();
+        if (!enableAI)
+        {
+            jumpValue = playerControls.Player.Jump.ReadValue<float>();
+        }
 
         // AY MI MADRE EL DERRAPE
         if ((jumpValue == 1 && !drifting && jumpValueLastFrame == 0) || (jumping && !drifting))
