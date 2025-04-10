@@ -1324,7 +1324,7 @@ VideoPlayer:
   m_GameObject: {fileID: 1634069203}
   m_Enabled: 0
   m_VideoClip: {fileID: 0}
-  m_TargetCameraAlpha: 1
+  m_TargetCameraAlpha: 0.5
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1970610965}
   m_TargetTexture: {fileID: 0}
@@ -1542,26 +1542,19 @@ MonoBehaviour:
   - car: {fileID: 901387417}
     speed: 200
   _characters:
-  - character: {fileID: 0}
-    name: Jinx
+  - name: Jinx
     clip: {fileID: 32900000, guid: 2efa230451da3fa4080de15df40006e1, type: 3}
-  - character: {fileID: 0}
-    name: Spamton
+  - name: Spamton
     clip: {fileID: 32900000, guid: b91e93ec935ba5a45921c408460387dc, type: 3}
-  - character: {fileID: 0}
-    name: Six
+  - name: Six
     clip: {fileID: 0}
-  - character: {fileID: 0}
-    name: Shrek
+  - name: Shrek
     clip: {fileID: 0}
-  - character: {fileID: 0}
-    name: Doraemon
+  - name: Doraemon
     clip: {fileID: 0}
-  - character: {fileID: 0}
-    name: Pingu
+  - name: Pingu
     clip: {fileID: 0}
-  - character: {fileID: 0}
-    name: Alastor
+  - name: Alastor
     clip: {fileID: 0}
   speedText: {fileID: 2129844028}
   kartBase: {fileID: 450116724}
