@@ -4,7 +4,7 @@
 # BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
 - **Movimiento del coche:** https://www.youtube.com/watch?v=Ki-tWT50cEQ&list=PL1R2qsKCcUCKY1p7URUct96O0dorgQnO6
-- **Importar modelos 3D:** https://www.youtube.com/watch?v=CVz2a0Orl_M
+- **Importar modelos 3D:** https://www.youtube.com/watch?v=CVz2a0Orl_M, https://www.youtube.com/watch?v=sZ8lvoUtGYg
 - **Texturas y materiales:** https://www.youtube.com/watch?v=yuLcssPwGLc&t=355s
 - **Tutorial genérico:** https://www.youtube.com/watch?v=x3FbFa843Pw&t=171s
 - **Colisiones:** https://www.youtube.com/watch?v=mkErt53EEFY
@@ -68,3 +68,4 @@
     Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots y comienza a implentarla.
     Martes --> María continua con la IA de los bots. Mauricio refactoriza el sistema de objetos y los programa todos.
     Miercoles --> María termina la ia de los bots. Mauricio mejora el sistema de selección para incluir personajes y vídeos, e implementa la lista de lobbies y opción de desconectarse.
+    Jueves --> Mauricio termina la lógica del selector de personajes. Tutoría.
