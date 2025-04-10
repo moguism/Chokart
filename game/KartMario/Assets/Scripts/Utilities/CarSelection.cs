@@ -2,7 +2,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class CarSelection : MonoBehaviour
@@ -26,7 +25,7 @@ public class CarSelection : MonoBehaviour
     private VideoPlayer videoPlayer;
 
     private int index;
-    private static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
+    public static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
 
     private bool showingCharacters = false;
 
@@ -130,12 +129,8 @@ public class CarSelection : MonoBehaviour
 
     private void ManageCharacterVisibility()
     {
-        for(int i = 0; i < _characters.Length; i++)
-        {
-            //_characters[i].character.SetActive(false);
-        }
+        _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex);
 
-        //_characters[characterIndex].character.SetActive(true);
         speedText.text = _characters[characterIndex].name;
 
         VideoClip clip = _characters[characterIndex].clip;
@@ -168,7 +163,6 @@ public class KartModel
 [System.Serializable]
 public class CharacterModel
 {
-    public GameObject character;
     public string name;
     public VideoClip clip;
 }
