@@ -10,17 +10,26 @@ public class CharacterSelector : MonoBehaviour
         // Para que no lo haga nada más empiece el selector
         if (WebsocketSingleton.kartModelIndex != -1)
         {
-            SetCharacter(CarSelection.characterIndex);
+            SetCharacter(CarSelection.characterIndex, true);
         }
     }
 
-    public void SetCharacter(int index)
+    public void SetCharacter(int index, bool destroy)
     {
         try
         {
             for (int i = 0; i < possibleCharacters.Length; i++)
             {
-                possibleCharacters[i].SetActive(false);
+                if (i == index) { continue; }
+
+                if (!destroy)
+                {
+                    possibleCharacters[i].SetActive(false);
+                }
+                else
+                {
+                    Destroy(possibleCharacters[i]);
+                }
             }
             possibleCharacters[index].SetActive(true);
         }
