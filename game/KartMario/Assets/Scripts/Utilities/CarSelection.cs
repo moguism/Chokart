@@ -2,6 +2,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class CarSelection : MonoBehaviour
@@ -24,6 +25,13 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private VideoPlayer videoPlayer;
 
+    [SerializeField]
+    private RawImage backgroundImage;
+
+    [SerializeField]
+    private RawImage videoRawImage;
+    private Color startVideoColor;
+
     private int index;
     public static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
 
@@ -33,6 +41,9 @@ public class CarSelection : MonoBehaviour
     {
         cars = _cars.ToArray(); // Para que haga una copia
         characters = _characters.ToArray();
+
+        videoPlayer.SetDirectAudioVolume(0, 0.25f); // Para el volumen
+        startVideoColor = videoRawImage.color;
 
         index = PlayerPrefs.GetInt("carIndex");
         characterIndex = PlayerPrefs.GetInt("characterIndex");
@@ -96,7 +107,6 @@ public class CarSelection : MonoBehaviour
         }
         else
         {
-            videoPlayer.enabled = true;
             showingCharacters = true;
             ManageVisibilityAndSave();
         }
@@ -129,20 +139,28 @@ public class CarSelection : MonoBehaviour
 
     private void ManageCharacterVisibility()
     {
-        _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex);
+        _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
 
         speedText.text = _characters[characterIndex].name;
 
         VideoClip clip = _characters[characterIndex].clip;
         if(clip == null)
         {
-            Debug.LogWarning("No hay video :(");
             videoPlayer.Stop();
+            Debug.LogWarning("No hay video :(");
+            SetVideoAndImageAvailability(true, false);
             return;
         }
 
+        SetVideoAndImageAvailability(false, true);
         videoPlayer.clip = clip;
         videoPlayer.Play();
+    }
+
+    private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
+    {
+        backgroundImage.color = imageOptions ? Color.white : Color.black;
+        videoRawImage.color = videoOptions ? startVideoColor : new Color(videoRawImage.color.r, videoRawImage.color.g, videoRawImage.color.b, 0);
     }
 
     private void SaveIndex()
