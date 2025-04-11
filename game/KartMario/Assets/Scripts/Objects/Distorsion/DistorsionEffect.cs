@@ -15,7 +15,7 @@ public class DistorsionEffect : MonoBehaviour
         if(active)
         {
             glitchEffect.enabled = true;
-            //timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
             if(timer <= 0.0f)
             {
                 glitchEffect.enabled = false;
