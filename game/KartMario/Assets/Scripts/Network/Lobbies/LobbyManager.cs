@@ -34,9 +34,6 @@ public class LobbyManager : MonoBehaviour
     private GameObject lobbyItemPrefab;
 
     [SerializeField]
-    private GameObject containerCanvas;
-
-    [SerializeField]
     private GameObject container;
 
     private Lobby currentLobby;
@@ -94,7 +91,7 @@ public class LobbyManager : MonoBehaviour
                 if(!wasHostBefore && currentLobby.HostId == AuthenticationService.Instance.PlayerId)
                 {
                     isHost = true;
-                    SetOptionsAvailability(false, true, false);
+                    SetOptionsAvailability(false, true);
                 }
 
                 if (currentLobby.Data["RELAY_CODE"].Value != "0")
@@ -140,7 +137,7 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync("Lobby de " + player.Data["PlayerName"].Value, maxPlayers, createLobbyOptions);
             currentLobby = lobby;
             isHost = true;
-            SetOptionsAvailability(false, true, false);
+            SetOptionsAvailability(false, true);
 
             Debug.Log("Lobby creada: " + lobby + ". Código: " + lobby.LobbyCode);
         }
@@ -150,11 +147,11 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void ListLobbiesButton()
+    /*public async void ListLobbiesButton()
     {
         containerCanvas.SetActive(true);
         await ListLobbiesAsync(true);
-    }
+    }*/
 
     public async Task<QueryResponse> ListLobbiesAsync(bool show)
     {
@@ -214,6 +211,11 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
+    public void JoinLobbyButton()
+    {
+        JoinLobbyByCode();
+    }
+
     public async void JoinLobbyByCode(string lobbyId = null)
     {
         try
@@ -251,7 +253,7 @@ public class LobbyManager : MonoBehaviour
             }
 
             currentLobby = lobby;
-            SetOptionsAvailability(false, true, false);
+            SetOptionsAvailability(false, true);
             Debug.Log("Unido a la lobby :D");
 
         }
@@ -294,7 +296,7 @@ public class LobbyManager : MonoBehaviour
     public void LeaveLobby()
     {
         KickPlayer(AuthenticationService.Instance.PlayerId);
-        SetOptionsAvailability(true, false, false);
+        SetOptionsAvailability(true, false);
         currentLobby = null;
         isHost = false;
     }
@@ -331,11 +333,10 @@ public class LobbyManager : MonoBehaviour
         };
     }
 
-    public void SetOptionsAvailability(bool preOptions, bool inOptions, bool containerCanvasOptions)
+    public void SetOptionsAvailability(bool preOptions, bool inOptions)
     {
         preLobbyOptions.SetActive(preOptions);
         afterLobbyOptions.SetActive(inOptions);
-        containerCanvas.SetActive(containerCanvasOptions);
 
         if (isHost)
         {

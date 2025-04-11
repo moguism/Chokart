@@ -3025,6 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  index: 0
   triggers:
   - {fileID: 380740407}
   - {fileID: 1100688653}
@@ -7971,9 +7972,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8837112396901257070, guid: 383526ca99e35db4491c325f7a9f9b9e,
         type: 3}
+      propertyPath: glitchEffect
+      value: 
+      objectReference: {fileID: 1633900388}
+    - target: {fileID: 8837112396901257070, guid: 383526ca99e35db4491c325f7a9f9b9e,
+        type: 3}
       propertyPath: positionManager
       value: 
       objectReference: {fileID: 276881112}
+    - target: {fileID: 8837112396901257070, guid: 383526ca99e35db4491c325f7a9f9b9e,
+        type: 3}
+      propertyPath: distorsionCanvas
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8973181910166717641, guid: 383526ca99e35db4491c325f7a9f9b9e,
         type: 3}
       propertyPath: GlobalObjectIdHash
@@ -10147,6 +10158,76 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e6a2aa5f88532d41bae18ddcaa0bb3a, type: 3}
+--- !u!1 &1633900387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633900389}
+  - component: {fileID: 1633900388}
+  m_Layer: 0
+  m_Name: GlitchEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!328 &1633900388
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633900387}
+  m_Enabled: 0
+  m_VideoClip: {fileID: 32900000, guid: b444382f6ad309b4aaa3968887f03d14, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 963194227}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 1
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
+  m_Url: 
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
+--- !u!224 &1633900389
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633900387}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3.7600007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 458.5, y: 246}
+  m_SizeDelta: {x: 917, y: 492}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1656429022
 GameObject:
   m_ObjectHideFlags: 0
@@ -12880,3 +12961,4 @@ SceneRoots:
   - {fileID: 868070369}
   - {fileID: 1624775480}
   - {fileID: 678890039}
+  - {fileID: 1633900389}

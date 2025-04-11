@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +38,12 @@ public class CarSelection : MonoBehaviour
 
     private bool showingCharacters = false;
 
+    [SerializeField]
+    private VideoPlayer glitchPlayer;
+
+    [SerializeField]
+    private AudioSource glitchAudio;
+
     private void Start()
     {
         cars = _cars.ToArray(); // Para que haga una copia
@@ -68,7 +75,7 @@ public class CarSelection : MonoBehaviour
         else
         {
             characterIndex++;
-            if(characterIndex >= _characters.Length)
+            if (characterIndex >= _characters.Length)
             {
                 characterIndex = 0;
             }
@@ -89,7 +96,7 @@ public class CarSelection : MonoBehaviour
         else
         {
             characterIndex--;
-            if(characterIndex < 0)
+            if (characterIndex < 0)
             {
                 characterIndex = _characters.Length - 1;
             }
@@ -103,7 +110,7 @@ public class CarSelection : MonoBehaviour
 
         if (showingCharacters)
         {
-            SceneManager.LoadScene(1);   
+            SceneManager.LoadScene(1);
         }
         else
         {
@@ -114,7 +121,7 @@ public class CarSelection : MonoBehaviour
 
     private void ManageVisibilityAndSave()
     {
-        if(showingCharacters)
+        if (showingCharacters)
         {
             ManageCharacterVisibility();
         }
@@ -128,7 +135,7 @@ public class CarSelection : MonoBehaviour
 
     private void ManageCarVisibility()
     {
-        for(int i = 0; i < _cars.Length; i++)
+        for (int i = 0; i < _cars.Length; i++)
         {
             _cars[i].car.SetActive(false);
         }
@@ -137,16 +144,26 @@ public class CarSelection : MonoBehaviour
         speedText.text = "Speed: " + _cars[index].speed;
     }
 
-    private void ManageCharacterVisibility()
+    private async void ManageCharacterVisibility()
     {
         _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
 
         speedText.text = _characters[characterIndex].name;
 
+        if(videoPlayer.clip == null)
+        {
+            glitchAudio.Play();
+            glitchPlayer.enabled = true;
+            await Task.Delay(1000);
+            glitchPlayer.enabled = false;
+            glitchAudio.Stop();
+        }
+
         VideoClip clip = _characters[characterIndex].clip;
-        if(clip == null)
+        if (clip == null)
         {
             videoPlayer.Stop();
+            videoPlayer.clip = null;
             Debug.LogWarning("No hay video :(");
             SetVideoAndImageAvailability(true, false);
             return;
@@ -159,7 +176,7 @@ public class CarSelection : MonoBehaviour
 
     private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
     {
-        backgroundImage.color = imageOptions ? Color.white : Color.black;
+        //backgroundImage.color = imageOptions ? Color.white : Color.black;
         videoRawImage.color = videoOptions ? startVideoColor : new Color(videoRawImage.color.r, videoRawImage.color.g, videoRawImage.color.b, 0);
     }
 
