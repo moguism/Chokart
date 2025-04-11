@@ -89,6 +89,9 @@ public class KartController : BasicPlayer
     private int kartIndex;
     private GameStarter starter;
 
+    [SerializeField]
+    public GameObject characters;
+
     // Controles
     private InputSystem_Actions playerControls;
     private float jumpValueLastFrame;
@@ -119,9 +122,6 @@ public class KartController : BasicPlayer
             speedometer.kart = this;
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
-
-            // cronometro en marcha
-            FindFirstObjectByType<Chronometer>().StartTimer();
         }
     }
 
@@ -178,6 +178,9 @@ public class KartController : BasicPlayer
         }
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
+
+        // cronometro en marcha
+        FindFirstObjectByType<Chronometer>().StartTimer();
     }
 
 

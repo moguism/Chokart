@@ -1660,8 +1660,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1483718422}
-        m_TargetAssemblyTypeName: TestLobby, Assembly-CSharp
-        m_MethodName: JoinLobbyByCode
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: JoinLobbyButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2271,7 +2271,6 @@ MonoBehaviour:
   startGameButton: {fileID: 763740537}
   lobbyItemPrefab: {fileID: 8135198271120477636, guid: 0c528c52d683b53418fd46ba803de186,
     type: 3}
-  containerCanvas: {fileID: 0}
   container: {fileID: 0}
 --- !u!4 &1483718423
 Transform:
