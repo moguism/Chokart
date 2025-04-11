@@ -159,7 +159,7 @@ public class CarSelection : MonoBehaviour
 
     private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
     {
-        backgroundImage.color = imageOptions ? Color.white : Color.black;
+        //backgroundImage.color = imageOptions ? Color.white : Color.black;
         videoRawImage.color = videoOptions ? startVideoColor : new Color(videoRawImage.color.r, videoRawImage.color.g, videoRawImage.color.b, 0);
     }
 
