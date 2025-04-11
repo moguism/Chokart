@@ -1,6 +1,7 @@
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class DistorsionObject : BasicObject
 {
@@ -8,6 +9,7 @@ public class DistorsionObject : BasicObject
     private GameObject effectObject;
 
     public PositionManager positionManager;
+    public VideoPlayer glitchEffect;
 
     public new void UseObject()
     {
@@ -48,9 +50,15 @@ public class DistorsionObject : BasicObject
     [ClientRpc]
     private void ApplyDistorsionClientRpc(ClientRpcParams clientRpcParams = default)
     {
+        if(glitchEffect == null)
+        {
+            glitchEffect = GameObject.Find("GlitchEffect").GetComponentInChildren<VideoPlayer>();
+        }
+
         GameObject distorsion = Instantiate(effectObject);
 
         DistorsionEffect effect = distorsion.GetComponentInChildren<DistorsionEffect>();
+        effect.glitchEffect = glitchEffect;
         effect.active = true;
     }
 }

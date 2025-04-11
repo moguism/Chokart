@@ -39,6 +39,7 @@ public class Invisibility : BasicObject
         {
             render.enabled = enabled;
         }
+        kart.characters.SetActive(enabled);
     }
 
     [ClientRpc]
