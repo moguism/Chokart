@@ -97,6 +97,8 @@ public class KartController : BasicPlayer
     private float jumpValueLastFrame;
     private float jumpValue;
 
+    public Speedometer speedometer;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -118,7 +120,7 @@ public class KartController : BasicPlayer
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
 
-            Speedometer speedometer = FindFirstObjectByType<Speedometer>();
+            speedometer = FindFirstObjectByType<Speedometer>();
             speedometer.kart = this;
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
