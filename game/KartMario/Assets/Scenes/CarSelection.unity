@@ -750,6 +750,16 @@ PrefabInstance:
       propertyPath: sphere
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5806340012035814678, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5806340012035814678, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6094651975244972527, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
         type: 3}
       propertyPath: ai

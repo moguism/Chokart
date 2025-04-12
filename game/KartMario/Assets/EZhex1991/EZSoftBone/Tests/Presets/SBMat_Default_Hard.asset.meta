@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ce02265f3c7c47d42a8bd85329838232
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148136
+  packageName: EZSoftBone
+  packageVersion: 1.6.0
+  assetPath: Assets/EZhex1991/EZSoftBone/Tests/Presets/SBMat_Default_Hard.asset
+  uploadId: 458587
