@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 72f92f477a0aba443b27cef02ed5835a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148136
+  packageName: EZSoftBone
+  packageVersion: 1.6.0
+  assetPath: Assets/EZhex1991/EZSoftBone/Tests/Animation/RunTurnAntiClockwise.controller
+  uploadId: 458587
