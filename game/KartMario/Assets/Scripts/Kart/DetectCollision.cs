@@ -8,11 +8,15 @@ public class DetectCollision : NetworkBehaviour
 
     private PositionManager positionManager;
     private ObjectSpawner spawner;
+    private SpectateKart spectateKart;
 
     private void Start()
     {
         positionManager = FindFirstObjectByType<PositionManager>();
         spawner = FindFirstObjectByType<ObjectSpawner>();
+        spectateKart = FindFirstObjectByType<SpectateKart>();
+
+        spectateKart.gameObject.SetActive(false);
     }
 
     // Seguramente haya que cambiar el DamageMultiplier porque la vida se va a quitar dos veces: el que choca (que pide que se quite vida) y el que recibe el choque (que calcula que tiene que restarse vida) 
@@ -121,8 +125,14 @@ public class DetectCollision : NetworkBehaviour
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
         
         // TODO: No hacer desaparecer, sino darlo como Game Over
-        if (kart.health <= 0)
+        if (kart.health <= 0 && LobbyManager.gameStarted)
         {
+            kart.chronometer.StopTimer();
+            kart.chronometer.timerText.text = "";
+
+            spectateKart.gameObject.SetActive(true);
+            spectateKart.kartCamera = kart.kartCamera;
+
             DispawnKartServerRpc(kart.NetworkObjectId);
         }
 
@@ -131,7 +141,9 @@ public class DetectCollision : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DispawnKartServerRpc(ulong kartId)
     {
-        positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).NetworkObject.Despawn(true);
+        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        kart.NetworkObject.Despawn(true);
+        positionManager.karts.Remove(kart);
     }
 
     [ServerRpc(RequireOwnership = false)]

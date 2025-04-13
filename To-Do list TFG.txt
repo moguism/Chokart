@@ -1,0 +1,10 @@
+Del juego en sí falta:
+- Que se unan bots si no se llega a los 8 jugadores
+- Que se muestre el código de la lobby
+- Pantalla de carga cuando te unes como cliente
+- Cuando te maten que te muestre la posición final en la que has quedad
+- Volver a habilitar el desgaste del coche
+- Total de kills
+- Temporizador antes de empezar la partida
+- Pantalla de victoria/derrota al final
+- Poner la vista de Auth al inicio
