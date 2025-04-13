@@ -152,7 +152,7 @@ public class AuthManager : MonoBehaviour
                 Debug.Log("Token guardado en PlayerPrefs.");
 
                 StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
-                //SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
+                //SceneManager.LoadScene(1); // La pantalla de lobbies
             }
             else
             {

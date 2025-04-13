@@ -92,4 +92,34 @@ public class PositionManager : NetworkBehaviour
             kart.positionText.text = newPosition.ToString();
         }
     }
+
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair = false)
+    {
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
+    }
+
+    [ClientRpc]
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
+    {
+        var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
+        if (kart != null)
+        {
+            kart.sphere.position = newPosition;
+            kart.sphere.transform.position = newPosition;
+            kart.transform.position = newPosition;
+            kart.position = position;
+            kart.lastTriggerIndex = lastTriggerIndex;
+            kart.triggers = triggers.ToList();
+
+            try
+            {
+                if (repair)
+                {
+                    kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
+                }
+            } catch { }
+
+            LobbyManager.gameStarted = true;
+        }
+    }
 }

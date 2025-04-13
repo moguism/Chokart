@@ -22,7 +22,7 @@ public class HairPhysics : MonoBehaviour
 
         if (distance > 0.09)
         {
-            hairPhysics.gravity = new Vector3(hairPhysics.gravity.x, _random.Next(0, 5), _random.Next(0, 5));
+            hairPhysics.gravity = new Vector3(hairPhysics.gravity.x, _random.Next(0, 5), hairPhysics.gravity.z);
         }
         else
         {

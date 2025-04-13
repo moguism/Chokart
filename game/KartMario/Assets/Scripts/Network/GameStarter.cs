@@ -5,7 +5,7 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
-public class GameStarter : MonoBehaviour
+public class GameStarter : NetworkBehaviour
 {
     public List<GameObject> PossiblePrefabs = new List<GameObject>();
 
@@ -19,30 +19,44 @@ public class GameStarter : MonoBehaviour
     private UnityTransport unityTransport;
 
     [SerializeField]
-    private GameObject DefaultPlayerPrefab;
+    private GameObject startGameButton;
 
-    private CustomSerializer customSerializer; // Para mandar mensajes por el socket (por ahora inutil)
-    
+    [SerializeField]
+    private PositionManager positionManager;
+
+    [SerializeField]
+    private GameObject[] spawners;
+
     void Start()
     {
-        customSerializer = new CustomSerializer(websocketSingleton);
-
-        if (WebsocketSingleton.kartModelIndex != -1)
+        if (LobbyManager.isHost)
         {
-            if (LobbyManager.isHost)
+            startGameButton.SetActive(true);
+
+            if (WebsocketSingleton.kartModelIndex != -1)
             {
-                // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
-                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);    
+                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
             }
         }
 
-        RelayManager.StartGame();
+        RelayManager.StartRelay();
     }
 
-    public void StartClient(string ip)
+    public void StartGame()
     {
-        print("IP: " + ip);
-        unityTransport.SetConnectionData(ip, 7777); // El puerto no debería cambiar
-        networkManager.StartClient();
+        startGameButton.SetActive(false);
+        LobbyManager.gameStarted = true;
+
+        for(int i = 0; i < positionManager.karts.Count; i++)
+        {
+            KartController kart = positionManager.karts[i];
+            Vector3 spawnerPosition = spawners[i].transform.position;
+
+            /*kart.sphere.position = spawnerPosition;
+            kart.sphere.transform.position = spawnerPosition;
+            kart.transform.position = spawnerPosition;*/
+
+            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], true);
+        }
     }
 }
