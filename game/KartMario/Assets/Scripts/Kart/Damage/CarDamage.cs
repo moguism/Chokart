@@ -44,10 +44,10 @@ public class CarDamage : NetworkBehaviour
 
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) Repair();
-    }
+    }*/
 
     void LoadOriginalMeshData()
     {
@@ -58,7 +58,7 @@ public class CarDamage : NetworkBehaviour
         }
     }
 
-    void Repair()
+    public void Repair()
     {
         for (int i = 0; i < meshfilters.Length; i++)
         {

@@ -1,3 +1,4 @@
+using Injecta;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
@@ -44,8 +45,18 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private AudioSource glitchAudio;
 
+    [SerializeField]
+    private GameObject waitingText;
+
+    [Inject]
+    private LobbyManager lobbyManager;
+
+    private bool hasFinished = false;
+
     private void Start()
     {
+        print(lobbyManager);
+
         cars = _cars.ToArray(); // Para que haga una copia
         characters = _characters.ToArray();
 
@@ -60,6 +71,14 @@ public class CarSelection : MonoBehaviour
     private void FixedUpdate()
     {
         kartBase.transform.Rotate(0, 1f, 0);
+    }
+
+    private void Update()
+    {
+        if(hasFinished && lobbyManager.hasRelay)
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
     public void Next()
@@ -104,13 +123,23 @@ public class CarSelection : MonoBehaviour
         ManageVisibilityAndSave();
     }
 
-    public void GoToGame()
+    public async void GoToGame()
     {
         WebsocketSingleton.kartModelIndex = index;
 
         if (showingCharacters)
         {
-            SceneManager.LoadScene(1);
+            hasFinished = true;
+
+            bool joined = await lobbyManager.StartGame();
+            if (joined)
+            {
+                SceneManager.LoadScene(2); // El juego
+            }
+            else
+            {
+                waitingText.SetActive(true);
+            }
         }
         else
         {
