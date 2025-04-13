@@ -97,7 +97,9 @@ public class KartController : BasicPlayer
     private float jumpValueLastFrame;
     private float jumpValue;
 
-    public Speedometer speedometer;
+    private Speedometer speedometer;
+    public Chronometer chronometer;
+    public CinemachineVirtualCamera kartCamera;
 
     public override void OnNetworkSpawn()
     {
@@ -114,9 +116,9 @@ public class KartController : BasicPlayer
                 return;
             }
 
-            CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
-            camera.Follow = gameObject.transform;
-            camera.LookAt = gameObject.transform;
+            kartCamera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+            kartCamera.Follow = gameObject.transform;
+            kartCamera.LookAt = gameObject.transform;
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
 
@@ -180,9 +182,7 @@ public class KartController : BasicPlayer
         }
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
-
-        // cronometro en marcha
-        FindFirstObjectByType<Chronometer>().StartTimer();
+        chronometer = FindFirstObjectByType<Chronometer>();
     }
 
 
@@ -305,18 +305,27 @@ public class KartController : BasicPlayer
         }
         else
         {
-            // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-            if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+            if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
             {
-                speed = acceleration;
-            }
-            else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-            {
-                speed = -acceleration;
+                speed = 0;
             }
             else
             {
-                speed = 0;
+                // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                {
+                    speed = acceleration;
+                }
+                else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                {
+                    speed = -acceleration;
+                }
+
+                // En cuanto se mueva por primera vez, activo el timer
+                if (LobbyManager.gameStarted && !chronometer.timerOn)
+                {
+                    chronometer.StartTimer();
+                }
             }
         }
 

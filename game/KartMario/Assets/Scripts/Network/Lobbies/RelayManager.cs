@@ -24,9 +24,11 @@ public class RelayManager : MonoBehaviour
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
             _relayServerData = relayServerData;
 
+            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
+
             return joinCode;
         }
-        catch(RelayServiceException e)
+        catch (RelayServiceException e)
         {
             Debug.LogError(e);
         }
@@ -34,29 +36,39 @@ public class RelayManager : MonoBehaviour
         return null;
     }
 
-    public static void StartGame()
+    public static void StartRelay()
     {
-        if(LobbyManager.isHost)
+        print(_relayServerData);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
+        if (LobbyManager.isHost)
         {
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
             NetworkManager.Singleton.StartHost();
+        }
+        else
+        {
+            NetworkManager.Singleton.StartClient();
         }
     }
 
-    public static async void JoinRelay(string joinCode)
+    public static async Task JoinRelay(string joinCode)
     {
         try
         {
             JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+            _relayServerData = relayServerData;
 
-            SceneManager.LoadScene(2);
+            print("R1: " + _relayServerData + ". R2:" + relayServerData);
+
+            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
+
+            /*SceneManager.LoadScene(2);
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-            NetworkManager.Singleton.StartClient();
+            NetworkManager.Singleton.StartClient();*/
         }
-        catch(RelayServiceException e)
+        catch (RelayServiceException e)
         {
             Debug.LogError(e);
         }
