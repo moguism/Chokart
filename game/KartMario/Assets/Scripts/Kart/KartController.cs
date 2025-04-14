@@ -321,7 +321,7 @@ public class KartController : BasicPlayer
         }
         else
         {
-            /*speed = acceleration;
+            speed = acceleration;
 
             if(direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
             {
@@ -332,9 +332,9 @@ public class KartController : BasicPlayer
             if (LobbyManager.gameStarted && !chronometer.timerOn)
             {
                 chronometer.StartTimer();
-            }*/
+            }
 
-            if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+            /*if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
             {
                 speed = 0;
             }
@@ -355,7 +355,7 @@ public class KartController : BasicPlayer
                 {
                     chronometer.StartTimer();
                 }
-            }
+            }*/
         }
 
 

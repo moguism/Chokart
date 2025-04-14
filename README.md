@@ -73,3 +73,5 @@
     Viernes --> Mauricio mejora la estética del selector, agrega que las coletas de Jinx se muevan y programa el efecto de distorsión.
     Sábado --> Mauricio termina el movimiento de las coletas y soluciona bugs.
     Domingo --> Mauricio comienza a juntar todo y a pulir.
+### Tercera semana (14/04 - 20/04)
+    Lunes --> Mauricio continua puliendo todo.
