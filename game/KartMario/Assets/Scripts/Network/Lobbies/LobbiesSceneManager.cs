@@ -14,6 +14,20 @@ public class LobbiesSceneManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField playerName;
 
+    public static bool showError = false;
+
+    [SerializeField]
+    private TMP_Text errorText;
+
+    private void Start()
+    {
+        if(showError)
+        {
+            errorText.enabled = true;
+            showError = false;
+        }
+    }
+
     public void CreateLobby()
     {
         lobbyManager.CreateLobby(playerName.text);

@@ -8,15 +8,12 @@ public class DetectCollision : NetworkBehaviour
 
     private PositionManager positionManager;
     private ObjectSpawner spawner;
-    private SpectateKart spectateKart;
 
     private void Start()
     {
         positionManager = FindFirstObjectByType<PositionManager>();
         spawner = FindFirstObjectByType<ObjectSpawner>();
-        spectateKart = FindFirstObjectByType<SpectateKart>();
-
-        spectateKart.gameObject.SetActive(false);
+        positionManager.spectateCanvas.SetActive(false);
     }
 
     // Seguramente haya que cambiar el DamageMultiplier porque la vida se va a quitar dos veces: el que choca (que pide que se quite vida) y el que recibe el choque (que calcula que tiene que restarse vida) 
@@ -36,17 +33,17 @@ public class DetectCollision : NetworkBehaviour
 
             if (kartSpeed > otherKartSpeed)
             {
-                CheckAndRemoveObject(otherKart, kartSpeed);
+                CheckAndRemoveObject(otherKart, kart.NetworkObjectId, kartSpeed);
             }
             else if (otherKartSpeed > kartSpeed)
             {
-                CheckAndRemoveObject(kart, otherKartSpeed);
+                CheckAndRemoveObject(kart, otherKart.NetworkObjectId, otherKartSpeed);
             }
             else
             {
                 // Quito vida a los dos por igual
-                CheckAndRemoveObject(kart, otherKartSpeed);
-                CheckAndRemoveObject(otherKart, kartSpeed);
+                CheckAndRemoveObject(kart, otherKart.NetworkObjectId, otherKartSpeed);
+                CheckAndRemoveObject(otherKart, kart.NetworkObjectId, kartSpeed);
             }
         }
         else if (collision.gameObject.CompareTag("Ground"))
@@ -93,7 +90,7 @@ public class DetectCollision : NetworkBehaviour
             if(basicObject is GreenShell)
             {
                 float damageOutput = isBomb ? (basicObject as GreenShell).damageOutput : (basicObject as GreenShell).damageOutput;
-                NotifyServerAboutChangeServerRpc(kartId, damageOutput);
+                NotifyServerAboutChangeServerRpc(kartId, damageOutput, basicObject.owner);
 
                 if (!isBomb)
                 {
@@ -107,17 +104,17 @@ public class DetectCollision : NetworkBehaviour
         }
     }
 
-    private void CheckAndRemoveObject(KartController kartController, float speed)
+    private void CheckAndRemoveObject(KartController kartController, ulong kartAggressor, float speed)
     {
         if (IsOwner)
         {
             var damage = speed * BasicPlayer.damageMultiplier;
-            NotifyServerAboutChangeServerRpc(kartController.NetworkObjectId, damage);
+            NotifyServerAboutChangeServerRpc(kartController.NetworkObjectId, damage, kartAggressor);
         }
     }
 
     [ClientRpc]
-    private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ClientRpcParams clientRpcParams = default)
+    private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ulong kartAggressor, ClientRpcParams clientRpcParams = default)
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         kart.health -= damage;
@@ -130,12 +127,25 @@ public class DetectCollision : NetworkBehaviour
             kart.chronometer.StopTimer();
             kart.chronometer.timerText.text = "";
 
-            spectateKart.gameObject.SetActive(true);
-            spectateKart.kartCamera = kart.kartCamera;
+            kart.positionText.color = Color.blue;
+            kart.positionText.text = positionManager.karts.Count.ToString();
+            kart.healthText.text = "";
+
+            positionManager.spectateCanvas.SetActive(true);
+            positionManager.spectateKart.kartCamera = kart.kartCamera;
+
+            NotifyNewKillClientRpc(kartAggressor);
 
             DispawnKartServerRpc(kart.NetworkObjectId);
         }
 
+    }
+
+    [ClientRpc(RequireOwnership = false)]
+    private void NotifyNewKillClientRpc(ulong kartId)
+    {
+        KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
+        kart.totalKills += 1;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -147,7 +157,7 @@ public class DetectCollision : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ServerRpcParams rpcParams = default)
+    public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ulong kartAggressor, ServerRpcParams rpcParams = default)
     {
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if(!kart.canBeHurt)
@@ -163,7 +173,7 @@ public class DetectCollision : NetworkBehaviour
             }
         };
 
-        NotifyHealthChangedClientRpc(damage, kartId, parameters);
+        NotifyHealthChangedClientRpc(damage, kartId, kartAggressor, parameters);
 
     }
 

@@ -1,15 +1,17 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RelayManager : MonoBehaviour
 {
     private static RelayServerData _relayServerData;
+    public static List<string> playersIds = new();
 
     public static async Task<string> CreateRelay()
     {
@@ -24,7 +26,7 @@ public class RelayManager : MonoBehaviour
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
             _relayServerData = relayServerData;
 
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
+            playersIds.Add(AuthenticationService.Instance.PlayerId);
 
             return joinCode;
         }
@@ -60,13 +62,6 @@ public class RelayManager : MonoBehaviour
             _relayServerData = relayServerData;
 
             print("R1: " + _relayServerData + ". R2:" + relayServerData);
-
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
-
-            /*SceneManager.LoadScene(2);
-
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-            NetworkManager.Singleton.StartClient();*/
         }
         catch (RelayServiceException e)
         {
