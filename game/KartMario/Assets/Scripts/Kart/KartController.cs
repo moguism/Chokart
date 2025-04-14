@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -101,6 +102,11 @@ public class KartController : BasicPlayer
     public Chronometer chronometer;
     public CinemachineVirtualCamera kartCamera;
 
+    [Header("Otras opciones")]
+    public bool canMove = true;
+    public int totalKills = 0;
+    private TMP_Text killsText;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -126,6 +132,7 @@ public class KartController : BasicPlayer
             speedometer.kart = this;
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
+            killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
         }
     }
 
@@ -136,7 +143,7 @@ public class KartController : BasicPlayer
             return;
         }
 
-        InformServerKartCreatedServerRpc(NetworkObjectId);
+        InformServerKartCreatedServerRpc(NetworkObjectId, AuthenticationService.Instance.PlayerId);
 
         // Si me han asignado un modelo que no es
         if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
@@ -182,13 +189,19 @@ public class KartController : BasicPlayer
         }
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
+
+        if(enableAI)
+        {
+            return;
+        }
+
         chronometer = FindFirstObjectByType<Chronometer>();
     }
 
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
-    void InformServerKartCreatedServerRpc(ulong kartId, ServerRpcParams rpcParams = default)
+    void InformServerKartCreatedServerRpc(ulong kartId, string playerId, ServerRpcParams rpcParams = default)
     {
         if (positionManager == null)
         {
@@ -201,6 +214,7 @@ public class KartController : BasicPlayer
         {
             print("Agregando");
             positionManager.karts.Add(this);
+            RelayManager.playersIds.Add(playerId);
         }
     }
 
@@ -247,10 +261,12 @@ public class KartController : BasicPlayer
             Time.timeScale = time;
         }*/
 
-        if (!IsOwner)
+        if (!IsOwner || !canMove)
         {
             return;
         }
+
+        killsText.text = "Kills: " + totalKills;
 
         if (isMobile)
         {
@@ -305,6 +321,19 @@ public class KartController : BasicPlayer
         }
         else
         {
+            /*speed = acceleration;
+
+            if(direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+            {
+                speed = 0;
+            }
+
+            // En cuanto se mueva por primera vez, activo el timer
+            if (LobbyManager.gameStarted && !chronometer.timerOn)
+            {
+                chronometer.StartTimer();
+            }*/
+
             if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
             {
                 speed = 0;
@@ -463,7 +492,7 @@ public class KartController : BasicPlayer
     // Es la esfera la que hace todo
     private void FixedUpdate()
     {
-        if (!IsOwner)
+        if (!IsOwner || !canMove)
         {
             return;
         }

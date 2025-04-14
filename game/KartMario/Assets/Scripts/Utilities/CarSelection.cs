@@ -51,11 +51,23 @@ public class CarSelection : MonoBehaviour
     [Inject]
     private LobbyManager lobbyManager;
 
+    [SerializeField]
+    private TMP_Text joinCodeText;
+
     private bool hasFinished = false;
 
     private void Start()
     {
         print(lobbyManager);
+
+        if (lobbyManager.lobbyCode == "" || lobbyManager.lobbyCode == null)
+        {
+            joinCodeText.text = "";
+        }
+        else
+        {
+            joinCodeText.text += " " + lobbyManager.lobbyCode;
+        }
 
         cars = _cars.ToArray(); // Para que haga una copia
         characters = _characters.ToArray();
@@ -131,7 +143,7 @@ public class CarSelection : MonoBehaviour
         {
             hasFinished = true;
 
-            bool joined = await lobbyManager.StartGame();
+            bool joined = await lobbyManager.StartRelay();
             if (joined)
             {
                 SceneManager.LoadScene(2); // El juego

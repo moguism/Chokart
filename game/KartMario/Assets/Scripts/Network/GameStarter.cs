@@ -1,6 +1,7 @@
 using Injecta;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -25,7 +26,13 @@ public class GameStarter : NetworkBehaviour
     private PositionManager positionManager;
 
     [SerializeField]
+    private SpawnBot botSpawner;
+
+    [SerializeField]
     private GameObject[] spawners;
+
+    [Inject]
+    private LobbyManager lobbyManager;
 
     void Start()
     {
@@ -42,21 +49,41 @@ public class GameStarter : NetworkBehaviour
         RelayManager.StartRelay();
     }
 
-    public void StartGame()
+    public async void StartGame()
     {
+        if(!LobbyManager.isHost)
+        {
+            return;
+        }
+
         startGameButton.SetActive(false);
-        LobbyManager.gameStarted = true;
+
+        lobbyManager.StartGame();
+
+        //LobbyManager.gameStarted = true;
+
+        int totalSpawned = 0;
 
         for(int i = 0; i < positionManager.karts.Count; i++)
         {
             KartController kart = positionManager.karts[i];
             Vector3 spawnerPosition = spawners[i].transform.position;
 
-            /*kart.sphere.position = spawnerPosition;
-            kart.sphere.transform.position = spawnerPosition;
-            kart.transform.position = spawnerPosition;*/
-
             positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], true);
+
+            totalSpawned++;
         }
+
+        // Relleno con bots hasta llegar al límite
+        /*while(totalSpawned < LobbyManager.maxPlayers)
+        {
+            botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
+            totalSpawned++;
+        }*/
+
+        await Task.Delay(1000); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
+
+        // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
+        positionManager.InformAboutGameStart();
     }
 }
