@@ -69,7 +69,7 @@ public class GameStarter : NetworkBehaviour
             KartController kart = positionManager.karts[i];
             Vector3 spawnerPosition = spawners[i].transform.position;
 
-            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], true);
+            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], 200, true);
 
             totalSpawned++;
         }
