@@ -9,6 +9,12 @@ public class PositionManager : NetworkBehaviour
     public List<KartController> karts;
     public FinishLine finishLine;
 
+    [SerializeField]
+    private StartCounter startCounter;
+
+    public SpectateKart spectateKart;
+    public GameObject spectateCanvas;
+
     void LateUpdate()
     {
         if (!IsHost)
@@ -98,6 +104,7 @@ public class PositionManager : NetworkBehaviour
         InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
     }
 
+
     [ClientRpc]
     private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
     {
@@ -115,11 +122,23 @@ public class PositionManager : NetworkBehaviour
             {
                 if (repair)
                 {
+                    kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }
 
             LobbyManager.gameStarted = true;
         }
+    }
+
+    public void InformAboutGameStart()
+    {
+        InformAboutGameStartClientRpc();
+    }
+
+    [ClientRpc]
+    private void InformAboutGameStartClientRpc()
+    {
+        startCounter.StartBegginingCounter(karts.ToArray());
     }
 }
