@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class ObjectSpawner : MonoBehaviour
 
     [SerializeField]
     private PositionManager positionManager;
+
+    [SerializeField]
+    private VideoPlayer glitchEffect;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -171,6 +175,7 @@ public class ObjectSpawner : MonoBehaviour
                                         {
                                             screenDistorsion.owner = ownerId;
                                             screenDistorsion.positionManager = positionManager;
+                                            screenDistorsion.glitchEffect = glitchEffect;
                                             screenDistorsion.UseObject();
 
                                             objectsSpawned.Add(screenDistorsion);

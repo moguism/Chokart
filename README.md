@@ -4,7 +4,7 @@
 # BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
 - **Movimiento del coche:** https://www.youtube.com/watch?v=Ki-tWT50cEQ&list=PL1R2qsKCcUCKY1p7URUct96O0dorgQnO6
-- **Importar modelos 3D:** https://www.youtube.com/watch?v=CVz2a0Orl_M
+- **Importar modelos 3D:** https://www.youtube.com/watch?v=CVz2a0Orl_M, https://www.youtube.com/watch?v=sZ8lvoUtGYg
 - **Texturas y materiales:** https://www.youtube.com/watch?v=yuLcssPwGLc&t=355s
 - **Tutorial genérico:** https://www.youtube.com/watch?v=x3FbFa843Pw&t=171s
 - **Colisiones:** https://www.youtube.com/watch?v=mkErt53EEFY
@@ -24,6 +24,8 @@
 - **Deformación del coche:** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 - **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
 - **Traducción:** https://youtu.be/lku7f4KNFEo?si=3Ysd8tw9SoK-RY73
+- **Vídeos:** https://www.youtube.com/watch?v=-XzVq7qIuys
+- **Movimiento del pelo:** https://www.youtube.com/watch?v=s7qb0NPbFXU
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -66,3 +68,10 @@
 ### Segunda semana (07/04 - 13/04)
     Lunes --> Mauricio prepara el sistema de traducción. María investiga sobre IA de los bots y comienza a implentarla.
     Martes --> María continua con la IA de los bots. Mauricio refactoriza el sistema de objetos y los programa todos.
+    Miercoles --> María termina la ia de los bots. Mauricio mejora el sistema de selección para incluir personajes y vídeos, e implementa la lista de lobbies y opción de desconectarse.
+    Jueves --> Mauricio termina la lógica del selector de personajes. Tutoría.
+    Viernes --> Mauricio mejora la estética del selector, agrega que las coletas de Jinx se muevan y programa el efecto de distorsión.
+    Sábado --> Mauricio termina el movimiento de las coletas y soluciona bugs.
+    Domingo --> Mauricio comienza a juntar todo y a pulir.
+### Tercera semana (14/04 - 20/04)
+    Lunes --> Mauricio continua puliendo todo.

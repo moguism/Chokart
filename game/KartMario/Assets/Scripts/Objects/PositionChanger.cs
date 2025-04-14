@@ -45,34 +45,12 @@ public class PositionChanger : BasicObject
             var triggerListForParent = kart.triggers.ToArray();
             var triggerListForOther = parent.triggers.ToArray();
 
-            /*parent.sphere.position = newPositionToParent;
-            kart.sphere.position = newPositionToOtherKart;
-
-            parent.sphere.transform.position = newPositionToParent;
-            kart.sphere.transform.position = newPositionToOtherKart;
-
-            parent.transform.position = newPositionToParent;
-            kart.transform.position = newPositionToOtherKart;
-
-            positionManager.karts.Remove(kart);
-            positionManager.karts.Remove(parent);
-
-            positionManager.karts.Add(kart);
-            positionManager.karts.Add(parent);*/
-
-            InformClientsAboutChangeClientRpc(newPositionToParent, parent.NetworkObjectId, lastTriggerIndexForParent, newPositionInRaceForParent, triggerListForParent);
-            InformClientsAboutChangeClientRpc(newPositionToOtherKart, kart.NetworkObjectId, lastTriggerIndexForOtherKart, newPositionInRaceForOtherKart, triggerListForOther);
-
-            /*positionManager.karts.Remove(kart);
-            positionManager.karts.Remove(parent);
-
-            positionManager.karts.Add(kart);
-            positionManager.karts.Add(parent);*/
+            positionManager.ChangeValuesOfKart(newPositionToParent, parent.NetworkObjectId, lastTriggerIndexForParent, newPositionInRaceForParent, triggerListForParent);
+            positionManager.ChangeValuesOfKart(newPositionToOtherKart, kart.NetworkObjectId, lastTriggerIndexForOtherKart, newPositionInRaceForOtherKart, triggerListForOther);
         }
-        //StartCoroutine(ChangePositionCoroutine(originalKartId));
     }
 
-    [ClientRpc]
+    /*[ClientRpc]
     private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers)
     {
         if(positionManager == null)
@@ -90,5 +68,5 @@ public class PositionChanger : BasicObject
             kart.lastTriggerIndex = lastTriggerIndex;
             kart.triggers = triggers.ToList();
         }
-    }
+    }*/
 }
