@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -13,13 +16,13 @@ public class LobbyManager : MonoBehaviour
     private Lobby currentLobby;
 
     private float heartBeatTimer;
-    private float lobbyUpdateTimer;
+    private float lobbyUpdateTimer = 2.0f;
 
     public static bool isHost = false;
-
     public static bool gameStarted = false;
 
     public bool hasRelay = false;
+    public string lobbyCode = "";
 
     async void Start()
     {
@@ -41,7 +44,7 @@ public class LobbyManager : MonoBehaviour
 
     private async void HandleLobbyHeartbeat()
     {
-        if (currentLobby != null && !gameStarted)
+        if (isHost && currentLobby != null && !gameStarted)
         {
             heartBeatTimer -= Time.deltaTime;
             if (heartBeatTimer < 0f)
@@ -54,32 +57,44 @@ public class LobbyManager : MonoBehaviour
 
     private async void HandleLobbyPollForUpdates()
     {
-        if (currentLobby != null && !gameStarted)
+        try
         {
-            lobbyUpdateTimer -= Time.deltaTime;
-            if (lobbyUpdateTimer < 0f)
+            if (currentLobby != null && !gameStarted)
             {
-                lobbyUpdateTimer = 1.1f;
-
-                Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
-                currentLobby = lobby;
-
-                bool wasHostBefore = isHost;
-
-                if (!wasHostBefore && currentLobby.HostId == AuthenticationService.Instance.PlayerId)
+                lobbyUpdateTimer -= Time.deltaTime;
+                if (lobbyUpdateTimer < 0f)
                 {
-                    isHost = true;
-                }
+                    lobbyUpdateTimer = 2f;
 
-                if (currentLobby.Data["RELAY_CODE"].Value != "0")
-                {
-                    if (!isHost)
+                    Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                    currentLobby = lobby;
+
+                    bool wasHostBefore = isHost;
+
+                    if (!wasHostBefore && currentLobby.HostId == AuthenticationService.Instance.PlayerId)
                     {
-                        await RelayManager.JoinRelay(currentLobby.Data["RELAY_CODE"].Value);
-                        hasRelay = true;
+                        isHost = true;
+                    }
+
+                    if (currentLobby.Data["RELAY_CODE"].Value != "0")
+                    {
+                        if (!isHost)
+                        {
+                            await RelayManager.JoinRelay(currentLobby.Data["RELAY_CODE"].Value);
+                            hasRelay = true;
+                        }
                     }
                 }
             }
+        } catch(Exception e)
+        {
+            // Si tira excepción es que me han echado de la lobby
+            Debug.LogError(e);
+
+            LobbiesSceneManager.showError = true;
+            LeaveLobby(true);
+
+            SceneManager.LoadScene(1);
         }
     }
 
@@ -103,6 +118,8 @@ public class LobbyManager : MonoBehaviour
             isHost = true;
 
             Debug.Log("Lobby creada: " + lobby + ". Código: " + lobby.LobbyCode);
+
+            lobbyCode = lobby.LobbyCode;
         }
         catch (LobbyServiceException e)
         {
@@ -110,7 +127,7 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async Task<QueryResponse> ListLobbiesAsync(bool show)
+    public async Task<QueryResponse> ListLobbiesAsync()
     {
         try
         {
@@ -154,7 +171,7 @@ public class LobbyManager : MonoBehaviour
             // Si no ha puesto código, se une a la primera que haya disponible
             if (input == null || input == "")
             {
-                QueryResponse result = await ListLobbiesAsync(false);
+                QueryResponse result = await ListLobbiesAsync();
 
                 if (result.Results.Count == 0)
                 {
@@ -174,8 +191,9 @@ public class LobbyManager : MonoBehaviour
                 lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(input, joinLobbyByCodeOptions);
             }
 
-
             currentLobby = lobby;
+            lobbyCode = currentLobby.LobbyCode;
+
             Debug.Log("Unido a la lobby :D");
         }
         catch (LobbyServiceException e)
@@ -194,7 +212,7 @@ public class LobbyManager : MonoBehaviour
         return await LobbyService.Instance.JoinLobbyByIdAsync(id, joinLobbyByIdOptions);
     }
 
-    public async Task<bool> StartGame()
+    public async Task<bool> StartRelay()
     {
         if (isHost)
         {
@@ -219,14 +237,40 @@ public class LobbyManager : MonoBehaviour
 
     }
 
-    public void LeaveLobby()
+    public async void StartGame()
     {
-        KickPlayer(AuthenticationService.Instance.PlayerId);
-        currentLobby = null;
-        isHost = false;
+        // Expulso de la lobby a todos aquellos que no estén ya en la partida
+        for(int i = 0; i < currentLobby.Players.Count; i++)
+        {
+            Player player = currentLobby.Players[i];
+            if(!RelayManager.playersIds.Contains(player.Id))
+            {
+                await KickPlayer(player.Id);
+            }
+        }
+
+        Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions
+        {
+            IsLocked = true
+        });
+
+        currentLobby = lobby;
+        gameStarted = true;
     }
 
-    private async void KickPlayer(string playerId)
+    public async void LeaveLobby(bool alreadyOut)
+    {
+        currentLobby = null;
+        isHost = false;
+        gameStarted = false;
+
+        if(!alreadyOut) 
+        { 
+            await KickPlayer(AuthenticationService.Instance.PlayerId);
+        }
+    }
+
+    private async Task KickPlayer(string playerId)
     {
         try
         {
