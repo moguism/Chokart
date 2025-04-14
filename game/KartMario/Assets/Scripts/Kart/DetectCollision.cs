@@ -135,6 +135,7 @@ public class DetectCollision : NetworkBehaviour
             positionManager.spectateKart.kartCamera = kart.kartCamera;
 
             NotifyNewKillClientRpc(kartAggressor);
+            CreateNewFinishKart(kart);
 
             DispawnKartServerRpc(kart.NetworkObjectId);
         }
@@ -152,15 +153,51 @@ public class DetectCollision : NetworkBehaviour
     private void DispawnKartServerRpc(ulong kartId)
     {
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        kart.NetworkObject.Despawn(true);
-        positionManager.karts.Remove(kart);
+        if (kart != null)
+        {
+            CreateNewFinishKart(kart);
+
+            kart.NetworkObject.Despawn(true);
+            positionManager.karts.Remove(kart);
+
+            if (positionManager.karts.Count == 1)
+            {
+                CreateNewFinishKart(positionManager.karts[0]);
+                NotifyAboutGameEndClientRpc();
+            }
+        }
+    }
+
+    private void CreateNewFinishKart(KartController kart)
+    {
+        positionManager.finishKarts.Add(new FinishKart()
+        {
+            playerName = LobbyManager.PlayerName,
+            position = positionManager.karts.Count,
+            kills = kart.totalKills
+        });
+    }
+
+    [ClientRpc]
+    private void NotifyAboutGameEndClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        KartController lastKart = FindAnyObjectByType<KartController>();
+        /*kart.kartCamera.LookAt = null;
+        kart.kartCamera.Follow = null;*/
+
+        CreateNewFinishKart(lastKart);
+        positionManager.victoryScreen.SetActive(true);
+
+        VictoryScreen victory = positionManager.victoryScreen.GetComponentInChildren<VictoryScreen>();
+        victory.finishKarts = positionManager.finishKarts.OrderBy(k => k.position).ToList();
+        victory.SetFinishKarts();
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ulong kartAggressor, ServerRpcParams rpcParams = default)
     {
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        if(!kart.canBeHurt)
+        if(kart == null || !kart.canBeHurt)
         {
             return;
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -23,6 +22,8 @@ public class LobbyManager : MonoBehaviour
 
     public bool hasRelay = false;
     public string lobbyCode = "";
+
+    public static string PlayerName;
 
     async void Start()
     {
@@ -102,6 +103,8 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            PlayerName = playerName;
+
             Player player = CreateNewPlayer(playerName);
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
@@ -166,6 +169,8 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            PlayerName = playerName;
+
             Lobby lobby;
 
             // Si no ha puesto código, se une a la primera que haya disponible

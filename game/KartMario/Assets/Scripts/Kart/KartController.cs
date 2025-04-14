@@ -321,41 +321,42 @@ public class KartController : BasicPlayer
         }
         else
         {
-            speed = acceleration;
+            // TODO: Descomentar esto
 
-            if(direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+            /*if (LobbyManager.gameStarted)
             {
-                speed = 0;
-            }
+                speed = acceleration;
 
-            // En cuanto se mueva por primera vez, activo el timer
-            if (LobbyManager.gameStarted && !chronometer.timerOn)
-            {
-                chronometer.StartTimer();
-            }
-
-            /*if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
-            {
-                speed = 0;
-            }
-            else
-            {
-                // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
                 {
-                    speed = acceleration;
-                }
-                else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-                {
-                    speed = -acceleration;
+                    speed = 0;
                 }
 
                 // En cuanto se mueva por primera vez, activo el timer
-                if (LobbyManager.gameStarted && !chronometer.timerOn)
+                if (!chronometer.timerOn)
                 {
                     chronometer.StartTimer();
                 }
-            }*/
+            }
+            else
+            {*/
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+                {
+                    speed = 0;
+                }
+                else
+                {
+                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                    {
+                        speed = acceleration;
+                    }
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                    {
+                        speed = -acceleration;
+                    }
+                }
+            //}
         }
 
 

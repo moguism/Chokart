@@ -9,8 +9,12 @@ public class PositionManager : NetworkBehaviour
     public List<KartController> karts;
     public FinishLine finishLine;
 
+    public List<FinishKart> finishKarts = new();
+
     [SerializeField]
     private StartCounter startCounter;
+
+    public GameObject victoryScreen;
 
     public SpectateKart spectateKart;
     public GameObject spectateCanvas;
@@ -99,14 +103,14 @@ public class PositionManager : NetworkBehaviour
         }
     }
 
-    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair = false)
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, float health = 0, bool repair = false)
     {
-        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair, health);
     }
 
 
     [ClientRpc]
-    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair, float health)
     {
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
@@ -123,6 +127,7 @@ public class PositionManager : NetworkBehaviour
                 if (repair)
                 {
                     kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
+                    kart.health = health;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }
@@ -141,4 +146,11 @@ public class PositionManager : NetworkBehaviour
     {
         startCounter.StartBegginingCounter(karts.ToArray());
     }
+}
+
+public class FinishKart
+{
+    public string playerName;
+    public int position;
+    public int kills;
 }
