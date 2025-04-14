@@ -8,8 +8,9 @@ public class Chronometer : MonoBehaviour
 {
     public static Chronometer instance;
     public TMP_Text timerText;
+    private string endTime;
     private TimeSpan timeChronometer;
-    private bool timerOn;
+    public bool timerOn;
     private float timePass;
 
     private void Awake()
@@ -35,6 +36,7 @@ public class Chronometer : MonoBehaviour
 
     public void StopTimer()
     {
+        endTime = timerText.text;
         timerOn = false;
     }
 

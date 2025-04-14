@@ -1,11 +1,12 @@
 using Injecta;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
-public class GameStarter : MonoBehaviour
+public class GameStarter : NetworkBehaviour
 {
     public List<GameObject> PossiblePrefabs = new List<GameObject>();
 
@@ -19,30 +20,70 @@ public class GameStarter : MonoBehaviour
     private UnityTransport unityTransport;
 
     [SerializeField]
-    private GameObject DefaultPlayerPrefab;
+    private GameObject startGameButton;
 
-    private CustomSerializer customSerializer; // Para mandar mensajes por el socket (por ahora inutil)
-    
+    [SerializeField]
+    private PositionManager positionManager;
+
+    [SerializeField]
+    private SpawnBot botSpawner;
+
+    [SerializeField]
+    private GameObject[] spawners;
+
+    [Inject]
+    private LobbyManager lobbyManager;
+
     void Start()
     {
-        customSerializer = new CustomSerializer(websocketSingleton);
-
-        if (WebsocketSingleton.kartModelIndex != -1)
+        if (LobbyManager.isHost)
         {
-            if (LobbyManager.isHost)
+            startGameButton.SetActive(true);
+
+            if (WebsocketSingleton.kartModelIndex != -1)
             {
-                // ESTA LISTA TIENE QUE SER IDÉNTICA A LA DE "CarSelection", PERO CON LOS PREFABS EN LUGAR DE LOS MODELOS
-                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);    
+                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
             }
         }
 
-        RelayManager.StartGame();
+        RelayManager.StartRelay();
     }
 
-    public void StartClient(string ip)
+    public async void StartGame()
     {
-        print("IP: " + ip);
-        unityTransport.SetConnectionData(ip, 7777); // El puerto no debería cambiar
-        networkManager.StartClient();
+        if(!LobbyManager.isHost)
+        {
+            return;
+        }
+
+        startGameButton.SetActive(false);
+
+        lobbyManager.StartGame();
+
+        //LobbyManager.gameStarted = true;
+
+        int totalSpawned = 0;
+
+        for(int i = 0; i < positionManager.karts.Count; i++)
+        {
+            KartController kart = positionManager.karts[i];
+            Vector3 spawnerPosition = spawners[i].transform.position;
+
+            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], true);
+
+            totalSpawned++;
+        }
+
+        // Relleno con bots hasta llegar al límite
+        /*while(totalSpawned < LobbyManager.maxPlayers)
+        {
+            botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
+            totalSpawned++;
+        }*/
+
+        await Task.Delay(1000); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
+
+        // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
+        positionManager.InformAboutGameStart();
     }
 }

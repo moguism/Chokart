@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
@@ -10,35 +11,18 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
-    [SerializeField]
-    private string lobbyName;
-
     public static int maxPlayers = 8;
-
-    [SerializeField]
-    private TMP_InputField lobbyCodeInput;
-
-    [SerializeField]
-    private TMP_InputField playerNameInput;
-
-    [SerializeField]
-    private TMP_Text playersList;
-
-    [SerializeField]
-    private GameObject preLobbyOptions;
-
-    [SerializeField]
-    private GameObject afterLobbyOptions;
-
-    [SerializeField]
-    private GameObject startGameButton;
 
     private Lobby currentLobby;
 
     private float heartBeatTimer;
-    private float lobbyUpdateTimer;
+    private float lobbyUpdateTimer = 2.0f;
 
     public static bool isHost = false;
+    public static bool gameStarted = false;
+
+    public bool hasRelay = false;
+    public string lobbyCode = "";
 
     async void Start()
     {
@@ -60,7 +44,7 @@ public class LobbyManager : MonoBehaviour
 
     private async void HandleLobbyHeartbeat()
     {
-        if (currentLobby != null)
+        if (isHost && currentLobby != null && !gameStarted)
         {
             heartBeatTimer -= Time.deltaTime;
             if (heartBeatTimer < 0f)
@@ -73,70 +57,74 @@ public class LobbyManager : MonoBehaviour
 
     private async void HandleLobbyPollForUpdates()
     {
-        if (currentLobby != null)
+        try
         {
-            lobbyUpdateTimer -= Time.deltaTime;
-            if (lobbyUpdateTimer < 0f)
+            if (currentLobby != null && !gameStarted)
             {
-                lobbyUpdateTimer = 1.1f;
-                
-                Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
-                currentLobby = lobby;
-
-                if (currentLobby.Data["RELAY_CODE"].Value != "0")
+                lobbyUpdateTimer -= Time.deltaTime;
+                if (lobbyUpdateTimer < 0f)
                 {
-                    if(!isHost)
+                    lobbyUpdateTimer = 2f;
+
+                    Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                    currentLobby = lobby;
+
+                    bool wasHostBefore = isHost;
+
+                    if (!wasHostBefore && currentLobby.HostId == AuthenticationService.Instance.PlayerId)
                     {
-                        RelayManager.JoinRelay(currentLobby.Data["RELAY_CODE"].Value);
-                        SceneManager.LoadScene(2);
+                        isHost = true;
+                    }
+
+                    if (currentLobby.Data["RELAY_CODE"].Value != "0")
+                    {
+                        if (!isHost)
+                        {
+                            await RelayManager.JoinRelay(currentLobby.Data["RELAY_CODE"].Value);
+                            hasRelay = true;
+                        }
                     }
                 }
-
-                PrintPlayersInLobby();
             }
-        }
-    }
-
-    private void PrintPlayersInLobby()
-    {
-        playersList.text = "";
-
-        foreach(Player player in currentLobby.Players)
+        } catch(Exception e)
         {
-            playersList.text += "\n" + player.Data["PlayerName"].Value;
+            // Si tira excepción es que me han echado de la lobby
+            Debug.LogError(e);
+
+            LobbiesSceneManager.showError = true;
+            LeaveLobby(true);
+
+            SceneManager.LoadScene(1);
         }
     }
 
-    public async void CreateLobby()
+    public async void CreateLobby(string playerName)
     {
         try
         {
+            Player player = CreateNewPlayer(playerName);
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = false,
-                Player = CreateNewPlayer(),
+                Player = player,
                 Data = new Dictionary<string, DataObject>
                 {
                     { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, "0") }
                 }
             };
 
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createLobbyOptions);
+            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync("Lobby de " + player.Data["PlayerName"].Value, maxPlayers, createLobbyOptions);
             currentLobby = lobby;
             isHost = true;
-            SetOptionsAvailability(false, true);
 
             Debug.Log("Lobby creada: " + lobby + ". Código: " + lobby.LobbyCode);
+
+            lobbyCode = lobby.LobbyCode;
         }
         catch (LobbyServiceException e)
         {
             Debug.LogError(e);
         }
-    }
-
-    public async void ListLobbiesButton()
-    {
-        await ListLobbiesAsync();
     }
 
     public async Task<QueryResponse> ListLobbiesAsync()
@@ -174,44 +162,39 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
-    public async void JoinLobbyByCode()
+    public async void JoinLobbyByCode(string input, string playerName)
     {
         try
         {
             Lobby lobby;
 
             // Si no ha puesto código, se une a la primera que haya disponible
-            if (lobbyCodeInput.text == "" || lobbyCodeInput.text == null)
+            if (input == null || input == "")
             {
                 QueryResponse result = await ListLobbiesAsync();
 
-                if(result.Results.Count == 0)
+                if (result.Results.Count == 0)
                 {
                     Debug.LogWarning("No hay ninguna lobby disponible");
                     return;
                 }
 
-                JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
-                {
-                    Player = CreateNewPlayer()
-                };
-
-                lobby = await LobbyService.Instance.JoinLobbyByIdAsync(result.Results[0].Id, joinLobbyByIdOptions);
+                lobby = await JoinLobbyById(result.Results[0].Id, playerName);
             }
             else
             {
                 JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
                 {
-                    Player = CreateNewPlayer()
+                    Player = CreateNewPlayer(playerName)
                 };
 
-                lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCodeInput.text, joinLobbyByCodeOptions);
+                lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(input, joinLobbyByCodeOptions);
             }
 
             currentLobby = lobby;
-            SetOptionsAvailability(false, true);
-            Debug.Log("Unido a la lobby :D");
+            lobbyCode = currentLobby.LobbyCode;
 
+            Debug.Log("Unido a la lobby :D");
         }
         catch (LobbyServiceException e)
         {
@@ -219,14 +202,24 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void StartGame()
+    private async Task<Lobby> JoinLobbyById(string id, string playerName)
     {
-        if(isHost)
+        JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
+        {
+            Player = CreateNewPlayer(playerName)
+        };
+
+        return await LobbyService.Instance.JoinLobbyByIdAsync(id, joinLobbyByIdOptions);
+    }
+
+    public async Task<bool> StartRelay()
+    {
+        if (isHost)
         {
             string relayCode = await RelayManager.CreateRelay();
 
-            Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions 
-            { 
+            Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions
+            {
                 Data = new Dictionary<string, DataObject>
                 {
                     { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
@@ -235,19 +228,49 @@ public class LobbyManager : MonoBehaviour
 
             currentLobby = lobby;
 
-            SceneManager.LoadScene(2); // La del coche
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public async void StartGame()
+    {
+        // Expulso de la lobby a todos aquellos que no estén ya en la partida
+        for(int i = 0; i < currentLobby.Players.Count; i++)
+        {
+            Player player = currentLobby.Players[i];
+            if(!RelayManager.playersIds.Contains(player.Id))
+            {
+                await KickPlayer(player.Id);
+            }
+        }
+
+        Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions
+        {
+            IsLocked = true
+        });
+
+        currentLobby = lobby;
+        gameStarted = true;
+    }
+
+    public async void LeaveLobby(bool alreadyOut)
+    {
+        currentLobby = null;
+        isHost = false;
+        gameStarted = false;
+
+        if(!alreadyOut) 
+        { 
+            await KickPlayer(AuthenticationService.Instance.PlayerId);
         }
     }
 
-    public void LeaveLobby()
-    {
-        KickPlayer(AuthenticationService.Instance.PlayerId);
-        SetOptionsAvailability(true, false);
-        currentLobby = null;
-        isHost = false;
-    }
-
-    private async void KickPlayer(string playerId)
+    private async Task KickPlayer(string playerId)
     {
         try
         {
@@ -259,9 +282,9 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private Player CreateNewPlayer()
+    private Player CreateNewPlayer(string playerName)
     {
-        if(playerNameInput.text == "" || playerNameInput.text == null)
+        if (playerName == null || playerName == "")
         {
             Debug.LogWarning("Debe de haber un nombre");
             return null;
@@ -273,24 +296,9 @@ public class LobbyManager : MonoBehaviour
             {
                 { "PlayerName", new PlayerDataObject(
                     PlayerDataObject.VisibilityOptions.Member,
-                    playerNameInput.text)
+                    playerName)
                 }
             }
         };
-    }
-
-    private void SetOptionsAvailability(bool preOptions, bool inOptions)
-    {
-        preLobbyOptions.SetActive(preOptions);
-        afterLobbyOptions.SetActive(inOptions);
-        
-        if(isHost)
-        {
-            startGameButton.SetActive(true);
-        }
-        else
-        {
-            startGameButton.SetActive(false);
-        }
     }
 }

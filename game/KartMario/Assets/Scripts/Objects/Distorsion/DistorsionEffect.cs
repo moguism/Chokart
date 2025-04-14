@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 public class DistorsionEffect : MonoBehaviour
 {
@@ -6,14 +7,18 @@ public class DistorsionEffect : MonoBehaviour
     private float timer;
     public bool active;
 
+    public VideoPlayer glitchEffect;
+
     // Update is called once per frame
     void Update()
     {
         if(active)
         {
-            //timer -= Time.deltaTime;
+            glitchEffect.enabled = true;
+            timer -= Time.deltaTime;
             if(timer <= 0.0f)
             {
+                glitchEffect.enabled = false;
                 Destroy(gameObject);
             }
         }

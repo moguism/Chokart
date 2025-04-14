@@ -1,15 +1,17 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RelayManager : MonoBehaviour
 {
     private static RelayServerData _relayServerData;
+    public static List<string> playersIds = new();
 
     public static async Task<string> CreateRelay()
     {
@@ -24,9 +26,11 @@ public class RelayManager : MonoBehaviour
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
             _relayServerData = relayServerData;
 
+            playersIds.Add(AuthenticationService.Instance.PlayerId);
+
             return joinCode;
         }
-        catch(RelayServiceException e)
+        catch (RelayServiceException e)
         {
             Debug.LogError(e);
         }
@@ -34,29 +38,32 @@ public class RelayManager : MonoBehaviour
         return null;
     }
 
-    public static void StartGame()
+    public static void StartRelay()
     {
-        if(LobbyManager.isHost)
+        print(_relayServerData);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
+        if (LobbyManager.isHost)
         {
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(_relayServerData);
             NetworkManager.Singleton.StartHost();
+        }
+        else
+        {
+            NetworkManager.Singleton.StartClient();
         }
     }
 
-    public static async void JoinRelay(string joinCode)
+    public static async Task JoinRelay(string joinCode)
     {
         try
         {
             JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+            _relayServerData = relayServerData;
 
-            SceneManager.LoadScene(2);
-
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-            NetworkManager.Singleton.StartClient();
+            print("R1: " + _relayServerData + ". R2:" + relayServerData);
         }
-        catch(RelayServiceException e)
+        catch (RelayServiceException e)
         {
             Debug.LogError(e);
         }
