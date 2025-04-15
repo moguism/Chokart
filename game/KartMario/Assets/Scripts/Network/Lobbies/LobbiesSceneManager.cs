@@ -30,13 +30,13 @@ public class LobbiesSceneManager : MonoBehaviour
 
     public void CreateLobby()
     {
-        lobbyManager.CreateLobby(playerName.text);
+        lobbyManager.CreateLobby();
         SceneManager.LoadScene(3); // La selección de personajes
     }
 
     public void JoinLobby()
     {
-        lobbyManager.JoinLobbyByCode(joinCode.text, playerName.text);
+        lobbyManager.JoinLobbyByCode(joinCode.text);
         SceneManager.LoadScene(3);
     }
 }
