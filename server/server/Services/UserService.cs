@@ -136,4 +136,13 @@ public class UserService
     {
         return _userMapper.ToDto(user);
     }
+
+    public UserResponse ToUserResponse(User user)
+    {
+        UserResponse userResponse = new UserResponse()
+        {
+            Nickname = user.Nickname
+        };
+        return userResponse;
+    }
 }

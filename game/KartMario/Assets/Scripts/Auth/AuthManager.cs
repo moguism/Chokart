@@ -26,7 +26,7 @@ public class AuthManager : MonoBehaviour
     [Inject]
     public WebsocketSingleton websocketSingleton;
 
-    void Start()
+    async void Start()
     {
         Debug.Log(websocketSingleton);
 
@@ -39,9 +39,16 @@ public class AuthManager : MonoBehaviour
             string savedToken = PlayerPrefs.GetString("AccessToken");
             Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
             Debug.Log("Usuario autenticado autom�ticamente >:)");
-            StartCoroutine(ConnectToSocketCoroutine(savedToken));
 
-            LobbyManager.PlayerName = PlayerPrefs.GetString("PlayerName");
+
+            //StartCoroutine(ConnectToSocketCoroutine(savedToken));
+            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), savedToken);
+
+            if (!couldSign)
+            {
+                Logout();
+                return;
+            }
 
             SceneManager.LoadScene(1);
         }
@@ -51,7 +58,7 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    public void OnRegButton()
+    public async void OnRegButton()
     {
         string email = emailInput.text.Trim();
         string nickname = nicknameInput.text.Trim();
@@ -74,10 +81,10 @@ public class AuthManager : MonoBehaviour
             Password = password
         };
 
-        StartCoroutine(Register(tempReg));
+        await Register(tempReg);
     }
 
-    public void OnLogInButton()
+    public async void OnLogInButton()
     {
         string emailOrNickname = loginEmailOrNicknameInput.text.Trim();
         string password = loginPasswordInput.text;
@@ -88,11 +95,11 @@ public class AuthManager : MonoBehaviour
             Password = password
         };
 
-        StartCoroutine(LoginAsync(tempLog));
+        await LoginAsync(tempLog);
     }
 
     // Registro
-    public IEnumerator Register(RegisterRequest register)
+    public async Task Register(RegisterRequest register)
     {
         // Hace la petici�n, convierte los datos del registro a JSON y posteriormente a bytes y lo env�a.
         UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "Auth/register", "POST");
@@ -105,18 +112,16 @@ public class AuthManager : MonoBehaviour
         unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
         unityWebRequest.SetRequestHeader("Content-Type", "application/json"); // Este Content-Type no sirve para cuando subamos avatares
 
-        yield return unityWebRequest.SendWebRequest();
+        await unityWebRequest.SendWebRequest();
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Registro exitoso: " + unityWebRequest.downloadHandler.text);
-            StartCoroutine(
-                LoginAsync(new LoginRequest()
-                {
-                    EmailOrNickname = register.Nickname,
-                    Password = register.Password
-                }
-            ));
+            await LoginAsync(new LoginRequest()
+            {
+                EmailOrNickname = register.Nickname,
+                Password = register.Password
+            });
         }
         else
         {
@@ -126,7 +131,7 @@ public class AuthManager : MonoBehaviour
     }
 
     // Inicio de sesi�n
-    public IEnumerator LoginAsync(LoginRequest loginRequest)
+    public async Task LoginAsync(LoginRequest loginRequest)
     {
         UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "Auth/login", "POST");
         string jsonData = JsonUtility.ToJson(loginRequest);
@@ -138,7 +143,7 @@ public class AuthManager : MonoBehaviour
         unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
 
-        yield return unityWebRequest.SendWebRequest();
+        await unityWebRequest.SendWebRequest();
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
@@ -151,12 +156,15 @@ public class AuthManager : MonoBehaviour
             // Guardar el token en PlayerPrefs si el "recu�rdame" est� activado
             if (rememberMeToggle.isOn)
             {
+                PlayerPrefs.SetInt("ID", response.id);
                 PlayerPrefs.SetString("AccessToken", response.accessToken);
                 PlayerPrefs.Save();
                 Debug.Log("Token guardado en PlayerPrefs.");
 
-                StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
-                //SceneManager.LoadScene(1); // La pantalla de lobbies
+                //StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
+                await GetUserAsync(response.id, response.accessToken);
+
+                SceneManager.LoadScene(1); // La pantalla de lobbies
             }
             else
             {
@@ -169,6 +177,35 @@ public class AuthManager : MonoBehaviour
         {
             Debug.LogError("Error en la solicitud: " + unityWebRequest.error);
             Debug.LogError("Respuesta del servidor: " + unityWebRequest.downloadHandler.text);
+        }
+    }
+
+    public async Task<bool> GetUserAsync(int id, string token)
+    {
+        UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "User/" + id, "GET");
+
+        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
+        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
+        unityWebRequest.SetRequestHeader("Authorization", "Bearer " + token);
+
+        await unityWebRequest.SendWebRequest();
+
+        if (unityWebRequest.result == UnityWebRequest.Result.Success)
+        {
+            string jsonResponse = unityWebRequest.downloadHandler.text;
+
+            UserResponse response = JsonUtility.FromJson<UserResponse>(jsonResponse);
+            PlayerPrefs.SetString("PlayerName", response.nickname);
+            PlayerPrefs.Save();
+
+            // TODO: Mostrar un aviso si está baneado
+            LobbyManager.PlayerName = response.nickname;
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

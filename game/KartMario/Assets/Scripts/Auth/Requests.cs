@@ -19,5 +19,12 @@ public class LoginRequest
 [Serializable]
 public class LoginResponse
 {
+    public int id;
     public string accessToken;
+}
+
+[Serializable]
+public class UserResponse
+{
+    public string nickname;
 }
