@@ -335,7 +335,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654436109572107649}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c53746bb65e494e4da58a12b73d96eb7, type: 3}
   m_Name: 
@@ -29813,6 +29813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   health: 120
+  maxHealth: 0
   kartModel: {fileID: 2837413282412538936}
   kartNormal: {fileID: 7002653077785774816}
   sphere: {fileID: 8533267132228075681}
@@ -29866,7 +29867,11 @@ MonoBehaviour:
   ai: {fileID: 1583639820755335427}
   kartIndex: 0
   characters: {fileID: 5617101350147764324}
-  speedometer: {fileID: 0}
+  chronometer: {fileID: 0}
+  kartCamera: {fileID: 0}
+  canMove: 1
+  totalKills: 0
+  ownerName: 
 --- !u!114 &3255239343157649172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89560,7 +89565,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4049fd80f622b8641969099834ed2db8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
