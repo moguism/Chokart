@@ -40,6 +40,10 @@ public class AuthManager : MonoBehaviour
             Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
             Debug.Log("Usuario autenticado autom�ticamente >:)");
             StartCoroutine(ConnectToSocketCoroutine(savedToken));
+
+            LobbyManager.PlayerName = PlayerPrefs.GetString("PlayerName");
+
+            SceneManager.LoadScene(1);
         }
         else
         {

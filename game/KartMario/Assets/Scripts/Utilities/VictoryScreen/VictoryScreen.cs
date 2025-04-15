@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VictoryScreen : MonoBehaviour
 {
@@ -9,8 +11,8 @@ public class VictoryScreen : MonoBehaviour
     [SerializeField]
     private GameObject container;
 
-    [SerializeField]
-    private float timer = 5.0f;
+    /*[SerializeField]
+    private float timer = 5.0f;*/
 
     [SerializeField]
     private GameObject playerItem;
@@ -25,7 +27,7 @@ public class VictoryScreen : MonoBehaviour
         otherCanvas.enabled = false;
     }
 
-    void Update()
+    /*void Update()
     {
         if(timer >= 0.0f)
         {
@@ -38,7 +40,7 @@ public class VictoryScreen : MonoBehaviour
         {
             Time.timeScale = originalTime;
         }
-    }
+    }*/
 
     public void SetFinishKarts()
     {
@@ -50,5 +52,10 @@ public class VictoryScreen : MonoBehaviour
             victoryScreenItem.finishKart = kart;
             victoryScreenItem.SetItem();
         }
+    }
+
+    public void CloseButton()
+    {
+        SceneManager.LoadScene(1); // Las lobbies
     }
 }
