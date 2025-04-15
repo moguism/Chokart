@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -23,6 +22,8 @@ public class LobbyManager : MonoBehaviour
 
     public bool hasRelay = false;
     public string lobbyCode = "";
+
+    public static string PlayerName;
 
     async void Start()
     {
@@ -98,11 +99,11 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void CreateLobby(string playerName)
+    public async void CreateLobby()
     {
         try
         {
-            Player player = CreateNewPlayer(playerName);
+            Player player = CreateNewPlayer();
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions
             {
                 IsPrivate = false,
@@ -162,7 +163,7 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
-    public async void JoinLobbyByCode(string input, string playerName)
+    public async void JoinLobbyByCode(string input)
     {
         try
         {
@@ -179,13 +180,13 @@ public class LobbyManager : MonoBehaviour
                     return;
                 }
 
-                lobby = await JoinLobbyById(result.Results[0].Id, playerName);
+                lobby = await JoinLobbyById(result.Results[0].Id);
             }
             else
             {
                 JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
                 {
-                    Player = CreateNewPlayer(playerName)
+                    Player = CreateNewPlayer()
                 };
 
                 lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(input, joinLobbyByCodeOptions);
@@ -202,11 +203,11 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private async Task<Lobby> JoinLobbyById(string id, string playerName)
+    private async Task<Lobby> JoinLobbyById(string id)
     {
         JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions
         {
-            Player = CreateNewPlayer(playerName)
+            Player = CreateNewPlayer()
         };
 
         return await LobbyService.Instance.JoinLobbyByIdAsync(id, joinLobbyByIdOptions);
@@ -282,9 +283,9 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    private Player CreateNewPlayer(string playerName)
+    private Player CreateNewPlayer()
     {
-        if (playerName == null || playerName == "")
+        if (PlayerName == null || PlayerName == "")
         {
             Debug.LogWarning("Debe de haber un nombre");
             return null;
@@ -296,7 +297,7 @@ public class LobbyManager : MonoBehaviour
             {
                 { "PlayerName", new PlayerDataObject(
                     PlayerDataObject.VisibilityOptions.Member,
-                    playerName)
+                    PlayerName)
                 }
             }
         };

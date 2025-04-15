@@ -75,3 +75,4 @@
     Domingo --> Mauricio comienza a juntar todo y a pulir.
 ### Tercera semana (14/04 - 20/04)
     Lunes --> Mauricio continua puliendo todo.
+    Martes --> Mauricio hace la pantalla de victoria y prácticamente termina de pulir.

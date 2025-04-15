@@ -32,7 +32,7 @@ public class StartCounter : MonoBehaviour
             }
             else
             {
-                EnableOrDisableKarts(true);
+                EnableOrDisableKarts(true, true);
                 Destroy(gameObject);
             }
         }
@@ -41,16 +41,21 @@ public class StartCounter : MonoBehaviour
     public void StartBegginingCounter(KartController[] karts)
     {
         _karts = karts;
-        EnableOrDisableKarts(false);
+        EnableOrDisableKarts(false, false);
         gameObject.SetActive(true);
         start = true;
     }
 
-    private void EnableOrDisableKarts(bool canMove)
+    private void EnableOrDisableKarts(bool canMove, bool canBeHurt)
     {
         for(int i = 0; i < _karts.Length; i++)
         {
             _karts[i].canMove = canMove;
+            _karts[i].canBeHurt = canBeHurt;
+            if (!_karts[i].canBeHurt)
+            {
+                _karts[i].health = _karts[i].maxHealth;
+            }
         }
     }
 }

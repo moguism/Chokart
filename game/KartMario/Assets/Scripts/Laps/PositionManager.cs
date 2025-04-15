@@ -9,11 +9,16 @@ public class PositionManager : NetworkBehaviour
     public List<KartController> karts;
     public FinishLine finishLine;
 
+    public List<FinishKart> finishKarts = new();
+
     [SerializeField]
     private StartCounter startCounter;
 
+    public GameObject victoryScreen;
+
     public SpectateKart spectateKart;
     public GameObject spectateCanvas;
+    public GameObject loadingScreen;
 
     void LateUpdate()
     {
@@ -111,6 +116,8 @@ public class PositionManager : NetworkBehaviour
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
+            LobbyManager.gameStarted = true;
+
             kart.sphere.position = newPosition;
             kart.sphere.transform.position = newPosition;
             kart.transform.position = newPosition;
@@ -123,11 +130,11 @@ public class PositionManager : NetworkBehaviour
                 if (repair)
                 {
                     kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
+                    kart.health = kart.maxHealth;
+                    kart.passedThroughFinishLine = false;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }
-
-            LobbyManager.gameStarted = true;
         }
     }
 

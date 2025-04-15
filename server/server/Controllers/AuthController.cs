@@ -95,6 +95,7 @@ namespace server.Controllers
                 // Se devuelve el resultado de inicio de sesión con el token y los datos del usuario
                 var loginResult = new LoginResult
                 {
+                    Id = user.Id,
                     AccessToken = stringToken,
                     User = _userService.ToDto(user)
                 };
