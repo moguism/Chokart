@@ -18,6 +18,7 @@ public class PositionManager : NetworkBehaviour
 
     public SpectateKart spectateKart;
     public GameObject spectateCanvas;
+    public GameObject loadingScreen;
 
     void LateUpdate()
     {
@@ -103,18 +104,20 @@ public class PositionManager : NetworkBehaviour
         }
     }
 
-    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, float health = 0, bool repair = false)
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair = false)
     {
-        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair, health);
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
     }
 
 
     [ClientRpc]
-    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair, float health)
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
     {
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
+            LobbyManager.gameStarted = true;
+
             kart.sphere.position = newPosition;
             kart.sphere.transform.position = newPosition;
             kart.transform.position = newPosition;
@@ -127,12 +130,11 @@ public class PositionManager : NetworkBehaviour
                 if (repair)
                 {
                     kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
-                    kart.health = health;
+                    kart.health = kart.maxHealth;
+                    kart.passedThroughFinishLine = false;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }
-
-            LobbyManager.gameStarted = true;
         }
     }
 
@@ -146,11 +148,4 @@ public class PositionManager : NetworkBehaviour
     {
         startCounter.StartBegginingCounter(karts.ToArray());
     }
-}
-
-public class FinishKart
-{
-    public string playerName;
-    public int position;
-    public int kills;
 }

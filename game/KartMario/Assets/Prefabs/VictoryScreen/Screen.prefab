@@ -637,10 +637,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8485872566526434609}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 7927039913112621848}
+        m_TargetAssemblyTypeName: VictoryScreen, Assembly-CSharp
+        m_MethodName: CloseButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1615,7 +1615,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   otherCanvas: {fileID: 0}
   container: {fileID: 4443300954562216669}
-  timer: 5
   playerItem: {fileID: 8135198271120477636, guid: ef1fcef9b3043304f9312c8a600ccd90,
     type: 3}
 --- !u!1 &8485872567974769517
