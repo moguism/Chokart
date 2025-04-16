@@ -19,6 +19,7 @@ public class LobbyManager : MonoBehaviour
 
     public static bool isHost = false;
     public static bool gameStarted = false;
+    public static bool spawnBotsWhenStarting = false;
 
     public bool hasRelay = false;
     public string lobbyCode = "";

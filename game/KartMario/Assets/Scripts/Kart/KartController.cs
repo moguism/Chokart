@@ -209,7 +209,6 @@ public class KartController : BasicPlayer
             return;
         }
 
-        killsText.text = "Kills: " + totalKills;
 
         if (isMobile)
         {
@@ -231,10 +230,6 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        if (healthText)
-        {
-            healthText.text = "Salud: \n" + health;
-        }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
@@ -264,9 +259,7 @@ public class KartController : BasicPlayer
         }
         else
         {
-            // TODO: Descomentar esto
-
-            /*if (LobbyManager.gameStarted)
+            if (LobbyManager.gameStarted)
             {
                 speed = acceleration;
 
@@ -282,7 +275,7 @@ public class KartController : BasicPlayer
                 }
             }
             else
-            {*/
+            {
                 if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
                 {
                     speed = 0;
@@ -299,7 +292,7 @@ public class KartController : BasicPlayer
                         speed = -acceleration;
                     }
                 }
-            //}
+            }
         }
 
 
@@ -407,6 +400,12 @@ public class KartController : BasicPlayer
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
 
         jumpValueLastFrame = jumpValue;
+
+        try
+        {
+            killsText.text = "Kills: " + totalKills;
+            healthText.text = "Salud: \n" + health;
+        } catch { }
     }
 
     public void SpawnObject()

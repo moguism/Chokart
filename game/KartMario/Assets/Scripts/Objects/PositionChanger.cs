@@ -42,11 +42,14 @@ public class PositionChanger : BasicObject
             int lastTriggerIndexForParent = kart.lastTriggerIndex;
             int lastTriggerIndexForOtherKart = parent.lastTriggerIndex;
 
+            int totalLapsForParent = kart.totalLaps;
+            int totalLapsForOtherKart = parent.totalLaps;
+
             var triggerListForParent = kart.triggers.ToArray();
             var triggerListForOther = parent.triggers.ToArray();
 
-            positionManager.ChangeValuesOfKart(newPositionToParent, parent.NetworkObjectId, lastTriggerIndexForParent, newPositionInRaceForParent, triggerListForParent);
-            positionManager.ChangeValuesOfKart(newPositionToOtherKart, kart.NetworkObjectId, lastTriggerIndexForOtherKart, newPositionInRaceForOtherKart, triggerListForOther);
+            positionManager.ChangeValuesOfKart(newPositionToParent, parent.NetworkObjectId, lastTriggerIndexForParent, newPositionInRaceForParent, totalLapsForParent, triggerListForParent);
+            positionManager.ChangeValuesOfKart(newPositionToOtherKart, kart.NetworkObjectId, lastTriggerIndexForOtherKart, newPositionInRaceForOtherKart, totalLapsForOtherKart, triggerListForOther);
         }
     }
 

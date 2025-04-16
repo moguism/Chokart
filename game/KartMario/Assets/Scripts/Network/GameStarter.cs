@@ -69,17 +69,20 @@ public class GameStarter : NetworkBehaviour
             KartController kart = positionManager.karts[i];
             Vector3 spawnerPosition = spawners[i].transform.position;
 
-            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, new int[0], true);
+            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, 0, new int[0], true);
 
             totalSpawned++;
         }
 
         // Relleno con bots hasta llegar al límite
-        /*while(totalSpawned < LobbyManager.maxPlayers)
+        if (LobbyManager.spawnBotsWhenStarting)
         {
-            botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
-            totalSpawned++;
-        }*/
+            while(totalSpawned < LobbyManager.maxPlayers)
+            {
+                botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
+                totalSpawned++;
+            }
+        }
 
         await Task.Delay(1000); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
 

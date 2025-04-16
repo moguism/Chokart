@@ -129,9 +129,13 @@ public class DetectCollision : NetworkBehaviour
             kart.chronometer.StopTimer();
             kart.chronometer.timerText.text = "";
 
-            kart.positionText.color = Color.blue;
-            kart.positionText.text = positionManager.karts.Count.ToString();
-            kart.healthText.text = "";
+            try
+            {
+                kart.positionText.color = Color.blue;
+                kart.positionText.text = positionManager.karts.Count.ToString();
+                kart.healthText.text = "";
+            }
+            catch {}
 
             positionManager.spectateCanvas.SetActive(true);
             positionManager.spectateKart.kartCamera = kart.kartCamera;
