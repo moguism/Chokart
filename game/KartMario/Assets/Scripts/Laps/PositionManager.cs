@@ -104,14 +104,14 @@ public class PositionManager : NetworkBehaviour
         }
     }
 
-    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair = false)
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool repair = false)
     {
-        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, totalLaps, triggers, repair);
     }
 
 
     [ClientRpc]
-    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool repair)
     {
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
@@ -123,15 +123,18 @@ public class PositionManager : NetworkBehaviour
             kart.transform.position = newPosition;
             kart.position = position;
             kart.lastTriggerIndex = lastTriggerIndex;
+            kart.totalLaps = totalLaps;
             kart.triggers = triggers.ToList();
 
             try
             {
+                // Si reparo significa que el juego acaba de comenzar
                 if (repair)
                 {
-                    kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
+                    kart.currentObject = "";
                     kart.health = kart.maxHealth;
                     kart.passedThroughFinishLine = false;
+                    kart.canMove = false;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }

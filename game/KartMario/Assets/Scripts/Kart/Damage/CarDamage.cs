@@ -79,7 +79,15 @@ public class CarDamage : NetworkBehaviour
         if (parent == null || !parent.CompareTag("Kart"))
         {
             isKart = false;
+
+            if(collision.gameObject.CompareTag("Map"))
+            {
+                return;
+            }
         }
+
+        Debug.LogWarning(collision.gameObject.tag);
+        Debug.LogWarning(parent != null ? parent.tag : null);
 
         Vector3 colRelVel = collision.relativeVelocity;
         colRelVel.y *= YforceDamp;

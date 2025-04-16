@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BasicPlayer : NetworkBehaviour
 {
+    // TODO: Aumentar la salud porque 120 es muy poco si hay muchos jugadores JAJAJAJAAJAJ
     public float health = 0;
+
     public float maxHealth;
     public static readonly float damageMultiplier = 1; // Al ser estático no se muestra en el editor :(
     

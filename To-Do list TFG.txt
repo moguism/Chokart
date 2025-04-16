@@ -1,3 +1,4 @@
 Del juego en sí falta (sin estética ni nada):
 - Hacer petición a la base de datos cuando termina la partida
+- Que la IA escoja personaje y coches aleatorios, no los del host
 - La IA se vuelve un poco loca xD
