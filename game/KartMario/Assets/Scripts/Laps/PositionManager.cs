@@ -9,11 +9,16 @@ public class PositionManager : NetworkBehaviour
     public List<KartController> karts;
     public FinishLine finishLine;
 
+    public List<FinishKart> finishKarts = new();
+
     [SerializeField]
     private StartCounter startCounter;
 
+    public GameObject victoryScreen;
+
     public SpectateKart spectateKart;
     public GameObject spectateCanvas;
+    public GameObject loadingScreen;
 
     void LateUpdate()
     {
@@ -99,35 +104,43 @@ public class PositionManager : NetworkBehaviour
         }
     }
 
-    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair = false)
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset = false)
     {
-        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, triggers, repair);
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, totalLaps, triggers, reset);
     }
 
 
     [ClientRpc]
-    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int[] triggers, bool repair)
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset)
     {
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
+            LobbyManager.gameStarted = true;
+
             kart.sphere.position = newPosition;
             kart.sphere.transform.position = newPosition;
             kart.transform.position = newPosition;
             kart.position = position;
             kart.lastTriggerIndex = lastTriggerIndex;
+            kart.totalLaps = totalLaps;
             kart.triggers = triggers.ToList();
 
             try
             {
-                if (repair)
+                if (reset)
                 {
-                    kart.currentObject = ""; // Si reparo significa que el juego ha comenzado
+                    kart.sphere.rotation = Quaternion.identity; // Resetea la rotación
+                    kart.sphere.transform.rotation = Quaternion.identity;
+                    kart.transform.rotation = Quaternion.identity;
+
+                    kart.currentObject = "";
+                    kart.health = kart.maxHealth;
+                    kart.passedThroughFinishLine = false;
+                    kart.canMove = false;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
             } catch { }
-
-            LobbyManager.gameStarted = true;
         }
     }
 

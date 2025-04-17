@@ -2,6 +2,7 @@ using Injecta;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LobbiesSceneManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class LobbiesSceneManager : MonoBehaviour
     private TMP_InputField joinCode;
 
     [SerializeField]
-    private TMP_InputField playerName;
+    private Toggle spawnBotsToggle;
 
     public static bool showError = false;
 
@@ -30,13 +31,18 @@ public class LobbiesSceneManager : MonoBehaviour
 
     public void CreateLobby()
     {
-        lobbyManager.CreateLobby(playerName.text);
+        //LobbyManager.PlayerName = "Testing";
+
+        lobbyManager.CreateLobby();
+        LobbyManager.spawnBotsWhenStarting = spawnBotsToggle.isOn;
         SceneManager.LoadScene(3); // La selección de personajes
     }
 
     public void JoinLobby()
     {
-        lobbyManager.JoinLobbyByCode(joinCode.text, playerName.text);
+        //LobbyManager.PlayerName = "Testing";
+
+        lobbyManager.JoinLobbyByCode(joinCode.text);
         SceneManager.LoadScene(3);
     }
 }
