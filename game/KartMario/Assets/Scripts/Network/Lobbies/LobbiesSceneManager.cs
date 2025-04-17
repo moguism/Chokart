@@ -1,8 +1,8 @@
 using Injecta;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LobbiesSceneManager : MonoBehaviour
 {
@@ -12,19 +12,22 @@ public class LobbiesSceneManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField joinCode;
 
-    [SerializeField]
-    private Toggle spawnBotsToggle;
-
     public static bool showError = false;
 
     [SerializeField]
-    private TMP_Text errorText;
+    private TMP_Text placeholderText;
+
+    private Color initialColor;
+    private string initialText;
 
     private void Start()
     {
+        initialColor = placeholderText.color;
+        initialText = placeholderText.text;
+
         if(showError)
         {
-            errorText.enabled = true;
+            ChangePlaceholderValues(Color.red, "Fuiste expulsado");
             showError = false;
         }
     }
@@ -34,15 +37,42 @@ public class LobbiesSceneManager : MonoBehaviour
         //LobbyManager.PlayerName = "Testing";
 
         lobbyManager.CreateLobby();
-        LobbyManager.spawnBotsWhenStarting = spawnBotsToggle.isOn;
         SceneManager.LoadScene(3); // La selección de personajes
     }
 
-    public void JoinLobby()
+    public async void JoinLobby()
     {
         //LobbyManager.PlayerName = "Testing";
 
-        lobbyManager.JoinLobbyByCode(joinCode.text);
+        bool joined = await lobbyManager.JoinLobbyByCode(joinCode.text);
+        if(!joined)
+        {
+            ChangePlaceholderValues(Color.red, "No hay lobbies");
+            return;
+        }
         SceneManager.LoadScene(3);
+    }
+
+    public void PlayWithBots()
+    {
+        LobbyManager.spawnBotsWhenStarting = true;
+        CreateLobby();
+    }
+
+    public void PlayWithoutBots()
+    {
+        LobbyManager.spawnBotsWhenStarting = false;
+        CreateLobby();
+    }
+
+    public void OnLobbyCodeValueChanged()
+    {
+        ChangePlaceholderValues(initialColor, initialText);
+    }
+
+    private void ChangePlaceholderValues(Color color, string text)
+    {
+        placeholderText.color = color;
+        placeholderText.text = text;
     }
 }
