@@ -1,10 +1,8 @@
 ﻿using Cinemachine;
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
-using Unity.Netcode;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -68,12 +66,10 @@ public class KartController : BasicPlayer
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
-    private PositionManager positionManager;
-
+   
     // Objetos
     [Header("Objetos")]
     public string currentObject;
-    private ObjectSpawner objectSpawner;
     public bool canBeHurt = true;
     public List<Renderer> renders;
     public ulong lastBombId;
@@ -88,9 +84,6 @@ public class KartController : BasicPlayer
     // Selección
     [SerializeField]
     private int kartIndex;
-    private GameStarter starter;
-
-    [SerializeField]
     public GameObject characters;
 
     // Controles
@@ -106,6 +99,7 @@ public class KartController : BasicPlayer
     public bool canMove = true;
     public int totalKills = 0;
     private TMP_Text killsText;
+    public string ownerName = "";
 
     public override void OnNetworkSpawn()
     {
@@ -143,7 +137,12 @@ public class KartController : BasicPlayer
             return;
         }
 
-        InformServerKartCreatedServerRpc(NetworkObjectId, AuthenticationService.Instance.PlayerId);
+        maxHealth = health;
+        ownerName = LobbyManager.PlayerName;
+
+        GetPositionManager();
+        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, AuthenticationService.Instance.PlayerId);
+        _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es
         if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
@@ -155,8 +154,7 @@ public class KartController : BasicPlayer
         playerControls = new InputSystem_Actions();
         playerControls.Enable();
 
-        var positionManager = GameObject.Find("Triggers");
-        positionManager.GetComponent<PositionManager>().karts.Add(this);
+        _positionManager.karts.Add(this);
 
         isMobile = Application.isMobilePlatform;
         if (isMobile)
@@ -198,61 +196,6 @@ public class KartController : BasicPlayer
         chronometer = FindFirstObjectByType<Chronometer>();
     }
 
-
-    // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
-    [ServerRpc]
-    void InformServerKartCreatedServerRpc(ulong kartId, string playerId, ServerRpcParams rpcParams = default)
-    {
-        if (positionManager == null)
-        {
-            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-        }
-
-        // El servidor agrega el kart a la lista
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        if (kart == null)
-        {
-            print("Agregando");
-            positionManager.karts.Add(this);
-            RelayManager.playersIds.Add(playerId);
-        }
-    }
-
-    [ServerRpc]
-    void InformServerKartStatusServerRpc(ulong kartId, Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
-    {
-        if (positionManager == null)
-        {
-            positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-        }
-
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        if (kart != null)
-        {
-            print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
-            kart.currentPosition = currentPositionToUpdate;
-        }
-    }
-
-    [ServerRpc]
-    void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
-    {
-        if (starter == null)
-        {
-            starter = FindFirstObjectByType<GameStarter>();
-        }
-
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        kart.GetComponentInParent<NetworkObject>().Despawn(true);
-
-        //NetworkManager.Singleton.NetworkConfig.PlayerPrefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
-
-        GameObject prefab = starter.PossiblePrefabs.ElementAt(desiredIndex);
-        GameObject gameObject = Instantiate(prefab, position, Quaternion.identity);
-
-        gameObject.GetComponent<NetworkObject>().SpawnWithOwnership(ownerId);
-    }
-
     void Update()
     {
         /*if (Input.GetKeyDown(KeyCode.Space))
@@ -266,7 +209,6 @@ public class KartController : BasicPlayer
             return;
         }
 
-        killsText.text = "Kills: " + totalKills;
 
         if (isMobile)
         {
@@ -288,10 +230,6 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        if (healthText)
-        {
-            healthText.text = "Salud: \n" + health;
-        }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
@@ -321,41 +259,40 @@ public class KartController : BasicPlayer
         }
         else
         {
-            speed = acceleration;
+            if (LobbyManager.gameStarted)
+            {
+                speed = acceleration;
 
-            if(direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-            {
-                speed = 0;
-            }
-
-            // En cuanto se mueva por primera vez, activo el timer
-            if (LobbyManager.gameStarted && !chronometer.timerOn)
-            {
-                chronometer.StartTimer();
-            }
-
-            /*if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
-            {
-                speed = 0;
-            }
-            else
-            {
-                // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
                 {
-                    speed = acceleration;
-                }
-                else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
-                {
-                    speed = -acceleration;
+                    speed = 0;
                 }
 
                 // En cuanto se mueva por primera vez, activo el timer
-                if (LobbyManager.gameStarted && !chronometer.timerOn)
+                if (!chronometer.timerOn)
                 {
                     chronometer.StartTimer();
                 }
-            }*/
+            }
+            else
+            {
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+                {
+                    speed = 0;
+                }
+                else
+                {
+                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                    {
+                        speed = acceleration;
+                    }
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                    {
+                        speed = -acceleration;
+                    }
+                }
+            }
         }
 
 
@@ -463,6 +400,12 @@ public class KartController : BasicPlayer
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
 
         jumpValueLastFrame = jumpValue;
+
+        try
+        {
+            killsText.text = "Kills: " + totalKills;
+            healthText.text = "Salud: \n" + health;
+        } catch { }
     }
 
     public void SpawnObject()
@@ -477,16 +420,6 @@ public class KartController : BasicPlayer
         currentObject = "";
     }
 
-    [ServerRpc]
-    private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
-    {
-        if (objectSpawner == null)
-        {
-            objectSpawner = FindFirstObjectByType<ObjectSpawner>();
-        }
-
-        objectSpawner.SpawnObject(currentObject, currentPosition, destination, kartId);
-    }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
     // Es la esfera la que hace todo

@@ -1,6 +1,4 @@
-Del juego en sí falta:
-- Pantalla de carga cuando te unes como cliente
-- Volver a habilitar el desgaste del coche
-- Pantalla de victoria/derrota al final
-- Poner la vista de Auth al inicio
+Del juego en sí falta (sin estética ni nada):
+- Hacer petición a la base de datos cuando termina la partida
+- Que la IA escoja personaje y coches aleatorios, no los del host
 - La IA se vuelve un poco loca xD
