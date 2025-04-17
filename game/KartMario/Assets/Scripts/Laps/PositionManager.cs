@@ -104,14 +104,14 @@ public class PositionManager : NetworkBehaviour
         }
     }
 
-    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool repair = false)
+    public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset = false)
     {
-        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, totalLaps, triggers, repair);
+        InformClientsAboutChangeClientRpc(newPosition, kartId, lastTriggerIndex, position, totalLaps, triggers, reset);
     }
 
 
     [ClientRpc]
-    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool repair)
+    private void InformClientsAboutChangeClientRpc(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset)
     {
         var kart = karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
@@ -128,9 +128,12 @@ public class PositionManager : NetworkBehaviour
 
             try
             {
-                // Si reparo significa que el juego acaba de comenzar
-                if (repair)
+                if (reset)
                 {
+                    kart.sphere.rotation = Quaternion.identity; // Resetea la rotación
+                    kart.sphere.transform.rotation = Quaternion.identity;
+                    kart.transform.rotation = Quaternion.identity;
+
                     kart.currentObject = "";
                     kart.health = kart.maxHealth;
                     kart.passedThroughFinishLine = false;
