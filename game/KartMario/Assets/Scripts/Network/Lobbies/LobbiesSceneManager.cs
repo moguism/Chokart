@@ -1,3 +1,4 @@
+using EasyTransition;
 using Injecta;
 using System.Threading.Tasks;
 using TMPro;
@@ -8,6 +9,9 @@ public class LobbiesSceneManager : MonoBehaviour
 {
     [Inject]
     private LobbyManager lobbyManager;
+
+    [SerializeField]
+    private TransitionSettings transitionSettings;
 
     [SerializeField]
     private TMP_InputField joinCode;
@@ -37,7 +41,7 @@ public class LobbiesSceneManager : MonoBehaviour
         //LobbyManager.PlayerName = "Testing";
 
         lobbyManager.CreateLobby();
-        SceneManager.LoadScene(3); // La selección de personajes
+        TransitionAndChangeScene();
     }
 
     public async void JoinLobby()
@@ -50,7 +54,16 @@ public class LobbiesSceneManager : MonoBehaviour
             ChangePlaceholderValues(Color.red, "No hay lobbies");
             return;
         }
-        SceneManager.LoadScene(3);
+
+        TransitionAndChangeScene();
+    }
+
+    private void TransitionAndChangeScene()
+    {
+        // Transiciono y voy a la selección de personajes
+
+        TransitionManager.Instance().Transition(3, transitionSettings, 0);
+        //SceneManager.LoadScene(3); 
     }
 
     public void PlayWithBots()
