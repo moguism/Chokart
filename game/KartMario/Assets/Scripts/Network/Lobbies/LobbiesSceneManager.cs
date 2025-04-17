@@ -1,8 +1,9 @@
+using EasyTransition;
 using Injecta;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LobbiesSceneManager : MonoBehaviour
 {
@@ -10,21 +11,27 @@ public class LobbiesSceneManager : MonoBehaviour
     private LobbyManager lobbyManager;
 
     [SerializeField]
-    private TMP_InputField joinCode;
+    private TransitionSettings transitionSettings;
 
     [SerializeField]
-    private Toggle spawnBotsToggle;
+    private TMP_InputField joinCode;
 
     public static bool showError = false;
 
     [SerializeField]
-    private TMP_Text errorText;
+    private TMP_Text placeholderText;
+
+    private Color initialColor;
+    private string initialText;
 
     private void Start()
     {
+        initialColor = placeholderText.color;
+        initialText = placeholderText.text;
+
         if(showError)
         {
-            errorText.enabled = true;
+            ChangePlaceholderValues(Color.red, "Fuiste expulsado");
             showError = false;
         }
     }
@@ -34,15 +41,51 @@ public class LobbiesSceneManager : MonoBehaviour
         //LobbyManager.PlayerName = "Testing";
 
         lobbyManager.CreateLobby();
-        LobbyManager.spawnBotsWhenStarting = spawnBotsToggle.isOn;
-        SceneManager.LoadScene(3); // La selección de personajes
+        TransitionAndChangeScene();
     }
 
-    public void JoinLobby()
+    public async void JoinLobby()
     {
         //LobbyManager.PlayerName = "Testing";
 
-        lobbyManager.JoinLobbyByCode(joinCode.text);
-        SceneManager.LoadScene(3);
+        bool joined = await lobbyManager.JoinLobbyByCode(joinCode.text);
+        if(!joined)
+        {
+            ChangePlaceholderValues(Color.red, "No hay lobbies");
+            return;
+        }
+
+        TransitionAndChangeScene();
+    }
+
+    private void TransitionAndChangeScene()
+    {
+        // Transiciono y voy a la selección de personajes
+
+        TransitionManager.Instance().Transition(3, transitionSettings, 0);
+        //SceneManager.LoadScene(3); 
+    }
+
+    public void PlayWithBots()
+    {
+        LobbyManager.spawnBotsWhenStarting = true;
+        CreateLobby();
+    }
+
+    public void PlayWithoutBots()
+    {
+        LobbyManager.spawnBotsWhenStarting = false;
+        CreateLobby();
+    }
+
+    public void OnLobbyCodeValueChanged()
+    {
+        ChangePlaceholderValues(initialColor, initialText);
+    }
+
+    private void ChangePlaceholderValues(Color color, string text)
+    {
+        placeholderText.color = color;
+        placeholderText.text = text;
     }
 }
