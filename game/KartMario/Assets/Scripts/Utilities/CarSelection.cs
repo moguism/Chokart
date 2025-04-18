@@ -45,16 +45,17 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private AudioSource glitchAudio;
 
-    [SerializeField]
-    private GameObject waitingText;
-
     [Inject]
     private LobbyManager lobbyManager;
 
     [SerializeField]
     private TMP_Text joinCodeText;
 
+    [SerializeField]
+    private TMP_Text buttonText;
+
     private bool hasFinished = false;
+    private bool waiting = false;
 
     private void Start()
     {
@@ -62,7 +63,7 @@ public class CarSelection : MonoBehaviour
 
         if (lobbyManager.lobbyCode == "" || lobbyManager.lobbyCode == null)
         {
-            joinCodeText.text = "";
+            Destroy(joinCodeText.transform.parent.gameObject);
         }
         else
         {
@@ -95,6 +96,11 @@ public class CarSelection : MonoBehaviour
 
     public void Next()
     {
+        if (waiting)
+        {
+            return;
+        }
+
         if (!showingCharacters)
         {
             index++;
@@ -116,6 +122,11 @@ public class CarSelection : MonoBehaviour
 
     public void Prev()
     {
+        if(waiting)
+        {
+            return;
+        }
+
         if (!showingCharacters)
         {
             index--;
@@ -137,6 +148,11 @@ public class CarSelection : MonoBehaviour
 
     public async void GoToGame()
     {
+        if(waiting)
+        {
+            return;
+        }
+
         WebsocketSingleton.kartModelIndex = index;
 
         if (showingCharacters)
@@ -150,7 +166,8 @@ public class CarSelection : MonoBehaviour
             }
             else
             {
-                waitingText.SetActive(true);
+                buttonText.text = "ESPERANDO...";
+                waiting = true;
             }
         }
         else
