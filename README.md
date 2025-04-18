@@ -77,4 +77,4 @@
     Lunes --> Mauricio continua puliendo todo.
     Martes --> Mauricio hace la pantalla de victoria y prácticamente termina de pulir.
     Miércoles --> Mauricio comienza a hacer la interfaz definitiva. Reunión de trabajo. María comienza la web del juego.
-    Viernes --> Mauricio continua con la interfaz, como el jueves.
+    Viernes --> Mauricio continua con la interfaz, haciendo también el HUD, y añade una pista de pruebas.
