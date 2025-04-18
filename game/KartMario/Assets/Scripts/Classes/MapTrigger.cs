@@ -100,11 +100,9 @@ public class MapTrigger : NetworkBehaviour
 
         //print("El coche " + kart.NetworkObjectId + " está en " + kart.currentPosition);
         //print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
-
-        if (IsOwner || kart.enableAI)
-        {
-            NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
-        }
+       
+        NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
+        
     }
 
     private MapTrigger GetNextTrigger(KartController kart)
@@ -129,7 +127,7 @@ public class MapTrigger : NetworkBehaviour
         return nextTrigger;
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, ServerRpcParams rpcParams = default)
     {
         // Debug.Log($"ServerRpc coche {kartId} actualizando a index {newTriggerIndex} distancia {distanceToNextTrigger}");
