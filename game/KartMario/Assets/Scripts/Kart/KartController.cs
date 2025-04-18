@@ -70,7 +70,14 @@ public class KartController : BasicPlayer
     // Objetos
     [Header("Objetos")]
     public string currentObject;
+    
     public bool canBeHurt = true;
+    public bool activateInvencibilityFrames = false;
+
+    [SerializeField]
+    private float invencibilityTimerSeconds = 2.0f;
+    private float invencibilityTimer;
+
     public List<Renderer> renders;
     public ulong lastBombId;
 
@@ -136,6 +143,8 @@ public class KartController : BasicPlayer
         {
             return;
         }
+
+        invencibilityTimer = invencibilityTimerSeconds;
 
         maxHealth = health;
         ownerName = LobbyManager.PlayerName;
@@ -207,6 +216,20 @@ public class KartController : BasicPlayer
         if (!IsOwner || !canMove)
         {
             return;
+        }
+
+        if(activateInvencibilityFrames)
+        {
+            canBeHurt = false;
+
+            invencibilityTimer -= Time.deltaTime;
+
+            if(invencibilityTimer <= 0.0f)
+            {
+                canBeHurt = true;
+                activateInvencibilityFrames = false;
+                invencibilityTimer = invencibilityTimerSeconds;
+            }
         }
 
 

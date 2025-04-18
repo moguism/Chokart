@@ -164,7 +164,7 @@ public class LobbyManager : MonoBehaviour
         return null;
     }
 
-    public async void JoinLobbyByCode(string input)
+    public async Task<bool> JoinLobbyByCode(string input)
     {
         try
         {
@@ -178,7 +178,7 @@ public class LobbyManager : MonoBehaviour
                 if (result.Results.Count == 0)
                 {
                     Debug.LogWarning("No hay ninguna lobby disponible");
-                    return;
+                    return false;
                 }
 
                 lobby = await JoinLobbyById(result.Results[0].Id);
@@ -197,10 +197,13 @@ public class LobbyManager : MonoBehaviour
             lobbyCode = currentLobby.LobbyCode;
 
             Debug.Log("Unido a la lobby :D");
+
+            return true;
         }
         catch (LobbyServiceException e)
         {
             Debug.LogError(e);
+            return false;
         }
     }
 
