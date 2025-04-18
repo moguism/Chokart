@@ -426,8 +426,8 @@ public class KartController : BasicPlayer
 
         try
         {
-            killsText.text = "Kills: " + totalKills;
-            healthText.text = "Salud: \n" + health;
+            killsText.text = totalKills.ToString();
+            healthText.text = health.ToString();
         } catch { }
     }
 

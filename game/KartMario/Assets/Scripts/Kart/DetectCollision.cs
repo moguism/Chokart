@@ -132,9 +132,9 @@ public class DetectCollision : NetworkBehaviour
 
             try
             {
-                kart.positionText.color = Color.blue;
                 kart.positionText.text = positionManager.karts.Count.ToString();
-                kart.healthText.text = "";
+                kart.healthText.color = Color.red;
+                kart.healthText.text = "0";
             }
             catch {}
 
