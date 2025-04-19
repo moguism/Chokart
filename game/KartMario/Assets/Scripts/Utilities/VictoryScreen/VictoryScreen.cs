@@ -56,6 +56,6 @@ public class VictoryScreen : MonoBehaviour
 
     public void CloseButton()
     {
-        SceneManager.LoadScene(1); // Las lobbies
+        SceneManager.LoadScene(2); // Las lobbies
     }
 }

@@ -62,8 +62,8 @@ public class LobbiesSceneManager : MonoBehaviour
     {
         // Transiciono y voy a la selección de personajes
 
-        TransitionManager.Instance().Transition(3, transitionSettings, 0);
-        //SceneManager.LoadScene(3); 
+        TransitionManager.Instance().Transition(4, transitionSettings, 0);
+        //SceneManager.LoadScene(4); 
     }
 
     public void PlayWithBots()
