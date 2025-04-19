@@ -90,7 +90,7 @@ public class CarSelection : MonoBehaviour
     {
         if(hasFinished && lobbyManager.hasRelay)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         }
     }
 
@@ -162,7 +162,7 @@ public class CarSelection : MonoBehaviour
             bool joined = await lobbyManager.StartRelay();
             if (joined)
             {
-                SceneManager.LoadScene(2); // El juego
+                SceneManager.LoadScene(3); // El juego
             }
             else
             {

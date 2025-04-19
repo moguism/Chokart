@@ -96,7 +96,7 @@ public class LobbyManager : MonoBehaviour
             LobbiesSceneManager.showError = true;
             LeaveLobby(true);
 
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 
