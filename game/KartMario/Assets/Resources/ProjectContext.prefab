@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -1785096461884067188}
   - component: {fileID: 7574927874596328143}
   - component: {fileID: 997468213644566341}
+  - component: {fileID: 6121902946783804654}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -65,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   websocketSingleton: {fileID: 7574927874596328143}
   lobbyManager: {fileID: 997468213644566341}
+  authManager: {fileID: 6121902946783804654}
 --- !u!114 &7574927874596328143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,11 +92,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6f8049afcf35e43a8112507a6e9e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyCodeInput: {fileID: 0}
-  playerNameInput: {fileID: 0}
-  playersList: {fileID: 0}
-  preLobbyOptions: {fileID: 0}
-  afterLobbyOptions: {fileID: 0}
-  startGameButton: {fileID: 0}
-  lobbyItemPrefab: {fileID: 0}
-  container: {fileID: 0}
+  hasRelay: 0
+  lobbyCode: 
+--- !u!114 &6121902946783804654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688360839623361399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98d31f4b22747f4bb8d532cf090a544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLogged: 0
+  isTryingToLog: 1

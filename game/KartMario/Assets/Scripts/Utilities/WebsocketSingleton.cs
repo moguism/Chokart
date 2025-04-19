@@ -43,7 +43,7 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
-            //SceneManager.LoadScene(3); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
+            //SceneManager.LoadScene(4); // La selección de coches: la idea sería que cada vez que el jugador le de a "Jugar" elija su coche y ya después se le empareje
         };
 
         webSocket.OnError += (e) =>
@@ -59,7 +59,7 @@ public class WebsocketSingleton : MonoBehaviour
                 PlayerPrefs.DeleteKey("AccessToken");
                 PlayerPrefs.Save();
             }
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         };
 
         webSocket.OnMessage += (bytes) =>
