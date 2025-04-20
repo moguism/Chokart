@@ -9,14 +9,24 @@ public class StartCounter : MonoBehaviour
     [SerializeField]
     private float timer = 3.0f;
 
+    [SerializeField]
+    private AudioSource startCounterAudio;
+
     private KartController[] _karts;
 
     private bool start = false;
+    private bool hasFinished = false;
 
     void Update()
     {
         if(start)
         {
+            if (!startCounterAudio.isPlaying)
+            {
+                startCounterAudio.time = 0.5f;
+                startCounterAudio.Play();
+            }
+
             timer -= Time.deltaTime;
             if(timer <= 3.0f && timer >= 2.0f)
             {
@@ -32,9 +42,15 @@ public class StartCounter : MonoBehaviour
             }
             else
             {
+                start = false;
+                hasFinished = true;
                 EnableOrDisableKarts(true, true);
                 Destroy(gameObject);
             }
+        }
+        else if(hasFinished)
+        {
+            Destroy(startCounterAudio);
         }
     }
 

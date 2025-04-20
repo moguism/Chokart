@@ -1,6 +1,8 @@
+using EasyTransition;
 using Injecta;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -66,38 +68,47 @@ public class TitleScreen : MonoBehaviour
 
     private int playKartIndex;
 
+    [Header("Buttons")]
+    [SerializeField]
+    private GameObject logoutButton;
+
+    [SerializeField]
+    private GameObject buttons;
+
+    [SerializeField]
+    private TransitionSettings transitionSettings;
+
+    private int indexToPlayMusic;
+
     void Start()
     {
         gifTimerLogo = maxTimerLogo;
         playKartIndex = Mathf.RoundToInt(kartLimit + 10);
+
+        indexToPlayMusic = Mathf.RoundToInt(logoFrames.Length / 2);
     }
 
     async void Update()
     {
+        if (!authManager.isTryingToLog)
+        {
+            if (!authManager.isLogged)
+            {
+                Destroy(logoutButton);
+            }
+        }
+
         if (hasFinished)
         {
             if (brokenScreen.activeInHierarchy)
             {
-                PlayAudio(music, true);
-
                 brokenScreen.SetActive(false);
                 backgroundImage.SetActive(false);
 
+                buttons.SetActive(true);
+
                 backgroundVideo.Play();
             }
-
-            // Si ya ha cargado
-            /*if (!authManager.isTryingToLog)
-            {
-                if (authManager.isLogged)
-                {
-                    SceneManager.LoadScene(2);
-                }
-                else
-                {
-                    SceneManager.LoadScene(1);
-                }
-            }*/
             return;
         }
 
@@ -120,6 +131,12 @@ public class TitleScreen : MonoBehaviour
             if (!hasWaited)
             {
                 await Task.Delay(1000);
+                hasWaited = true;
+            }
+
+            if(indexLogo == indexToPlayMusic)
+            {
+                PlayAudio(music, true);
             }
 
             logo.SetActive(true);
@@ -154,5 +171,28 @@ public class TitleScreen : MonoBehaviour
 
             gifTimerLogo = maxTimerLogo;
         }
+    }
+
+    public void StartGame()
+    {
+        if (!authManager.isTryingToLog)
+        {
+            if (!authManager.isLogged)
+            {
+                AuthManagerScene.audioSourceTime = audioSource.time;
+                AuthManagerScene.videoTime = backgroundVideo.time;
+                TransitionManager.Instance().Transition(1, transitionSettings, 0);
+            }
+            else
+            {
+                TransitionManager.Instance().Transition(2, transitionSettings, 0);
+            }
+        }
+    }
+
+    public void LogoutButton()
+    {
+        authManager.Logout();
+        Destroy(logoutButton);
     }
 }

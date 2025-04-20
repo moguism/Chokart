@@ -21,6 +21,9 @@ public class LobbiesSceneManager : MonoBehaviour
     [SerializeField]
     private TMP_Text placeholderText;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
     private Color initialColor;
     private string initialText;
 
@@ -62,6 +65,7 @@ public class LobbiesSceneManager : MonoBehaviour
     {
         // Transiciono y voy a la selección de personajes
 
+        CarSelection.audioSourceTime = audioSource.time;
         TransitionManager.Instance().Transition(4, transitionSettings, 0);
         //SceneManager.LoadScene(4); 
     }
