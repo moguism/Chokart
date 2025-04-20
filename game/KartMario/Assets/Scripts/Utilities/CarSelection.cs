@@ -54,12 +54,20 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private TMP_Text buttonText;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
     private bool hasFinished = false;
     private bool waiting = false;
+
+    public static float audioSourceTime;
 
     private void Start()
     {
         print(lobbyManager);
+
+        audioSource.time = audioSourceTime + 0.7f;
+        audioSource.Play();
 
         if (lobbyManager.lobbyCode == "" || lobbyManager.lobbyCode == null)
         {
@@ -172,6 +180,7 @@ public class CarSelection : MonoBehaviour
         }
         else
         {
+            audioSource.Stop();
             showingCharacters = true;
             ManageVisibilityAndSave();
         }
