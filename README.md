@@ -79,3 +79,4 @@
     Miércoles --> Mauricio comienza a hacer la interfaz definitiva. Reunión de trabajo. María comienza la web del juego.
     Viernes --> Mauricio continua con la interfaz, haciendo también el HUD, y añade una pista de pruebas.
     Sábado --> Mauricio hace la pantalla de título y rehace la de autenticación.
+    Domingo --> Mauricio termina la estética del proyecto, por lo menos por ahora.

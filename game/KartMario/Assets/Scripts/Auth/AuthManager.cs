@@ -160,8 +160,6 @@ public class AuthManager : MonoBehaviour
 
                 //StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
                 await GetUserAsync(response.id, response.accessToken);
-
-                SceneManager.LoadScene(2); // La pantalla de lobbies
             }
             else
             {
@@ -216,6 +214,7 @@ public class AuthManager : MonoBehaviour
         {
             PlayerPrefs.DeleteKey("AccessToken");
             Debug.Log("A chuparla el token >:) ; Sesi�n cerrada.");
+            isLogged = false;
         }
         else
         {
