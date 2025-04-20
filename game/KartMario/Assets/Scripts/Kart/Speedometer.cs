@@ -17,10 +17,6 @@ public class Speedometer : MonoBehaviour
     public float speed = 0f;
     
     private AudioSource audioSource;
-    private bool reduceAudio = false;
-    private const float changeFactor = 0.1f;
-
-    private int oldSpeed = 0;
 
     private void Awake()
     {
