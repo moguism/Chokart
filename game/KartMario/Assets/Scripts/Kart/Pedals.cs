@@ -1,0 +1,41 @@
+using DG.Tweening;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class Pedals : MonoBehaviour
+{
+    public KartController kart;
+
+    public void Accelerate()
+    {
+        kart.direction = 1;
+    }
+
+    public void GoBackwards()
+    {
+        kart.direction = -1;
+    }
+
+    public void NotMoveKart()
+    {
+        kart.direction = 0;
+    }
+
+    public async void Jump()
+    {
+        //if (isGrounded)
+        //{
+        kart.jumping = true;
+
+        kart.kartModel.parent.DOComplete();
+        kart.kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
+        await Task.Delay(1);
+        //}
+    }
+
+    public void StopJumping()
+    {
+        print("DEJO DE SALTAR");
+        kart.jumping = false;
+    }
+}

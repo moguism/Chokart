@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -168,11 +169,13 @@ public class DetectCollision : NetworkBehaviour
 
         if (kart != null)
         {
-            CreateNewFinishKart(kart, positionManager.karts.Count);
+            CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
 
             if (positionManager.karts.Count - 1 == 1)
             {
-                CreateNewFinishKart(positionManager.karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), positionManager.karts.Count - 1);
+                CreateNewFinishKart(positionManager, positionManager.karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), positionManager.karts.Count - 1);
+
+                positionManager.CreateBattleCoroutine(); // Manda la petición a la base de datos
 
                 string json = JsonConvert.SerializeObject(positionManager.finishKarts);
                 Debug.LogWarning("JSON: " + json);
@@ -186,10 +189,11 @@ public class DetectCollision : NetworkBehaviour
         }
     }
 
-    private void CreateNewFinishKart(KartController kart, int position)
+    public static void CreateNewFinishKart(PositionManager positionManager, KartController kart, int position)
     {
         positionManager.finishKarts.Add(new FinishKart()
         {
+            playerId = kart.ownerId,
             playerName = kart.ownerName,
             position = position,
             kills = kart.totalKills

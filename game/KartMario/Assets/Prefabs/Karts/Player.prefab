@@ -29852,6 +29852,8 @@ MonoBehaviour:
   currentPosition: {x: 0, y: 0, z: 0}
   currentObject: 
   canBeHurt: 1
+  activateInvencibilityFrames: 0
+  invencibilityTimerSeconds: 2
   renders:
   - {fileID: 4177690252849554732}
   - {fileID: 2591339757275151201}
@@ -29872,6 +29874,7 @@ MonoBehaviour:
   canMove: 1
   totalKills: 0
   ownerName: 
+  ownerId: 0
 --- !u!114 &3255239343157649172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34993,6 +34996,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleCharacters:
   - {fileID: 4348226265322837252}
+  textures: []
+  spriteImage: {fileID: 0}
 --- !u!1 &5733086065313436134
 GameObject:
   m_ObjectHideFlags: 0
