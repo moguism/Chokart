@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using server.Models.Entities;
+﻿using server.Models.Entities;
+using server.Models.Helper;
 
 namespace server
 {
@@ -15,6 +15,11 @@ namespace server
         public async Task SeedAsync()
         {
             await SeedStateAsync();
+            await SeedUsersAsync();
+            await SeedBattleResultAsync();
+            await SeedBattleStateAsync();
+            await SeedCharactersAsync();
+            await SeedTracksAsync();
             await _context.SaveChangesAsync();
         }
         private async Task SeedStateAsync()
@@ -32,6 +37,79 @@ namespace server
                 ];
 
             await _context.States.AddRangeAsync(states);
+        }
+
+        private async Task SeedBattleResultAsync()
+        {
+            BattleResult[] results = [
+                new BattleResult()
+                {
+                    Name = "Victoria"
+                }
+            ];
+
+            await _context.BattleResults.AddRangeAsync(results);
+        }
+
+        private async Task SeedBattleStateAsync()
+        {
+            BattleState[] states = [
+                new BattleState()
+                {
+                    Name = "Fin"
+                }
+            ];
+
+            await _context.BattleStates.AddRangeAsync(states);
+        }
+
+        private async Task SeedCharactersAsync()
+        {
+            Character[] characters = [
+                new Character()
+                {
+                    Name = "Jinx"
+                }
+            ];
+
+            await _context.Characters.AddRangeAsync(characters);
+        }
+
+        private async Task SeedTracksAsync()
+        {
+            Track[] tracks = [
+                new Track()
+                {
+                    Name = "Moo moo farm"
+                }
+            ];
+
+            await _context.Tracks.AddRangeAsync(tracks);
+        }
+
+        private async Task SeedUsersAsync()
+        {
+            string defaultPassword = PasswordHelper.Hash(Environment.GetEnvironmentVariable("DefaultPassword"));
+            User[] users = [
+                new User
+                {
+                    Nickname = "moguism",
+                    Email = "a@a.com",
+                    Password = defaultPassword,
+                    Role = "Admin",
+                    StateId = 1
+                },
+                new User
+                {
+                    Nickname = "zero",
+                    Email = "maria@gmail.com",
+                    Password = defaultPassword,
+                    Role = "Admin",
+                    StateId = 1
+                }
+            ];
+
+            await _context.Users.AddRangeAsync(users);
         }
     }
 }

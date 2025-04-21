@@ -1,5 +1,4 @@
 ﻿using server.Models.Entities;
-using server.Sockets.Game;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -61,23 +60,9 @@ public class UserSocket
                     bool send = true;
 
                     // En función del switch, obtengo unos datos u otros, y los envío en JSON
-                    switch (messageType)
+                    /*switch (messageType)
                     {
-                        case MessageType.HostGame:
-                            await GameNetwork.HostLobby(User, dictInput["ip"].ToString());
-                            dict.Add("participants", User.Nickname);
-                            break;
-                        case MessageType.JoinGame:
-                            dict["joined"] = await GameNetwork.JoinLobby(User, dictInput["host"].ToString());
-                            break;
-                        case MessageType.StartGame:
-                            dict["joined"] = GameNetwork.StartGame(User.Nickname);
-                            break;
-                        case MessageType.GameStarted:
-                            send = false;
-                            await GameNetwork.StartGameForClients(User.Nickname);
-                            break;
-                    }
+                    }*/
 
                     if (send)
                     {

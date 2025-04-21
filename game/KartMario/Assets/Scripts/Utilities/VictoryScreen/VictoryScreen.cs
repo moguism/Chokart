@@ -1,7 +1,6 @@
+using EasyTransition;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class VictoryScreen : MonoBehaviour
 {
@@ -11,40 +10,35 @@ public class VictoryScreen : MonoBehaviour
     [SerializeField]
     private GameObject container;
 
-    /*[SerializeField]
-    private float timer = 5.0f;*/
+    [SerializeField]
+    private TransitionSettings transitionSettings;
 
     [SerializeField]
     private GameObject playerItem;
 
-    private float originalTime;
-
     public List<FinishKart> finishKarts = new();
+
+    public static bool disable = true;
+    public static bool showing = false;
 
     void Start()
     {
-        originalTime = Time.timeScale;
+        if (disable)
+        {
+            gameObject.SetActive(false);
+            disable = false;
+            return;
+        }
         otherCanvas.enabled = false;
+        disable = true;
     }
-
-    /*void Update()
-    {
-        if(timer >= 0.0f)
-        {
-            timer -= Time.deltaTime;
-
-            float time = Time.timeScale == 1 ? .2f : 1;
-            Time.timeScale = time;
-        }
-        else
-        {
-            Time.timeScale = originalTime;
-        }
-    }*/
 
     public void SetFinishKarts()
     {
-        foreach(FinishKart kart in finishKarts)
+        LobbyManager.gameStarted = false;
+        showing = true;
+
+        foreach (FinishKart kart in finishKarts)
         {
             GameObject item = Instantiate(playerItem, container.transform);
 
@@ -56,6 +50,7 @@ public class VictoryScreen : MonoBehaviour
 
     public void CloseButton()
     {
-        SceneManager.LoadScene(2); // Las lobbies
+        print("Cerrando...");
+        TransitionManager.Instance().Transition(2, transitionSettings, 0); // Las lobbies
     }
 }

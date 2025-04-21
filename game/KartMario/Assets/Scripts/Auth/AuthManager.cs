@@ -1,29 +1,27 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class AuthManager : MonoBehaviour
 {
     public bool isLogged = false;
     public bool isTryingToLog = true;
+    public static string token = "";
 
     async void Start()
     {
         // Intentar cargar el token guardado
         if (PlayerPrefs.HasKey("AccessToken"))
         {
-            string savedToken = PlayerPrefs.GetString("AccessToken");
-            Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
+            token = PlayerPrefs.GetString("AccessToken");
+            Debug.Log("Token encontrado en PlayerPrefs: " + token);
             Debug.Log("Usuario autenticado autom�ticamente >:)");
 
             //StartCoroutine(ConnectToSocketCoroutine(savedToken));
-            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), savedToken);
+            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), token);
 
             if (!couldSign)
             {
-                isLogged = false;
                 isTryingToLog = false;
                 Logout();
                 return;
@@ -39,81 +37,6 @@ public class AuthManager : MonoBehaviour
 
         isTryingToLog = false;
     }
-
-    /*public async void OnRegButton(string email, string nickname, string password)
-    {
-
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-        {
-            Debug.LogError("El email o la contrase�a est�n vac�os.");
-            return;
-        }
-
-        RegisterRequest tempReg = new RegisterRequest()
-        {
-            Email = email,
-            Nickname = nickname,
-            Password = password
-        };
-
-        await Register(tempReg);
-    }*/
-
-    /*public async void OnLogInButton()
-    {
-        string emailOrNickname = loginEmailOrNicknameInput.text.Trim();
-        string password = loginPasswordInput.text;
-
-        LoginRequest tempLog = new LoginRequest()
-        {
-            EmailOrNickname = emailOrNickname,
-            Password = password
-        };
-
-        await LoginAsync(tempLog);
-    }*/
-
-    // Registro
-    /*public async Task Register(string email, string nickname, string password)
-    {
-
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-        {
-            Debug.LogError("El email o la contrase�a est�n vac�os.");
-            return;
-        }
-
-        RegisterRequest register = new RegisterRequest()
-        {
-            Email = email,
-            Nickname = nickname,
-            Password = password
-        };
-
-        // Hace la petici�n, convierte los datos del registro a JSON y posteriormente a bytes y lo env�a.
-        UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "Auth/register", "POST");
-        string jsonData = JsonUtility.ToJson(register);
-        Debug.Log("Datos registro: " + jsonData);
-
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
-
-        unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
-        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
-        unityWebRequest.SetRequestHeader("Content-Type", "application/json"); // Este Content-Type no sirve para cuando subamos avatares
-
-        await unityWebRequest.SendWebRequest();
-
-        if (unityWebRequest.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Registro exitoso: " + unityWebRequest.downloadHandler.text);
-            await LoginAsync(register.Nickname, register.Password, false);
-        }
-        else
-        {
-            Debug.LogError("Error en la solicitud: " + unityWebRequest.error);
-            Debug.LogError("Respuesta del servidor: " + unityWebRequest.downloadHandler.text);
-        }
-    }*/
 
     // Inicio de sesi�n
     public async Task<bool> LoginAsync(string emailOrNickname, string password, bool rememberMe)
@@ -158,6 +81,8 @@ public class AuthManager : MonoBehaviour
                 PlayerPrefs.Save();
                 Debug.Log("Token guardado en PlayerPrefs.");
 
+                token = response.accessToken;
+
                 //StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
                 await GetUserAsync(response.id, response.accessToken);
             }
@@ -198,6 +123,7 @@ public class AuthManager : MonoBehaviour
 
             // TODO: Mostrar un aviso si está baneado
             LobbyManager.PlayerName = response.nickname;
+            LobbyManager.PlayerId = id;
 
             return true;
         }
@@ -215,6 +141,7 @@ public class AuthManager : MonoBehaviour
             PlayerPrefs.DeleteKey("AccessToken");
             Debug.Log("A chuparla el token >:) ; Sesi�n cerrada.");
             isLogged = false;
+            token = "";
         }
         else
         {

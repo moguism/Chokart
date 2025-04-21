@@ -27,7 +27,8 @@
       "applicationUrl": "https://localhost:7048;http://localhost:5066",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "JwtKey": "dhasiuhdriawenidqwepouhedipauhseuidhasndiupawhedouiasdi"
+        "JwtKey": "dhasiuhdriawenidqwepouhedipauhseuidhasndiupawhedouiasdi",
+        "DefaultPassword": "123456"
       }
     },
     "IIS Express": {
