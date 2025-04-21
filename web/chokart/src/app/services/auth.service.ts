@@ -1,144 +1,107 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { Result } from '../models/result';
 import { lastValueFrom, Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { LoginRequest } from '../models/loginRequest';
+import { LoginResponse } from '../models/loginResponse';
+import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  private readonly BASE_URL = environment.apiUrl;
-
   private readonly USER_KEY = 'user';
   private readonly TOKEN_KEY = 'jwtToken';
+  rememberMe: boolean = false;
 
-  jwt: string | null = ""
-
-  constructor(private http: HttpClient) {
-    let token: string | null = localStorage.getItem("token")
+  constructor(private api: ApiService) {
+    const token =
+      localStorage.getItem(this.TOKEN_KEY) ||
+      sessionStorage.getItem(this.TOKEN_KEY);
     if (token) {
-      this.jwt = token
+      this.api.jwt = token;
     }
   }
 
-  deleteToken() {
-    this.jwt = null;
-    localStorage.removeItem("token");
-  }
+  async login(
+    authData: LoginRequest,
+    rememberMe: boolean
+  ): Promise<Result<LoginResponse>> {
+    // Iniciar sesión
+    const result = await this.api.post<LoginResponse>('Auth/login', authData);
+    this.rememberMe = rememberMe;
 
-  async get<T = void>(path: string, params: any = {}, responseType: any = null): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.get(url, {
-      params: new HttpParams({ fromObject: params }),
-      headers: this.getHeader(),
-      responseType: responseType,
-      observe: 'response',
-    });
-    return this.sendRequest<T>(request$);
-  }
+    if (result.success && result.data) {
+      const { accessToken, user } = result.data; // guardo info de la respuesta AuthResponse
+      this.api.jwt = accessToken;
 
-  async post<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.post(url, body, {
-      headers: this.getHeader(contentType),
-      observe: 'response'
-    });
-
-    return this.sendRequest<T>(request$);
-  }
-
-  async postWithImage<T = void>(path: string, body: Object = {}): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.post(url, body, {
-      headers: this.getHeader(null, ""),
-      observe: 'response',
-      responseType: 'text'
-    });
-    return this.sendRequest<T>(request$);
-  }
-
-  async put<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.put(url, body, {
-      headers: this.getHeader(contentType),
-      observe: 'response'
-    });
-
-    return this.sendRequest<T>(request$);
-  }
-
-  async putWithImage<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.put(url, body, {
-      headers: this.getHeader(contentType, ""),
-      observe: 'response'
-    });
-    return this.sendRequest<T>(request$);
-  }
-
-  async delete<T = void>(path: string, params: any = {}): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.delete(url, {
-      params: new HttpParams({ fromObject: params }),
-      headers: this.getHeader(),
-      observe: 'response'
-    });
-
-    return this.sendRequest<T>(request$);
-  }
-
-  private async sendRequest<T = void>(request$: Observable<HttpResponse<any>>): Promise<Result<T>> {
-    let result: Result<T>;
-
-    try {
-      const response = await lastValueFrom(request$);
-      const statusCode = response.status;
-
-      if (response.ok) {
-        const data = response.body as T;
-
-        if (data == undefined) {
-          result = Result.success(statusCode);
-        } else {
-          result = Result.success(statusCode, data);
-        }
+      if (rememberMe) {
+        // Si se pulsó el botón recuérdame
+        localStorage.setItem(this.TOKEN_KEY, accessToken);
+        this.saveUser(user);
       } else {
-        result = result = Result.error(statusCode, response.statusText);
-      }
-    } catch (exception) {
-      if (exception instanceof HttpErrorResponse) {
-        result = Result.error(exception.status, exception.statusText);
-      } else if (exception instanceof Error) {
-        result = Result.error(-1, exception.message);
-      } else {
-        result = Result.error(-1, 'Unknown error occurred');
+        sessionStorage.setItem(this.TOKEN_KEY, accessToken);
+        this.saveUser(user);
       }
     }
 
     return result;
   }
 
-  public getHeader(accept = null, contentType = "application/json"): HttpHeaders {
-    let header: any = {};
-
-    // Para cuando haya que poner un JWT
-    console.log("JWT: ", this.jwt)
-    header['Authorization'] = `Bearer ${this.jwt}`;
-
-    if (accept)
-      header['Accept'] = accept;
-
-    if (contentType && contentType !== "")
-      header['Content-Type'] = contentType;
-
-    const headerObject = new HttpHeaders(header)
-
-    console.log("HEADER OBJECT: ", headerObject);
-
-    return headerObject;
+  saveUser(user: User) {
+    if (this.rememberMe) {
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    } else {
+      sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    }
   }
 
-  
+  // Comprobar si el usuario esta logeado
+  isAuthenticated(): boolean {
+    const token =
+      localStorage.getItem(this.TOKEN_KEY) ||
+      sessionStorage.getItem(this.TOKEN_KEY);
+    return !!token;
+  }
+
+  // Cerrar sesión
+  logout(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.USER_KEY);
+    localStorage.removeItem(this.USER_KEY);
+  }
+
+  getUser(): User | null {
+    const user =
+      localStorage.getItem(this.USER_KEY) ||
+      sessionStorage.getItem(this.USER_KEY);
+    if (user) {
+      return JSON.parse(user);
+    }
+    return null;
+  }
+
+  // comprueba si es admin
+  isAdmin(): boolean {
+    const user = this.getUser();
+    if (user?.role == 'Admin') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Registro
+  async register(formData: FormData): Promise<Result<any>> {
+    return this.api.postWithImage<any>('Auth/register', formData);
+  }
 }
