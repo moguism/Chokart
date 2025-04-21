@@ -1,7 +1,6 @@
 ﻿using Cinemachine;
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
@@ -107,6 +106,7 @@ public class KartController : BasicPlayer
     public int totalKills = 0;
     private TMP_Text killsText;
     public string ownerName = "";
+    public int ownerId;
 
     public override void OnNetworkSpawn()
     {
@@ -148,9 +148,10 @@ public class KartController : BasicPlayer
 
         maxHealth = health;
         ownerName = LobbyManager.PlayerName;
+        ownerId = LobbyManager.PlayerId;
 
         GetPositionManager();
-        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, AuthenticationService.Instance.PlayerId);
+        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, AuthenticationService.Instance.PlayerId);
         _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es
@@ -166,14 +167,17 @@ public class KartController : BasicPlayer
         _positionManager.karts.Add(this);
 
         isMobile = Application.isMobilePlatform;
+        Pedals pedals = FindFirstObjectByType<Pedals>();
+
         if (isMobile)
         {
             Input.gyro.enabled = true;
+            pedals.kart = this;
             //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
         }
         else
         {
-            Destroy(GameObject.Find("Buttons"));
+            Destroy(pedals.gameObject);
         }
 
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
@@ -591,38 +595,4 @@ public class KartController : BasicPlayer
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position + transform.up, transform.position - (transform.up * 2));
     //}
-
-    // PARA MÓVILES
-    public void Accelerate()
-    {
-        direction = 1;
-    }
-
-    public void GoBackwards()
-    {
-        direction = -1;
-    }
-
-    public void NotMoveKart()
-    {
-        direction = 0;
-    }
-
-    public async void Jump()
-    {
-        //if (isGrounded)
-        //{
-        jumping = true;
-
-        kartModel.parent.DOComplete();
-        kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
-        await Task.Delay(1);
-        //}
-    }
-
-    public void StopJumping()
-    {
-        print("DEJO DE SALTAR");
-        jumping = false;
-    }
 }

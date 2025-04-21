@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class PositionManager : NetworkBehaviour
     public SpectateKart spectateKart;
     public GameObject spectateCanvas;
     public GameObject loadingScreen;
+
+    private readonly BattleService battleService = new BattleService();
 
     void LateUpdate()
     {
@@ -140,7 +143,8 @@ public class PositionManager : NetworkBehaviour
                     kart.canMove = false;
                     kart.transform.parent.GetComponentInChildren<CarDamage>().Repair();
                 }
-            } catch { }
+            }
+            catch { }
         }
     }
 
@@ -153,5 +157,29 @@ public class PositionManager : NetworkBehaviour
     private void InformAboutGameStartClientRpc()
     {
         startCounter.StartBegginingCounter(karts.ToArray());
+    }
+
+    public void CreateBattleCoroutine()
+    {
+        StartCoroutine(battleService.CreateBattleCorroutine(finishKarts));
+    }
+
+    public async Task CreateBattleAsync()
+    {
+        await battleService.CreateBattleAsync(finishKarts);
+    }
+
+    private async void OnApplicationQuit()
+    {
+        Debug.LogWarning("Cerrando");
+        if (LobbyManager.gameStarted && LobbyManager.isHost)
+        {
+            foreach (KartController kart in karts)
+            {
+                DetectCollision.CreateNewFinishKart(this, kart, kart.position);
+            }
+
+            await CreateBattleAsync();
+        }
     }
 }

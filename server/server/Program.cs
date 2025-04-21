@@ -1,11 +1,9 @@
 ﻿
 using Microsoft.IdentityModel.Tokens;
-using server.Models.Entities;
 using server.Models.Mappers;
 using server.Repositories;
 using server.Services;
 using server.Sockets;
-using server.Sockets.Game;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -21,9 +19,9 @@ namespace server
             builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddScoped<UserMapper>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<BattleService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();
-            builder.Services.AddSingleton<GameNetwork>();
 
             builder.Services.AddTransient<PreAuthMiddleware>();
 
@@ -94,15 +92,6 @@ namespace server
                 Seeder seeder = new Seeder(dbContext);
                 await seeder.SeedAsync();
             }
-
-            // Por si se va la luz 😎
-            UnitOfWork unitOfWork = scope.ServiceProvider.GetService<UnitOfWork>();
-            ICollection<Battle> battles = await unitOfWork.BattleRepository.GetBattlesInProgressAsync();
-            foreach (Battle battle in battles)
-            {
-                unitOfWork.BattleRepository.Delete(battle);
-            }
-            await unitOfWork.SaveAsync();
         }
     }
 }

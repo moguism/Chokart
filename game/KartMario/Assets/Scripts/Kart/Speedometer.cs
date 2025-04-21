@@ -39,7 +39,6 @@ public class Speedometer : MonoBehaviour
         if (kart == null || !kart.canMove)
         {
             speed = 0;
-            kart.currentSpeed = 0;
             audioSource.Stop();
             return;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -24,6 +25,7 @@ public class RelayManager : MonoBehaviour
             Debug.Log("Código: " + joinCode);
 
             RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+
             _relayServerData = relayServerData;
 
             playersIds.Add(AuthenticationService.Instance.PlayerId);
