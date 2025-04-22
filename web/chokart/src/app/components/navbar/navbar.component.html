@@ -1,1 +1,11 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <img src="logo-chokart.png" class="logo" alt="logo chokart" />
+
+  <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+  <ul [class.active]="isMenuOpen" class="nav-links">
+    <li><a [routerLink]="'/'" (click)="closeMenu()">Inicio</a></li>
+    <li><a [routerLink]="'/download'" (click)="closeMenu()">Descargar</a></li>
+    <li><a [routerLink]="'/login'" (click)="closeMenu()">Login</a></li>
+  </ul>
+</nav>

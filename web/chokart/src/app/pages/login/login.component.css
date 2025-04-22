@@ -1,19 +1,18 @@
+body {
+  background-color: #f2f2f2;
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .caja {
-  max-width: 400px; /*Max width para que se estreche en pantallas pequeñas*/
-  box-shadow: 0 4px 8px rgba(113, 113, 113, 0.953);
-  border-spacing: 1.5rem;
-  background-color: #302244;
-  border: 5px solid transparent;
-  border-image: linear-gradient(
-    to bottom right,
-    #b827fc 0%,
-    #2c90fc 25%,
-    #b8fd33 50%,
-    #fec837 75%,
-    #fd1892 100%
-  );
-  border-image-slice: 1;
-  margin: 20px auto;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 40px auto;
+  border: 4px solid #e60012; /* rojo Nintendo */
 }
 
 .container {
@@ -22,79 +21,81 @@
 
 .menu {
   display: flex;
-  justify-content: space-around;
-  background-color: #ddd;
-  border-bottom: 1px solid #ccc;
+  justify-content: center;
+  background-color: #e60012;
 }
 
 .menu button {
   flex: 1;
-  padding: 10px;
+  padding: 15px 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
   background: none;
   border: none;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.5rem;
+  transition: background-color 0.3s ease;
 }
 
 .menu button.active {
-  background-color: #fff;
-  border-bottom: 2px solid #7c679a;
+  background-color: #ffffff;
+  color: #e60012;
+  border-bottom: 4px solid #e60012;
 }
 
 .contenido {
-  padding: 20px;
+  padding: 30px 25px;
 }
 
 input {
-  width: 95%;
-  font-size: 1.5rem;
-}
-
-.login input {
+  width: 90%;
+  font-size: 1.2rem;
+  padding: 12px;
   margin-bottom: 18px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  transition: border-color 0.3s;
 }
 
-.registro input {
-  width: 95%;
-  font-size: 1.5rem;
+input:focus {
+  border-color: #e60012;
+  outline: none;
 }
 
 input[type="checkbox"] {
-  width: 5%;
-}
-
-.button-wrapper {
-  width: 150px;
-}
-
-.load-avatar-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#preview-img {
-  width: 65px;
-  height: 65px;
-  margin-left: 25px;
-  border: 3px solid white;
-  object-fit: cover; /* Recorta la imagen sin deformarla */
-  object-position: center;
+  width: auto;
+  transform: scale(1.3);
+  margin-right: 10px;
 }
 
 label {
-  font-size: 1.4rem;
-  line-height: 2rem;
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
-button {
-  font-size: 1.5rem;
+.form-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e60012;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #c1000f;
 }
 
 .error {
-  color: rgb(241, 126, 126);
-  text-align: left;
-  font-size: 1rem;
-  height: 18px;
+  color: #ff3b3b;
+  font-size: 0.95rem;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  display: block;
+  min-height: 20px;
 }
