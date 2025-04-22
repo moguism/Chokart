@@ -12,14 +12,14 @@
       <form (submit)="login()">
         <div>
 
-          <input type="text" [maxLength]="30" placeholder="Apodo o email" class="icon-input" required
+          <!--<input type="text" [maxLength]="30" placeholder="Apodo o email" class="icon-input" required
            [(ngModel)]="emailOrNickname" [ngModelOptions]="{standalone: true}" />
 
           <input type="password" placeholder="Contraseña" class="icon-input" required [(ngModel)]="password"
             [ngModelOptions]="{standalone: true}" />
 
           <input type="checkbox" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}" inputId="rememberMe"
-            binary="true" />
+            binary="true" />-->
           <label for="rememberMe" class="remember-me-label">Recuérdame</label>
         </div>
 
@@ -35,7 +35,7 @@
     }
     @else {
     <div class="contenido registro">
-      <form [formGroup]="registerForm" (submit)="register()">
+      <!--<form [formGroup]="registerForm" (submit)="register()">
 
         <input type="text" [maxlength]="16" placeholder="Nickname" formControlName="nickname" />
 
@@ -74,7 +74,7 @@
         <br>
 
         <button [disabled]="!registerForm.valid" type="submit" class="form-button">Crear Cuenta</button>
-      </form>
+      </form>-->
 
     </div>
     }

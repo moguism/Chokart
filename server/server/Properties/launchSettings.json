@@ -28,7 +28,11 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "JwtKey": "dhasiuhdriawenidqwepouhedipauhseuidhasndiupawhedouiasdi",
-        "DefaultPassword": "123456"
+        "DefaultPassword": "123456",
+        "EmailHost": "smtp.gmail.com",
+        "EmailPort": "587",
+        "EmailAddress": "fortnitenotifier.moguism@gmail.com",
+        "EmailPassword": "wzxh rzps liit ahmr"
       }
     },
     "IIS Express": {
