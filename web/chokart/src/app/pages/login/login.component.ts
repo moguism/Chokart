@@ -96,20 +96,23 @@ export class LoginComponent {
   // Registro
   async register() {
     if (this.pressedEnter) return;
-    console.log(this.registerForm.value);
     this.pressedEnter = true;
 
     if (this.registerForm.valid) {
-      const formData = new FormData();
-      formData.append('Nickname', this.registerForm.value.nickname);
-      formData.append('Email', this.registerForm.value.email);
-      formData.append('Password', this.registerForm.value.newPassword);
+      const formUser = this.registerForm.value;
 
-      const registerResult = await this.authService.register(formData);
+      const registerPayload = {
+        id: 0,
+        nickname: formUser.nickname,
+        email: formUser.email,
+        password: formUser.newPassword,
+        role: 'User',
+        changeImage: 'true',
+      };
+
+      const registerResult = await this.authService.register(registerPayload);
 
       if (registerResult.success) {
-        const formUser = this.registerForm.value;
-
         const authData = {
           emailOrNickname: formUser.email,
           password: formUser.newPassword,
@@ -120,7 +123,7 @@ export class LoginComponent {
           alert('Te has registrado con éxito');
           this.router.navigateByUrl('');
         } else {
-          alert('Error en el registro');
+          alert('Error en el login tras el registro');
           this.pressedEnter = false;
         }
       } else {
