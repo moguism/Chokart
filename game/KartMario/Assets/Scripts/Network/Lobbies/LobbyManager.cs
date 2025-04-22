@@ -25,6 +25,7 @@ public class LobbyManager : MonoBehaviour
     public string lobbyCode = "";
 
     public static string PlayerName;
+    public static int PlayerId;
 
     async void Start()
     {
@@ -54,6 +55,10 @@ public class LobbyManager : MonoBehaviour
                 heartBeatTimer = 15;
                 await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
             }
+        }
+        else if(gameStarted)
+        {
+            currentLobby = null;
         }
     }
 
@@ -88,6 +93,10 @@ public class LobbyManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                currentLobby = null;
+            }
         } catch(Exception e)
         {
             // Si tira excepción es que me han echado de la lobby
@@ -96,7 +105,7 @@ public class LobbyManager : MonoBehaviour
             LobbiesSceneManager.showError = true;
             LeaveLobby(true);
 
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 

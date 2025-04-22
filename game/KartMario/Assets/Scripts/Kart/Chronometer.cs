@@ -13,10 +13,13 @@ public class Chronometer : MonoBehaviour
     public bool timerOn;
     private float timePass;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
     private void Awake()
     {
         instance = this;
-        timerText = GameObject.Find("Chronometer").GetComponent<TMP_Text>();
+        //timerText = GameObject.Find("Chronometer").GetComponent<TMP_Text>();
         timerText.text = "00:00:00";
     }
 
@@ -44,6 +47,11 @@ public class Chronometer : MonoBehaviour
     {
         while (timerOn)
         {
+            if(!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+
             timePass += Time.deltaTime;
             timeChronometer = TimeSpan.FromSeconds(timePass);
             timerText.text = string.Format("{0:D2}:{1:D2}:{2:D3}", timeChronometer.Minutes, timeChronometer.Seconds, timeChronometer.Milliseconds);

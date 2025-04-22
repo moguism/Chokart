@@ -6,17 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Auth.unity
-    guid: 905752c2cb87bc0458edb3870747d52d
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 3c1f0afce1922fc499c1bbb1bfa55dbc
+  - enabled: 1
+    path: Assets/Scenes/NewAuth.unity
+    guid: 592a440276acf9d46ac77865c1f38d89
   - enabled: 1
     path: Assets/Scenes/Lobbies/NewLobbies.unity
     guid: 4bfbc76cdeec74f489be6234b5820365
   - enabled: 1
+    path: Assets/Scenes/NewTrack.unity
+    guid: 9aad6b7f422aaba43b3c4de100ca8d82
+  - enabled: 1
+    path: Assets/Scenes/NewCarSelection.unity
+    guid: ba1d0153ed427aa4db23951a78fd32ee
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/CarSelection.unity
-    guid: f7d396c54cf2551478a234c2ef180e44
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5a57bf569ddd6774d8ee4ac276b18d32,
       type: 2}

@@ -1,5 +1,4 @@
 ﻿using server.Models.Entities;
-using server.Sockets.Game;
 using System.Net.WebSockets;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -57,38 +56,6 @@ public class WebSocketHandler
         // Sección crítica
         // Nos desuscribimos de los eventos y eliminamos el WebSocketHandler de la lista
         disconnectedHandler.Disconnected -= OnDisconnectedAsync;
-
-        // TODO: Guardar en la base de datos
-        GameHandler handler = GameNetwork.handlers.FirstOrDefault(h => h.participants.Any(p => p.UserId == disconnectedHandler.User.Id));
-        if (handler != null)
-        {
-            Dictionary<object, object> dict = new Dictionary<object, object>()
-            {
-                { "messageType", MessageType.PlayerDisconnected }
-            };
-
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-
-            UserBattle participant = handler.participants.FirstOrDefault(p => p.UserId == disconnectedHandler.User.Id);
-            
-            if (participant.IsHost)
-            {
-                // Si es el host termino la partida directamente
-                dict["messageType"] = MessageType.EndGame;
-                GameNetwork.handlers.Remove(handler);
-            }
-            else
-            {
-                handler.participants.Remove(participant);
-                dict.Add("participants", handler.participants.Select(p => p.User.Nickname));
-            }
-
-            foreach (UserBattle otherParticipant in handler.participants)
-            {
-                await NotifyOneUser(JsonSerializer.Serialize(dict, options), otherParticipant.UserId);
-            }
-        }
 
         USER_SOCKETS.Remove(disconnectedHandler);
 
