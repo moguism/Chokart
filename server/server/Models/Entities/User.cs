@@ -20,4 +20,5 @@ public class User
     public long TotalPoints { get; set; } = 0;
 
     public bool Verified { get; set; } = false;
+    public string VerificationCode { get; set; } = "";
 }
