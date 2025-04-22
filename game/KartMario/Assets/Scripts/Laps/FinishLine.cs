@@ -29,11 +29,8 @@ public class FinishLine : MapTrigger
             kart.totalLaps++;
             Debug.LogWarning("El coche " + kart.NetworkObjectId + " ha dado " + kart.totalLaps + " vueltas");
 
-            if (IsOwner)
-            {
-                NotifyLapCompletedServerRpc(kart.NetworkObjectId, kart.totalLaps);
-                ChangeIndexAndCalculatePosition(kart);
-            }
+            NotifyLapCompletedServerRpc(kart.NetworkObjectId, kart.totalLaps);
+            ChangeIndexAndCalculatePosition(kart);
         }
         else
         {
@@ -41,7 +38,7 @@ public class FinishLine : MapTrigger
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void NotifyLapCompletedServerRpc(ulong kartId, int totalLaps, ServerRpcParams rpcParams = default)
     {
         var kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);

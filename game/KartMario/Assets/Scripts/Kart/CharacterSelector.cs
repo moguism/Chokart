@@ -1,15 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterSelector : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] possibleCharacters; // Esta lista debe estar en el mismo orden que la está en el selector de personajes
 
+    [SerializeField]
+    private Texture[] textures; // Esta lista, exclusiva para la HUD, también lo tiene que estar
+
+    [SerializeField]
+    private RawImage spriteImage;
+
     private void Start()
     {
         // Para que no lo haga nada más empiece el selector
         if (WebsocketSingleton.kartModelIndex != -1)
         {
+
             SetCharacter(CarSelection.characterIndex, true);
         }
     }
@@ -18,20 +26,27 @@ public class CharacterSelector : MonoBehaviour
     {
         try
         {
-            for (int i = 0; i < possibleCharacters.Length; i++)
+            if (spriteImage != null)
             {
-                if (i == index) { continue; }
-
-                if (!destroy)
-                {
-                    possibleCharacters[i].SetActive(false);
-                }
-                else
-                {
-                    Destroy(possibleCharacters[i]);
-                }
+                spriteImage.texture = textures[index];
             }
-            possibleCharacters[index].SetActive(true);
+            else
+            {
+                for (int i = 0; i < possibleCharacters.Length; i++)
+                {
+                    if (i == index) { continue; }
+
+                    if (!destroy)
+                    {
+                        possibleCharacters[i].SetActive(false);
+                    }
+                    else
+                    {
+                        Destroy(possibleCharacters[i]);
+                    }
+                }
+                possibleCharacters[index].SetActive(true);
+            }
         }
         catch {}
     }

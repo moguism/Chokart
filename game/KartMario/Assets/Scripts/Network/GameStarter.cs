@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStarter : NetworkBehaviour
 {
@@ -45,6 +46,8 @@ public class GameStarter : NetworkBehaviour
                 networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
             }
         }
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
 
         RelayManager.StartRelay();
     }
@@ -88,5 +91,17 @@ public class GameStarter : NetworkBehaviour
 
         // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
         positionManager.InformAboutGameStart();
+    }
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        Debug.Log($"Cliente {clientId} desconectado.");
+
+        if (clientId == 1)
+        {
+            print("El host se ha ido");
+            LobbiesSceneManager.showError = true;
+            SceneManager.LoadScene(2);
+        }
     }
 }

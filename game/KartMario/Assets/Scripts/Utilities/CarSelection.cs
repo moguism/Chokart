@@ -45,24 +45,33 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private AudioSource glitchAudio;
 
-    [SerializeField]
-    private GameObject waitingText;
-
     [Inject]
     private LobbyManager lobbyManager;
 
     [SerializeField]
     private TMP_Text joinCodeText;
 
+    [SerializeField]
+    private TMP_Text buttonText;
+
+    [SerializeField]
+    private AudioSource audioSource;
+
     private bool hasFinished = false;
+    private bool waiting = false;
+
+    public static float audioSourceTime;
 
     private void Start()
     {
         print(lobbyManager);
 
+        audioSource.time = audioSourceTime + 0.7f;
+        audioSource.Play();
+
         if (lobbyManager.lobbyCode == "" || lobbyManager.lobbyCode == null)
         {
-            joinCodeText.text = "";
+            Destroy(joinCodeText.transform.parent.gameObject);
         }
         else
         {
@@ -89,12 +98,17 @@ public class CarSelection : MonoBehaviour
     {
         if(hasFinished && lobbyManager.hasRelay)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         }
     }
 
     public void Next()
     {
+        if (waiting)
+        {
+            return;
+        }
+
         if (!showingCharacters)
         {
             index++;
@@ -116,6 +130,11 @@ public class CarSelection : MonoBehaviour
 
     public void Prev()
     {
+        if(waiting)
+        {
+            return;
+        }
+
         if (!showingCharacters)
         {
             index--;
@@ -137,6 +156,11 @@ public class CarSelection : MonoBehaviour
 
     public async void GoToGame()
     {
+        if(waiting)
+        {
+            return;
+        }
+
         WebsocketSingleton.kartModelIndex = index;
 
         if (showingCharacters)
@@ -146,15 +170,17 @@ public class CarSelection : MonoBehaviour
             bool joined = await lobbyManager.StartRelay();
             if (joined)
             {
-                SceneManager.LoadScene(2); // El juego
+                SceneManager.LoadScene(3); // El juego
             }
             else
             {
-                waitingText.SetActive(true);
+                buttonText.text = "ESPERANDO...";
+                waiting = true;
             }
         }
         else
         {
+            audioSource.Stop();
             showingCharacters = true;
             ManageVisibilityAndSave();
         }
