@@ -113,26 +113,12 @@ export class LoginComponent {
       const registerResult = await this.authService.register(registerPayload);
 
       if (registerResult.success) {
-        const authData = {
-          emailOrNickname: formUser.email,
-          password: formUser.newPassword,
-        };
-        const loginResult = await this.authService.login(authData, false);
+        const email = this.registerForm.value.email;
 
-        if (loginResult.success) {
-          alert('Te has registrado con éxito');
-          this.router.navigateByUrl('');
-        } else {
-          alert('Error en el login tras el registro');
-          this.pressedEnter = false;
-        }
-      } else {
-        alert('Error en el registro');
-        this.pressedEnter = false;
+        this.router.navigate(['/checkEmail'], {
+          state: { email },
+        });
       }
-    } else {
-      alert('Formulario no válido');
-      this.pressedEnter = false;
     }
   }
 
