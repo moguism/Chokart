@@ -132,6 +132,21 @@ public class UserService
         return user;
     }
 
+    public async Task<bool> VerifyUserAsync(int userId)
+    {
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        if(user == null)
+        {
+            return false;
+        }
+        user.Verified = true;
+
+        _unitOfWork.UserRepository.Update(user);
+        await _unitOfWork.SaveAsync();
+
+        return true;
+    }
+
     public UserDto ToDto(User user)
     {
         return _userMapper.ToDto(user);
