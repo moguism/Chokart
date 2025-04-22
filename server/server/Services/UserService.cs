@@ -84,6 +84,9 @@ public class UserService
 
             //ImageService imageService = new ImageService();
 
+            Guid uuid = Guid.NewGuid();
+            string uuidString = uuid.ToString();
+
             var newUser = new User
             {
                 Email = model.Email.ToLower(),
@@ -93,7 +96,8 @@ public class UserService
                 Password = PasswordHelper.Hash(model.Password),
                 //IsInQueue = false,  // por defecto al crearse
                 StateId = state.Id,
-                State = state
+                State = state,
+                VerificationCode = uuidString
             };
 
             //if (model.Image != null)
@@ -132,14 +136,16 @@ public class UserService
         return user;
     }
 
-    public async Task<bool> VerifyUserAsync(int userId)
+    public async Task<bool> VerifyUserAsync(int userId, string code)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
-        if(user == null)
+        if(user == null || !user.VerificationCode.Equals(code))
         {
             return false;
         }
+
         user.Verified = true;
+        user.VerificationCode = "";
 
         _unitOfWork.UserRepository.Update(user);
         await _unitOfWork.SaveAsync();
