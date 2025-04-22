@@ -8,14 +8,14 @@ import {
   Validator,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { PasswordValidatorService } from '../../services/password-validator.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -86,7 +86,7 @@ export class LoginComponent {
 
       alert('Inicio de sesión exitoso');
 
-      this.router.navigateByUrl('menu'); // redirige a inicio
+      this.router.navigateByUrl('');
     } else {
       alert('datos incorrectos');
       this.pressedEnter = false;
@@ -118,7 +118,7 @@ export class LoginComponent {
 
         if (loginResult.success) {
           alert('Te has registrado con éxito');
-          this.router.navigateByUrl('menu'); // redirige a inicio
+          this.router.navigateByUrl('');
         } else {
           alert('Error en el registro');
           this.pressedEnter = false;
