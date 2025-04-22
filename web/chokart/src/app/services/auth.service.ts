@@ -101,15 +101,15 @@ export class AuthService {
   }
 
   // Registro
-  async register(formData: FormData): Promise<Result<any>> {
-    return this.api.postWithImage<any>('Auth/register', formData);
+  async register(data: any): Promise<Result<any>> {
+    return this.api.post<any>('Auth/register', data);
   }
 
   // Verificar el mail
   async verifyEmail(id: number, code: string): Promise<any> {
-    const path = "/Auth/verify/" + id + "/" + code
+    const path = 'Auth/verify/' + id + '/' + code;
     const result = await this.api.get(path);
     const data: any = result.data;
-    return data
+    return data;
   }
 }
