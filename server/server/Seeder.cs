@@ -97,7 +97,8 @@ namespace server
                     Email = "a@a.com",
                     Password = defaultPassword,
                     Role = "Admin",
-                    StateId = 1
+                    StateId = 1,
+                    Verified = true
                 },
                 new User
                 {
@@ -105,7 +106,8 @@ namespace server
                     Email = "maria@gmail.com",
                     Password = defaultPassword,
                     Role = "Admin",
-                    StateId = 1
+                    StateId = 1,
+                    Verified = true
                 }
             ];
 
