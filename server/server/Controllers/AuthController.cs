@@ -18,8 +18,6 @@ namespace server.Controllers
         private readonly UserService _userService;
         private readonly EmailService _emailService;
 
-        public static readonly Dictionary<int, string> _verificationCodes = new();
-
         public AuthController(UserService userService, IOptionsMonitor<JwtBearerOptions> jwtOptions, EmailService emailService) {
             _userService = userService;
             _tokenParameters = jwtOptions.Get(JwtBearerDefaults.AuthenticationScheme).TokenValidationParameters;
@@ -55,14 +53,7 @@ namespace server.Controllers
             var userDto = _userService.ToDto(newUser);
 
             // Mando un correo de verifición
-            Guid uuid = Guid.NewGuid();
-            string uuidString = uuid.ToString();
-
-            bool couldAdd = _verificationCodes.TryAdd(newUser.Id, uuidString);
-            if(couldAdd)
-            {
-                await _emailService.CreateEmailUser(newUser.Email, newUser.Id, uuidString);
-            }
+            await _emailService.CreateEmailUser(newUser.Email, newUser.Id, newUser.VerificationCode);
 
             return CreatedAtAction(nameof(Login), new { email = userDto.Email }, userDto);
         }
@@ -128,16 +119,8 @@ namespace server.Controllers
         [HttpGet("verify/{id}/{code}")]
         public async Task<bool> VerifyUser(int id, string code)
         {
-            if(_verificationCodes.Contains(new KeyValuePair<int, string>(id, code)))
-            {
-                bool couldUpdate = await _userService.VerifyUserAsync(id);
-                if(couldUpdate)
-                {
-                    _verificationCodes.Remove(id);
-                    return true;
-                }
-            }
-            return false;
+            bool couldUpdate = await _userService.VerifyUserAsync(id, code);
+            return couldUpdate;
         }
     }
 }
