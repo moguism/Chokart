@@ -52,7 +52,7 @@ public class UserController : ControllerBase
         // Pilla el usuario de la base de datos
         User user = await _userService.GetBasicUserByIdAsync(int.Parse(idString));
 
-        if (user == null || user.Banned)
+        if (user == null || user.Banned || !user.Verified)
         {
             Console.WriteLine("Usuario baneado");
             return null;
