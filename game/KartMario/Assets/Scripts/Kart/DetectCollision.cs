@@ -171,17 +171,7 @@ public class DetectCollision : NetworkBehaviour
         {
             CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
 
-            if (positionManager.karts.Count - 1 == 1)
-            {
-                CreateNewFinishKart(positionManager, positionManager.karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), positionManager.karts.Count - 1);
-
-                positionManager.CreateBattleCoroutine(); // Manda la petición a la base de datos
-
-                string json = JsonConvert.SerializeObject(positionManager.finishKarts);
-                Debug.LogWarning("JSON: " + json);
-
-                NotifyAboutGameEndClientRpc(json);
-            }
+            positionManager.CheckVictory(kartId);
 
             kart.NetworkObject.Despawn(true);
             positionManager.karts.Remove(kart);
@@ -200,20 +190,6 @@ public class DetectCollision : NetworkBehaviour
         });
     }
 
-    [ClientRpc(RequireOwnership = false)]
-    private void NotifyAboutGameEndClientRpc(string json)
-    {
-        Debug.LogWarning("JSON1: " + json);
-        positionManager.victoryScreen.SetActive(true);
-
-        List<FinishKart> finishKarts = JsonConvert.DeserializeObject<List<FinishKart>>(json);
-
-        Debug.LogWarning("Deserializado: " + finishKarts.Count);
-
-        VictoryScreen victory = positionManager.victoryScreen.GetComponentInChildren<VictoryScreen>();
-        victory.finishKarts = finishKarts.OrderBy(k => k.position).ToList();
-        victory.SetFinishKarts();
-    }
 
     [ServerRpc(RequireOwnership = false)]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ulong kartAggressor, ServerRpcParams rpcParams = default)
