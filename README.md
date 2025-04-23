@@ -82,4 +82,5 @@
     Domingo --> Mauricio termina la estética del proyecto, por lo menos por ahora.
 ### Cuarta semana (21/04 - 27/04)
     Lunes --> Mauricio hace que se guarde en la BBDD la partida, soluciona bugs y mejora la interfaz. María continua con la web, configura el inicio y registro.
-    Martes --> Mauricio hace la verificación de mail. 
+    Martes --> Mauricio hace la verificación de mail.
+    Miércoles --> Mauricio programa el manejo de desconexión completo. 

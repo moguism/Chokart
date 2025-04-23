@@ -97,11 +97,20 @@ public class GameStarter : NetworkBehaviour
     {
         Debug.Log($"Cliente {clientId} desconectado.");
 
-        if (clientId == 1)
+        if (clientId == 0 && !LobbyManager.isHost)
         {
             print("El host se ha ido");
             LobbiesSceneManager.showError = true;
             SceneManager.LoadScene(2);
+        }
+        else 
+        {
+            if(LobbyManager.isHost && LobbyManager.gameStarted)
+            {
+                KartController kart = positionManager.karts.FirstOrDefault(k => k.OwnerClientId == clientId);
+                DetectCollision.CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
+                positionManager.CheckVictory(kart.NetworkObjectId);
+            }
         }
     }
 }
