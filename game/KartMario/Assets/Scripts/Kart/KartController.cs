@@ -394,7 +394,17 @@ public class KartController : BasicPlayer
         // Para rotar el modelo con y sin derrape (qué coño es un Quaternion 😭)
         if (!drifting)
         {
-            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            // Solo rota el kart si se está moviendo
+            if (Mathf.Abs(currentSpeed) > 0.1f)
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            }
+            else
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90, kartModel.localEulerAngles.z), .2f);
+            }
+
+            //kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
