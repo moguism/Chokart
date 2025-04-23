@@ -83,4 +83,4 @@
 ### Cuarta semana (21/04 - 27/04)
     Lunes --> Mauricio hace que se guarde en la BBDD la partida, soluciona bugs y mejora la interfaz. María continua con la web, configura el inicio y registro.
     Martes --> Mauricio hace la verificación de mail. María termina de configurar el registro y comienza a diseñar la web.
-    Miércoles --> Mauricio programa el manejo de desconexión completo. María ajusta la ia de los bots y continua con la web.
+    Miércoles --> Mauricio programa el manejo de desconexión completo y el movimiento con mando. María ajusta la ia de los bots y continua con la web.

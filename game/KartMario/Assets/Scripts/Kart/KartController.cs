@@ -290,7 +290,7 @@ public class KartController : BasicPlayer
             {
                 speed = acceleration;
 
-                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                 {
                     speed = 0;
                 }
@@ -303,18 +303,18 @@ public class KartController : BasicPlayer
             }
             else
             {
-                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
                 }
                 else
                 {
                     // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
                     {
                         speed = acceleration;
                     }
-                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                     {
                         speed = -acceleration;
                     }
@@ -394,7 +394,17 @@ public class KartController : BasicPlayer
         // Para rotar el modelo con y sin derrape (qué coño es un Quaternion 😭)
         if (!drifting)
         {
-            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            // Solo rota el kart si se está moviendo
+            if (Mathf.Abs(currentSpeed) > 0.1f)
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            }
+            else
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90, kartModel.localEulerAngles.z), .2f);
+            }
+
+            //kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
@@ -416,7 +426,7 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        if (playerControls.Player.Fire3.ReadValue<float>() == 1)
+        if (playerControls.Player.Fire3.ReadValue<float>() != 0)
         {
             if (currentObject != "")
             {
