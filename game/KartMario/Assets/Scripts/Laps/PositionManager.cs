@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -147,7 +148,6 @@ public class PositionManager : NetworkBehaviour
             catch { }
         }
     }
-
     public void InformAboutGameStart()
     {
         InformAboutGameStartClientRpc();
@@ -157,6 +157,36 @@ public class PositionManager : NetworkBehaviour
     private void InformAboutGameStartClientRpc()
     {
         startCounter.StartBegginingCounter(karts.ToArray());
+    }
+
+    public void CheckVictory(ulong kartId)
+    {
+        if (karts.Count - 1 == 1)
+        {
+            DetectCollision.CreateNewFinishKart(this, karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), karts.Count - 1);
+
+            CreateBattleCoroutine(); // Manda la petición a la base de datos
+
+            string json = JsonConvert.SerializeObject(finishKarts);
+            Debug.LogWarning("JSON: " + json);
+
+            NotifyAboutGameEndClientRpc(json);
+        }
+    }
+
+    [ClientRpc(RequireOwnership = false)]
+    private void NotifyAboutGameEndClientRpc(string json)
+    {
+        Debug.LogWarning("JSON1: " + json);
+        victoryScreen.SetActive(true);
+
+        List<FinishKart> finishKarts = JsonConvert.DeserializeObject<List<FinishKart>>(json);
+
+        Debug.LogWarning("Deserializado: " + finishKarts.Count);
+
+        VictoryScreen victory = victoryScreen.GetComponentInChildren<VictoryScreen>();
+        victory.finishKarts = finishKarts.OrderBy(k => k.position).ToList();
+        victory.SetFinishKarts();
     }
 
     public void CreateBattleCoroutine()
