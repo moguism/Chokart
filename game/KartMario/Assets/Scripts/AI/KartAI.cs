@@ -17,15 +17,6 @@ public class KartAI : NetworkBehaviour
     public float HorizontalInput { get; private set; }
     public int MoveDirection { get; private set; }
 
-    /*[SerializeField]
-    private NavMeshAgent agent;*/
-
-    [SerializeField]
-    private SphereCollider sphereCollider;
-
-    /* [SerializeField]
-     public KartController parent;*/
-
     public KartController enemyKart;
 
     /*[SerializeField]*/
@@ -43,7 +34,7 @@ public class KartAI : NetworkBehaviour
 
         botDrift = Random.value < 0.5f;
 
-        Debug.Log("el coche bot es ", kart);
+        Debug.Log("IA el coche bot es ", kart);
     }
 
     private void Start()
@@ -90,7 +81,7 @@ public class KartAI : NetworkBehaviour
         }*/
 
 
-        Debug.Log("COCHE " + kart.GetComponentIndex() + " IA LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
+        Debug.Log("COCHE " + kart.GetComponentIndex() + " LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
         kart.horizontalInput = HorizontalInput;
         kart.direction = MoveDirection;
 
