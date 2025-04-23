@@ -290,7 +290,7 @@ public class KartController : BasicPlayer
             {
                 speed = acceleration;
 
-                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                 {
                     speed = 0;
                 }
@@ -303,18 +303,18 @@ public class KartController : BasicPlayer
             }
             else
             {
-                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
                 }
                 else
                 {
                     // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
                     {
                         speed = acceleration;
                     }
-                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                     {
                         speed = -acceleration;
                     }
@@ -416,7 +416,7 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        if (playerControls.Player.Fire3.ReadValue<float>() == 1)
+        if (playerControls.Player.Fire3.ReadValue<float>() != 0)
         {
             if (currentObject != "")
             {
