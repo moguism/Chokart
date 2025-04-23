@@ -26,7 +26,7 @@ public class MapTrigger : NetworkBehaviour
         var parent = other.gameObject.transform.parent;
         if (parent && parent.CompareTag("Kart"))
         {
-            // Debug.Log("Ha entrado en el trigger  " + parent.name);
+            Debug.Log("Ha entrado en el trigger " + index + " el coche " + parent.name);
             var kart = parent.GetComponentInChildren<KartController>();
             bool alreadyAdded = false;
             bool shouldContinue = true;
@@ -35,7 +35,6 @@ public class MapTrigger : NetworkBehaviour
             {
                 kart.triggers.Remove(index);
 
-               
                 // Recalcula quién es el próximo trigger
                 if (IsOwner || kart.enableAI)
                 {
@@ -79,6 +78,7 @@ public class MapTrigger : NetworkBehaviour
 
         if (kart.enableAI && kart.ai != null)
         {
+            Debug.Log("lastTriggerIndex actualizado a: " + index + " para " + kart.name);
             kart.ai.UpdateDestination(); // usa el índice nuevo para calcular el siguiente
         }
 
