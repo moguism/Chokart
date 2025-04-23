@@ -2,7 +2,6 @@ using EasyTransition;
 using Injecta;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -112,7 +111,7 @@ public class TitleScreen : MonoBehaviour
             return;
         }
 
-        kart.transform.position = new Vector3(kart.transform.position.x, kart.transform.position.y, kart.transform.position.z + moveFactor);
+        kart.transform.position = new Vector3(kart.transform.position.x, kart.transform.position.y, kart.transform.position.z + moveFactor * Time.deltaTime);
 
         if (!doLogoCountdown)
         {

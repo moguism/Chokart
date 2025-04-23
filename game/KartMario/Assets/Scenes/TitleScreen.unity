@@ -3455,7 +3455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3733f0007dcd7454ab6336f05f5ca1bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFactor: -0.05
+  moveFactor: -25
   kartLimit: -9
   kart: {fileID: 669846713}
   logo: {fileID: 1736101850}
