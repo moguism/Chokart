@@ -92,11 +92,13 @@ public class Speedometer : MonoBehaviour
                 audioSource.Play();
             }
 
+#if !UNITY_WEBGL
             try
             {
                 Handheld.Vibrate();
             }
             catch { }
+#endif
         }
 
         if (speed < 0.5f && audioSource.isPlaying)
