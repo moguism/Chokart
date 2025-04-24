@@ -126,11 +126,13 @@ public class TitleScreen : MonoBehaviour
             }
             else
             {
+#if !UNITY_WEBGL
                 try
                 {
                     Handheld.Vibrate();
                 }
                 catch { }
+#endif
             }
         }
         else
