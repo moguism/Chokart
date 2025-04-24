@@ -85,9 +85,18 @@ public class Speedometer : MonoBehaviour
         float targetVolume = Mathf.Clamp01(speed / maxSpeed);
         audioSource.volume = Mathf.Lerp(audioSource.volume, targetVolume, Time.deltaTime * smoothSpeed);
 
-        if (speed > 0 && !audioSource.isPlaying)
+        if(speed > 0)
         {
-            audioSource.Play();
+            if(!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+
+            try
+            {
+                Handheld.Vibrate();
+            }
+            catch { }
         }
 
         if (speed < 0.5f && audioSource.isPlaying)
