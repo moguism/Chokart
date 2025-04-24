@@ -15,10 +15,12 @@ public class WebsocketSingleton : MonoBehaviour
 
     void Update()
     {
+#if !UNITY_WEBGL || UNITY_EDITOR
         if (webSocket != null)
         {
             webSocket.DispatchMessageQueue();
         }
+#endif
     }
 
     private async void OnApplicationQuit()
