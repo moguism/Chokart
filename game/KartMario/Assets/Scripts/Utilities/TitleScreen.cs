@@ -124,6 +124,14 @@ public class TitleScreen : MonoBehaviour
                 brokenScreen.SetActive(true);
                 doLogoCountdown = true;
             }
+            else
+            {
+                try
+                {
+                    Handheld.Vibrate();
+                }
+                catch { }
+            }
         }
         else
         {
