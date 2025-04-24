@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Injecta;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,6 +8,9 @@ public class AuthManager : MonoBehaviour
     public bool isLogged = false;
     public bool isTryingToLog = true;
     public static string token = "";
+
+    [Inject]
+    private WebsocketSingleton websocket;
 
     async void Start()
     {
@@ -19,6 +23,8 @@ public class AuthManager : MonoBehaviour
 
             //StartCoroutine(ConnectToSocketCoroutine(savedToken));
             bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), token);
+
+            await websocket.ConnectToSocket(token);
 
             if (!couldSign)
             {

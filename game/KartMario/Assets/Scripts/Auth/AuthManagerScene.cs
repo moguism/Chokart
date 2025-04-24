@@ -32,6 +32,9 @@ public class AuthManagerScene : MonoBehaviour
     [Inject]
     private AuthManager authManager;
 
+    [Inject]
+    private WebsocketSingleton websocket;
+
     private bool isLogin = false;
 
     public static float audioSourceTime;
