@@ -16,7 +16,5 @@ export class CheckEmailComponent {
   ngOnInit(): void {
     const state = this.location.getState() as { email?: string };
     this.email = state?.email || '';
-
-    console.log('Email recibido:', this.email);
   }
 }
