@@ -32,13 +32,8 @@ public class WebsocketSingleton : MonoBehaviour
 
     public async Task ConnectToSocket(string token)
     {
-        Dictionary<string, string> dict = new() 
-        {
-            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" }
-        };
-
         // webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
-        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
+        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token);
 
         webSocket.OnOpen += () =>
         {
@@ -49,6 +44,7 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnError += (e) =>
         {
             Debug.LogError("Error! " + e);
+            SceneManager.LoadScene(1);
         };
 
         webSocket.OnClose += (e) =>

@@ -63,11 +63,12 @@ namespace server
             }
 
             app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            
+
+            app.UseHttpsRedirection();
             app.UseWebSockets();
             app.UseMiddleware<PreAuthMiddleware>();
 
-            app.UseHttpsRedirection();
+            
             app.UseRouting();
 
             app.UseAuthentication();
