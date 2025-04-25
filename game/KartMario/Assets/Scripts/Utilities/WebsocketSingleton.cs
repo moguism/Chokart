@@ -46,7 +46,7 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnError += (e) =>
         {
             Debug.LogError("Error! " + e);
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
         };
 
         webSocket.OnClose += (e) =>

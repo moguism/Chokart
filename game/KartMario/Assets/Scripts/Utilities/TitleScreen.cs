@@ -2,6 +2,7 @@ using EasyTransition;
 using Injecta;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -85,6 +86,8 @@ public class TitleScreen : MonoBehaviour
         playKartIndex = Mathf.RoundToInt(kartLimit + 10);
 
         indexToPlayMusic = Mathf.RoundToInt(logoFrames.Length / 2);
+
+        buttons.SetActive(false);
     }
 
     async void Update()
@@ -184,18 +187,15 @@ public class TitleScreen : MonoBehaviour
 
     public void StartGame()
     {
-        if (!authManager.isTryingToLog)
+        if (!authManager.isLogged)
         {
-            if (!authManager.isLogged)
-            {
-                AuthManagerScene.audioSourceTime = audioSource.time;
-                AuthManagerScene.videoTime = backgroundVideo.time;
-                TransitionManager.Instance().Transition(1, transitionSettings, 0);
-            }
-            else
-            {
-                TransitionManager.Instance().Transition(2, transitionSettings, 0);
-            }
+            AuthManagerScene.audioSourceTime = audioSource.time;
+            AuthManagerScene.videoTime = backgroundVideo.time;
+            TransitionManager.Instance().Transition(1, transitionSettings, 0);
+        }
+        else
+        {
+            TransitionManager.Instance().Transition(2, transitionSettings, 0);
         }
     }
 

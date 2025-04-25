@@ -104,7 +104,7 @@ public class KartAI : NetworkBehaviour
     {
         if (!IsOwner)
         {
-            Debug.Log("NO ES DUEÑO DE SU PROPIO COCHE");
+            //Debug.Log("NO ES DUEÑO DE SU PROPIO COCHE");
             return;
         }
         /*

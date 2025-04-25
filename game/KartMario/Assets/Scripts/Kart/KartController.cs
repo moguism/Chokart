@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 
 public class KartController : BasicPlayer
@@ -207,6 +208,8 @@ public class KartController : BasicPlayer
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
+
+        InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
     }
 
     void Update()
@@ -251,7 +254,7 @@ public class KartController : BasicPlayer
             direction = ai.MoveDirection;
             Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
-        else
+        else if(!isMobile)
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             //horizontalInput = Input.GetAxis("Horizontal");
