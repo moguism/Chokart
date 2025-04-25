@@ -85,3 +85,4 @@
     Martes --> Mauricio hace la verificación de mail. María termina de configurar el registro y comienza a diseñar la web.
     Miércoles --> Mauricio programa el manejo de desconexión completo y el movimiento con mando. María ajusta la ia de los bots y continua con la web.
     Jueves --> María continua estilando la web. Mauricio programa la vibración de la pantalla. Tutoría.
+    Viernes --> Mauricio arregla el despliegue a móvil.
