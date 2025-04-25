@@ -24,8 +24,6 @@ public class AuthManager : MonoBehaviour
             //StartCoroutine(ConnectToSocketCoroutine(savedToken));
             bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), token);
 
-            await websocket.ConnectToSocket(token);
-
             if (!couldSign)
             {
                 isTryingToLog = false;
@@ -34,6 +32,8 @@ public class AuthManager : MonoBehaviour
             }
 
             isLogged = true;
+
+            await websocket.ConnectToSocket(token);
         }
         else
         {

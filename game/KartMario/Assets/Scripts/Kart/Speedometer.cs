@@ -76,6 +76,14 @@ public class Speedometer : MonoBehaviour
                 {
                     int roundedSpeed = Mathf.RoundToInt(absSpeed);
                     speedText.text = roundedSpeed.ToString() + " km/h";
+
+#if !UNITY_WEBGL
+                    try
+                    {
+                        Handheld.Vibrate();
+                    }
+                    catch { }
+#endif
                 }
             }
         }
@@ -85,20 +93,12 @@ public class Speedometer : MonoBehaviour
         float targetVolume = Mathf.Clamp01(speed / maxSpeed);
         audioSource.volume = Mathf.Lerp(audioSource.volume, targetVolume, Time.deltaTime * smoothSpeed);
 
-        if(speed > 0)
+        if (speed > 0)
         {
-            if(!audioSource.isPlaying)
+            if (!audioSource.isPlaying)
             {
                 audioSource.Play();
             }
-
-#if !UNITY_WEBGL
-            try
-            {
-                Handheld.Vibrate();
-            }
-            catch { }
-#endif
         }
 
         if (speed < 0.5f && audioSource.isPlaying)
