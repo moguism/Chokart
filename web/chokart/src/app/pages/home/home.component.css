@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(https://i1.sndcdn.com/artworks-6YIVMvpHvhMZlHJZ-Yzo2bQ-t1080x1080.jpg);
+  height: 100vh;
+  color: white;
+  background-size: cover;
+  gap: 2rem;
+}
+
+.container img {
+  width: 20rem;
+}
