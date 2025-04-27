@@ -21,7 +21,7 @@ public class BattleController : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task CreateBattle([FromBody] List<FinishKart> finishKarts)
+    public async Task CreateBattle([FromBody] BattlePetition battlePetition)
     {
         User user = await GetAuthorizedUser();
 
@@ -30,7 +30,7 @@ public class BattleController : ControllerBase
             return;
         }
 
-        await _battleService.CreateBattleAsync([.. finishKarts]);
+        await _battleService.CreateBattleAsync(battlePetition);
     }
 
     private async Task<User> GetAuthorizedUser()

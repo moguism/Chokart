@@ -1,10 +1,10 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using ProximityChat;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 
 public class KartController : BasicPlayer
@@ -102,12 +102,21 @@ public class KartController : BasicPlayer
     public Chronometer chronometer;
     public CinemachineVirtualCamera kartCamera;
 
+    [Header("Health timer")]
+    private const float maxHealthTimer = 2.0f;
+    private float healthTimer;
+    private const float healthReduction = 10.0f;
+
     [Header("Otras opciones")]
     public bool canMove = true;
     public int totalKills = 0;
     private TMP_Text killsText;
     public string ownerName = "";
     public int ownerId;
+
+    [SerializeField]
+    private VoiceNetworker voiceNetworker;
+    private bool isRecording = false;
 
     public override void OnNetworkSpawn()
     {
@@ -144,6 +153,8 @@ public class KartController : BasicPlayer
         {
             return;
         }
+
+        healthTimer = maxHealthTimer;
 
         invencibilityTimer = invencibilityTimerSeconds;
 
@@ -202,14 +213,12 @@ public class KartController : BasicPlayer
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
 
-        if(enableAI)
+        if (enableAI)
         {
             return;
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
-
-        InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
     }
 
     void Update()
@@ -225,7 +234,7 @@ public class KartController : BasicPlayer
             return;
         }
 
-        if(activateInvencibilityFrames)
+        if (activateInvencibilityFrames)
         {
             canBeHurt = false;
 
@@ -441,11 +450,34 @@ public class KartController : BasicPlayer
 
         jumpValueLastFrame = jumpValue;
 
+        HandleHealthTimer();
+
         try
         {
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
         } catch { }
+    }
+
+    private void HandleHealthTimer()
+    {
+        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        {
+            return;
+        }
+        healthTimer -= Time.deltaTime;
+        if(healthTimer <= 0.0f)
+        {
+            health -= healthReduction;
+
+            if(health <= 0)
+            {
+                DetectCollision.DisableKart(_positionManager, this, true);
+                DispawnKartServerRpc(NetworkObjectId, 0);
+            }
+
+            healthTimer = maxHealthTimer;
+        }
     }
 
     public void SpawnObject()
@@ -459,7 +491,6 @@ public class KartController : BasicPlayer
 
         currentObject = "";
     }
-
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
     // Es la esfera la que hace todo
@@ -489,7 +520,29 @@ public class KartController : BasicPlayer
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
+    }
 
+    private void LateUpdate()
+    {
+        try
+        {
+            // Para hablar por voz
+            if (playerControls.UI.PushToTalk.ReadValue<float>() == 1)
+            {
+                if (!isRecording)
+                {
+                    voiceNetworker.StartRecording();
+                    isRecording = true;
+                }
+            }
+            else
+            {
+                isRecording = false;
+                //voiceNetworker.StopRecording();
+            }
+        }
+        catch
+        { }
     }
 
     public void Boost()

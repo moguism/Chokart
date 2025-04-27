@@ -50,6 +50,11 @@ public class CarSelection : MonoBehaviour
 
     [SerializeField]
     private TMP_Text joinCodeText;
+    private bool shouldChangeCode = false;
+    private string originalText = "";
+    private string otherText = "Copiado :D";
+    private float timerCode = 2.0f;
+    private float maxTimer;
 
     [SerializeField]
     private TMP_Text buttonText;
@@ -65,6 +70,7 @@ public class CarSelection : MonoBehaviour
     private void Start()
     {
         print(lobbyManager);
+        maxTimer = timerCode;
 
         audioSource.time = audioSourceTime + 0.7f;
         audioSource.Play();
@@ -96,6 +102,17 @@ public class CarSelection : MonoBehaviour
 
     private void Update()
     {
+        if(shouldChangeCode)
+        {
+            timerCode -= Time.deltaTime;
+            if(timerCode <= 0.0f)
+            {
+                joinCodeText.text = originalText;
+                timerCode = maxTimer;
+                shouldChangeCode = false;
+            }
+        }
+
         if(hasFinished && lobbyManager.hasRelay)
         {
             SceneManager.LoadScene(3);
@@ -213,32 +230,36 @@ public class CarSelection : MonoBehaviour
 
     private async void ManageCharacterVisibility()
     {
-        _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
-
-        speedText.text = _characters[characterIndex].name;
-
-        if(videoPlayer.clip == null)
+        try
         {
-            glitchAudio.Play();
-            glitchPlayer.enabled = true;
-            await Task.Delay(1000);
-            glitchPlayer.enabled = false;
-            glitchAudio.Stop();
-        }
+            _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
 
-        VideoClip clip = _characters[characterIndex].clip;
-        if (clip == null)
-        {
-            videoPlayer.Stop();
-            videoPlayer.clip = null;
-            Debug.LogWarning("No hay video :(");
-            SetVideoAndImageAvailability(true, false);
-            return;
-        }
+            speedText.text = _characters[characterIndex].name;
 
-        SetVideoAndImageAvailability(false, true);
-        videoPlayer.clip = clip;
-        videoPlayer.Play();
+            if (videoPlayer.clip == null)
+            {
+                glitchAudio.Play();
+                glitchPlayer.enabled = true;
+                await Task.Delay(1000);
+                glitchPlayer.enabled = false;
+                glitchAudio.Stop();
+            }
+
+            VideoClip clip = _characters[characterIndex].clip;
+            if (clip == null)
+            {
+                videoPlayer.Stop();
+                videoPlayer.clip = null;
+                Debug.LogWarning("No hay video :(");
+                SetVideoAndImageAvailability(true, false);
+                return;
+            }
+
+            SetVideoAndImageAvailability(false, true);
+            videoPlayer.clip = clip;
+            videoPlayer.Play();
+        }
+        catch { }
     }
 
     private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
@@ -252,6 +273,14 @@ public class CarSelection : MonoBehaviour
         PlayerPrefs.SetInt("carIndex", index);
         PlayerPrefs.SetInt("characterIndex", characterIndex);
         PlayerPrefs.Save();
+    }
+
+    public void CopyCodeToClipboard()
+    {
+        GUIUtility.systemCopyBuffer = joinCodeText.text;
+        originalText = joinCodeText.text;
+        shouldChangeCode = true;
+        joinCodeText.text = otherText;
     }
 }
 

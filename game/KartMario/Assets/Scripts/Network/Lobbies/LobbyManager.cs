@@ -27,6 +27,8 @@ public class LobbyManager : MonoBehaviour
     public static string PlayerName;
     public static int PlayerId;
 
+    public static Gamemodes gamemode = Gamemodes.Race;
+
     async void Start()
     {
         await UnityServices.InitializeAsync();
@@ -83,6 +85,8 @@ public class LobbyManager : MonoBehaviour
                         isHost = true;
                     }
 
+                    Enum.TryParse(currentLobby.Data["GAMEMODE"].Value, out gamemode);
+
                     if (currentLobby.Data["RELAY_CODE"].Value != "0")
                     {
                         if (!isHost)
@@ -120,7 +124,8 @@ public class LobbyManager : MonoBehaviour
                 Player = player,
                 Data = new Dictionary<string, DataObject>
                 {
-                    { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, "0") }
+                    { "RELAY_CODE", new DataObject(DataObject.VisibilityOptions.Member, "0") },
+                    { "GAMEMODE", new DataObject(DataObject.VisibilityOptions.Public, gamemode.ToString()) }
                 }
             };
 
@@ -277,6 +282,7 @@ public class LobbyManager : MonoBehaviour
         currentLobby = null;
         isHost = false;
         gameStarted = false;
+        hasRelay = false;
 
         if(!alreadyOut) 
         { 

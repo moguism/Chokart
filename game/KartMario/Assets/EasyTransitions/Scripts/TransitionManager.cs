@@ -77,7 +77,7 @@ namespace EasyTransition
         {
             if (transition == null || runningTransition)
             {
-                Debug.LogError("You have to assing a transition.");
+                //Debug.LogError("You have to assing a transition.");
                 return;
             }
 

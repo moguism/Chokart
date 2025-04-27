@@ -86,3 +86,4 @@
     Miércoles --> Mauricio programa el manejo de desconexión completo y el movimiento con mando. María ajusta la ia de los bots y continua con la web.
     Jueves --> María continua estilando la web. Mauricio programa la vibración de la pantalla. Tutoría.
     Viernes --> Mauricio arregla el despliegue a móvil.
+    Domingo --> Mauricio soluciona bugs, hace que se pueda copiar el código al portapapeles, programa el chat de voz por proximidad, pone el modo carrera y establece una forma de limitar la duración de las partidas.
