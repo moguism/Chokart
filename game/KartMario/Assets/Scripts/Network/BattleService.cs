@@ -8,7 +8,9 @@ using UnityEngine.Networking;
 public class BattleService {
     public IEnumerator CreateBattleCorroutine(List<FinishKart> finishKarts)
     {
-        UnityWebRequest unityWebRequest = CreateWebRequest(finishKarts);
+        BattlePetition battlePetition = CreateBattlePetition(finishKarts);
+
+        UnityWebRequest unityWebRequest = CreateWebRequest(battlePetition);
 
         yield return unityWebRequest.SendWebRequest();
 
@@ -17,15 +19,16 @@ public class BattleService {
 
     public async Task CreateBattleAsync(List<FinishKart> finishKarts)
     {
-        UnityWebRequest unityWebRequest = CreateWebRequest(finishKarts);
+        BattlePetition battlePetition = CreateBattlePetition(finishKarts);
+        UnityWebRequest unityWebRequest = CreateWebRequest(battlePetition);
         await unityWebRequest.SendWebRequest();
         ManageResult(unityWebRequest);
     }
 
-    private UnityWebRequest CreateWebRequest(List<FinishKart> finishKarts)
+    private UnityWebRequest CreateWebRequest(BattlePetition battlePetition)
     {
         UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "Battle", "POST");
-        string jsonData = JsonConvert.SerializeObject(finishKarts);
+        string jsonData = JsonConvert.SerializeObject(battlePetition);
         Debug.Log("Datos: " + jsonData);
 
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
@@ -37,7 +40,6 @@ public class BattleService {
 
         return unityWebRequest;
     }
-
     private void ManageResult(UnityWebRequest unityWebRequest)
     {
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
@@ -48,5 +50,16 @@ public class BattleService {
         {
             Debug.LogError("No se ha podido crear la batalla: " + unityWebRequest.error);
         }
+    }
+
+    private BattlePetition CreateBattlePetition(List<FinishKart> finishKarts)
+    {
+        BattlePetition battlePetition = new BattlePetition()
+        {
+            gamemode = (int)LobbyManager.gamemode,
+            finishKarts = finishKarts
+        };
+
+        return battlePetition;
     }
 }

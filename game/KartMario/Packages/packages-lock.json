@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "63d111fba0960aff123dcd193a16d1f5738532be"
     },
+    "com.matthias.proximitychat": {
+      "version": "https://github.com/matthiasbroske/ProximityChat-UnityPackage.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f8911aa1278684c1ed1f1b7da976508bc615bcd7"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

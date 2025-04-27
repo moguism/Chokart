@@ -23,6 +23,11 @@ public class MapTrigger : NetworkBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if(!LobbyManager.isHost)
+        {
+            return;
+        }
+
         var parent = other.gameObject.transform.parent;
         if (parent && parent.CompareTag("Kart"))
         {
@@ -101,7 +106,7 @@ public class MapTrigger : NetworkBehaviour
         //print("El coche " + kart.NetworkObjectId + " está en " + kart.currentPosition);
         //print("La distancia del coche " + kart.NetworkObjectId + " es: " + distance);
        
-        NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance);
+        //NotifyTriggerChangeServerRpc(kart.NetworkObjectId, kart.lastTriggerIndex, distance, kart.triggers.ToArray());
         
     }
 
@@ -127,8 +132,8 @@ public class MapTrigger : NetworkBehaviour
         return nextTrigger;
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, ServerRpcParams rpcParams = default)
+    /*[ServerRpc(RequireOwnership = false)]
+    private void NotifyTriggerChangeServerRpc(ulong kartId, int newTriggerIndex, float distanceToNextTrigger, int[] triggers, ServerRpcParams rpcParams = default)
     {
         // Debug.Log($"ServerRpc coche {kartId} actualizando a index {newTriggerIndex} distancia {distanceToNextTrigger}");
         var kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
@@ -139,6 +144,7 @@ public class MapTrigger : NetworkBehaviour
             {
                 kart.lastTriggerIndex = newTriggerIndex;
             }
+            kart.triggers = triggers.ToList();
         }
-    }
+    }*/
 }

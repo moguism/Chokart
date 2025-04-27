@@ -1,5 +1,6 @@
 using EasyTransition;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class VictoryScreen : MonoBehaviour
@@ -37,6 +38,7 @@ public class VictoryScreen : MonoBehaviour
     {
         LobbyManager.gameStarted = false;
         showing = true;
+        disable = true;
 
         foreach (FinishKart kart in finishKarts)
         {
@@ -51,6 +53,8 @@ public class VictoryScreen : MonoBehaviour
     public void CloseButton()
     {
         print("Cerrando...");
+        otherCanvas.enabled = true;
+        NetworkManager.Singleton.Shutdown();
         TransitionManager.Instance().Transition(2, transitionSettings, 0); // Las lobbies
     }
 }

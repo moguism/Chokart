@@ -45,7 +45,12 @@ public class CharacterSelector : MonoBehaviour
                         Destroy(possibleCharacters[i]);
                     }
                 }
-                possibleCharacters[index].SetActive(true);
+
+                GameObject active = possibleCharacters[index];
+                active.SetActive(true);
+
+                active.AddComponent<ClientNetworkTransform>();
+                active.GetComponent<ClientNetworkTransform>().AuthorityMode = Unity.Netcode.Components.NetworkTransform.AuthorityModes.Owner;
             }
         }
         catch {}
