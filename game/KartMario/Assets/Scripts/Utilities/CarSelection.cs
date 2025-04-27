@@ -230,32 +230,36 @@ public class CarSelection : MonoBehaviour
 
     private async void ManageCharacterVisibility()
     {
-        _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
-
-        speedText.text = _characters[characterIndex].name;
-
-        if(videoPlayer.clip == null)
+        try
         {
-            glitchAudio.Play();
-            glitchPlayer.enabled = true;
-            await Task.Delay(1000);
-            glitchPlayer.enabled = false;
-            glitchAudio.Stop();
-        }
+            _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
 
-        VideoClip clip = _characters[characterIndex].clip;
-        if (clip == null)
-        {
-            videoPlayer.Stop();
-            videoPlayer.clip = null;
-            Debug.LogWarning("No hay video :(");
-            SetVideoAndImageAvailability(true, false);
-            return;
-        }
+            speedText.text = _characters[characterIndex].name;
 
-        SetVideoAndImageAvailability(false, true);
-        videoPlayer.clip = clip;
-        videoPlayer.Play();
+            if (videoPlayer.clip == null)
+            {
+                glitchAudio.Play();
+                glitchPlayer.enabled = true;
+                await Task.Delay(1000);
+                glitchPlayer.enabled = false;
+                glitchAudio.Stop();
+            }
+
+            VideoClip clip = _characters[characterIndex].clip;
+            if (clip == null)
+            {
+                videoPlayer.Stop();
+                videoPlayer.clip = null;
+                Debug.LogWarning("No hay video :(");
+                SetVideoAndImageAvailability(true, false);
+                return;
+            }
+
+            SetVideoAndImageAvailability(false, true);
+            videoPlayer.clip = clip;
+            videoPlayer.Play();
+        }
+        catch { }
     }
 
     private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
