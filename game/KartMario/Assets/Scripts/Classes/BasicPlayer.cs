@@ -75,6 +75,35 @@ public class BasicPlayer : NetworkBehaviour
         objectSpawner.SpawnObject(currentObject, currentPosition, destination, kartId);
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void DispawnKartServerRpc(ulong kartId, ulong kartAggressor)
+    {
+        KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
+        NotifyNewKillClientRpc(kartAggressor);
+
+        if (kart != null)
+        {
+            DetectCollision.CreateNewFinishKart(_positionManager, kart, _positionManager.karts.Count);
+
+            _positionManager.CheckVictory(kartId);
+
+            kart.NetworkObject.Despawn(true);
+            _positionManager.karts.Remove(kart);
+            kart = null;
+        }
+    }
+
+    [ClientRpc(RequireOwnership = false)]
+    private void NotifyNewKillClientRpc(ulong kartId)
+    {
+        try
+        {
+            KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
+            kart.totalKills += 1;
+        }
+        catch { }
+    }
+
     protected void GetPositionManager()
     {
         if (_positionManager == null)

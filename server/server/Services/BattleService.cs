@@ -17,7 +17,10 @@ public class BattleService
     {
         try
         {
-            Battle battle = new Battle();
+            Battle battle = new Battle()
+            {
+                GameModeId = battlePetition.GameMode
+            };
 
             foreach (FinishKart finishKart in battlePetition.FinishKarts)
             {

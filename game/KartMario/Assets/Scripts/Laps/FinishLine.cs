@@ -83,7 +83,7 @@ public class FinishLine : MapTrigger
 
             if (disable)
             {
-                DetectCollision.DisableKart(positionManager, kart, false);
+                DetectCollision.DisableKart(positionManager, kart, false, true);
             }
         }
     }
