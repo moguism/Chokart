@@ -1,5 +1,7 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using ProximityChat;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
@@ -109,6 +111,10 @@ public class KartController : BasicPlayer
     public string ownerName = "";
     public int ownerId;
 
+    [SerializeField]
+    private VoiceNetworker voiceNetworker;
+    private bool isRecording = false;
+
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
@@ -202,14 +208,12 @@ public class KartController : BasicPlayer
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
 
-        if(enableAI)
+        if (enableAI)
         {
             return;
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
-
-        InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
     }
 
     void Update()
@@ -225,7 +229,7 @@ public class KartController : BasicPlayer
             return;
         }
 
-        if(activateInvencibilityFrames)
+        if (activateInvencibilityFrames)
         {
             canBeHurt = false;
 
@@ -460,7 +464,6 @@ public class KartController : BasicPlayer
         currentObject = "";
     }
 
-
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
     // Es la esfera la que hace todo
     private void FixedUpdate()
@@ -489,7 +492,24 @@ public class KartController : BasicPlayer
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
+    }
 
+    private void LateUpdate()
+    {
+        // Para hablar por voz
+        if (playerControls.UI.PushToTalk.ReadValue<float>() == 1)
+        {
+            if (!isRecording)
+            {
+                voiceNetworker.StartRecording();
+                isRecording = true;
+            }
+        }
+        else
+        {
+            isRecording = false;
+            //voiceNetworker.StopRecording();
+        }
     }
 
     public void Boost()

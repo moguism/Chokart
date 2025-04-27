@@ -1933,6 +1933,16 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 730788523
       objectReference: {fileID: 0}
+    - target: {fileID: 968409006176750639, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3963995155
+      objectReference: {fileID: 0}
+    - target: {fileID: 968409006176750639, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1638380341
+      objectReference: {fileID: 0}
     - target: {fileID: 1583639820755335427, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
         type: 3}
       propertyPath: sphereCollider
@@ -1962,6 +1972,16 @@ PrefabInstance:
         type: 3}
       propertyPath: parent
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411679813115281593, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3983166362
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411679813115281593, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1638380341
       objectReference: {fileID: 0}
     - target: {fileID: 7468548331436223440, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
         type: 3}

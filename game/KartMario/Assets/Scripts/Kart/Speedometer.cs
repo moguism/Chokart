@@ -38,6 +38,8 @@ public class Speedometer : MonoBehaviour
             speed = -speed;
         }*/
 
+        bool isMoving = false;
+
         if (kart == null || !kart.canMove)
         {
             speed = 0;
@@ -61,6 +63,11 @@ public class Speedometer : MonoBehaviour
         {
             float distance = Vector3.Distance(oldPosition, kart.currentPosition);
             print("Distancia: " + distance);
+
+            if(Mathf.Abs(distance) >= 0.01)
+            {
+                isMoving = true;
+            }
 
             if (distance > 0.01 && absSpeed < minSpeed)
             {
@@ -90,18 +97,17 @@ public class Speedometer : MonoBehaviour
 
         // Control de volumen según velocidad
 
-        float targetVolume = Mathf.Clamp01(speed / maxSpeed);
+        float targetVolume = Mathf.Clamp01(absSpeed / maxSpeed);
         audioSource.volume = Mathf.Lerp(audioSource.volume, targetVolume, Time.deltaTime * smoothSpeed);
 
-        if (speed > 0)
+        if (isMoving)
         {
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
             }
         }
-
-        if (speed < 0.5f && audioSource.isPlaying)
+        else if (audioSource.isPlaying)
         {
             audioSource.Stop();
         }
