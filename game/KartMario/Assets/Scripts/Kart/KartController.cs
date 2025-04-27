@@ -496,20 +496,25 @@ public class KartController : BasicPlayer
 
     private void LateUpdate()
     {
-        // Para hablar por voz
-        if (playerControls.UI.PushToTalk.ReadValue<float>() == 1)
+        try
         {
-            if (!isRecording)
+            // Para hablar por voz
+            if (playerControls.UI.PushToTalk.ReadValue<float>() == 1)
             {
-                voiceNetworker.StartRecording();
-                isRecording = true;
+                if (!isRecording)
+                {
+                    voiceNetworker.StartRecording();
+                    isRecording = true;
+                }
+            }
+            else
+            {
+                isRecording = false;
+                //voiceNetworker.StopRecording();
             }
         }
-        else
-        {
-            isRecording = false;
-            //voiceNetworker.StopRecording();
-        }
+        catch
+        { }
     }
 
     public void Boost()

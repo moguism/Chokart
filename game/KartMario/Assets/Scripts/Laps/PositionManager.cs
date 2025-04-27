@@ -54,6 +54,7 @@ public class PositionManager : NetworkBehaviour
             //print("EL COCHE " + kart.NetworkObjectId + " ESTÁ EN " + kart.currentPosition);
 
             int newPosition = i + 1;
+            kart.position = newPosition;
 
             NetworkObject networkObject = kart.gameObject.transform.parent.GetComponent<NetworkObject>();
             ulong ownerClient = networkObject.OwnerClientId;
@@ -164,14 +165,18 @@ public class PositionManager : NetworkBehaviour
         if (karts.Count - 1 == 1)
         {
             DetectCollision.CreateNewFinishKart(this, karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), karts.Count - 1);
-
-            CreateBattleCoroutine(); // Manda la petición a la base de datos
-
-            string json = JsonConvert.SerializeObject(finishKarts);
-            Debug.LogWarning("JSON: " + json);
-
-            NotifyAboutGameEndClientRpc(json);
+            SetVictoryScreen();
         }
+    }
+
+    public void SetVictoryScreen()
+    {
+        CreateBattleCoroutine(); // Manda la petición a la base de datos
+
+        string json = JsonConvert.SerializeObject(finishKarts);
+        Debug.LogWarning("JSON: " + json);
+
+        NotifyAboutGameEndClientRpc(json);
     }
 
     [ClientRpc(RequireOwnership = false)]

@@ -47,7 +47,7 @@ public class Speedometer : MonoBehaviour
             return;
         }
 
-        print("Velocidad actual: " + kart.currentSpeed);
+        //print("Velocidad actual: " + kart.currentSpeed);
 
         //la aguja gira suavemente
         speed = Mathf.Lerp(speed, kart.currentSpeed, Time.deltaTime * smoothSpeed);
@@ -62,7 +62,7 @@ public class Speedometer : MonoBehaviour
         if (speedText != null)
         {
             float distance = Vector3.Distance(oldPosition, kart.currentPosition);
-            print("Distancia: " + distance);
+            //print("Distancia: " + distance);
 
             if(Mathf.Abs(distance) >= 0.01)
             {

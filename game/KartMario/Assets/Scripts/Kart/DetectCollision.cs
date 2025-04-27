@@ -1,7 +1,4 @@
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -53,7 +50,7 @@ public class DetectCollision : NetworkBehaviour
         {
             kart.isGrounded = true;
         }
-        else if(collision.gameObject.CompareTag("Object"))
+        else if (collision.gameObject.CompareTag("Object"))
         {
             BasicObject basicObject = collision.gameObject.GetComponentInChildren<BasicObject>();
             CheckCollisionWithObjectServerRpc(kart.NetworkObjectId, basicObject.NetworkObjectId);
@@ -68,11 +65,11 @@ public class DetectCollision : NetworkBehaviour
 
         bool isBomb = false;
 
-        if(basicObject != null)
+        if (basicObject != null)
         {
-            if(basicObject.owner == kartId)
+            if (basicObject.owner == kartId)
             {
-                if(basicObject is Bomb)
+                if (basicObject is Bomb)
                 {
                     isBomb = true;
 
@@ -87,7 +84,7 @@ public class DetectCollision : NetworkBehaviour
                 }
             }
 
-            if(basicObject is GreenShell)
+            if (basicObject is GreenShell)
             {
                 float damageOutput = isBomb ? (basicObject as GreenShell).damageOutput : (basicObject as GreenShell).damageOutput;
 
@@ -124,23 +121,11 @@ public class DetectCollision : NetworkBehaviour
         kart.activateInvencibilityFrames = true;
 
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
-        
+
         // TODO: No hacer desaparecer, sino darlo como Game Over
-        if (kart.health <= 0 && LobbyManager.gameStarted)
+        if (kart.health <= 0 && LobbyManager.gamemode != Gamemodes.Race && LobbyManager.gameStarted)
         {
-            kart.chronometer.StopTimer();
-            kart.chronometer.timerText.text = "";
-
-            try
-            {
-                kart.positionText.text = positionManager.karts.Count.ToString();
-                kart.healthText.color = Color.red;
-                kart.healthText.text = "0";
-            }
-            catch {}
-
-            positionManager.spectateCanvas.SetActive(true);
-            positionManager.spectateKart.kartCamera = kart.kartCamera;
+            DisableKart(positionManager, kart, true);
 
             //NotifyNewKillClientRpc(kartAggressor);
             //CreateNewFinishKart(kart);
@@ -190,12 +175,36 @@ public class DetectCollision : NetworkBehaviour
         });
     }
 
+    public static void DisableKart(PositionManager positionManager, KartController kart, bool changeColor)
+    {
+        try
+        {
+            Invisibility.DisableOnEnableRenders(kart, false);
+
+            kart.chronometer.StopTimer();
+            kart.chronometer.timerText.text = "";
+
+            if (changeColor)
+            {
+                kart.positionText.text = positionManager.karts.Count.ToString();
+                kart.healthText.color = Color.red;
+                kart.healthText.text = "0";
+            }
+
+            positionManager.spectateCanvas.SetActive(true);
+            positionManager.spectateKart.kartCamera = kart.kartCamera;
+
+            kart.sphere.position = new Vector3(0, -10000);
+            kart.gameObject.SetActive(false);
+        }
+        catch { }
+    }
 
     [ServerRpc(RequireOwnership = false)]
     public void NotifyServerAboutChangeServerRpc(ulong kartId, float damage, ulong kartAggressor, ServerRpcParams rpcParams = default)
     {
         KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId);
-        if(kart == null || !kart.canBeHurt)
+        if (kart == null || !kart.canBeHurt)
         {
             return;
         }
