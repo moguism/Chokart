@@ -1,12 +1,10 @@
 ﻿using Cinemachine;
 using DG.Tweening;
 using ProximityChat;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 
 public class KartController : BasicPlayer
@@ -104,6 +102,11 @@ public class KartController : BasicPlayer
     public Chronometer chronometer;
     public CinemachineVirtualCamera kartCamera;
 
+    [Header("Health timer")]
+    private const float maxHealthTimer = 2.0f;
+    private float healthTimer;
+    private const float healthReduction = 10.0f;
+
     [Header("Otras opciones")]
     public bool canMove = true;
     public int totalKills = 0;
@@ -150,6 +153,8 @@ public class KartController : BasicPlayer
         {
             return;
         }
+
+        healthTimer = maxHealthTimer;
 
         invencibilityTimer = invencibilityTimerSeconds;
 
@@ -445,11 +450,34 @@ public class KartController : BasicPlayer
 
         jumpValueLastFrame = jumpValue;
 
+        HandleHealthTimer();
+
         try
         {
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
         } catch { }
+    }
+
+    private void HandleHealthTimer()
+    {
+        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        {
+            return;
+        }
+        healthTimer -= Time.deltaTime;
+        if(healthTimer <= 0.0f)
+        {
+            health -= healthReduction;
+
+            if(health <= 0)
+            {
+                DetectCollision.DisableKart(_positionManager, this, true);
+                DispawnKartServerRpc(NetworkObjectId, 0);
+            }
+
+            healthTimer = maxHealthTimer;
+        }
     }
 
     public void SpawnObject()

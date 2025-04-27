@@ -111,6 +111,7 @@ public class DetectCollision : NetworkBehaviour
 
         var damage = speed * BasicPlayer.damageMultiplier;
         NotifyServerAboutChangeServerRpc(kartController.NetworkObjectId, damage, kartAggressor);
+        NotifyServerAboutChangeServerRpc(kartAggressor, -damage, kartAggressor); // Le doy salud al otro
     }
 
     [ClientRpc]
@@ -130,42 +131,17 @@ public class DetectCollision : NetworkBehaviour
             //NotifyNewKillClientRpc(kartAggressor);
             //CreateNewFinishKart(kart);
 
-            DispawnKartServerRpc(kart.NetworkObjectId, kartAggressor);
-        }
-
-    }
-
-    [ClientRpc(RequireOwnership = false)]
-    private void NotifyNewKillClientRpc(ulong kartId)
-    {
-        try
-        {
-            KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
-            kart.totalKills += 1;
-        }
-        catch { }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void DispawnKartServerRpc(ulong kartId, ulong kartAggressor)
-    {
-        KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
-        NotifyNewKillClientRpc(kartAggressor);
-
-        if (kart != null)
-        {
-            CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
-
-            positionManager.CheckVictory(kartId);
-
-            kart.NetworkObject.Despawn(true);
-            positionManager.karts.Remove(kart);
-            kart = null;
+            kart.DispawnKartServerRpc(kart.NetworkObjectId, kartAggressor);
         }
     }
 
     public static void CreateNewFinishKart(PositionManager positionManager, KartController kart, int position)
     {
+        if(kart == null)
+        {
+            return;
+        }
+
         positionManager.finishKarts.Add(new FinishKart()
         {
             playerId = kart.ownerId,
@@ -175,7 +151,7 @@ public class DetectCollision : NetworkBehaviour
         });
     }
 
-    public static void DisableKart(PositionManager positionManager, KartController kart, bool changeColor)
+    public static void DisableKart(PositionManager positionManager, KartController kart, bool changeColor, bool changePosition = false)
     {
         try
         {
@@ -194,8 +170,11 @@ public class DetectCollision : NetworkBehaviour
             positionManager.spectateCanvas.SetActive(true);
             positionManager.spectateKart.kartCamera = kart.kartCamera;
 
-            kart.sphere.position = new Vector3(0, -10000);
-            kart.gameObject.SetActive(false);
+            if (changePosition)
+            {
+                kart.sphere.position = new Vector3(0, -10000);
+                kart.gameObject.SetActive(false);
+            }
         }
         catch { }
     }

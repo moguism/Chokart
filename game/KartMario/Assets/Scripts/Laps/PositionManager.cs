@@ -162,7 +162,7 @@ public class PositionManager : NetworkBehaviour
 
     public void CheckVictory(ulong kartId)
     {
-        if (karts.Count - 1 == 1)
+        if (karts.Count - 1 <= 1)
         {
             DetectCollision.CreateNewFinishKart(this, karts.FirstOrDefault(k => k != null && k.NetworkObjectId != kartId), karts.Count - 1);
             SetVictoryScreen();
