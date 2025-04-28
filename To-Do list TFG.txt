@@ -1,9 +1,9 @@
 Pantalla de configuración (incluyendo el idioma con banderas)
 Bots marcha atrás
-Minimapa
 Menú de pausa
 Amigos
 Model View View Model
 Página web
+Arreglar exportación a web
 PowerBi
 (OPCIONAL) Login con Steam
