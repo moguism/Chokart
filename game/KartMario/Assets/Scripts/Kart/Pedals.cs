@@ -1,5 +1,5 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Pedals : MonoBehaviour
@@ -29,7 +29,7 @@ public class Pedals : MonoBehaviour
 
         kart.kartModel.parent.DOComplete();
         kart.kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
-        await Task.Delay(1);
+        await UniTask.WaitForSeconds(0.001f);
         //}
     }
 

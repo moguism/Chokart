@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -30,7 +29,7 @@ public class ObjectSpawner : MonoBehaviour
     private PositionManager positionManager;
 
     [SerializeField]
-    private VideoPlayer glitchEffect;
+    private CustomVideoPlayer glitchEffect;
 
     private void OnTriggerEnter(Collider other)
     {

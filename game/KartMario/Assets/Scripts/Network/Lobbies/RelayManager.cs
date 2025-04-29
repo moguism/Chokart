@@ -24,7 +24,7 @@ public class RelayManager : MonoBehaviour
 
             Debug.Log("Código: " + joinCode);
 
-            RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+            RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "wss");
 
             _relayServerData = relayServerData;
 
@@ -60,7 +60,7 @@ public class RelayManager : MonoBehaviour
         {
             JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+            RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "wss");
             _relayServerData = relayServerData;
 
             print("R1: " + _relayServerData + ". R2:" + relayServerData);
