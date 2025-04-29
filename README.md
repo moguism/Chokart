@@ -91,4 +91,4 @@
     Domingo --> Mauricio soluciona bugs, hace que se pueda copiar el código al portapapeles, programa el chat de voz por proximidad, pone el modo carrera y establece una forma de limitar la duración de las partidas.
 ### Quinta semana (28/04 - 04/05)
     Lunes --> Mauricio hace el minimapa y el menú de pausa.
-    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Marñia arregla la IA.
+    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Maria arregla la IA.
