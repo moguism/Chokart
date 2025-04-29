@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a4b6bfcbbd3efd741b3f140448845bf4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148136
+  packageName: EZSoftBone
+  packageVersion: 1.6.0
+  assetPath: Assets/EZhex1991/EZSoftBone/Tests/Animation/HumanoidRunTurn.anim
+  uploadId: 458587

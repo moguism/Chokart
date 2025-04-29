@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Locales_es-ES
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-ES
+  m_SharedData: {fileID: 11400000, guid: ce09af175614af74bac9118bcbab45b0, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 28384301056
+    m_Localized: 'Hostear
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3675474235392
+    m_Localized: Email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710567976960
+    m_Localized: Apodo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3746806763520
+    m_Localized: "Contrase\xF1a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3842873102336
+    m_Localized: "Cerrar sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3911051513856
+    m_Localized: "Ir a Inicio de Sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4073488519168
+    m_Localized: Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4137170636800
+    m_Localized: "Iniciar sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188076904448
+    m_Localized: "Recu\xE9rdame"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269685477376
+    m_Localized: Ir a Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5253832773632
+    m_Localized: Apodo o email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7968765498494976
+    m_Localized: COMENZAR
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
