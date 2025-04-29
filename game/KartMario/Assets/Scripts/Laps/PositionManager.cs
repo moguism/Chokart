@@ -204,9 +204,8 @@ public class PositionManager : NetworkBehaviour
         await battleService.CreateBattleAsync(finishKarts);
     }
 
-    private async void OnApplicationQuit()
+    public async Task ExitGame()
     {
-        Debug.LogWarning("Cerrando");
         if (LobbyManager.gameStarted && LobbyManager.isHost)
         {
             foreach (KartController kart in karts)
@@ -216,5 +215,11 @@ public class PositionManager : NetworkBehaviour
 
             await CreateBattleAsync();
         }
+    }
+
+    private async void OnApplicationQuit()
+    {
+        Debug.LogWarning("Cerrando");
+        await ExitGame();
     }
 }

@@ -105,7 +105,11 @@ public class KartController : BasicPlayer
     [Header("Health timer")]
     private const float maxHealthTimer = 2.0f;
     private float healthTimer;
-    private const float healthReduction = 10.0f;
+    private const float healthReduction = 1.0f;
+
+    [Header("Minimap")]
+    [SerializeField]
+    private Canvas canvasMask;
 
     [Header("Otras opciones")]
     public bool canMove = true;
@@ -144,6 +148,7 @@ public class KartController : BasicPlayer
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
             killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
+
         }
     }
 
@@ -219,6 +224,9 @@ public class KartController : BasicPlayer
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
+
+        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+        FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
     void Update()
