@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class KartController : BasicPlayer
 {
@@ -70,6 +71,7 @@ public class KartController : BasicPlayer
     // Objetos
     [Header("Objetos")]
     public string currentObject;
+    private TMP_Text objectText;
     
     public bool canBeHurt = true;
     public bool activateInvencibilityFrames = false;
@@ -148,7 +150,10 @@ public class KartController : BasicPlayer
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
             killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
+            objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
 
+            var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
+            objectButton.onClick.AddListener(delegate { SpawnObject();});
         }
     }
 
@@ -342,7 +347,6 @@ public class KartController : BasicPlayer
             }
         }
 
-
         // Para girar el modelo a la izquierda o la derecha
         if (horizontalInput != 0 && speed != 0)
         {
@@ -353,7 +357,10 @@ public class KartController : BasicPlayer
 
         if (!enableAI)
         {
-            jumpValue = playerControls.Player.Jump.ReadValue<float>();
+            if (!ChatManager.isChatActive)
+            {
+                jumpValue = playerControls.Player.Jump.ReadValue<float>();
+            }
         }
         else
         {
@@ -448,10 +455,7 @@ public class KartController : BasicPlayer
 
         if (playerControls.Player.Fire3.ReadValue<float>() != 0)
         {
-            if (currentObject != "")
-            {
-                SpawnObject();
-            }
+            SpawnObject();
         }
 
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
@@ -464,6 +468,7 @@ public class KartController : BasicPlayer
         {
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
+            objectText.text = currentObject;
         } catch { }
     }
 
@@ -490,6 +495,11 @@ public class KartController : BasicPlayer
 
     public void SpawnObject()
     {
+        if(currentObject == "")
+        {
+            return;
+        }
+
         print("Spawneando...");
 
         if (IsOwner)
@@ -530,12 +540,13 @@ public class KartController : BasicPlayer
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
     }
 
+#if !UNITY_WEBGL || UNITY_EDITOR
     private void LateUpdate()
     {
         try
         {
             // Para hablar por voz
-            if (playerControls.UI.PushToTalk.ReadValue<float>() == 1)
+            if (OptionsSettings.shouldRecord)
             {
                 if (!isRecording)
                 {
@@ -552,6 +563,7 @@ public class KartController : BasicPlayer
         catch
         { }
     }
+#endif
 
     public void Boost()
     {

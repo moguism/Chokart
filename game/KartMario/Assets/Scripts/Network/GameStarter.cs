@@ -1,11 +1,11 @@
 using Injecta;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 public class GameStarter : NetworkBehaviour
 {
@@ -87,25 +87,29 @@ public class GameStarter : NetworkBehaviour
             }
         }
 
-        await Task.Delay(1000); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
+        await UniTask.WaitForSeconds(1); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
 
         // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
         positionManager.InformAboutGameStart();
     }
 
+
     private void OnClientDisconnected(ulong clientId)
     {
         Debug.Log($"Cliente {clientId} desconectado.");
 
-        if (clientId == 0 && !LobbyManager.isHost)
+        if(!LobbyManager.isHost)
         {
-            print("El host se ha ido");
-            LobbiesSceneManager.showError = true;
-            SceneManager.LoadScene(2);
+            if(clientId == 0 || clientId == 1)
+            {
+                print("El host se ha ido");
+                LobbiesSceneManager.showError = true;
+                SceneManager.LoadScene(2);
+            }
         }
         else 
         {
-            if(LobbyManager.isHost && LobbyManager.gameStarted)
+            if(LobbyManager.gameStarted)
             {
                 KartController kart = positionManager.karts.FirstOrDefault(k => k.OwnerClientId == clientId);
                 DetectCollision.CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);

@@ -1028,6 +1028,7 @@ GameObject:
   - component: {fileID: 377115397}
   - component: {fileID: 377115399}
   - component: {fileID: 377115398}
+  - component: {fileID: 377115400}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1153,6 +1154,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377115396}
   m_CullTransparentMesh: 1
+--- !u!114 &377115400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377115396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:ce09af175614af74bac9118bcbab45b0
+    m_TableEntryReference:
+      m_KeyId: 7968765498494976
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 377115398}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &399777969
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,6 +3046,7 @@ GameObject:
   - component: {fileID: 788471685}
   - component: {fileID: 788471687}
   - component: {fileID: 788471686}
+  - component: {fileID: 788471688}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3130,6 +3172,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788471684}
   m_CullTransparentMesh: 1
+--- !u!114 &788471688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788471684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:ce09af175614af74bac9118bcbab45b0
+    m_TableEntryReference:
+      m_KeyId: 3842873102336
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 788471686}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &850954483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3498,7 +3580,7 @@ MonoBehaviour:
   brokenScreen: {fileID: 208881687}
   imageLogo: {fileID: 1736101852}
   backgroundImage: {fileID: 1896594676}
-  backgroundVideo: {fileID: 1878083727}
+  backgroundVideo: {fileID: 1878083728}
   logoFrames:
   - {fileID: 2800000, guid: 224f67e13b5c9fe49be107eff54f7a9f, type: 3}
   - {fileID: 2800000, guid: c7439f344ea075b4499462015c4daa15, type: 3}
@@ -3537,7 +3619,7 @@ MonoBehaviour:
   audioSource: {fileID: 1665921213}
   logoutButton: {fileID: 1400084820}
   buttons: {fileID: 260986610}
-  transitionSettings: {fileID: 11400000, guid: 057babd6f13132c449650d99e3c4e99c, type: 2}
+  transitionSettings: {fileID: 11400000, guid: 3ad3e86dc386e60458fda4c93a2c3d62, type: 2}
 --- !u!4 &952962868
 Transform:
   m_ObjectHideFlags: 0
@@ -6022,7 +6104,7 @@ MonoBehaviour:
     - m_Text: "Espa\xF1ol"
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: "Ingl\xE9s"
+    - m_Text: English
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
@@ -6031,7 +6113,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1813908428}
         m_TargetAssemblyTypeName: LocalizationManager, Assembly-CSharp
         m_MethodName: OnLanguageChanged
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6091,6 +6173,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 1813908425}
+  textsToTranslate:
+  - textElement: {fileID: 377115398}
+    code: START_GAME
+  - textElement: {fileID: 788471686}
+    code: LOGOUT
+  tables:
+  - {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933, type: 2}
+  - {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2, type: 2}
 --- !u!1 &1831511165
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,6 +6414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1878083726}
   - component: {fileID: 1878083727}
+  - component: {fileID: 1878083728}
   m_Layer: 5
   m_Name: Video Player
   m_TagString: Untagged
@@ -6367,7 +6459,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -6380,9 +6472,24 @@ VideoPlayer:
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 1
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &1878083728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878083725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73beca2233617c04da59ccc1bb20f6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoFileName: title.mp4
+  videoPlayer: {fileID: 1878083727}
+  autoPlay: 0
 --- !u!1 &1882319730
 GameObject:
   m_ObjectHideFlags: 0
