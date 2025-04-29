@@ -109,7 +109,7 @@ public class GameStarter : NetworkBehaviour
         }
         else 
         {
-            if(LobbyManager.gameStarted)
+            if(LobbyManager.gameStarted && clientId != 0)
             {
                 KartController kart = positionManager.karts.FirstOrDefault(k => k.OwnerClientId == clientId);
                 DetectCollision.CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
