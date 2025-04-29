@@ -1,0 +1,101 @@
+body {
+  background-color: #f2f2f2;
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.caja {
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 40px auto;
+  border: 4px solid #e60012; /* rojo Nintendo */
+}
+
+.container {
+  margin: 20px;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  background-color: #e60012;
+}
+
+.menu button {
+  flex: 1;
+  padding: 15px 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu button.active {
+  background-color: #ffffff;
+  color: #e60012;
+  border-bottom: 4px solid #e60012;
+}
+
+.contenido {
+  padding: 30px 25px;
+}
+
+input {
+  width: 90%;
+  font-size: 1.2rem;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #e60012;
+  outline: none;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  transform: scale(1.3);
+  margin-right: 10px;
+}
+
+label {
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.form-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e60012;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #c1000f;
+}
+
+.error {
+  color: #ff3b3b;
+  font-size: 0.95rem;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  display: block;
+  min-height: 20px;
+}

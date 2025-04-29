@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: de73835b5de58f741a6af5ce6efcae10
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148136
+  packageName: EZSoftBone
+  packageVersion: 1.6.0
+  assetPath: Assets/EZhex1991/EZSoftBone/Tests/Presets/SBForce_Demo_Curve.asset
+  uploadId: 458587
