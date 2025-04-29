@@ -7,30 +7,33 @@ public class CharacterSelector : MonoBehaviour
     private GameObject[] possibleCharacters; // Esta lista debe estar en el mismo orden que la está en el selector de personajes
 
     [SerializeField]
-    private Texture[] textures; // Esta lista, exclusiva para la HUD, también lo tiene que estar
+    private Texture[] textures; // Esta lista, exclusiva para la HUD y el minimap, también lo tiene que estar
 
     [SerializeField]
     private RawImage spriteImage;
+
+    [SerializeField]
+    private bool isHud = true;
 
     private void Start()
     {
         // Para que no lo haga nada más empiece el selector
         if (WebsocketSingleton.kartModelIndex != -1)
         {
-
             SetCharacter(CarSelection.characterIndex, true);
         }
+    }
+
+    private void Update()
+    {
+        spriteImage.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
     public void SetCharacter(int index, bool destroy)
     {
         try
         {
-            if (spriteImage != null)
-            {
-                spriteImage.texture = textures[index];
-            }
-            else
+            if(!isHud)
             {
                 for (int i = 0; i < possibleCharacters.Length; i++)
                 {
@@ -52,7 +55,17 @@ public class CharacterSelector : MonoBehaviour
                 active.AddComponent<ClientNetworkTransform>();
                 active.GetComponent<ClientNetworkTransform>().AuthorityMode = Unity.Netcode.Components.NetworkTransform.AuthorityModes.Owner;
             }
+
+            SetSprite(index);
         }
         catch {}
+    }
+
+    private void SetSprite(int index)
+    {
+        if (spriteImage != null)
+        {
+            spriteImage.texture = textures[index];
+        }
     }
 }
