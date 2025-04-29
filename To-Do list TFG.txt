@@ -1,6 +1,5 @@
 Pantalla de configuración (incluyendo el idioma con banderas)
 Bots marcha atrás
-Menú de pausa
 Amigos
 Model View View Model
 Página web

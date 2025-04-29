@@ -220,7 +220,9 @@ public class KartController : BasicPlayer
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
+
         FindFirstObjectByType<Minimap>().player = transform;
+        FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
     void Update()
