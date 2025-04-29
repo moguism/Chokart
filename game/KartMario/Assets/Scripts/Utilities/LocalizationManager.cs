@@ -72,7 +72,7 @@ public class LocalizationManager : MonoBehaviour
 
     private void LocalizationSettings_SelectedLocaleChanged(UnityEngine.Localization.Locale obj)
     {
-        Debug.LogError("MONDONGO" + LocalizationSettings.SelectedLocale);
+        Debug.Log(LocalizationSettings.SelectedLocale);
     }
 
     private void Translate()

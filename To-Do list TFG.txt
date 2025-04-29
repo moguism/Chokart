@@ -3,6 +3,5 @@ Bots marcha atrás
 Amigos
 Model View View Model
 Página web
-Arreglar exportación a web
 PowerBi
 (OPCIONAL) Login con Steam
