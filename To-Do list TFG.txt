@@ -1,3 +1,7 @@
-Del juego en sí falta (sin estética ni nada):
-- Que la IA escoja personaje y coches aleatorios, no los del host
-- La IA se vuelve un poco loca xD
+Pantalla de configuración (incluyendo el idioma con banderas)
+Bots marcha atrás
+Amigos
+Model View View Model
+Página web
+PowerBi
+(OPCIONAL) Login con Steam

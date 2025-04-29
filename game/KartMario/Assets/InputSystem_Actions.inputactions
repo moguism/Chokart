@@ -36,7 +36,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -524,11 +524,33 @@
                 },
                 {
                     "name": "",
+                    "id": "0db2110f-1084-4909-958c-2670662e9a22",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Fire1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "863760ba-263c-42e2-ac09-19fe25bbcdd3",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Fire3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "941b8405-b3ba-4ba6-8efe-6c5a1ffb216b",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Fire3",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -551,6 +573,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
+                    "action": "Fire2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f65b6abf-7229-4cd1-ba0e-f059db2bfaaa",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Fire2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -647,6 +680,15 @@
                     "type": "PassThrough",
                     "id": "9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PushToTalk",
+                    "type": "Button",
+                    "id": "b02f2163-83e7-4e8a-b1ed-8e3602feff18",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1068,6 +1110,56 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96c9a3fc-f68a-4111-91a6-abb6fb3b09f3",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "PushToTalk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Mobile",
+            "id": "73524546-4085-4839-a8a2-2482f244f577",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "6bfaa0b2-7dc2-492e-9a33-3185baac9403",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "14c20eb4-e5c4-49bb-b354-fbdfd9a8ad92",
+                    "path": "<Accelerometer>/acceleration",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52a8133a-34c3-40e8-873d-9b8a96eaacf6",
+                    "path": "<Gyroscope>/angularVelocity",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,10 +1,12 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using ProximityChat;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class KartController : BasicPlayer
 {
@@ -69,6 +71,7 @@ public class KartController : BasicPlayer
     // Objetos
     [Header("Objetos")]
     public string currentObject;
+    private TMP_Text objectText;
     
     public bool canBeHurt = true;
     public bool activateInvencibilityFrames = false;
@@ -101,12 +104,25 @@ public class KartController : BasicPlayer
     public Chronometer chronometer;
     public CinemachineVirtualCamera kartCamera;
 
+    [Header("Health timer")]
+    private const float maxHealthTimer = 2.0f;
+    private float healthTimer;
+    private const float healthReduction = 1.0f;
+
+    [Header("Minimap")]
+    [SerializeField]
+    private Canvas canvasMask;
+
     [Header("Otras opciones")]
     public bool canMove = true;
     public int totalKills = 0;
     private TMP_Text killsText;
     public string ownerName = "";
     public int ownerId;
+
+    [SerializeField]
+    private VoiceNetworker voiceNetworker;
+    private bool isRecording = false;
 
     public override void OnNetworkSpawn()
     {
@@ -134,6 +150,10 @@ public class KartController : BasicPlayer
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
             killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
+            objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
+
+            var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
+            objectButton.onClick.AddListener(delegate { SpawnObject();});
         }
     }
 
@@ -143,6 +163,8 @@ public class KartController : BasicPlayer
         {
             return;
         }
+
+        healthTimer = maxHealthTimer;
 
         invencibilityTimer = invencibilityTimerSeconds;
 
@@ -201,12 +223,15 @@ public class KartController : BasicPlayer
 
         objectSpawner = FindFirstObjectByType<ObjectSpawner>();
 
-        if(enableAI)
+        if (enableAI)
         {
             return;
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
+
+        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+        FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
     void Update()
@@ -222,7 +247,7 @@ public class KartController : BasicPlayer
             return;
         }
 
-        if(activateInvencibilityFrames)
+        if (activateInvencibilityFrames)
         {
             canBeHurt = false;
 
@@ -251,7 +276,7 @@ public class KartController : BasicPlayer
             direction = ai.MoveDirection;
             Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
-        else
+        else if(!isMobile)
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             //horizontalInput = Input.GetAxis("Horizontal");
@@ -290,7 +315,7 @@ public class KartController : BasicPlayer
             {
                 speed = acceleration;
 
-                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                 {
                     speed = 0;
                 }
@@ -303,25 +328,24 @@ public class KartController : BasicPlayer
             }
             else
             {
-                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() != 1 && playerControls.Player.Fire2.ReadValue<float>() != 1)
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
                 }
                 else
                 {
                     // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() == 1)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
                     {
                         speed = acceleration;
                     }
-                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() == 1)
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
                     {
                         speed = -acceleration;
                     }
                 }
             }
         }
-
 
         // Para girar el modelo a la izquierda o la derecha
         if (horizontalInput != 0 && speed != 0)
@@ -333,7 +357,10 @@ public class KartController : BasicPlayer
 
         if (!enableAI)
         {
-            jumpValue = playerControls.Player.Jump.ReadValue<float>();
+            if (!ChatManager.isChatActive)
+            {
+                jumpValue = playerControls.Player.Jump.ReadValue<float>();
+            }
         }
         else
         {
@@ -394,7 +421,17 @@ public class KartController : BasicPlayer
         // Para rotar el modelo con y sin derrape (qué coño es un Quaternion 😭)
         if (!drifting)
         {
-            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            // Solo rota el kart si se está moviendo
+            if (Mathf.Abs(currentSpeed) > 0.1f)
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            }
+            else
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90, kartModel.localEulerAngles.z), .2f);
+            }
+
+            //kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
@@ -416,27 +453,53 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        if (playerControls.Player.Fire3.ReadValue<float>() == 1)
+        if (playerControls.Player.Fire3.ReadValue<float>() != 0)
         {
-            if (currentObject != "")
-            {
-                SpawnObject();
-            }
+            SpawnObject();
         }
 
         InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
 
         jumpValueLastFrame = jumpValue;
 
+        HandleHealthTimer();
+
         try
         {
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
+            objectText.text = currentObject;
         } catch { }
+    }
+
+    private void HandleHealthTimer()
+    {
+        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        {
+            return;
+        }
+        healthTimer -= Time.deltaTime;
+        if(healthTimer <= 0.0f)
+        {
+            health -= healthReduction;
+
+            if(health <= 0)
+            {
+                DetectCollision.DisableKart(_positionManager, this, true);
+                DispawnKartServerRpc(NetworkObjectId, 0);
+            }
+
+            healthTimer = maxHealthTimer;
+        }
     }
 
     public void SpawnObject()
     {
+        if(currentObject == "")
+        {
+            return;
+        }
+
         print("Spawneando...");
 
         if (IsOwner)
@@ -446,7 +509,6 @@ public class KartController : BasicPlayer
 
         currentObject = "";
     }
-
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
     // Es la esfera la que hace todo
@@ -476,8 +538,32 @@ public class KartController : BasicPlayer
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
-
     }
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+    private void LateUpdate()
+    {
+        try
+        {
+            // Para hablar por voz
+            if (OptionsSettings.shouldRecord)
+            {
+                if (!isRecording)
+                {
+                    voiceNetworker.StartRecording();
+                    isRecording = true;
+                }
+            }
+            else
+            {
+                isRecording = false;
+                //voiceNetworker.StopRecording();
+            }
+        }
+        catch
+        { }
+    }
+#endif
 
     public void Boost()
     {

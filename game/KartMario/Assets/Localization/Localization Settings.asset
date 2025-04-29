@@ -37,7 +37,7 @@ MonoBehaviour:
         asm: Unity.Localization}
       data:
         m_LocaleId:
-          m_Code: 
+          m_Code: es-ES
     - rid: 2373127791036596421
       type: {class: LocalesProvider, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
       data: 

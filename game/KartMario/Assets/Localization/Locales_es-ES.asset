@@ -64,6 +64,10 @@ MonoBehaviour:
     m_Localized: Apodo o email
     m_Metadata:
       m_Items: []
+  - m_Id: 7968765498494976
+    m_Localized: COMENZAR
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

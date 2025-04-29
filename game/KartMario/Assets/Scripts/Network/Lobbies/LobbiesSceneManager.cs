@@ -1,9 +1,7 @@
 using EasyTransition;
 using Injecta;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LobbiesSceneManager : MonoBehaviour
 {
@@ -23,6 +21,9 @@ public class LobbiesSceneManager : MonoBehaviour
 
     [SerializeField]
     private AudioSource audioSource;
+
+    [SerializeField]
+    private GameObject playButtons;
 
     private Color initialColor;
     private string initialText;
@@ -70,15 +71,15 @@ public class LobbiesSceneManager : MonoBehaviour
         //SceneManager.LoadScene(4); 
     }
 
-    public void PlayWithBots()
+    public void SetGameMode(int gamemode)
     {
-        LobbyManager.spawnBotsWhenStarting = true;
-        CreateLobby();
+        LobbyManager.gamemode = (Gamemodes)gamemode;
+        playButtons.SetActive(true);
     }
 
-    public void PlayWithoutBots()
+    public void StartPlaying(bool spawnBots)
     {
-        LobbyManager.spawnBotsWhenStarting = false;
+        LobbyManager.spawnBotsWhenStarting = spawnBots;
         CreateLobby();
     }
 

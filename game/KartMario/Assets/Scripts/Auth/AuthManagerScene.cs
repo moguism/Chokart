@@ -24,13 +24,16 @@ public class AuthManagerScene : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField]
-    private VideoPlayer videoPlayer;
+    private CustomVideoPlayer videoPlayer;
 
     [SerializeField]
     private TransitionSettings transitionSettings;
 
     [Inject]
     private AuthManager authManager;
+
+    [Inject]
+    private WebsocketSingleton websocket;
 
     private bool isLogin = false;
 
@@ -40,10 +43,10 @@ public class AuthManagerScene : MonoBehaviour
     private void Start()
     {
         audioSource.time = audioSourceTime + 0.7f;
-        videoPlayer.time = videoTime + 0.7f;
+        videoPlayer.videoPlayer.time  = videoTime + 0.7f;
 
         audioSource.Play();
-        videoPlayer.Play();
+        videoPlayer.PlayVideo();
     }
 
     public async void Login()
