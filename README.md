@@ -27,6 +27,7 @@
 - **Vídeos:** https://www.youtube.com/watch?v=9UE3hLSHMTE, https://www.youtube.com/watch?v=-XzVq7qIuys
 - **Movimiento del pelo:** https://www.youtube.com/watch?v=s7qb0NPbFXU
 - **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
+- **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -90,4 +91,4 @@
     Domingo --> Mauricio soluciona bugs, hace que se pueda copiar el código al portapapeles, programa el chat de voz por proximidad, pone el modo carrera y establece una forma de limitar la duración de las partidas.
 ### Quinta semana (28/04 - 04/05)
     Lunes --> Mauricio hace el minimapa y el menú de pausa.
-    Martes --> Mauricio soluciona la exportación a web. Grabamos el vídeo del horizonte de sucesos.
+    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos.

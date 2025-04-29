@@ -82,6 +82,8 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
+        Application.runInBackground = true;
+
         gifTimerLogo = maxTimerLogo;
         playKartIndex = Mathf.RoundToInt(kartLimit + 10);
 

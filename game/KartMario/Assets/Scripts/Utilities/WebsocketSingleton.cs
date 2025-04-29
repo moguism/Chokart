@@ -46,7 +46,10 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnError += (e) =>
         {
             Debug.LogError("Error! " + e);
-            //SceneManager.LoadScene(1);
+            if (delete)
+            {
+                SceneManager.LoadScene(1);
+            }
         };
 
         webSocket.OnClose += (e) =>
@@ -56,8 +59,8 @@ public class WebsocketSingleton : MonoBehaviour
             {
                 PlayerPrefs.DeleteKey("AccessToken");
                 PlayerPrefs.Save();
+                SceneManager.LoadScene(1);
             }
-            SceneManager.LoadScene(1);
         };
 
         webSocket.OnMessage += (bytes) =>
