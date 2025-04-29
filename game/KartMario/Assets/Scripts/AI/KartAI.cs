@@ -80,6 +80,13 @@ public class KartAI : NetworkBehaviour
             kart.jumping = false;
         }*/
 
+        // que no se quede yendo marcha atras sino que gire
+        float angle = Vector3.Angle(kart.transform.forward, (destination.position - kart.transform.position).normalized);
+        if (MoveDirection == -1 && angle > 90f)
+        {
+            HorizontalInput = -HorizontalInput;
+            MoveDirection = 1;
+        }
 
         Debug.Log("COCHE " + kart.GetComponentIndex() + " LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
         kart.horizontalInput = HorizontalInput;
