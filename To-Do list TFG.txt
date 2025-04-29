@@ -1,5 +1,5 @@
 Pantalla de configuración (incluyendo el idioma con banderas)
-Bots marcha atrás
+Traducción
 Amigos
 Model View View Model
 Página web
