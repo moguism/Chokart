@@ -11,4 +11,5 @@ public class Battle
     public int TrackId { get; set; } = 1;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime FinishedAt { get; set; } = DateTime.UtcNow.AddMonths(1); // Valor por defecto
+    public int GameModeId { get; set; }
 }

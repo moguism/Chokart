@@ -33,7 +33,7 @@ public class Invisibility : BasicObject
         }
     }
 
-    private void DisableOnEnableRenders(KartController kart, bool enabled)
+    public static void DisableOnEnableRenders(KartController kart, bool enabled)
     {
         foreach(Renderer render in kart.renders)
         {

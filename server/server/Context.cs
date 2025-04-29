@@ -21,10 +21,13 @@ public class Context : DbContext
     {
 # if DEBUG
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        optionsBuilder.UseSqlite($"DataSource={baseDir}{DATABASE_PATH}");
-#else
+        //optionsBuilder.UseSqlite($"DataSource={baseDir}{DATABASE_PATH}");
 
-            optionsBuilder.UseMySql("Server=db16516.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; ", ServerVersion.AutoDetect("Server=db16516.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; "));
+        string key = "Server=db16516.public.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; SslMode=Preferred; ";
+        optionsBuilder.UseMySql(key, ServerVersion.AutoDetect(key));
+#else
+string key = "Server=db16516.public.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; SslMode=Preferred; ";
+        optionsBuilder.UseMySql(key, ServerVersion.AutoDetect(key));
 #endif
     }
 

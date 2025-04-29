@@ -1,7 +1,8 @@
+using Cysharp.Threading.Tasks;
 using EasyTransition;
 using Injecta;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -32,7 +33,7 @@ public class TitleScreen : MonoBehaviour
     private GameObject backgroundImage;
 
     [SerializeField]
-    private VideoPlayer backgroundVideo;
+    private CustomVideoPlayer backgroundVideo;
 
     [Header("Frames")]
     [SerializeField]
@@ -81,10 +82,14 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
+        Application.runInBackground = true;
+
         gifTimerLogo = maxTimerLogo;
         playKartIndex = Mathf.RoundToInt(kartLimit + 10);
 
         indexToPlayMusic = Mathf.RoundToInt(logoFrames.Length / 2);
+
+        buttons.SetActive(false);
     }
 
     async void Update()
@@ -106,7 +111,7 @@ public class TitleScreen : MonoBehaviour
 
                 buttons.SetActive(true);
 
-                backgroundVideo.Play();
+                backgroundVideo.PlayVideo();
             }
             return;
         }
@@ -124,12 +129,22 @@ public class TitleScreen : MonoBehaviour
                 brokenScreen.SetActive(true);
                 doLogoCountdown = true;
             }
+            else
+            {
+#if !UNITY_WEBGL
+                try
+                {
+                    Handheld.Vibrate();
+                }
+                catch { }
+#endif
+            }
         }
         else
         {
             if (!hasWaited)
             {
-                await Task.Delay(1000);
+                await UniTask.WaitForSeconds(1);
                 hasWaited = true;
             }
 
@@ -174,18 +189,19 @@ public class TitleScreen : MonoBehaviour
 
     public void StartGame()
     {
-        if (!authManager.isTryingToLog)
+        if (!authManager.isLogged)
         {
-            if (!authManager.isLogged)
-            {
-                AuthManagerScene.audioSourceTime = audioSource.time;
-                AuthManagerScene.videoTime = backgroundVideo.time;
-                TransitionManager.Instance().Transition(1, transitionSettings, 0);
-            }
-            else
-            {
-                TransitionManager.Instance().Transition(2, transitionSettings, 0);
-            }
+            AuthManagerScene.audioSourceTime = audioSource.time;
+            AuthManagerScene.videoTime = backgroundVideo.videoPlayer.time;
+
+            backgroundVideo.videoPlayer.url = null;
+            backgroundVideo.videoPlayer.targetTexture.Release();
+
+            TransitionManager.Instance().Transition(1, transitionSettings, 0);
+        }
+        else
+        {
+            TransitionManager.Instance().Transition(2, transitionSettings, 0);
         }
     }
 

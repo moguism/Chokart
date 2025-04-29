@@ -9,7 +9,7 @@ public class DistorsionObject : BasicObject
     private GameObject effectObject;
 
     public PositionManager positionManager;
-    public VideoPlayer glitchEffect;
+    public CustomVideoPlayer glitchEffect;
 
     public new void UseObject()
     {
@@ -52,7 +52,7 @@ public class DistorsionObject : BasicObject
     {
         if(glitchEffect == null)
         {
-            glitchEffect = GameObject.Find("GlitchEffect").GetComponentInChildren<VideoPlayer>();
+            glitchEffect = GameObject.Find("GlitchEffect").GetComponentInChildren<CustomVideoPlayer>();
         }
 
         GameObject distorsion = Instantiate(effectObject);

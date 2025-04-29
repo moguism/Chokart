@@ -15,10 +15,12 @@ public class WebsocketSingleton : MonoBehaviour
 
     void Update()
     {
+#if !UNITY_WEBGL || UNITY_EDITOR
         if (webSocket != null)
         {
             webSocket.DispatchMessageQueue();
         }
+#endif
     }
 
     private async void OnApplicationQuit()
@@ -32,13 +34,8 @@ public class WebsocketSingleton : MonoBehaviour
 
     public async Task ConnectToSocket(string token)
     {
-        Dictionary<string, string> dict = new() 
-        {
-            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" }
-        };
-
         // webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
-        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token, dict);
+        webSocket = new WebSocket(ENVIRONMENT.SOCKET_URL + "?token=" + token);
 
         webSocket.OnOpen += () =>
         {
@@ -49,6 +46,10 @@ public class WebsocketSingleton : MonoBehaviour
         webSocket.OnError += (e) =>
         {
             Debug.LogError("Error! " + e);
+            if (delete)
+            {
+                SceneManager.LoadScene(1);
+            }
         };
 
         webSocket.OnClose += (e) =>
@@ -58,8 +59,8 @@ public class WebsocketSingleton : MonoBehaviour
             {
                 PlayerPrefs.DeleteKey("AccessToken");
                 PlayerPrefs.Save();
+                SceneManager.LoadScene(1);
             }
-            SceneManager.LoadScene(1);
         };
 
         webSocket.OnMessage += (bytes) =>

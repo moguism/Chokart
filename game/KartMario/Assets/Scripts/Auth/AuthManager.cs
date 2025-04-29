@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Injecta;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,6 +8,9 @@ public class AuthManager : MonoBehaviour
     public bool isLogged = false;
     public bool isTryingToLog = true;
     public static string token = "";
+
+    [Inject]
+    private WebsocketSingleton websocket;
 
     async void Start()
     {
@@ -28,6 +32,8 @@ public class AuthManager : MonoBehaviour
             }
 
             isLogged = true;
+
+            await websocket.ConnectToSocket(token);
         }
         else
         {

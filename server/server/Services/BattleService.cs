@@ -13,13 +13,16 @@ public class BattleService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task CreateBattleAsync(FinishKart[] finishKarts)
+    public async Task CreateBattleAsync(BattlePetition battlePetition)
     {
         try
         {
-            Battle battle = new Battle();
+            Battle battle = new Battle()
+            {
+                GameModeId = battlePetition.GameMode
+            };
 
-            foreach (FinishKart finishKart in finishKarts)
+            foreach (FinishKart finishKart in battlePetition.FinishKarts)
             {
                 // No guardo a los jugadores que sean un bot
                 if (finishKart.PlayerId == 0)

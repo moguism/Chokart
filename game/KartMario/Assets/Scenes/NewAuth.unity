@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 63686659}
   - component: {fileID: 63686660}
+  - component: {fileID: 63686661}
   m_Layer: 5
   m_Name: Video Player
   m_TagString: Untagged
@@ -276,7 +277,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -289,9 +290,24 @@ VideoPlayer:
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 1
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &63686661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63686658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73beca2233617c04da59ccc1bb20f6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoFileName: title.mp4
+  videoPlayer: {fileID: 63686660}
+  autoPlay: 0
 --- !u!1 &89815870
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +1003,7 @@ MonoBehaviour:
   rememberMe: {fileID: 1308805802}
   errorMessage: {fileID: 452461652}
   audioSource: {fileID: 2132040734}
-  videoPlayer: {fileID: 63686660}
+  videoPlayer: {fileID: 63686661}
   transitionSettings: {fileID: 11400000, guid: c9f7b34f761c5c342ada8a4b2ab7a716, type: 2}
 --- !u!1 &554821785
 GameObject:

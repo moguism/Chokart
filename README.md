@@ -24,8 +24,10 @@
 - **Deformación del coche:** https://www.youtube.com/watch?v=l04cw7EChpI&t=563s
 - **UGS (Unity Game Services):** https://www.youtube.com/watch?v=-KDlEBfCBiU, https://www.youtube.com/watch?v=msPNJ2cxWfw
 - **Traducción:** https://youtu.be/lku7f4KNFEo?si=3Ysd8tw9SoK-RY73
-- **Vídeos:** https://www.youtube.com/watch?v=-XzVq7qIuys
+- **Vídeos:** https://www.youtube.com/watch?v=9UE3hLSHMTE, https://www.youtube.com/watch?v=-XzVq7qIuys
 - **Movimiento del pelo:** https://www.youtube.com/watch?v=s7qb0NPbFXU
+- **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
+- **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -83,4 +85,10 @@
 ### Cuarta semana (21/04 - 27/04)
     Lunes --> Mauricio hace que se guarde en la BBDD la partida, soluciona bugs y mejora la interfaz. María continua con la web, configura el inicio y registro.
     Martes --> Mauricio hace la verificación de mail. María termina de configurar el registro y comienza a diseñar la web.
-    Miércoles --> Mauricio programa el manejo de desconexión completo. María ajusta la ia de los bots y continua con la web.
+    Miércoles --> Mauricio programa el manejo de desconexión completo y el movimiento con mando. María ajusta la ia de los bots y continua con la web.
+    Jueves --> María continua estilando la web. Mauricio programa la vibración de la pantalla. Tutoría.
+    Viernes --> Mauricio arregla el despliegue a móvil.
+    Domingo --> Mauricio soluciona bugs, hace que se pueda copiar el código al portapapeles, programa el chat de voz por proximidad, pone el modo carrera y establece una forma de limitar la duración de las partidas.
+### Quinta semana (28/04 - 04/05)
+    Lunes --> Mauricio hace el minimapa y el menú de pausa.
+    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos.
