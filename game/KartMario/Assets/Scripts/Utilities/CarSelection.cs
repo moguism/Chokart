@@ -1,6 +1,6 @@
+using Cysharp.Threading.Tasks;
 using Injecta;
 using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,7 +25,7 @@ public class CarSelection : MonoBehaviour
     private GameObject kartBase;
 
     [SerializeField]
-    private VideoPlayer videoPlayer;
+    private CustomVideoPlayer videoPlayer;
 
     [SerializeField]
     private RawImage backgroundImage;
@@ -40,7 +40,7 @@ public class CarSelection : MonoBehaviour
     private bool showingCharacters = false;
 
     [SerializeField]
-    private VideoPlayer glitchPlayer;
+    private CustomVideoPlayer glitchPlayer;
 
     [SerializeField]
     private AudioSource glitchAudio;
@@ -87,7 +87,7 @@ public class CarSelection : MonoBehaviour
         cars = _cars.ToArray(); // Para que haga una copia
         characters = _characters.ToArray();
 
-        videoPlayer.SetDirectAudioVolume(0, 0.25f); // Para el volumen
+        videoPlayer.videoPlayer.SetDirectAudioVolume(0, 0.25f); // Para el volumen
         startVideoColor = videoRawImage.color;
 
         index = PlayerPrefs.GetInt("carIndex");
@@ -187,6 +187,8 @@ public class CarSelection : MonoBehaviour
             bool joined = await lobbyManager.StartRelay();
             if (joined)
             {
+                videoPlayer.videoPlayer.url = null;
+                videoPlayer.videoPlayer.targetTexture.Release();
                 SceneManager.LoadScene(3); // El juego
             }
             else
@@ -236,28 +238,29 @@ public class CarSelection : MonoBehaviour
 
             speedText.text = _characters[characterIndex].name;
 
-            if (videoPlayer.clip == null)
+            if (videoPlayer.videoPlayer.url == null || videoPlayer.videoPlayer.url == "")
             {
                 glitchAudio.Play();
-                glitchPlayer.enabled = true;
-                await Task.Delay(1000);
-                glitchPlayer.enabled = false;
+                glitchPlayer.PlayVideo();
+
+                await UniTask.WaitForSeconds(1);
+
+                glitchPlayer.videoPlayer.enabled = false;
                 glitchAudio.Stop();
             }
 
-            VideoClip clip = _characters[characterIndex].clip;
-            if (clip == null)
+            string clip = _characters[characterIndex].clip;
+            if (clip == null || clip == "")
             {
-                videoPlayer.Stop();
-                videoPlayer.clip = null;
+                videoPlayer.videoPlayer.Stop();
                 Debug.LogWarning("No hay video :(");
                 SetVideoAndImageAvailability(true, false);
                 return;
             }
 
             SetVideoAndImageAvailability(false, true);
-            videoPlayer.clip = clip;
-            videoPlayer.Play();
+            videoPlayer.videoFileName = clip;
+            videoPlayer.PlayVideo();
         }
         catch { }
     }
@@ -295,5 +298,5 @@ public class KartModel
 public class CharacterModel
 {
     public string name;
-    public VideoClip clip;
+    public string clip;
 }

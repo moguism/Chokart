@@ -1,8 +1,8 @@
+using Cysharp.Threading.Tasks;
 using EasyTransition;
 using Injecta;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -33,7 +33,7 @@ public class TitleScreen : MonoBehaviour
     private GameObject backgroundImage;
 
     [SerializeField]
-    private VideoPlayer backgroundVideo;
+    private CustomVideoPlayer backgroundVideo;
 
     [Header("Frames")]
     [SerializeField]
@@ -109,7 +109,7 @@ public class TitleScreen : MonoBehaviour
 
                 buttons.SetActive(true);
 
-                backgroundVideo.Play();
+                backgroundVideo.PlayVideo();
             }
             return;
         }
@@ -142,7 +142,7 @@ public class TitleScreen : MonoBehaviour
         {
             if (!hasWaited)
             {
-                await Task.Delay(1000);
+                await UniTask.WaitForSeconds(1);
                 hasWaited = true;
             }
 
@@ -190,7 +190,11 @@ public class TitleScreen : MonoBehaviour
         if (!authManager.isLogged)
         {
             AuthManagerScene.audioSourceTime = audioSource.time;
-            AuthManagerScene.videoTime = backgroundVideo.time;
+            AuthManagerScene.videoTime = backgroundVideo.videoPlayer.time;
+
+            backgroundVideo.videoPlayer.url = null;
+            backgroundVideo.videoPlayer.targetTexture.Release();
+
             TransitionManager.Instance().Transition(1, transitionSettings, 0);
         }
         else
