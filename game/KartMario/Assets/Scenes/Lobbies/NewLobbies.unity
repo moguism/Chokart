@@ -1422,6 +1422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 761218068}
   - component: {fileID: 761218069}
+  - component: {fileID: 761218070}
   m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
@@ -1473,12 +1474,27 @@ VideoPlayer:
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 1
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &761218070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761218067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73beca2233617c04da59ccc1bb20f6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoFileName: menu.mp4
+  videoPlayer: {fileID: 761218069}
+  autoPlay: 1
 --- !u!1 &768608996
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,11 +1,11 @@
 using Injecta;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 public class GameStarter : NetworkBehaviour
 {
@@ -87,11 +87,12 @@ public class GameStarter : NetworkBehaviour
             }
         }
 
-        await Task.Delay(1000); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
+        await UniTask.WaitForSeconds(1); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
 
         // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
         positionManager.InformAboutGameStart();
     }
+
 
     private void OnClientDisconnected(ulong clientId)
     {

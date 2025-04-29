@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Key: NICK_OR_EMAIL
     m_Metadata:
       m_Items: []
+  - m_Id: 7968765498494976
+    m_Key: START_GAME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
