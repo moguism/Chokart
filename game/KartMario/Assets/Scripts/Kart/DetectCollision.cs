@@ -142,10 +142,16 @@ public class DetectCollision : NetworkBehaviour
             return;
         }
 
+        string playerName = kart.ownerName;
+        if(kart.enableAI)
+        {
+            playerName = "BOT";
+        }
+
         positionManager.finishKarts.Add(new FinishKart()
         {
             playerId = kart.ownerId,
-            playerName = kart.ownerName,
+            playerName = playerName,
             position = position,
             kills = kart.totalKills
         });
