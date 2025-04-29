@@ -794,6 +794,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionSettings: {fileID: 11400000, guid: 5d42ad7319df4a8439d74d82f30a60cc, type: 2}
+  mainCanvas: {fileID: 351642386607453118}
+  videoPlayer: {fileID: 761218070}
   joinCode: {fileID: 1705486231}
   placeholderText: {fileID: 1605148556}
   audioSource: {fileID: 1688884678}
@@ -1458,7 +1460,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: d0d2c356d6fccdf4faf6e188a7f4f91a, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 918a03719b312ca46b4a6ee57f3433d8, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -2075,7 +2077,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: d0d2c356d6fccdf4faf6e188a7f4f91a, type: 2}
+  m_Texture: {fileID: 8400000, guid: 918a03719b312ca46b4a6ee57f3433d8, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -4455,6 +4457,12 @@ RectTransform:
 --- !u!224 &351642386607453117 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 576385201803430700, guid: 0a68be1bd13d8694e8d8fe85574ac075,
+    type: 3}
+  m_PrefabInstance: {fileID: 351642386607453115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &351642386607453118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 353375068566706746, guid: 0a68be1bd13d8694e8d8fe85574ac075,
     type: 3}
   m_PrefabInstance: {fileID: 351642386607453115}
   m_PrefabAsset: {fileID: 0}
