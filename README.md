@@ -29,6 +29,7 @@
 - **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
 - **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
 - **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
+- **MVVM en Angular:** https://medium.com/front-end-world/mvc-and-mvvm-patterns-in-angular-7397e0bc7b07
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
