@@ -2243,10 +2243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3857,7 +3857,8 @@ AudioSource:
   m_GameObject: {fileID: 1205021897}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 2e860ea9e5d598a428374257d1dc2dbb,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ffcdac63d59b43b4a90be22728b626ca, type: 3}
   m_Resource: {fileID: 8300000, guid: ffcdac63d59b43b4a90be22728b626ca, type: 3}
   m_PlayOnAwake: 0
@@ -6912,10 +6913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -7471,7 +7472,8 @@ AudioSource:
   m_GameObject: {fileID: 1920080081}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 2e860ea9e5d598a428374257d1dc2dbb,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 64bba7c5358e46e40a51fbee55e2c8d3, type: 3}
   m_Resource: {fileID: 8300000, guid: 64bba7c5358e46e40a51fbee55e2c8d3, type: 3}
   m_PlayOnAwake: 0

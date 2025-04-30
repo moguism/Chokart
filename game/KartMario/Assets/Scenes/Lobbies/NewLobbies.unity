@@ -794,8 +794,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionSettings: {fileID: 11400000, guid: 5d42ad7319df4a8439d74d82f30a60cc, type: 2}
-  mainCanvas: {fileID: 351642386607453118}
-  videoPlayer: {fileID: 761218070}
   joinCode: {fileID: 1705486231}
   placeholderText: {fileID: 1605148556}
   audioSource: {fileID: 1688884678}
@@ -2855,7 +2853,8 @@ AudioSource:
   m_GameObject: {fileID: 1688884676}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3943409515242259491, guid: 2e860ea9e5d598a428374257d1dc2dbb,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ffcdac63d59b43b4a90be22728b626ca, type: 3}
   m_Resource: {fileID: 8300000, guid: ffcdac63d59b43b4a90be22728b626ca, type: 3}
   m_PlayOnAwake: 1
@@ -4457,12 +4456,6 @@ RectTransform:
 --- !u!224 &351642386607453117 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 576385201803430700, guid: 0a68be1bd13d8694e8d8fe85574ac075,
-    type: 3}
-  m_PrefabInstance: {fileID: 351642386607453115}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &351642386607453118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 353375068566706746, guid: 0a68be1bd13d8694e8d8fe85574ac075,
     type: 3}
   m_PrefabInstance: {fileID: 351642386607453115}
   m_PrefabAsset: {fileID: 0}
