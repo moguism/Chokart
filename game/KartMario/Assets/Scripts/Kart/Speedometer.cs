@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Speedometer : MonoBehaviour
 {
@@ -84,13 +85,15 @@ public class Speedometer : MonoBehaviour
                     int roundedSpeed = Mathf.RoundToInt(absSpeed);
                     speedText.text = roundedSpeed.ToString() + " km/h";
 
-#if !UNITY_WEBGL
                     try
                     {
+#if UNITY_ANDROID
                         Handheld.Vibrate();
-                    }
-                    catch { }
+#else
+                        Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
 #endif
+                    }
+                    catch {}
                 }
             }
         }

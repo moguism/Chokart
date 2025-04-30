@@ -28,6 +28,7 @@
 - **Movimiento del pelo:** https://www.youtube.com/watch?v=s7qb0NPbFXU
 - **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
 - **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
+- **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -92,3 +93,4 @@
 ### Quinta semana (28/04 - 04/05)
     Lunes --> Mauricio hace el minimapa y el menú de pausa.
     Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Maria arregla la IA.
+    Miércoles --> Mauricio hace el menú de configuración.

@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using EasyTransition;
 using Injecta;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -131,13 +132,15 @@ public class TitleScreen : MonoBehaviour
             }
             else
             {
-#if !UNITY_WEBGL
                 try
                 {
-                    Handheld.Vibrate();
-                }
-                catch { }
+#if UNITY_ANDROID
+                        Handheld.Vibrate();
+#else
+                    Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
 #endif
+                }
+                catch {}
             }
         }
         else
