@@ -89,7 +89,7 @@ public class Speedometer : MonoBehaviour
                     {
 #if UNITY_ANDROID
                         Handheld.Vibrate();
-#else
+#elif !UNITY_WEBGL || UNITY_EDITOR
                         Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
 #endif
                     }
