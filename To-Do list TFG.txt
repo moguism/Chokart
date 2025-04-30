@@ -1,6 +1,5 @@
 Traducción
 Amigos
-Model View View Model
-Página web
+Página web (con MVVM)
 PowerBi
 (OPCIONAL) Login con Steam
