@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class OptionsSettings : MonoBehaviour
@@ -12,5 +13,16 @@ public class OptionsSettings : MonoBehaviour
     public void ManageVoiceChat()
     {
         shouldRecord = voiceChatToggle.isOn;
+    }
+
+    public static void ChangeMotorSpeed(float left, float right)
+    {
+        try
+        {
+#if !UNITY_WEBGL || UNITY_EDITOR
+            Gamepad.current.SetMotorSpeeds(left, right);
+#endif
+        }
+        catch { }
     }
 }
