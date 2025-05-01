@@ -2,10 +2,7 @@ using Cysharp.Threading.Tasks;
 using EasyTransition;
 using Injecta;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -76,6 +73,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField]
     private GameObject buttons;
 
+    [Header("Other options")]
     [SerializeField]
     private TransitionSettings transitionSettings;
 

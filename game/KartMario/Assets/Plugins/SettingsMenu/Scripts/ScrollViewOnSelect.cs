@@ -29,46 +29,59 @@ namespace ModularOptions {
 #endif
 
 		public void OnSelect(BaseEventData _eventData){
-			var contentRect = scrollRect.content.rect;
-			var viewport = scrollRect.viewport;
+			try
+			{
+				var contentRect = scrollRect.content.rect;
+				var viewport = scrollRect.viewport;
 
-			var scrollbar = scrollRect.verticalScrollbar;
-			if (scrollbar != null && contentRect.height > viewport.rect.height){ //No scroll if content fits in viewport
-				float selectableTop = rectToScrollTo.position.y + rectToScrollTo.rect.yMax * rectToScrollTo.lossyScale.y;
-				float viewportTop = viewport.position.y + viewport.rect.yMax * viewport.lossyScale.y;
+				var scrollbar = scrollRect.verticalScrollbar;
+				if (scrollbar != null && contentRect.height > viewport.rect.height)
+				{ //No scroll if content fits in viewport
+					float selectableTop = rectToScrollTo.position.y + rectToScrollTo.rect.yMax * rectToScrollTo.lossyScale.y;
+					float viewportTop = viewport.position.y + viewport.rect.yMax * viewport.lossyScale.y;
 
-				if (selectableTop > viewportTop){
-					float delta = selectableTop - viewportTop;
-					scrollbar.value += delta * 1/(1-scrollbar.size)/viewport.lossyScale.y / contentRect.height;
-				} else {
-					float selectableBottom = rectToScrollTo.position.y + rectToScrollTo.rect.yMin * rectToScrollTo.lossyScale.y;
-					float viewportBottom = viewport.position.y + viewport.rect.yMin * viewport.lossyScale.y;
+					if (selectableTop > viewportTop)
+					{
+						float delta = selectableTop - viewportTop;
+						scrollbar.value += delta * 1 / (1 - scrollbar.size) / viewport.lossyScale.y / contentRect.height;
+					}
+					else
+					{
+						float selectableBottom = rectToScrollTo.position.y + rectToScrollTo.rect.yMin * rectToScrollTo.lossyScale.y;
+						float viewportBottom = viewport.position.y + viewport.rect.yMin * viewport.lossyScale.y;
 
-					if (selectableBottom < viewportBottom){
-						float delta = selectableBottom - viewportBottom;
-						scrollbar.value += delta * 1/(1-scrollbar.size)/viewport.lossyScale.y / contentRect.height;
+						if (selectableBottom < viewportBottom)
+						{
+							float delta = selectableBottom - viewportBottom;
+							scrollbar.value += delta * 1 / (1 - scrollbar.size) / viewport.lossyScale.y / contentRect.height;
+						}
 					}
 				}
-			}
 
-			scrollbar = scrollRect.horizontalScrollbar;
-			if (scrollbar != null && contentRect.width > viewport.rect.width){
-				float selectableRight = rectToScrollTo.position.x + rectToScrollTo.rect.xMax * rectToScrollTo.lossyScale.x;
-				float viewportRight = viewport.position.x + viewport.rect.xMax * viewport.lossyScale.x;
+				scrollbar = scrollRect.horizontalScrollbar;
+				if (scrollbar != null && contentRect.width > viewport.rect.width)
+				{
+					float selectableRight = rectToScrollTo.position.x + rectToScrollTo.rect.xMax * rectToScrollTo.lossyScale.x;
+					float viewportRight = viewport.position.x + viewport.rect.xMax * viewport.lossyScale.x;
 
-				if (selectableRight > viewportRight){
-					float delta = selectableRight - viewportRight;
-					scrollbar.value += delta * 1/(1-scrollbar.size)/viewport.lossyScale.x / contentRect.width;
-				} else {
-					float selectableLeft = rectToScrollTo.position.x + rectToScrollTo.rect.xMin * rectToScrollTo.lossyScale.x;
-					float viewportLeft = viewport.position.x + viewport.rect.xMin * viewport.lossyScale.x;
+					if (selectableRight > viewportRight)
+					{
+						float delta = selectableRight - viewportRight;
+						scrollbar.value += delta * 1 / (1 - scrollbar.size) / viewport.lossyScale.x / contentRect.width;
+					}
+					else
+					{
+						float selectableLeft = rectToScrollTo.position.x + rectToScrollTo.rect.xMin * rectToScrollTo.lossyScale.x;
+						float viewportLeft = viewport.position.x + viewport.rect.xMin * viewport.lossyScale.x;
 
-					if (selectableLeft < viewportLeft){
-						float delta = selectableLeft - viewportLeft;
-						scrollbar.value += delta * 1/(1-scrollbar.size)/viewport.lossyScale.x / contentRect.width;
+						if (selectableLeft < viewportLeft)
+						{
+							float delta = selectableLeft - viewportLeft;
+							scrollbar.value += delta * 1 / (1 - scrollbar.size) / viewport.lossyScale.x / contentRect.width;
+						}
 					}
 				}
-			}
+			} catch { }
 		}
 	}
 }
