@@ -11,15 +11,17 @@ namespace server.Controllers;
 public class UserController : ControllerBase
 {
     private readonly UserService _userService;
+    private readonly FriendshipService _friendshipService;
 
-    public UserController(UserService userService)
+    public UserController(UserService userService, FriendshipService friendshipService)
     {
         _userService = userService;
+        _friendshipService = friendshipService;
     }
 
     [Authorize]
     [HttpGet("{id}")]
-    public async Task<UserResponse> GetUserNicknameById(int id)
+    public async Task<UserDto> GetUserById(int id)
     {
         User user = await GetAuthorizedUser();
 
@@ -28,16 +30,20 @@ public class UserController : ControllerBase
             return null;
         }
 
-        UserResponse userResponse;
+        UserDto userResponse;
+
+        var friendships = await _friendshipService.GetFriendList(id);
 
         if(user.Id != id)
         {
             User askedUser = await _userService.GetBasicUserByIdAsync(id);
-            userResponse = _userService.ToUserResponse(askedUser);
+            askedUser.Friendships = friendships;
+            userResponse = _userService.ToDto(askedUser);
         }
         else
         {
-            userResponse = _userService.ToUserResponse(user);
+            user.Friendships = friendships;
+            userResponse = _userService.ToDto(user);
         }
 
         return userResponse;

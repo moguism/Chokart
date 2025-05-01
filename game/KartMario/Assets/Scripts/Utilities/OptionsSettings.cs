@@ -7,6 +7,11 @@ public class OptionsSettings : MonoBehaviour
     [SerializeField]
     private Toggle voiceChatToggle;
 
+    [SerializeField]
+    private GameObject startGameButton;
+
+    public static bool shouldEnableStartButton = true;
+
     // La idea es que se como el REMATCH, por ejemplo, que tienes la opción de habilitar o deshabilitar el chat de voz en los ajustes
     public static bool shouldRecord = false;
 
@@ -24,5 +29,13 @@ public class OptionsSettings : MonoBehaviour
 #endif
         }
         catch { }
+    }
+
+    public void ManageAvailability()
+    {
+        if(shouldEnableStartButton)
+        {
+            startGameButton.SetActive(true);
+        }
     }
 }

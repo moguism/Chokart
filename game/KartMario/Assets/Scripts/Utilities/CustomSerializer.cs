@@ -1,4 +1,3 @@
-using Injecta;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ public class CustomSerializer
         _singleton = singleton;
     }
 
-    public async Task<string> Serialize(Dictionary<object, object> dict, bool send)
+    public async Task<string> SerializeAndSendAsync(Dictionary<object, object> dict, bool send)
     {
         var json = JsonConvert.SerializeObject(dict);
         if(send)

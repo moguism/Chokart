@@ -22,7 +22,7 @@ public class LobbyManager : MonoBehaviour
     public static bool spawnBotsWhenStarting = false;
 
     public bool hasRelay = false;
-    public string lobbyCode = "";
+    public static string lobbyCode = "";
 
     public static string PlayerName;
     public static int PlayerId;

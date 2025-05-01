@@ -19,7 +19,8 @@ public class BattleService
         {
             Battle battle = new Battle()
             {
-                GameModeId = battlePetition.GameMode
+                GameModeId = battlePetition.GameMode,
+                TrackId = battlePetition.TrackId
             };
 
             foreach (FinishKart finishKart in battlePetition.FinishKarts)
@@ -35,6 +36,8 @@ public class BattleService
                     UserId = finishKart.PlayerId,
                     TotalKills = finishKart.Kills,
                     Position = finishKart.Position,
+                    CharacterId = finishKart.CharacterId,
+                    KartId = finishKart.KartId
                 };
 
                 battle.BattleUsers.Add(userBattle);
