@@ -8,6 +8,9 @@ public class LobbiesSceneManager : MonoBehaviour
     [Inject]
     private LobbyManager lobbyManager;
 
+    [Inject]
+    private WebsocketSingleton websocket;
+
     [SerializeField]
     private TransitionSettings transitionSettings;
 
@@ -28,7 +31,7 @@ public class LobbiesSceneManager : MonoBehaviour
     private Color initialColor;
     private string initialText;
 
-    private void Start()
+    private async void Start()
     {
         initialColor = placeholderText.color;
         initialText = placeholderText.text;
@@ -37,6 +40,11 @@ public class LobbiesSceneManager : MonoBehaviour
         {
             ChangePlaceholderValues(Color.red, "Fuiste expulsado");
             showError = false;
+        }
+
+        if(!WebsocketSingleton.connected)
+        {
+            await websocket.ConnectToSocket(AuthManager.token);
         }
     }
 

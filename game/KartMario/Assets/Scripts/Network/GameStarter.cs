@@ -60,6 +60,7 @@ public class GameStarter : NetworkBehaviour
         }
 
         startGameButton.SetActive(false);
+        OptionsSettings.shouldEnableStartButton = false;
 
         lobbyManager.StartGame();
 

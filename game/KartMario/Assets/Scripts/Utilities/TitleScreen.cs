@@ -73,10 +73,6 @@ public class TitleScreen : MonoBehaviour
     [SerializeField]
     private GameObject buttons;
 
-    [Header("Vertical Menu")]
-    [SerializeField]
-    private GameObject verticalMenu;
-
     [Header("Other options")]
     [SerializeField]
     private TransitionSettings transitionSettings;
@@ -113,7 +109,6 @@ public class TitleScreen : MonoBehaviour
                 backgroundImage.SetActive(false);
 
                 buttons.SetActive(true);
-                verticalMenu.SetActive(true);
 
                 backgroundVideo.PlayVideo();
 
