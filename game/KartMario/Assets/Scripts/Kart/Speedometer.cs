@@ -44,6 +44,7 @@ public class Speedometer : MonoBehaviour
         if (kart == null || !kart.canMove)
         {
             speed = 0;
+            OptionsSettings.ChangeMotorSpeed(0, 0);
             audioSource.Stop();
             return;
         }
@@ -90,7 +91,7 @@ public class Speedometer : MonoBehaviour
 #if UNITY_ANDROID
                         Handheld.Vibrate();
 #elif !UNITY_WEBGL || UNITY_EDITOR
-                        Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
+                        OptionsSettings.ChangeMotorSpeed(0.123f, 0.234f);
 #endif
                     }
                     catch {}
@@ -113,6 +114,7 @@ public class Speedometer : MonoBehaviour
         else if (audioSource.isPlaying)
         {
             audioSource.Stop();
+            OptionsSettings.ChangeMotorSpeed(0, 0);
         }
 
         oldPosition = kart.currentPosition;

@@ -113,6 +113,8 @@ public class TitleScreen : MonoBehaviour
                 buttons.SetActive(true);
 
                 backgroundVideo.PlayVideo();
+
+                OptionsSettings.ChangeMotorSpeed(0, 0);
             }
             return;
         }
@@ -137,7 +139,7 @@ public class TitleScreen : MonoBehaviour
 #if UNITY_ANDROID
                         Handheld.Vibrate();
 #elif !UNITY_WEBGL || UNITY_EDITOR
-                    Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
+                    OptionsSettings.ChangeMotorSpeed(0.123f, 0.234f);
 #endif
                 }
                 catch {}
