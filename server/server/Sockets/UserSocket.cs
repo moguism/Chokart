@@ -15,6 +15,8 @@ public class UserSocket
     public WebSocket Socket;
     public User User { get; set; }
 
+    private bool isFirstTime = true;
+
     public event Func<UserSocket, Task> Disconnected;
 
     public UserSocket(IServiceProvider serviceProvider, WebSocket socket, User user)
@@ -137,6 +139,12 @@ public class UserSocket
     // READ RECIBIRÍA EL TIPO DEL MENSAJE (por ejemplo, que quiero info de las partidas), Y HABRÍA UNA O VARIAS CLASES QUE OBTENGA LOS DATOS QUE QUIERE Y ENVÍE LO NECESARIO
     private async Task<string> ReadAsync(CancellationToken cancellation = default)
     {
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+            return null;
+        }
+
         // Creo un buffer para almacenar temporalmente los bytes del contenido del mensaje
         byte[] buffer = new byte[4096];
         // Creo un StringBuilder para poder ir creando poco a poco el mensaje en formato texto

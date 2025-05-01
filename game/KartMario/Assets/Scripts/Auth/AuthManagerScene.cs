@@ -2,9 +2,7 @@ using EasyTransition;
 using Injecta;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class AuthManagerScene : MonoBehaviour
 {
@@ -32,8 +30,8 @@ public class AuthManagerScene : MonoBehaviour
     [Inject]
     private AuthManager authManager;
 
-    [Inject]
-    private WebsocketSingleton websocket;
+    /*[Inject]
+    private WebsocketSingleton websocket;*/
 
     private bool isLogin = false;
 

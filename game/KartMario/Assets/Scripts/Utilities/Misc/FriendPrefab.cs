@@ -1,3 +1,4 @@
+using EasyTransition;
 using Injecta;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,16 @@ public class FriendPrefab : MonoBehaviour
     [SerializeField]
     private GameObject inviteButton;
 
+    [SerializeField]
+    private TransitionSettings transitionSettings;
+
     [Inject]
     private WebsocketSingleton websocket;
+
+    [Inject]
+    private LobbyManager lobbyManager;
+
+    private string lobbyCodeToJoin;
 
     public UserDto friend;
 
@@ -25,6 +34,8 @@ public class FriendPrefab : MonoBehaviour
         { "reject", true },
         { "lobbyCode", LobbyManager.lobbyCode }
     };
+
+    public static List<string> pendingRequests = new();
 
     private void Start()
     {
@@ -38,7 +49,21 @@ public class FriendPrefab : MonoBehaviour
         await customSerializer.SerializeAndSendAsync(dict, true);
     }
 
-    public void SetAvailability(bool acceptOrReject, bool invite)
+    public async void AcceptInvitation()
+    {
+        bool couldJoin = await lobbyManager.JoinLobbyByCode(lobbyCodeToJoin); 
+        if(couldJoin)
+        {
+            TransitionManager.Instance().Transition(4, transitionSettings, 0);
+        }
+    }
+
+    public void RejectInvitation()
+    {
+        Destroy(gameObject);
+    }
+
+    public void SetAvailability(bool acceptOrReject, bool invite, string lobbyCodeToJoin)
     {
         acceptButton.SetActive(acceptOrReject);
         rejectButton.SetActive(acceptOrReject);
@@ -51,5 +76,7 @@ public class FriendPrefab : MonoBehaviour
         {
             inviteButton.SetActive(false);
         }
+
+        this.lobbyCodeToJoin = lobbyCodeToJoin;
     }
 }

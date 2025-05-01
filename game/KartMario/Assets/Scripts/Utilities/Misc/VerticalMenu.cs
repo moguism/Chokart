@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -12,9 +13,6 @@ public class VerticalMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject friendPrefab;
-
-    [SerializeField]
-    private bool canInvite = false;
 
     private bool hasSetUp = false;
 
@@ -37,16 +35,19 @@ public class VerticalMenu : MonoBehaviour
         menus.SetActive(!menus.activeInHierarchy);
     }
 
-    public void ManageFriendList()
+    private void ManageFriendList()
     {
         foreach (Friendship friendship in AuthManager.user.friendships)
         {
-            ConfigureFriendship(friendlist.transform, friendship.senderUser ?? friendship.receiverUser, true);
+            UserDto user = friendship.senderUser.id != 0 ? friendship.senderUser : friendship.receiverUser;
+            ConfigureFriendship(friendlist.transform, user, true, null);
         }
     }
 
-    private void ConfigureFriendship(Transform parent, UserDto senderOrReceiver, bool isFriendList)
+    public void ConfigureFriendship(Transform parent, UserDto senderOrReceiver, bool isFriendList, string lobbyCodeToJoin)
     {
+        //Debug.LogError(senderOrReceiver.nickname);
+
         var friend = Instantiate(friendPrefab, parent);
         friend.GetComponentInChildren<TMP_Text>().text = senderOrReceiver.nickname;
 
@@ -55,12 +56,19 @@ public class VerticalMenu : MonoBehaviour
 
         if (isFriendList)
         {
-            friendScript.SetAvailability(false, true);
+            friendScript.SetAvailability(false, true, lobbyCodeToJoin);
         }
         else
         {
             // En este caso se trata de una solicitud
-            friendScript.SetAvailability(true, false);
+            var alreadyExistingRequest = FriendPrefab.pendingRequests.FirstOrDefault(nickname => nickname.Equals(senderOrReceiver.nickname));
+            if (alreadyExistingRequest != null)
+            {
+                Destroy(friend);
+                return;
+            }
+
+            friendScript.SetAvailability(true, false, lobbyCodeToJoin);
         }
     }
 }
