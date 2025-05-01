@@ -9,6 +9,8 @@ public class AuthManager : MonoBehaviour
     public bool isTryingToLog = true;
     public static string token = "";
 
+    public static UserDto user;
+
     [Inject]
     private WebsocketSingleton websocket;
 
@@ -122,13 +124,13 @@ public class AuthManager : MonoBehaviour
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = unityWebRequest.downloadHandler.text;
+            user = JsonUtility.FromJson<UserDto>(jsonResponse);
 
-            UserResponse response = JsonUtility.FromJson<UserResponse>(jsonResponse);
-            PlayerPrefs.SetString("PlayerName", response.nickname);
+            PlayerPrefs.SetString("PlayerName", user.nickname);
             PlayerPrefs.Save();
 
             // TODO: Mostrar un aviso si está baneado
-            LobbyManager.PlayerName = response.nickname;
+            LobbyManager.PlayerName = user.nickname;
             LobbyManager.PlayerId = id;
 
             return true;

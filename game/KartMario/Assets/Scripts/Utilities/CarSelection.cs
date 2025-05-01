@@ -75,13 +75,13 @@ public class CarSelection : MonoBehaviour
         audioSource.time = audioSourceTime + 0.7f;
         audioSource.Play();
 
-        if (lobbyManager.lobbyCode == "" || lobbyManager.lobbyCode == null)
+        if (LobbyManager.lobbyCode == "" || LobbyManager.lobbyCode == null)
         {
             Destroy(joinCodeText.transform.parent.gameObject);
         }
         else
         {
-            joinCodeText.text += " " + lobbyManager.lobbyCode;
+            joinCodeText.text += " " + LobbyManager.lobbyCode;
         }
 
         cars = _cars.ToArray(); // Para que haga una copia
