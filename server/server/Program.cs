@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.IdentityModel.Tokens;
+using server.Models.Entities;
 using server.Models.Mappers;
 using server.Repositories;
 using server.Services;
@@ -21,6 +22,7 @@ namespace server
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<BattleService>();
             builder.Services.AddScoped<EmailService>();
+            builder.Services.AddScoped<FriendshipService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();
 
@@ -87,6 +89,8 @@ namespace server
         {
             using IServiceScope scope = serviceProvider.CreateScope();
             using Context dbContext = scope.ServiceProvider.GetService<Context>();
+
+            UnitOfWork unitOfWork = scope.ServiceProvider.GetService<UnitOfWork>();
 
             // Si no existe la base de datos, la creamos y ejecutamos el seeder
             if (dbContext.Database.EnsureCreated())

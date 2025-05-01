@@ -153,7 +153,9 @@ public class DetectCollision : NetworkBehaviour
             playerId = kart.ownerId,
             playerName = playerName,
             position = position,
-            kills = kart.totalKills
+            kills = kart.totalKills,
+            characterId = CarSelection.characterIndex,
+            kartId = WebsocketSingleton.kartModelIndex
         });
     }
 

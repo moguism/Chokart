@@ -57,6 +57,7 @@ public class BattleService {
         BattlePetition battlePetition = new BattlePetition()
         {
             gamemode = (int)LobbyManager.gamemode,
+            trackId = 1,
             finishKarts = finishKarts
         };
 

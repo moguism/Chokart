@@ -36,6 +36,11 @@ public class UserService
         return user;
     }
 
+    public async Task<User> GetFullUserByIdAsync(int userId)
+    {
+        return await _unitOfWork.UserRepository.GetUserById(userId);
+    }
+
     public async Task<UserDto> GetUserByEmailAsync(string email)
     {
         var user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
@@ -156,14 +161,5 @@ public class UserService
     public UserDto ToDto(User user)
     {
         return _userMapper.ToDto(user);
-    }
-
-    public UserResponse ToUserResponse(User user)
-    {
-        UserResponse userResponse = new UserResponse()
-        {
-            Nickname = user.Nickname
-        };
-        return userResponse;
     }
 }

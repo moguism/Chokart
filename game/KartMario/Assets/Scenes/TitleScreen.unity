@@ -3796,7 +3796,11 @@ MonoBehaviour:
   audioSource: {fileID: 1665921213}
   logoutButton: {fileID: 1400084820}
   buttons: {fileID: 260986610}
-  transitionSettings: {fileID: 11400000, guid: 3ad3e86dc386e60458fda4c93a2c3d62, type: 2}
+  verticalMenu: {fileID: 0}
+  friendlist: {fileID: 0}
+  friendPrefab: {fileID: 9033381475290208137, guid: 0ec9517a28cba8440aa80573260f4ab4,
+    type: 3}
+  transitionSettings: {fileID: 11400000, guid: 057babd6f13132c449650d99e3c4e99c, type: 2}
 --- !u!4 &952962868
 Transform:
   m_ObjectHideFlags: 0
@@ -7098,6 +7102,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuTemplate
       objectReference: {fileID: 0}
+    - target: {fileID: 8075751637187257023, guid: c03a0aef2eb16d546bb7b21dd8b46d01,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8104206110895494556, guid: c03a0aef2eb16d546bb7b21dd8b46d01,
         type: 3}
       propertyPath: m_Sprite
@@ -9343,10 +9352,10 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 952962868}
   - {fileID: 920316406}
   - {fileID: 636746397}
   - {fileID: 669846712}
-  - {fileID: 952962868}
   - {fileID: 1632450422}
   - {fileID: 480352698}
   - {fileID: 1314023100}
