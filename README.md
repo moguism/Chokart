@@ -96,3 +96,4 @@
     Lunes --> Mauricio hace el minimapa y el menú de pausa.
     Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Maria arregla la IA.
     Miércoles --> Mauricio hace el menú de configuración.
+    Jueves --> Mauricio empieza y termina la lista de amigos en el juego, faltando la web.
