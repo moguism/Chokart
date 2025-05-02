@@ -37,6 +37,7 @@ public class UserDto
     public int stateId;
     public List<Friendship> friendships;
     public long totalPoints;
+    public string steamId;
 }
 
 
@@ -49,4 +50,13 @@ public class Friendship
     public int receiverUserId;
     public UserDto senderUser;
     public UserDto receiverUser;
+}
+
+[Serializable]
+public class SteamProfile
+{
+    public string steamId;
+    public string personaName;
+    public string avatar;
+    public string avatarFull;
 }

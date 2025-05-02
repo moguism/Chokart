@@ -42,7 +42,7 @@ public class VerticalMenu : MonoBehaviour
 
     public async Task RefreshFriendList()
     {
-        await authManager.GetUserAsync(AuthManager.user.id, AuthManager.token);
+        await authManager.GetUserAsync(AuthManager.user.id);
         ManageFriendList(true);
     }
 

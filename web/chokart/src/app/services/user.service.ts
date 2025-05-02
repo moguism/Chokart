@@ -20,6 +20,12 @@ export class UserService {
 
   }
 
+  async getCurrentUser(id: number)
+  {
+    const user = await this.getUserById(id);
+    return user
+  }
+
   async getUserById(id : number): Promise<any> {
     const result = await this.api.get(`User/${id}`);
     const user: any = result.data;
@@ -47,7 +53,9 @@ export class UserService {
         stateId: u.stateId,
         friendships: u.friendships,
         banned: u.banned,
-        totalPoints: u.totalPoints
+        totalPoints: u.totalPoints,
+        steamId: u.steamId,
+        verificationCode: u.verificationCode
       }
       users.push(user);
     }

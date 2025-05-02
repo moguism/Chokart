@@ -32,7 +32,8 @@
         "EmailHost": "smtp.gmail.com",
         "EmailPort": "587",
         "EmailAddress": "fortnitenotifier.moguism@gmail.com",
-        "EmailPassword": "wzxh rzps liit ahmr"
+        "EmailPassword": "wzxh rzps liit ahmr",
+        "STEAM_KEY": "332E3BA66E65E56A912DEC8879B14271"
       }
     },
     "IIS Express": {
