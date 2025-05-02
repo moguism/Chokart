@@ -82,7 +82,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   async getCurrentUser()
   {
-    this.user = await this.userService.getUserById(this.user.id);
+    this.user = await this.userService.getCurrentUser(this.user.id)
     this.authService.saveUser(this.user)
     this.processFriends()
   }
