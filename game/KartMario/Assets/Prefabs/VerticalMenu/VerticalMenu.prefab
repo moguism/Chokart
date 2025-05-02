@@ -2869,6 +2869,7 @@ GameObject:
   - component: {fileID: 3152162328081345428}
   - component: {fileID: 3664012115935493401}
   - component: {fileID: 1240847069786284781}
+  - component: {fileID: 9028361664171909780}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Respawn
@@ -2978,7 +2979,18 @@ MonoBehaviour:
   requestsList: {fileID: 2836660980000962479}
   friendPrefab: {fileID: 9033381475290208137, guid: 0ec9517a28cba8440aa80573260f4ab4,
     type: 3}
-  canInvite: 0
+--- !u!114 &9028361664171909780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6291460592369356708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f26700aff9105b4090dca30d18ac3af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6849918790303329013
 GameObject:
   m_ObjectHideFlags: 0

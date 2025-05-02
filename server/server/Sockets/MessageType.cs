@@ -2,7 +2,7 @@
 
 public enum MessageType
 {
-    Friend,
     AskForFriend,
+    FriendUpdate,
     InviteToBattle
 }
