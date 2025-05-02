@@ -17,5 +17,8 @@ public class UserDto
     public ICollection<Friendship> Friendships { get; set; } = new List<Friendship>();
     public List<BattleDto> Battles{ get; set; } = new List<BattleDto>();
     public long TotalPoints { get; set; } = 0;
+    public string VerificationCode { get; set; } = "";
 
+    // Opciones para steam
+    public string SteamId { get; set; }
 }

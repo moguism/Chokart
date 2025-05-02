@@ -25,7 +25,8 @@ namespace server
                     Password = defaultPassword,
                     Role = "Admin",
                     StateId = 1,
-                    Verified = true
+                    Verified = true,
+                    VerificationCode = "MONDONGO"
                 },
                 new User
                 {
@@ -34,7 +35,8 @@ namespace server
                     Password = defaultPassword,
                     Role = "Admin",
                     StateId = 1,
-                    Verified = true
+                    Verified = true,
+                    VerificationCode = "MONDONGO"
                 }
             ];
 

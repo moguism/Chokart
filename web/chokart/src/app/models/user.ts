@@ -9,5 +9,7 @@ export interface User {
   banned: boolean;
   stateId: number;
   totalPoints: number;
-  friendships: Friend[]
+  friendships: Friend[];
+  steamId: string;
+  verificationCode: string
 }

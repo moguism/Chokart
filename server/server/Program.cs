@@ -1,6 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using server.Models.Entities;
 using server.Models.Mappers;
 using server.Repositories;
 using server.Services;
@@ -22,6 +22,7 @@ namespace server
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<BattleService>();
             builder.Services.AddScoped<FriendshipService>();
+            builder.Services.AddScoped<SteamService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();
 
@@ -36,18 +37,29 @@ namespace server
             });
 
             // CONFIGURANDO JWT
-            builder.Services.AddAuthentication()
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     string key = Environment.GetEnvironmentVariable("JwtKey");
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-
-                        // INDICAMOS LA CLAVE
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                     };
+                })
+                .AddCookie("SteamCookie") // Este es el valor que necesita el navegador para ubicarse
+                .AddSteam("Steam", options =>
+                {
+                    options.ApplicationKey = Environment.GetEnvironmentVariable("STEAM_KEY");
+                    options.SignInScheme = "SteamCookie";
+                    options.CallbackPath = "/api/SteamAuth/steam-callback";
+                    options.CorrelationCookie.SameSite = SameSiteMode.None;
+                    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
                 });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -69,7 +81,7 @@ namespace server
             app.UseWebSockets();
             app.UseMiddleware<PreAuthMiddleware>();
 
-            
+
             app.UseRouting();
 
             app.UseAuthentication();

@@ -19,8 +19,10 @@ public class UserMapper
             Banned = user.Banned,
             StateId = user.StateId,
             Friendships = user.Friendships,
-            TotalPoints = user.TotalPoints
+            TotalPoints = user.TotalPoints,
+            VerificationCode = user.VerificationCode,
             //BattleUsers = user.BattleUsers
+            SteamId = user.SteamId
         };
     }
 
