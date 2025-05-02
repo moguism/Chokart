@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Injecta;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,6 +10,7 @@ public class AuthManager : MonoBehaviour
     public static string token = "";
 
     public static UserDto user;
+    public static SteamProfile steamProfile;
 
     [Inject]
     private WebsocketSingleton websocket;
@@ -24,7 +25,7 @@ public class AuthManager : MonoBehaviour
             Debug.Log("Usuario autenticado autom�ticamente >:)");
 
             //StartCoroutine(ConnectToSocketCoroutine(savedToken));
-            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"), token);
+            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"));
 
             if (!couldSign)
             {
@@ -49,7 +50,7 @@ public class AuthManager : MonoBehaviour
     // Inicio de sesi�n
     public async Task<bool> LoginAsync(string emailOrNickname, string password, bool rememberMe)
     {
-        if(emailOrNickname == "" || emailOrNickname == null || password == "" || password == null)
+        if (emailOrNickname == "" || emailOrNickname == null || password == "" || password == null)
         {
             return false;
         }
@@ -92,7 +93,7 @@ public class AuthManager : MonoBehaviour
                 token = response.accessToken;
 
                 //StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
-                await GetUserAsync(response.id, response.accessToken);
+                await GetUserAsync(response.id);
             }
             else
             {
@@ -111,20 +112,21 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    public async Task<bool> GetUserAsync(int id, string token)
+    public async Task<bool> GetUserAsync(int id)
     {
-        UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "User/" + id, "GET");
-
-        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
-        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
-        unityWebRequest.SetRequestHeader("Authorization", "Bearer " + token);
-
-        await unityWebRequest.SendWebRequest();
+        UnityWebRequest unityWebRequest = await PrepareWebRequestAndSendAsync(ENVIRONMENT.API_URL + "User/" + id);
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = unityWebRequest.downloadHandler.text;
             user = JsonUtility.FromJson<UserDto>(jsonResponse);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            await GetSteamProfile();
 
             PlayerPrefs.SetString("PlayerName", user.nickname);
             PlayerPrefs.Save();
@@ -139,6 +141,45 @@ public class AuthManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private async Task GetSteamProfile()
+    {
+        try
+        {
+            if (user.steamId != null && user.steamId != "")
+            {
+                UnityWebRequest steamRequest = await PrepareWebRequestAndSendAsync(ENVIRONMENT.API_URL + "SteamAuth/getId/" + user.steamId);
+                if (steamRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = steamRequest.downloadHandler.text;
+                    steamProfile = JsonUtility.FromJson<SteamProfile>(jsonResponse);
+
+                    if(steamProfile == null)
+                    {
+                        return;
+                    }
+
+                    user.nickname = steamProfile.personaName;
+
+                    Debug.Log("Nombre de Steam: " + user.nickname);
+                }
+            }
+        }
+        catch { }
+    }
+
+    private async Task<UnityWebRequest> PrepareWebRequestAndSendAsync(string path)
+    {
+        UnityWebRequest unityWebRequest = new UnityWebRequest(path, "GET");
+
+        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
+        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
+        unityWebRequest.SetRequestHeader("Authorization", "Bearer " + token);
+
+        await unityWebRequest.SendWebRequest();
+
+        return unityWebRequest;
     }
 
     // Cerrar sesi�n
