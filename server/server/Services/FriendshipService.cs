@@ -11,7 +11,7 @@ namespace server.Services
         private readonly UnitOfWork _unitOfWork;
         private Dictionary<object, object> dict = new Dictionary<object, object>
         {
-            { "messageType", MessageType.Friend },
+            { "messageType", MessageType.AskForFriend },
             { "friends", null }
         };
 
@@ -80,7 +80,7 @@ namespace server.Services
             JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 
-            dict["messageType"] = MessageType.AskForFriend;
+            dict["messageType"] = MessageType.FriendUpdate;
             await WebSocketHandler.NotifyOneUser(JsonSerializer.Serialize(dict, options), existingFriendship.SenderUserId);
             await WebSocketHandler.NotifyOneUser(JsonSerializer.Serialize(dict, options), existingFriendship.ReceiverUserId);
 
@@ -111,7 +111,7 @@ namespace server.Services
             JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 
-            dict["messageType"] = MessageType.AskForFriend;
+            dict["messageType"] = MessageType.FriendUpdate;
             await WebSocketHandler.NotifyOneUser(JsonSerializer.Serialize(dict, options), existingFriendship.SenderUserId);
             await WebSocketHandler.NotifyOneUser(JsonSerializer.Serialize(dict, options), existingFriendship.ReceiverUserId);
         }

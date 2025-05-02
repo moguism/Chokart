@@ -4,6 +4,7 @@ using server.Models.Entities;
 using server.Models.Helper;
 using server.Models.Mappers;
 using server.Repositories;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace server.Services;
@@ -156,6 +157,16 @@ public class UserService
         await _unitOfWork.SaveAsync();
 
         return true;
+    }
+
+    public async Task<List<UserDto>> SearchUser(string search)
+    {
+
+        string searchSinTildes = Regex.Replace(search.Normalize(NormalizationForm.FormD), @"[^a-zA-z0-9 ]+", "");
+
+        var users = await _unitOfWork.UserRepository.SearchUser(searchSinTildes.ToLower());
+
+        return _userMapper.ToDto(users).ToList();
     }
 
     public UserDto ToDto(User user)

@@ -13,8 +13,6 @@ public class EmailService
     private readonly string ADDRESS = Environment.GetEnvironmentVariable("EmailAddress");
     private readonly string PASSWORD = Environment.GetEnvironmentVariable("EmailPassword");
 
-    public EmailService() { }
-
     private async Task SendEmailAsync(string to, string subject, string body, bool isHtml = false)
     {
         using SmtpClient client = new SmtpClient(HOST, PORT)
