@@ -15,13 +15,17 @@ namespace server.Controllers
     public class AuthController : ControllerBase
     {
         private readonly TokenValidationParameters _tokenParameters;
-        private readonly UserService _userService;
-        private readonly EmailService _emailService;
 
-        public AuthController(UserService userService, IOptionsMonitor<JwtBearerOptions> jwtOptions, EmailService emailService) {
+        private readonly UserService _userService;
+        private readonly FriendshipService _friendshipService;
+
+        private readonly EmailService _emailService = new EmailService();
+
+        public AuthController(UserService userService, IOptionsMonitor<JwtBearerOptions> jwtOptions, FriendshipService friendshipService)
+        {
             _userService = userService;
             _tokenParameters = jwtOptions.Get(JwtBearerDefaults.AuthenticationScheme).TokenValidationParameters;
-            _emailService = emailService;
+            _friendshipService = friendshipService;
         }
 
         // CREAR NUEVO USUARIO
@@ -73,6 +77,9 @@ namespace server.Controllers
                 {
                     return Unauthorized("Datos de inicio de sesión incorrectos.");
                 }
+
+                var friendships = await _friendshipService.GetFriendList(user.Id);
+                user.Friendships = friendships;
 
                 // Se crea el token JWT
                 var tokenDescriptor = new SecurityTokenDescriptor

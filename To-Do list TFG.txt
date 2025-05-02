@@ -1,5 +1,4 @@
 Traducción
-Amigos
 Página web (con MVVM)
 PowerBi
 (OPCIONAL) Login con Steam
