@@ -151,7 +151,6 @@ public class UserService
         }
 
         user.Verified = true;
-        user.VerificationCode = "";
 
         _unitOfWork.UserRepository.Update(user);
         await _unitOfWork.SaveAsync();

@@ -21,4 +21,7 @@ public class User
 
     public bool Verified { get; set; } = false;
     public string VerificationCode { get; set; } = "";
+
+    // Opciones para steam
+    public string SteamId { get; set; }
 }
