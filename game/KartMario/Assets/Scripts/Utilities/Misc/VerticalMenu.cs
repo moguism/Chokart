@@ -1,4 +1,6 @@
+using Injecta;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +16,9 @@ public class VerticalMenu : MonoBehaviour
     [SerializeField]
     private GameObject friendPrefab;
 
+    [Inject]
+    private AuthManager authManager;
+
     private bool hasSetUp = false;
 
     private void Update()
@@ -25,7 +30,7 @@ public class VerticalMenu : MonoBehaviour
                 return;
             }
 
-            ManageFriendList();
+            ManageFriendList(false);
             hasSetUp = true;
         }
     }
@@ -35,8 +40,23 @@ public class VerticalMenu : MonoBehaviour
         menus.SetActive(!menus.activeInHierarchy);
     }
 
-    private void ManageFriendList()
+    public async Task RefreshFriendList()
     {
+        await authManager.GetUserAsync(AuthManager.user.id, AuthManager.token);
+        ManageFriendList(true);
+    }
+
+    private void ManageFriendList(bool deleteExisting)
+    {
+        if(deleteExisting)
+        {
+            FriendPrefab[] friendPrefabs = friendlist.GetComponentsInChildren<FriendPrefab>();
+            for(int i = 0; i < friendPrefabs.Length; i++)
+            {
+                Destroy(friendPrefabs.ElementAt(i).gameObject);
+            }
+        }
+
         foreach (Friendship friendship in AuthManager.user.friendships)
         {
             UserDto user = friendship.senderUser.id != 0 ? friendship.senderUser : friendship.receiverUser;

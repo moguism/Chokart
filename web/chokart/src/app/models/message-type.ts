@@ -1,5 +1,4 @@
-public enum MessageType
-{
+export enum MessageType {
     AskForFriend,
     FriendUpdate,
     InviteToBattle

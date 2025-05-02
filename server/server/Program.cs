@@ -21,7 +21,6 @@ namespace server
             builder.Services.AddScoped<UserMapper>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<BattleService>();
-            builder.Services.AddScoped<EmailService>();
             builder.Services.AddScoped<FriendshipService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();

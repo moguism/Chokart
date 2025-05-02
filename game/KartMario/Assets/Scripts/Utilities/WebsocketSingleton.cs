@@ -69,15 +69,15 @@ public class WebsocketSingleton : MonoBehaviour
             }
         };
 
-        webSocket.OnMessage += (bytes) =>
+        webSocket.OnMessage += async (bytes) =>
         {
-            ProcessMessage(bytes);
+            await ProcessMessage(bytes);
         };
 
         await webSocket.Connect();
     }
 
-    private void ProcessMessage(byte[] bytes)
+    private async Task ProcessMessage(byte[] bytes)
     {
         Debug.Log("OnMessage!");
         Debug.Log(bytes);
@@ -94,6 +94,15 @@ public class WebsocketSingleton : MonoBehaviour
 
         switch (messageType)
         {
+            case MessageType.FriendUpdate:
+                if(verticalMenu == null)
+                {
+                    verticalMenu = FindFirstObjectByType<VerticalMenu>();
+                }
+
+                await verticalMenu.RefreshFriendList();
+                break;
+
             case MessageType.InviteToBattle:
                 if(verticalMenu == null)
                 {
