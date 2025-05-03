@@ -1,7 +1,3 @@
-Pantalla de configuración (incluyendo el idioma con banderas)
-Bots marcha atrás
-Amigos
-Model View View Model
-Página web
+Traducción
+Página web (con MVVM)
 PowerBi
-(OPCIONAL) Login con Steam

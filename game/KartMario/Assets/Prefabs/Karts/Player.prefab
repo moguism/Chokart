@@ -35072,6 +35072,7 @@ MonoBehaviour:
   - {fileID: 4348226265322837252}
   textures: []
   spriteImage: {fileID: 774465770563082478}
+  parent: {fileID: 5697130421628379105}
   isHud: 0
 --- !u!1 &5733086065313436134
 GameObject:

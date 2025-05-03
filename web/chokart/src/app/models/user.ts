@@ -1,3 +1,5 @@
+import { Friend } from "./friend";
+
 export interface User {
   id: number;
   nickname: string;
@@ -7,4 +9,7 @@ export interface User {
   banned: boolean;
   stateId: number;
   totalPoints: number;
+  friendships: Friend[];
+  steamId: string;
+  verificationCode: string
 }

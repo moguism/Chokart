@@ -48,12 +48,8 @@ public class WebSocketController : ControllerBase
 
             Console.WriteLine("usuario no nulo " + user.Nickname);
 
-
-            string ip = HttpContext.Connection.RemoteIpAddress?.ToString();
-            Console.WriteLine("IP: " + ip);
-
             // Manejamos la solicitud.
-            await _webSocketHandler.HandleWebsocketAsync(webSocket, user, ip);
+            await _webSocketHandler.HandleWebsocketAsync(webSocket, user);
         }
         // En caso contrario la rechazamos
         else

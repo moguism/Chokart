@@ -17,6 +17,9 @@ public class PauseScreen : MonoBehaviour
     private PositionManager positionManager;
 
     [SerializeField]
+    private GameObject hud;
+
+    [SerializeField]
     private GameObject pauseButton;
 
     public KartController kart;
@@ -42,6 +45,7 @@ public class PauseScreen : MonoBehaviour
     {
         minimap.SetActive(map);
         pauseButton.SetActive(map);
+        hud.SetActive(map);
         kart.canMove = map;
 
         screen.SetActive(pause);

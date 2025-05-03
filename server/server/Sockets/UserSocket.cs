@@ -1,4 +1,6 @@
-﻿using server.Models.Entities;
+﻿using server.Models.DTOs;
+using server.Models.Entities;
+using server.Models.Mappers;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -12,6 +14,8 @@ public class UserSocket
 
     public WebSocket Socket;
     public User User { get; set; }
+
+    private bool isFirstTime = true;
 
     public event Func<UserSocket, Task> Disconnected;
 
@@ -51,22 +55,37 @@ public class UserSocket
 
                     MessageType messageType = (MessageType)messageTypeRaw;
 
-                    Dictionary<object, object> dict = new Dictionary<object, object>
+                    Dictionary<object, object> dictToSend = new Dictionary<object, object>
                     {
-                        { "messageType", messageType },
-                        { "joined", false }
+                        { "messageType", messageType }
                     };
 
                     bool send = true;
 
+                    UserMapper userMapper = new UserMapper();
+
                     // En función del switch, obtengo unos datos u otros, y los envío en JSON
-                    /*switch (messageType)
+                    switch (messageType)
                     {
-                    }*/
+                        case MessageType.InviteToBattle:
+                            send = false;
+
+                            JsonElement elem = (JsonElement) dictInput["messageRaw"];
+
+                            int otherUserId = elem.GetProperty("otherUser").GetInt32();
+                            string lobbyCode = elem.GetProperty("lobbyCode").ToString();
+
+                            UserDto userWhoInvited = userMapper.ToDto(User);
+                            dictToSend.Add("userWhoInvited", userWhoInvited);
+                            dictToSend.Add("lobbyCode", lobbyCode);
+
+                            await WebSocketHandler.NotifyOneUser(JsonSerializer.Serialize(dictToSend, options), otherUserId);
+                            break;
+                    }
 
                     if (send)
                     {
-                        string outMessage = System.Text.Json.JsonSerializer.Serialize(dict, options);
+                        string outMessage = System.Text.Json.JsonSerializer.Serialize(dictToSend, options);
                         // Procesamos el mensaje
                         //string outMessage = $"[{string.Join(", ", message as IEnumerable<char>)}]";
 
@@ -98,7 +117,7 @@ public class UserSocket
     {
         Dictionary<object, object> dict = new Dictionary<object, object>
         {
-            { "messageType", -1 }
+            { "messageType", -1 },
         };
 
         try
@@ -106,14 +125,10 @@ public class UserSocket
             JsonDocument dxoc = JsonDocument.Parse(message);
             JsonElement elem = dxoc.RootElement;
 
+            dict.Add("messageRaw", elem);
+
             MessageType messageType = (MessageType)elem.GetProperty("messageType").GetInt32();
             dict["messageType"] = messageType;
-
-            string host = elem.GetProperty("host").ToString();
-            dict.Add("host", host);
-
-            string ip = elem.GetProperty("ip").ToString();
-            dict.Add("ip", ip);
         }
         catch {}
 
@@ -124,6 +139,12 @@ public class UserSocket
     // READ RECIBIRÍA EL TIPO DEL MENSAJE (por ejemplo, que quiero info de las partidas), Y HABRÍA UNA O VARIAS CLASES QUE OBTENGA LOS DATOS QUE QUIERE Y ENVÍE LO NECESARIO
     private async Task<string> ReadAsync(CancellationToken cancellation = default)
     {
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+            return null;
+        }
+
         // Creo un buffer para almacenar temporalmente los bytes del contenido del mensaje
         byte[] buffer = new byte[4096];
         // Creo un StringBuilder para poder ir creando poco a poco el mensaje en formato texto

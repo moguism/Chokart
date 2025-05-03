@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Speedometer : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class Speedometer : MonoBehaviour
         if (kart == null || !kart.canMove)
         {
             speed = 0;
+            OptionsSettings.ChangeMotorSpeed(0, 0);
             audioSource.Stop();
             return;
         }
@@ -84,13 +86,15 @@ public class Speedometer : MonoBehaviour
                     int roundedSpeed = Mathf.RoundToInt(absSpeed);
                     speedText.text = roundedSpeed.ToString() + " km/h";
 
-#if !UNITY_WEBGL
                     try
                     {
+#if UNITY_ANDROID
                         Handheld.Vibrate();
-                    }
-                    catch { }
+#elif !UNITY_WEBGL || UNITY_EDITOR
+                        OptionsSettings.ChangeMotorSpeed(0.123f, 0.234f);
 #endif
+                    }
+                    catch {}
                 }
             }
         }
@@ -110,6 +114,7 @@ public class Speedometer : MonoBehaviour
         else if (audioSource.isPlaying)
         {
             audioSource.Stop();
+            OptionsSettings.ChangeMotorSpeed(0, 0);
         }
 
         oldPosition = kart.currentPosition;

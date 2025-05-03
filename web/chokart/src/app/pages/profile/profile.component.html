@@ -1,1 +1,16 @@
-<p>profile works!</p>
+@if(user)
+{
+    @if(user.steamId != "" && user.steamId != null)
+    {
+        <p>Id: {{ steamId }}</p>
+        <p>Nombre: {{ steamProfile.personaName }}</p>
+        Avatar: <img [src]="steamProfile.avatarFull">
+        <button (click)="removeSteamAccount()">Desvincular cuenta de Steam</button>
+    }
+    @else {
+        <a [href]="STEAM_URL">Vincular con steam</a>
+    }
+}
+@else {
+    <p>Cargando...</p>
+}

@@ -1,10 +1,6 @@
 public enum MessageType
 {
-    HostGame,
-    JoinGame,
-    PlayerJoined,
-    StartGame,
-    GameStarted,
-    PlayerDisconnected,
-    EndGame
+    AskForFriend,
+    FriendUpdate,
+    InviteToBattle
 }

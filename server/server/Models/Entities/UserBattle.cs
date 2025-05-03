@@ -16,4 +16,7 @@ public class UserBattle
 
     public int Position { get; set; } = 0;
     public int TotalKills { get; set; } = 0;
+
+    public Kart Kart { get; set; } = null;
+    public int KartId { get; set; }
 }
