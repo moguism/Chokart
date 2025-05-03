@@ -4,6 +4,7 @@ using server.Models.Entities;
 using server.Models.Helper;
 using server.Models.Mappers;
 using server.Repositories;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace server.Services;
@@ -34,6 +35,11 @@ public class UserService
     {
         User user = await _unitOfWork.UserRepository.GetByIdAsync(id);
         return user;
+    }
+
+    public async Task<User> GetFullUserByIdAsync(int userId)
+    {
+        return await _unitOfWork.UserRepository.GetUserById(userId);
     }
 
     public async Task<UserDto> GetUserByEmailAsync(string email)
@@ -145,7 +151,6 @@ public class UserService
         }
 
         user.Verified = true;
-        user.VerificationCode = "";
 
         _unitOfWork.UserRepository.Update(user);
         await _unitOfWork.SaveAsync();
@@ -153,17 +158,18 @@ public class UserService
         return true;
     }
 
+    public async Task<List<UserDto>> SearchUser(string search)
+    {
+
+        string searchSinTildes = Regex.Replace(search.Normalize(NormalizationForm.FormD), @"[^a-zA-z0-9 ]+", "");
+
+        var users = await _unitOfWork.UserRepository.SearchUser(searchSinTildes.ToLower());
+
+        return _userMapper.ToDto(users).ToList();
+    }
+
     public UserDto ToDto(User user)
     {
         return _userMapper.ToDto(user);
-    }
-
-    public UserResponse ToUserResponse(User user)
-    {
-        UserResponse userResponse = new UserResponse()
-        {
-            Nickname = user.Nickname
-        };
-        return userResponse;
     }
 }

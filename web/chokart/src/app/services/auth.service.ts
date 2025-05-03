@@ -56,7 +56,7 @@ export class AuthService {
     return result;
   }
 
-  saveUser(user: User) {
+  public saveUser(user: User) {
     if (this.rememberMe) {
       localStorage.setItem(this.USER_KEY, JSON.stringify(user));
     } else {

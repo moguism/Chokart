@@ -18,7 +18,7 @@ public class WebSocketHandler
         _serviceProvider = serviceProvider;
     }
 
-    public async Task HandleWebsocketAsync(WebSocket webSocket, User user, string ip)
+    public async Task HandleWebsocketAsync(WebSocket webSocket, User user)
     {
         // Creamos un nuevo WebSocketHandler a partir del WebSocket recibido y lo añadimos a la lista
         UserSocket handler = await AddWebsocketAsync(webSocket, user);
@@ -33,10 +33,10 @@ public class WebSocketHandler
         // Sección crítica
 
         UserSocket existingSocket = USER_SOCKETS.FirstOrDefault(u => u.User.Id == user.Id);
-        if (existingSocket != null)
+        /*if (existingSocket != null)
         {
             USER_SOCKETS.Remove(existingSocket);
-        }
+        }*/
 
         UserSocket handler = new UserSocket(_serviceProvider, webSocket, user);
         handler.Disconnected += OnDisconnectedAsync;
@@ -65,10 +65,15 @@ public class WebSocketHandler
 
     public static async Task NotifyOneUser(string jsonToSend, int id)
     {
-        var userSocket = USER_SOCKETS.FirstOrDefault(userSocket => userSocket.User.Id == id);
-        if (userSocket != null && userSocket.Socket.State == WebSocketState.Open)
+        var userSockets = USER_SOCKETS.Where(userSocket => userSocket.User.Id == id).ToList();
+
+        // Un usuario puede tener más de un socket (el juego y la web abierta, por ejemplo)
+        foreach (UserSocket userSocket in userSockets)
         {
-            await userSocket.SendAsync(jsonToSend);
+            if (userSocket != null && userSocket.Socket.State == WebSocketState.Open)
+            {
+                await userSocket.SendAsync(jsonToSend);
+            }
         }
     }
 

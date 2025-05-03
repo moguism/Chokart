@@ -1,5 +1,6 @@
 # DOCUMENTACIÓN
 - [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
+- [Horizonte de sucesos](https://youtu.be/Hvsa6Z8EmTk)
 
 # BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
@@ -28,6 +29,8 @@
 - **Movimiento del pelo:** https://www.youtube.com/watch?v=s7qb0NPbFXU
 - **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
 - **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
+- **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
+- **MVVM en Angular:** https://medium.com/front-end-world/mvc-and-mvvm-patterns-in-angular-7397e0bc7b07
 
 # INSTRUCCIONES PARA EL DESARROLLO
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -91,4 +94,7 @@
     Domingo --> Mauricio soluciona bugs, hace que se pueda copiar el código al portapapeles, programa el chat de voz por proximidad, pone el modo carrera y establece una forma de limitar la duración de las partidas.
 ### Quinta semana (28/04 - 04/05)
     Lunes --> Mauricio hace el minimapa y el menú de pausa.
-    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Marñia arregla la IA.
+    Martes --> Mauricio soluciona la exportación a web y pone chat de texto. Grabamos el vídeo del horizonte de sucesos. Maria arregla la IA.
+    Miércoles --> Mauricio hace el menú de configuración.
+    Jueves --> Mauricio empieza y termina la lista de amigos en el juego, faltando la web.
+    Viernes --> Mauricio termina la lista de amigos completa y hace el login con Steam.

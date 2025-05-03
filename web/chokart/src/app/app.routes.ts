@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { VerificationComponent } from './pages/verification/verification.component';
 import { CheckEmailComponent } from './pages/check-email/check-email.component';
+import { MenuComponent } from './pages/menu/menu.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'verify/:id/:code', component: VerificationComponent },
   { path: 'checkEmail', component: CheckEmailComponent },
+  { path: 'menu', component: MenuComponent }
   // {path: 'play', component: PlayComponent}
   // {path: 'ranking', component: RankingComponent},
   // {path: 'dashboard', component: DashboardComponent}

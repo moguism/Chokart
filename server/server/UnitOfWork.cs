@@ -12,6 +12,7 @@ public class UnitOfWork
     private BattleResultRepository _battleResultRepository;
     private CharacterRepository _characterRepository;
     private TrackRepository _trackRepository;
+    private KartRepository _kartRepository;
 
     // poner todos los repositorys
 
@@ -24,6 +25,7 @@ public class UnitOfWork
     public BattleResultRepository BattleResultRepository => _battleResultRepository ??= new BattleResultRepository(_context);
     public CharacterRepository CharacterRepository => _characterRepository ??= new CharacterRepository(_context);
     public TrackRepository TrackRepository => _trackRepository ??= new TrackRepository(_context);
+    public KartRepository KartRepository => _kartRepository ??= new KartRepository(_context);
 
     // poner todos los repositorys
 

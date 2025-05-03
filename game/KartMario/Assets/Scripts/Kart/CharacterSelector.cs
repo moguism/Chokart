@@ -13,7 +13,12 @@ public class CharacterSelector : MonoBehaviour
     private RawImage spriteImage;
 
     [SerializeField]
+    private KartController parent;
+
+    [SerializeField]
     private bool isHud = true;
+
+    private readonly System.Random _random = new();
 
     private void Start()
     {
@@ -35,6 +40,12 @@ public class CharacterSelector : MonoBehaviour
         {
             if(!isHud)
             {
+                // Escoge personaje aleatorio
+                if(parent.enableAI)
+                {
+                    index = _random.Next(0, possibleCharacters.Length);
+                }
+
                 for (int i = 0; i < possibleCharacters.Length; i++)
                 {
                     if (i == index) { continue; }

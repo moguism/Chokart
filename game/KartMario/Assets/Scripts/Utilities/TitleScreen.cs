@@ -2,9 +2,7 @@ using Cysharp.Threading.Tasks;
 using EasyTransition;
 using Injecta;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -75,6 +73,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField]
     private GameObject buttons;
 
+    [Header("Other options")]
     [SerializeField]
     private TransitionSettings transitionSettings;
 
@@ -112,6 +111,8 @@ public class TitleScreen : MonoBehaviour
                 buttons.SetActive(true);
 
                 backgroundVideo.PlayVideo();
+
+                OptionsSettings.ChangeMotorSpeed(0, 0);
             }
             return;
         }
@@ -131,13 +132,15 @@ public class TitleScreen : MonoBehaviour
             }
             else
             {
-#if !UNITY_WEBGL
                 try
                 {
-                    Handheld.Vibrate();
-                }
-                catch { }
+#if UNITY_ANDROID
+                        Handheld.Vibrate();
+#elif !UNITY_WEBGL || UNITY_EDITOR
+                    OptionsSettings.ChangeMotorSpeed(0.123f, 0.234f);
 #endif
+                }
+                catch {}
             }
         }
         else
