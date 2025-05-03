@@ -1,28 +1,51 @@
-<nav class="navbar">
-  <img src="logo-chokart.png" class="logo" alt="logo chokart" />
+<ng-container *transloco="let t">
+  <nav class="navbar">
+    <img src="logo-chokart.png" class="logo" alt="logo chokart" />
 
-  <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
 
-  <ul [class.active]="isMenuOpen" class="nav-links">
-    <li><a [routerLink]="'/'" (click)="closeMenu()">Inicio</a></li>
-    <li><a [routerLink]="'/login'" (click)="closeMenu()">Galeria</a></li>
-    <li><a [routerLink]="'/login'" (click)="closeMenu()">Login</a></li>
-  </ul>
+    <ul [class.active]="isMenuOpen" class="nav-links">
+      <li><a [routerLink]="'/'" (click)="closeMenu()">Inicio</a></li>
+      <li>
+        <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("media") }}</a>
+      </li>
+      <li><a [routerLink]="'/login'" (click)="closeMenu()">Login</a></li>
+    </ul>
 
-  <label>
-    <select
-      [(ngModel)]="languageSelected"
-      (ngModelChange)="onLanguageChanged()"
-    >
-      @for (language of LANGUAGES; track $index) {
-      <option [value]="$index">
-        {{ language.emoji + " " + language.name }}
-      </option>
-      }
-    </select>
-  </label>
+    <div class="nav-end">
+      <details
+        #langSelector
+        (toggle)="isMenuOpen = !isMenuOpen"
+        class="custom-select"
+      >
+        <summary>
+          <img
+            [src]="getFlagUrl(LANGUAGES[languageSelected]?.code)"
+            style="width: 28px; height: auto; object-fit: contain"
+          />
+        </summary>
 
-  <a id="download" [routerLink]="'/download'" (click)="closeMenu()">
-    &nbsp; Descargar</a
-  >
-</nav>
+        <div class="custom-select-options">
+          @for (lang of LANGUAGES; track $index) { @if ($index !==
+          languageSelected) {
+          <input
+            type="radio"
+            class="rad"
+            name="lang"
+            [id]="'lang-' + $index"
+            [checked]="$index === languageSelected"
+            (change)="languageSelected = $index; onLanguageChanged()"
+          />
+          <label class="opt" [for]="'lang-' + $index">
+            <img [src]="getFlagUrl(lang.code)" />
+          </label>
+          } }
+        </div>
+      </details>
+
+      <a id="download" [routerLink]="'/download'" (click)="closeMenu()">
+        &nbsp; Descargar</a
+      >
+    </div>
+  </nav>
+</ng-container>

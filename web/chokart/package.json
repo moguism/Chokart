@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@jsverse/transloco": "^7.6.1",
+    "@primeng/themes": "^18.0.2",
+    "primeng": "^18.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

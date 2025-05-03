@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -9,12 +9,20 @@ import {
 } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { WebsocketService } from '../../services/websocket.service';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, RouterLink, RouterLinkWithHref, FormsModule],
+  imports: [
+    RouterModule,
+    RouterLink,
+    RouterLinkWithHref,
+    FormsModule,
+    SelectButtonModule,
+    TranslocoModule,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -43,18 +51,40 @@ export class NavbarComponent implements OnInit {
 
   // Listado de idiomas de ejemplo.
   readonly LANGUAGES = [
-    { code: 'en', name: 'English', emoji: '🌭' },
-    { code: 'es', name: 'Español', emoji: '🥘' },
+    {
+      code: 'en',
+      name: 'English',
+      emoji: '🌭',
+      flag: 'https://flagcdn.com/w320/gb.png',
+    },
+    {
+      code: 'es',
+      name: 'Español',
+      emoji: '🥘',
+      flag: 'https://flagcdn.com/w320/es.png',
+    },
   ];
 
   // Índice del idioma actualmente seleccionado.
   languageSelected: number;
+
+  languageSelect: string;
 
   ngOnInit(): void {
     // Obtiene el idioma activo actual.
     const activeLang = this.translocoService.getActiveLang();
     // Busca el índice del idioma activo en la lista LANGUAGES y lo guarda.
     this.languageSelected = this.findLanguageIndex(activeLang);
+    this.languageSelect = this.getShortCode(activeLang);
+  }
+
+  getFlagUrl(langCode: string): string {
+    const map: Record<string, string> = {
+      en: 'gb',
+      es: 'es',
+    };
+    const countryCode = map[langCode] || langCode;
+    return `https://flagcdn.com/w40/${countryCode}.png`;
   }
 
   // Devuelve el nombre del idioma detectado en el navegador del usuario.
@@ -67,12 +97,17 @@ export class NavbarComponent implements OnInit {
     return this.findLanguageName(this.translocoService.getActiveLang());
   }
 
+  @ViewChild('langSelector', { static: false })
+  langSelector!: ElementRef<HTMLElement>;
+
   // Se llama cuando el usuario cambia el idioma desde la interfaz
   onLanguageChanged() {
     // Obtiene el idioma que el usuario ha seleccionado.
     const language = this.LANGUAGES[this.languageSelected];
     // Cambia el idioma activo en Transloco al seleccionado.
     this.translocoService.setActiveLang(language.code);
+
+    this.langSelector.nativeElement.removeAttribute('open');
   }
 
   // Dado un código de idioma, devuelve el nombre del idioma.

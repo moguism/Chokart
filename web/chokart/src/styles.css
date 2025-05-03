@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Road+Rage&display=swap");
 
+:root {
+  --primary-color: #ffcc00;
+  --primary-color-text: #000;
+  --highlight-bg: #fff3cd;
+  --highlight-text-color: #333;
+
+  --surface-card: #1e1e1e;
+  --text-color: #fdfdfd;
+  --accent-color: #ff9900;
+}
+
 * {
   margin: 0;
 }
