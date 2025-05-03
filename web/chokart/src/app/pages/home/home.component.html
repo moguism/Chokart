@@ -1,4 +1,4 @@
-<div id="home">
+<div id="home" *transloco="let t">
   <app-navbar></app-navbar>
 
   <a
@@ -8,17 +8,34 @@
   </a>
 
   <div class="container">
-    <img src="/logo-chokart.png" alt="" />
-    <h1>JUEGA GRATIS EN PC, WEB Y MÓVIL</h1>
+    <img src="/logo-chokart.png" alt="logo chokart" />
+
+    <h1>{{ t("play-free") }}</h1>
+
     <div class="links">
-      <button>Jugar</button>
-      <button (click)="router.navigateToUrl('menu')">Ir al menú</button>
-      <button (click)="router.navigateToUrl('profile')">Ir al perfil</button>
-      <button>registrate</button>
-      <button>ver trailer</button>
+      <div class="card-button">
+        <i
+          class="pi pi-plus-circle"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span>{{ t("download-now") }}</span>
+      </div>
+      <div class="card-button">
+        <i
+          class="pi pi-chevron-circle-right"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span (click)="router.navigateToUrl('login')">
+          {{ t("signup") }}
+        </span>
+      </div>
+      <div class="card-button">
+        <i
+          class="pi pi-play-circle"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span>{{ t("watch-trailer") }}</span>
+      </div>
     </div>
-  </div>
-  <div class="card flex justify-center">
-    <p-button label="Check"></p-button>
   </div>
 </div>
