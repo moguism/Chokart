@@ -37,8 +37,21 @@ public class PauseScreen : MonoBehaviour
     public async void ExitGame()
     {
         await positionManager.ExitGame();
+        DisableControls();
         NetworkManager.Singleton.Shutdown();
         TransitionManager.Instance().Transition(2, transition, 0);
+    }
+
+    private void DisableControls()
+    {
+        try
+        {
+            kart.playerControls.Player.Disable();
+            kart.playerControls.Mobile.Disable();
+            kart.playerControls.UI.Disable();
+            kart.playerControls.Disable();
+        }
+        catch { }
     }
 
     private void SetAvailability(bool map, bool pause)

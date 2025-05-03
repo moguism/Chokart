@@ -96,7 +96,7 @@ public class KartController : BasicPlayer
     public GameObject characters;
 
     // Controles
-    private InputSystem_Actions playerControls;
+    public InputSystem_Actions playerControls;
     private float jumpValueLastFrame;
     private float jumpValue;
 
