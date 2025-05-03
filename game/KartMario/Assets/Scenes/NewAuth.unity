@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 89815871}
   - component: {fileID: 89815873}
   - component: {fileID: 89815872}
+  - component: {fileID: 89815874}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -444,6 +445,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89815870}
   m_CullTransparentMesh: 1
+--- !u!114 &89815874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89815870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 89815872}
+  textRaw: {fileID: 0}
+  code: UPPERCASE_PASSWORD
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &122653665
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +847,7 @@ GameObject:
   - component: {fileID: 452461653}
   - component: {fileID: 452461655}
   - component: {fileID: 452461654}
+  - component: {fileID: 452461656}
   m_Layer: 5
   m_Name: Error
   m_TagString: Untagged
@@ -954,6 +973,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452461652}
   m_CullTransparentMesh: 1
+--- !u!114 &452461656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452461652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 452461654}
+  textRaw: {fileID: 0}
+  code: WRONG_CREDENTIALS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &495166277
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,6 +1000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 495166279}
   - component: {fileID: 495166280}
+  - component: {fileID: 495166281}
   m_Layer: 0
   m_Name: AuthManager
   m_TagString: Untagged
@@ -1005,6 +1042,22 @@ MonoBehaviour:
   audioSource: {fileID: 2132040734}
   videoPlayer: {fileID: 63686661}
   transitionSettings: {fileID: 11400000, guid: c9f7b34f761c5c342ada8a4b2ab7a716, type: 2}
+--- !u!114 &495166281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495166277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 0}
+  tables:
+  - {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933, type: 2}
+  - {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2, type: 2}
 --- !u!1 &554821785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1233,7 @@ GameObject:
   - component: {fileID: 684668491}
   - component: {fileID: 684668493}
   - component: {fileID: 684668492}
+  - component: {fileID: 684668494}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1305,6 +1359,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684668490}
   m_CullTransparentMesh: 1
+--- !u!114 &684668494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684668490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 684668492}
+  textRaw: {fileID: 0}
+  code: SCAN_QR
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &706851944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,6 +1980,7 @@ GameObject:
   - component: {fileID: 1232914341}
   - component: {fileID: 1232914343}
   - component: {fileID: 1232914342}
+  - component: {fileID: 1232914344}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -1979,6 +2051,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232914340}
   m_CullTransparentMesh: 1
+--- !u!114 &1232914344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232914340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 0}
+  textRaw: {fileID: 1232914342}
+  code: REMEMBER_ME
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1291566804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2602,6 +2691,7 @@ GameObject:
   - component: {fileID: 1463463029}
   - component: {fileID: 1463463031}
   - component: {fileID: 1463463030}
+  - component: {fileID: 1463463032}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2727,6 +2817,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463463028}
   m_CullTransparentMesh: 1
+--- !u!114 &1463463032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463463028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1463463030}
+  textRaw: {fileID: 0}
+  code: OR_PRESS_HERE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1480865211
 GameObject:
   m_ObjectHideFlags: 0
@@ -3308,6 +3415,7 @@ GameObject:
   - component: {fileID: 1786056091}
   - component: {fileID: 1786056093}
   - component: {fileID: 1786056092}
+  - component: {fileID: 1786056094}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -3435,6 +3543,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786056090}
   m_CullTransparentMesh: 1
+--- !u!114 &1786056094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786056090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1786056092}
+  textRaw: {fileID: 0}
+  code: USER_OR_EMAIL
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1788826352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3446,6 +3571,7 @@ GameObject:
   - component: {fileID: 1788826353}
   - component: {fileID: 1788826355}
   - component: {fileID: 1788826354}
+  - component: {fileID: 1788826356}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3571,6 +3697,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788826352}
   m_CullTransparentMesh: 1
+--- !u!114 &1788826356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788826352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1788826354}
+  textRaw: {fileID: 0}
+  code: WITHOUT_ACCOUNT
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1817096812
 GameObject:
   m_ObjectHideFlags: 0
@@ -3730,6 +3873,7 @@ GameObject:
   - component: {fileID: 1995095385}
   - component: {fileID: 1995095387}
   - component: {fileID: 1995095386}
+  - component: {fileID: 1995095388}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3855,6 +3999,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995095384}
   m_CullTransparentMesh: 1
+--- !u!114 &1995095388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995095384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1995095386}
+  textRaw: {fileID: 0}
+  code: LOGIN
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &2132040733
 GameObject:
   m_ObjectHideFlags: 0

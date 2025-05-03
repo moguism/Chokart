@@ -98,3 +98,4 @@
     Miércoles --> Mauricio hace el menú de configuración.
     Jueves --> Mauricio empieza y termina la lista de amigos en el juego, faltando la web.
     Viernes --> Mauricio termina la lista de amigos completa y hace el login con Steam.
+    Sábado --> Mauricio traduce todo el juego y soluciona bugs.
