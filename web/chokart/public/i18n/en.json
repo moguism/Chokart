@@ -1,7 +1,10 @@
 {
-  "inicio": "Home",
+  "home": "Home",
   "login": "Log in",
   "signup": "Sign up",
   "download": "Download",
-  "media":"Media"
+  "media":"Media",
+  "play-free":"Free to play on PC, Mobile & Web",
+  "download-now": "Download now",
+  "watch-trailer" : "Watch trailer"
 }

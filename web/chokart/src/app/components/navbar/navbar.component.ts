@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { WebsocketService } from '../../services/websocket.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { TranslatorService } from '../../services/translator.service';
 
 @Component({
   selector: 'app-navbar',
@@ -27,11 +28,27 @@ import { SelectButtonModule } from 'primeng/selectbutton';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
+  // Listado de idiomas
+  LANGUAGES: { code: string; name: string; emoji: string; flag: string }[] = [];
+
   constructor(
     private authService: AuthService,
     private websocketService: WebsocketService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private translatorService: TranslatorService
   ) {}
+
+  ngOnInit(): void {
+    // Obtiene el idioma activo actual.
+    const activeLang = this.translocoService.getActiveLang();
+    // Busca el índice del idioma activo en la lista LANGUAGES y lo guarda.
+    this.languageSelected =
+      this.translatorService.findLanguageIndex(activeLang);
+    this.languageSelect = this.translatorService.getShortCode(activeLang);
+
+    this.LANGUAGES = this.translatorService.LANGUAGES;
+  }
+
   isMenuOpen = false;
 
   toggleMenu() {
@@ -49,34 +66,9 @@ export class NavbarComponent implements OnInit {
       }
   }*/
 
-  // Listado de idiomas de ejemplo.
-  readonly LANGUAGES = [
-    {
-      code: 'en',
-      name: 'English',
-      emoji: '🌭',
-      flag: 'https://flagcdn.com/w320/gb.png',
-    },
-    {
-      code: 'es',
-      name: 'Español',
-      emoji: '🥘',
-      flag: 'https://flagcdn.com/w320/es.png',
-    },
-  ];
-
   // Índice del idioma actualmente seleccionado.
   languageSelected: number;
-
   languageSelect: string;
-
-  ngOnInit(): void {
-    // Obtiene el idioma activo actual.
-    const activeLang = this.translocoService.getActiveLang();
-    // Busca el índice del idioma activo en la lista LANGUAGES y lo guarda.
-    this.languageSelected = this.findLanguageIndex(activeLang);
-    this.languageSelect = this.getShortCode(activeLang);
-  }
 
   getFlagUrl(langCode: string): string {
     const map: Record<string, string> = {
@@ -85,16 +77,6 @@ export class NavbarComponent implements OnInit {
     };
     const countryCode = map[langCode] || langCode;
     return `https://flagcdn.com/w40/${countryCode}.png`;
-  }
-
-  // Devuelve el nombre del idioma detectado en el navegador del usuario.
-  getBrowserLanguage(): string {
-    return this.findLanguageName(window.navigator.language);
-  }
-
-  // Devuelve el nombre del idioma actualmente activo en Transloco.
-  getActivatedLanguage() {
-    return this.findLanguageName(this.translocoService.getActiveLang());
   }
 
   @ViewChild('langSelector', { static: false })
@@ -108,30 +90,5 @@ export class NavbarComponent implements OnInit {
     this.translocoService.setActiveLang(language.code);
 
     this.langSelector.nativeElement.removeAttribute('open');
-  }
-
-  // Dado un código de idioma, devuelve el nombre del idioma.
-  private findLanguageName(code: string) {
-    // Extrae el código del idioma en 2 dígitos. Ej: "es-ES" -> "es".
-    const shortCode = this.getShortCode(code);
-    // Busca el idioma en la lista y devuelve su nombre. Si no lo encuentra, devuelve el código corto.
-    return (
-      this.LANGUAGES.find((language) => language.code == shortCode)?.name ??
-      shortCode
-    );
-  }
-
-  // Dado un código de idioma, devuelve su índice en la lista LANGUAGES.
-  private findLanguageIndex(code: string) {
-    // Extrae el código del idioma en 2 dígitos. Ej: "es-ES" -> "es".
-    const shortCode = this.getShortCode(code);
-    // Busca el índice del idioma correspondiente en la lista.
-    return this.LANGUAGES.findIndex((language) => language.code == shortCode);
-  }
-
-  // Extrae el código corto de un lenguaje.
-  private getShortCode(languageCode: string) {
-    // Divide por "-" y devuelve la primera parte. Ej: "es-ES" -> "es".
-    return languageCode.split('-')?.at(0);
   }
 }

@@ -18,3 +18,26 @@
 .container img {
   width: 20rem;
 }
+
+.links {
+  display: flex;
+  gap: 2rem;
+  justify-items: center;
+}
+
+.card-button {
+  background-image: linear-gradient(
+    to right,
+    rgb(209, 209, 209) 0%,
+    rgb(255, 255, 255) 40%,
+    rgb(255, 255, 255) 100%
+  );
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: black;
+  width: 10rem;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
