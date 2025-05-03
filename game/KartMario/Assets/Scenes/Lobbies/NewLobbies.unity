@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 16235488}
   - component: {fileID: 16235490}
   - component: {fileID: 16235489}
+  - component: {fileID: 16235491}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -257,6 +258,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16235487}
   m_CullTransparentMesh: 1
+--- !u!114 &16235491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16235487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 16235489}
+  textRaw: {fileID: 0}
+  code: HOST
+  dropdown: {fileID: 0}
+  dropdownCodes: []
+--- !u!1 &98029997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98029999}
+  - component: {fileID: 98029998}
+  m_Layer: 0
+  m_Name: LocalizationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &98029998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98029997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 0}
+  tables:
+  - {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933, type: 2}
+  - {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2, type: 2}
+--- !u!4 &98029999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98029997}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1605.445, y: 1036, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159074152
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +532,7 @@ GameObject:
   - component: {fileID: 290474273}
   - component: {fileID: 290474275}
   - component: {fileID: 290474274}
+  - component: {fileID: 290474276}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -593,6 +660,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290474272}
   m_CullTransparentMesh: 1
+--- !u!114 &290474276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290474272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 290474274}
+  textRaw: {fileID: 0}
+  code: PLAY_WITH_BOTS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &297806212
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,6 +1057,7 @@ GameObject:
   - component: {fileID: 492209166}
   - component: {fileID: 492209168}
   - component: {fileID: 492209167}
+  - component: {fileID: 492209169}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1098,6 +1183,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492209165}
   m_CullTransparentMesh: 1
+--- !u!114 &492209169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492209165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 492209167}
+  textRaw: {fileID: 0}
+  code: RACE_MODE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &556770032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1211,7 @@ GameObject:
   - component: {fileID: 556770033}
   - component: {fileID: 556770035}
   - component: {fileID: 556770034}
+  - component: {fileID: 556770036}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1236,6 +1339,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556770032}
   m_CullTransparentMesh: 1
+--- !u!114 &556770036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556770032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 556770034}
+  textRaw: {fileID: 0}
+  code: PLAY_WITHOUT_BOTS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &706240143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +2011,7 @@ GameObject:
   - component: {fileID: 1101496596}
   - component: {fileID: 1101496598}
   - component: {fileID: 1101496597}
+  - component: {fileID: 1101496599}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2018,6 +2139,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101496595}
   m_CullTransparentMesh: 1
+--- !u!114 &1101496599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101496595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1101496597}
+  textRaw: {fileID: 0}
+  code: JOIN
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1139618901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2293,7 +2431,8 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6277459629236134919, guid: 6bf985da4945455419f1be5cd10880a1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2485,6 +2624,7 @@ GameObject:
   - component: {fileID: 1220042125}
   - component: {fileID: 1220042127}
   - component: {fileID: 1220042126}
+  - component: {fileID: 1220042128}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2612,6 +2752,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220042124}
   m_CullTransparentMesh: 1
+--- !u!114 &1220042128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220042124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1220042126}
+  textRaw: {fileID: 0}
+  code: SURVIVAL_MODE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1437249101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,6 +2981,7 @@ GameObject:
   - component: {fileID: 1605148557}
   - component: {fileID: 1605148556}
   - component: {fileID: 1605148555}
+  - component: {fileID: 1605148558}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -2969,6 +3127,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605148553}
   m_CullTransparentMesh: 1
+--- !u!114 &1605148558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605148553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1605148556}
+  textRaw: {fileID: 0}
+  code: LOBBY_CODE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &1687612264
 GameObject:
   m_ObjectHideFlags: 0
@@ -3655,6 +3830,7 @@ GameObject:
   - component: {fileID: 2047928824}
   - component: {fileID: 2047928826}
   - component: {fileID: 2047928825}
+  - component: {fileID: 2047928827}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3780,6 +3956,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047928823}
   m_CullTransparentMesh: 1
+--- !u!114 &2047928827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047928823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 2047928825}
+  textRaw: {fileID: 0}
+  code: BACK
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1001 &351642386607453115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4675,3 +4868,4 @@ SceneRoots:
   - {fileID: 1687612266}
   - {fileID: 1559671911}
   - {fileID: 1191268583}
+  - {fileID: 98029999}

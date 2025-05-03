@@ -27,6 +27,7 @@ public class CustomVideoPlayer : MonoBehaviour
         if(videoPlayer.enabled == false) { videoPlayer.enabled = true; }
 
         videoPlayer.url = videoPath;
+        videoPlayer.isLooping = true;
         videoPlayer.Play();
     }
 }
