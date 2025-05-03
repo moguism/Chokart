@@ -2881,6 +2881,7 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 2ff14cd2bd24aaf48b6cbd1ed5c7f493, type: 3}
   spriteImage: {fileID: 6190870021190728354}
+  parent: {fileID: 0}
   isHud: 1
 --- !u!1 &6511549082757075181
 GameObject:
@@ -3381,6 +3382,7 @@ GameObject:
   - component: {fileID: 683623757727405655}
   - component: {fileID: 6267661262987128385}
   - component: {fileID: 8936146288375422669}
+  - component: {fileID: 1287866772888041718}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3508,6 +3510,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1287866772888041718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130180740652664727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 8936146288375422669}
+  textRaw: {fileID: 0}
+  code: PAUSE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &8271142851069326990
 GameObject:
   m_ObjectHideFlags: 0

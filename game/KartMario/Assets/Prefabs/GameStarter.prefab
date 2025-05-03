@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8911753833725220284}
   - component: {fileID: 1510385471145934131}
   - component: {fileID: 3001429019021187514}
+  - component: {fileID: 7639707262790721137}
   m_Layer: 0
   m_Name: GameStarter
   m_TagString: Untagged
@@ -81,3 +82,19 @@ MonoBehaviour:
   positionManager: {fileID: 0}
   botSpawner: {fileID: 0}
   spawners: []
+--- !u!114 &7639707262790721137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4841970221736678278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 0}
+  tables:
+  - {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933, type: 2}
+  - {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2, type: 2}

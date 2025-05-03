@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 2431206463178328562}
   - component: {fileID: 4692840718364113418}
   - component: {fileID: 5721829463628217042}
+  - component: {fileID: 2839809595175166404}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -674,6 +675,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2839809595175166404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162657044060799784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 5721829463628217042}
+  textRaw: {fileID: 0}
+  code: INVITE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &5867126464503438180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +1041,7 @@ GameObject:
   - component: {fileID: 2486229847056180249}
   - component: {fileID: 5360312121377017388}
   - component: {fileID: 1666292243000784177}
+  - component: {fileID: 5745603733883646345}
   m_Layer: 5
   m_Name: FriendPrefab
   m_TagString: Untagged
@@ -1116,6 +1135,7 @@ MonoBehaviour:
     stateId: 0
     friendships: []
     totalPoints: 0
+    steamId: 
 --- !u!114 &1666292243000784177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,3 +1148,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f26700aff9105b4090dca30d18ac3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5745603733883646345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033381475290208137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 0}
+  tables:
+  - {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933, type: 2}
+  - {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2, type: 2}
