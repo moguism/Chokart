@@ -1,12 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
+import { Language } from '../models/language';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslatorService implements OnInit {
   // Listado de idiomas de ejemplo.
-  public LANGUAGES = [
+  public LANGUAGES: Language[] = [
     {
       code: 'en',
       name: 'English',

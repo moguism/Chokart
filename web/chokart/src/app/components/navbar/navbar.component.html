@@ -24,13 +24,13 @@
       >
         <summary>
           <img
-            [src]="getFlagUrl(this.LANGUAGES[languageSelected]?.code)"
+            [src]="getFlagUrl(this.languages[languageSelected]?.code)"
             style="width: 28px; height: auto; object-fit: contain"
           />
         </summary>
 
         <div class="custom-select-options">
-          @for (lang of this.LANGUAGES; track $index) { @if ($index !==
+          @for (lang of this.languages; track $index) { @if ($index !==
           languageSelected) {
           <input
             type="radio"
