@@ -10,6 +10,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+import MyTheme from '../mytheme';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -19,12 +24,19 @@ export const appConfig: ApplicationConfig = {
     provideTransloco({
       config: {
         availableLangs: ['en', 'es'],
-        defaultLang: 'es',
+        defaultLang: window.navigator.language?.split('-')?.at(0),
+        fallbackLang: 'es',
         // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
       },
       loader: TranslocoHttpLoader,
+    }),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: MyTheme,
+      },
     }),
   ],
 };
