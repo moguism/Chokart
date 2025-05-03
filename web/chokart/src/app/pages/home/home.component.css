@@ -3,16 +3,23 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /*  background-image: url(https://i1.sndcdn.com/artworks-6YIVMvpHvhMZlHJZ-Yzo2bQ-t1080x1080.jpg);
- */
-  height: 100vh;
   color: white;
   background-size: cover;
   gap: 2rem;
+  font-family: "Road Rage", sans-serif;
+  font-size: 1.5rem;
 }
 
 #home {
-  background-image: url(/background1-home.jpg);
+  background-image: url(https://media.vandal.net/i/1280x720/10-2023/18/202310182222449_5.jpg);
+  background-size: cover;
+  height: 100vh;
+}
+
+h1 {
+  color: rgb(0, 0, 0);
+  font-weight: 200;
+  text-transform: uppercase;
 }
 
 .container img {
