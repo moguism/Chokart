@@ -7,6 +7,22 @@
     <li><a [routerLink]="'/'" (click)="closeMenu()">Inicio</a></li>
     <li><a [routerLink]="'/login'" (click)="closeMenu()">Galeria</a></li>
     <li><a [routerLink]="'/login'" (click)="closeMenu()">Login</a></li>
-    <li><a [routerLink]="'/download'" (click)="closeMenu()">Descargar</a></li>
   </ul>
+
+  <label>
+    <select
+      [(ngModel)]="languageSelected"
+      (ngModelChange)="onLanguageChanged()"
+    >
+      @for (language of LANGUAGES; track $index) {
+      <option [value]="$index">
+        {{ language.emoji + " " + language.name }}
+      </option>
+      }
+    </select>
+  </label>
+
+  <a id="download" [routerLink]="'/download'" (click)="closeMenu()">
+    &nbsp; Descargar</a
+  >
 </nav>
