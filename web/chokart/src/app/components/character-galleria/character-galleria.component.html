@@ -1,0 +1,25 @@
+<div class="galleria">
+  <div class="carrusel" *transloco="let t">
+    <p-galleria
+      [value]="characters"
+      [showThumbnails]="true"
+      [circular]="true"
+      [autoPlay]="true"
+      [responsiveOptions]="responsiveOptions"
+      [containerStyle]="{ 'max-width': '640px' }"
+    >
+      <ng-template pTemplate="item" let-character>
+        <div class="character-card">
+          <img class="character-img" [src]="character.image" />
+          <div class="info">
+            <h2>{{ character.name }}</h2>
+            <p class="quote">{{ t(character.quoteKey) }}</p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <img [src]="item.miniImage" style="height: 55px" />
+      </ng-template>
+    </p-galleria>
+  </div>
+</div>
