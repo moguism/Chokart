@@ -3269,6 +3269,7 @@ GameObject:
   - component: {fileID: 922602314}
   - component: {fileID: 922602316}
   - component: {fileID: 922602315}
+  - component: {fileID: 922602317}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3394,6 +3395,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922602313}
   m_CullTransparentMesh: 1
+--- !u!114 &922602317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922602313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 922602315}
+  textRaw: {fileID: 0}
+  code: NEXT
+  dropdown: {fileID: 0}
+  dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &997659528
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,6 +3837,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6277459629236134919, guid: 6bf985da4945455419f1be5cd10880a1,
+        type: 3}
+      propertyPath: tables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277459629236134919, guid: 6bf985da4945455419f1be5cd10880a1,
+        type: 3}
+      propertyPath: 'tables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2609ce3598dcaaf4e96ce277de0ec933,
+        type: 2}
+    - target: {fileID: 6277459629236134919, guid: 6bf985da4945455419f1be5cd10880a1,
+        type: 3}
+      propertyPath: 'tables.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 987979a17f07c32418c70710cd4166a2,
+        type: 2}
     - target: {fileID: 6436148416749148012, guid: 6bf985da4945455419f1be5cd10880a1,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4281,6 +4317,7 @@ GameObject:
   - component: {fileID: 1249904148}
   - component: {fileID: 1249904150}
   - component: {fileID: 1249904149}
+  - component: {fileID: 1249904151}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4409,6 +4446,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249904147}
   m_CullTransparentMesh: 1
+--- !u!114 &1249904151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249904147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1249904149}
+  textRaw: {fileID: 0}
+  code: CONTINUE
+  dropdown: {fileID: 0}
+  dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1001 &1281926245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5294,6 +5349,7 @@ GameObject:
   - component: {fileID: 1428150557}
   - component: {fileID: 1428150559}
   - component: {fileID: 1428150558}
+  - component: {fileID: 1428150560}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -5419,6 +5475,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428150556}
   m_CullTransparentMesh: 1
+--- !u!114 &1428150560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428150556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 1428150558}
+  textRaw: {fileID: 0}
+  code: PREVIOUS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1001 &1435347754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8526,7 +8600,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Speed: 100'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd5305cb948bb9b4cbe924a4522ba80a, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: bd5305cb948bb9b4cbe924a4522ba80a, type: 2}

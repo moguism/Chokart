@@ -96,7 +96,7 @@ public class KartController : BasicPlayer
     public GameObject characters;
 
     // Controles
-    private InputSystem_Actions playerControls;
+    public InputSystem_Actions playerControls;
     private float jumpValueLastFrame;
     private float jumpValue;
 
@@ -189,18 +189,23 @@ public class KartController : BasicPlayer
         _positionManager.karts.Add(this);
 
         isMobile = Application.isMobilePlatform;
-        Pedals pedals = FindFirstObjectByType<Pedals>();
 
-        if (isMobile)
+        try
         {
-            Input.gyro.enabled = true;
-            pedals.kart = this;
-            //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+            Pedals pedals = FindFirstObjectByType<Pedals>();
+
+            if (isMobile)
+            {
+                Input.gyro.enabled = true;
+                pedals.kart = this;
+                //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+            }
+            else
+            {
+                Destroy(pedals.gameObject);
+            }
         }
-        else
-        {
-            Destroy(pedals.gameObject);
-        }
+        catch { }
 
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
