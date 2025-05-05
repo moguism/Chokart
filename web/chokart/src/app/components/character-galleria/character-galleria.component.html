@@ -10,13 +10,25 @@
     >
       <ng-template pTemplate="item" let-character>
         <div class="character-card">
+          <!--imagen-->
           <img class="character-img" [src]="character.image" />
+
+          <!--texto de cada personaje-->
           <div class="info">
             <h2>{{ character.name }}</h2>
+            <span class="item">{{ t("item") }}</span>
+            <br />
+            <p style="text-transform: uppercase">
+              <i>
+                <b>{{ t("skills") }}</b></i
+              >
+            </p>
             <p class="quote">{{ t(character.quoteKey) }}</p>
           </div>
         </div>
       </ng-template>
+
+      <!--thumb-->
       <ng-template pTemplate="thumbnail" let-item>
         <img [src]="item.miniImage" style="height: 55px" />
       </ng-template>
