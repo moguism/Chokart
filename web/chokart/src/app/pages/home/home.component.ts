@@ -5,11 +5,19 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ButtonModule } from 'primeng/button';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TranslatorService } from '../../services/translator.service';
+import { GalleriaModule } from 'primeng/galleria';
+import { CharacterGalleriaComponent } from '../../components/character-galleria/character-galleria.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, ButtonModule, TranslocoModule],
+  imports: [
+    NavbarComponent,
+    ButtonModule,
+    TranslocoModule,
+    GalleriaModule,
+    CharacterGalleriaComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

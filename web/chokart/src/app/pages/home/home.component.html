@@ -7,29 +7,45 @@
     <h1>{{ t("play-free") }}</h1>
 
     <div class="links">
-      <div class="card-button">
+      <div class="card-button" (click)="this.router.navigateToUrl('/download')">
         <i
           class="pi pi-plus-circle"
           style="font-size: 2rem; align-self: end"
         ></i>
         <span>{{ t("download-now") }}</span>
       </div>
-      <div class="card-button">
+      <div class="card-button" (click)="this.router.navigateToUrl('/login')">
         <i
           class="pi pi-chevron-circle-right"
           style="font-size: 2rem; align-self: end"
         ></i>
-        <span (click)="router.navigateToUrl('login')">
-          {{ t("signup") }}
-        </span>
+        <span>{{ t("signup") }} </span>
       </div>
-      <div class="card-button">
+      <div class="card-button" (click)="this.router.navigateToUrl('/media')">
         <i
           class="pi pi-play-circle"
           style="font-size: 2rem; align-self: end"
         ></i>
         <span>{{ t("watch-trailer") }}</span>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="home-content" *transloco="let t">
+  <div class="landing1">
+    <h1>{{ t("landing-h1") }}</h1>
+    <p>{{ t("landing-p1") }}</p>
+  </div>
+
+  <div class="characters">
+    <div>
+      <h1>{{ t("landing-h1-character") }}</h1>
+      <p>{{ t("landing-p-character") }}</p>
+    </div>
+    <!--carrusel personajes-->
+    <div>
+      <app-character-galleria></app-character-galleria>
     </div>
   </div>
 </div>

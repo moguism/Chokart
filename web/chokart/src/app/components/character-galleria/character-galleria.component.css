@@ -1,0 +1,65 @@
+.p-galleria {
+  height: 500px;
+  overflow: visible;
+}
+
+.carrusel {
+  background-image: url("/home/carrusel-bg.webp");
+  width: 626px;
+  height: 348px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.character-card {
+  height: 250px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  color: white;
+  border-radius: 20px;
+  padding: 2rem;
+  gap: 1rem;
+  justify-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.character-img {
+  height: 300px;
+  position: relative;
+  top: -100px;
+  -webkit-filter: drop-shadow(5px 5px 5px #ffffff);
+  filter: drop-shadow(5px 5px 5px #ffffff);
+}
+
+:host ::ng-deep .p-galleria {
+  border: none;
+  overflow: visible !important;
+  height: auto !important;
+}
+
+:host ::ng-deep .p-galleria-thumbnails-content {
+  width: 60%;
+  background-color: #00000000;
+}
+
+:host ::ng-deep .p-galleria-thumbnail-item {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1300px) {
+  :host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
+    width: 50px;
+    background-color: rgb(0, 119, 255);
+    border: 2px solid #fff;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 6px #ffffff, 0 0 7px #ffffff,
+      0 0 8px #ffffff, inset 0 0 10px #ffffff;
+    margin: 0 10px;
+  }
+
+  :host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
+    flex: 1 0 25%;
+  }
+}
