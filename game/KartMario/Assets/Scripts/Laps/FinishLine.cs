@@ -56,7 +56,7 @@ public class FinishLine : MapTrigger
                 {
                     disable = true;
 
-                    Debug.LogError("Ha hecho las vueltas y su posición final ha sido: " + kart.position);
+                    Debug.LogWarning("Ha hecho las vueltas y su posición final ha sido: " + kart.position);
                     DetectCollision.CreateNewFinishKart(positionManager, kart, kart.position);
 
                     if (positionManager.karts.Count == positionManager.finishKarts.Count)

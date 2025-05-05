@@ -41,7 +41,7 @@ public class CharacterSelector : MonoBehaviour
             if(!isHud)
             {
                 // Escoge personaje aleatorio
-                if(parent.enableAI)
+                if(parent != null && parent.enableAI)
                 {
                     index = _random.Next(0, possibleCharacters.Length);
                 }
