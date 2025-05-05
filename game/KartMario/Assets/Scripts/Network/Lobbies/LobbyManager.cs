@@ -274,6 +274,7 @@ public class LobbyManager : MonoBehaviour
         });
 
         currentLobby = lobby;
+        RelayManager.playersIds.Clear();
         gameStarted = true;
     }
 

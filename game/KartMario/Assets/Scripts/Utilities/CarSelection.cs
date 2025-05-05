@@ -3,6 +3,8 @@ using Injecta;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -35,7 +37,7 @@ public class CarSelection : MonoBehaviour
     private Color startVideoColor;
 
     private int index;
-    public static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
+    public static int characterIndex = 0; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
 
     private bool showingCharacters = false;
 
@@ -51,8 +53,12 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private TMP_Text joinCodeText;
     private bool shouldChangeCode = false;
+
     private string originalText = "";
-    private string otherText = "Copiado :D";
+    private string waitingText = "";
+    private string speedString = "";
+
+    private string otherText;
     private float timerCode = 2.0f;
     private float maxTimer;
 
@@ -81,7 +87,7 @@ public class CarSelection : MonoBehaviour
         }
         else
         {
-            joinCodeText.text += " " + LobbyManager.lobbyCode;
+            joinCodeText.text = LobbyManager.lobbyCode;
         }
 
         cars = _cars.ToArray(); // Para que haga una copia
@@ -93,6 +99,20 @@ public class CarSelection : MonoBehaviour
         index = PlayerPrefs.GetInt("carIndex");
         characterIndex = PlayerPrefs.GetInt("characterIndex");
         ManageCarVisibility();
+
+        switch (LocalizationManager.languageCode)
+        {
+            case "es-ES":
+                otherText = "Copiado :D";
+                waitingText = "ESPERANDO...";
+                speedString = "VELOCIDAD: ";
+                break;
+            case "en-US":
+                otherText = "Copied :D";
+                waitingText = "WAITING...";
+                speedString = "SPEED: ";
+                break;
+        }
     }
 
     private void FixedUpdate()
@@ -193,7 +213,7 @@ public class CarSelection : MonoBehaviour
             }
             else
             {
-                buttonText.text = "ESPERANDO...";
+                buttonText.text = waitingText;
                 waiting = true;
             }
         }
@@ -227,7 +247,7 @@ public class CarSelection : MonoBehaviour
         }
 
         _cars[index].car.SetActive(true);
-        speedText.text = "Speed: " + _cars[index].speed;
+        //speedText.text = speedString + _cars[index].speed;
     }
 
     private async void ManageCharacterVisibility()
