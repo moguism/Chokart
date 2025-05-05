@@ -2208,12 +2208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Multi-Sample Anti-Aliasing</b>
-
-    Smoothes out jagged geometry, has
-    no effect on textures or shading.
-
-    Number indicates samples per pixel.'
+  m_text: '<b>Multi-Sample Anti-Aliasing</b>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3274,14 +3269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Low = Half resolution + Bilinear
-
-
-    Medium = Full resolution + Mixed
-
-
-    High
-    = Full resolution + Anisotropic x8'
+  m_text: 'patata'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

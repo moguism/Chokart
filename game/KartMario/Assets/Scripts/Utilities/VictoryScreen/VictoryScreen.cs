@@ -19,26 +19,15 @@ public class VictoryScreen : MonoBehaviour
 
     public List<FinishKart> finishKarts = new();
 
-    public static bool disable = true;
-    public static bool showing = false;
-
-    void Start()
+    /*void Start()
     {
-        if (disable)
-        {
-            gameObject.SetActive(false);
-            disable = false;
-            return;
-        }
-        otherCanvas.enabled = false;
-        disable = true;
-    }
+        gameObject.SetActive(false);
+        return;
+    }*/
 
     public void SetFinishKarts()
     {
-        LobbyManager.gameStarted = false;
-        showing = true;
-        disable = true;
+        otherCanvas.enabled = false;
 
         foreach (FinishKart kart in finishKarts)
         {
