@@ -71,3 +71,38 @@ h1 {
 .home-content {
   color: white;
 }
+
+.landing1 {
+  text-align: center;
+  padding: 5rem;
+}
+
+.home-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.home-content p {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Arial,
+    sans-serif;
+}
+
+.characters {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin: 2rem 10rem;
+  padding-bottom: 3rem;
+}
+
+.text-characters {
+  width: 45%;
+  margin: 0 3rem;
+}
+
+.play-modes {
+  background-image: url("/home/home-bg2.webp");
+  background-size: cover;
+  margin-top: -85px;
+}

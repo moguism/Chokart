@@ -6,19 +6,19 @@
 .carrusel {
   background-image: url("/home/carrusel-bg.webp");
   width: 626px;
-  height: 348px;
+  height: 342px;
   background-size: cover;
   background-repeat: no-repeat;
+  filter: drop-shadow(1px 1px 1px white) drop-shadow(-1px 0 1px white)
+    drop-shadow(5px 5px 15px #13a0dcd5);
 }
 
 .character-card {
   height: 250px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+  grid-template-columns: 56% 44%;
   color: white;
   border-radius: 20px;
-  padding: 2rem;
   gap: 1rem;
   justify-items: center;
   position: relative;
@@ -28,7 +28,8 @@
 .character-img {
   height: 300px;
   position: relative;
-  top: -100px;
+  top: -70px;
+  margin-left: 3rem;
   -webkit-filter: drop-shadow(5px 5px 5px #ffffff);
   filter: drop-shadow(5px 5px 5px #ffffff);
 }
@@ -40,26 +41,64 @@
 }
 
 :host ::ng-deep .p-galleria-thumbnails-content {
-  width: 60%;
+  width: 56%;
   background-color: #00000000;
 }
 
-:host ::ng-deep .p-galleria-thumbnail-item {
-  opacity: 0.8;
+:host ::ng-deep .p-ripple {
+  background-color: #0e5395;
+  color: #ffffff;
+  border-radius: 80px;
+  border: 3px solid white;
 }
 
-@media screen and (max-width: 1300px) {
-  :host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
-    width: 50px;
-    background-color: rgb(0, 119, 255);
-    border: 2px solid #fff;
-    border-radius: 0.2rem;
-    box-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 6px #ffffff, 0 0 7px #ffffff,
-      0 0 8px #ffffff, inset 0 0 10px #ffffff;
-    margin: 0 10px;
-  }
+:host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
+  width: 50px;
+  background: #1370b3;
+  background: linear-gradient(
+    168deg,
+    rgba(72, 161, 224, 1) 0%,
+    rgba(0, 66, 120, 1) 100%
+  );
+  border: 2px solid #fff;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 6px #ffffff, 0 0 7px #ffffff,
+    0 0 8px #ffffff, inset 0 0 10px #ffffff;
+  margin: 0 10px;
+}
 
-  :host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
-    flex: 1 0 25%;
-  }
+:host ::ng-deep #pn_id_1 .p-galleria-thumbnail-item {
+  flex: 1 0 25%;
+}
+
+.info {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.info h2 {
+  color: rgb(255, 255, 255);
+  text-shadow: 2px 0px 5px #001757;
+  font-size: 3rem;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+}
+
+.info p {
+  width: 90%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Arial,
+    sans-serif;
+}
+
+.item {
+  width: fit-content;
+  background-color: var(--primary-color);
+  color: black;
+  border-radius: 0px 0px 72px 0px / 0px 0px 148px 0px;
+  font-family: "Road Rage", sans-serif;
+  font-size: 1.5rem;
+  padding: 3px 12px;
+  margin: 0.4rem 0;
 }
