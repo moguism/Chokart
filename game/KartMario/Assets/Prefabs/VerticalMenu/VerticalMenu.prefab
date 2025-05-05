@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 8733508140887872936}
   - component: {fileID: 2407776164727879416}
   - component: {fileID: 5849427828365508550}
+  - component: {fileID: 7443980483959658748}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -275,6 +276,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7443980483959658748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598039919160157841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 5849427828365508550}
+  textRaw: {fileID: 0}
+  code: MY_FRIENDS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &867549726495884005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,12 +1843,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Multi-Sample Anti-Aliasing</b>
-
-    Smoothes out jagged geometry, has
-    no effect on textures or shading.
-
-    Number indicates samples per pixel.'
+  m_text: <b>Multi-Sample Anti-Aliasing</b>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2334,14 +2347,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Low = Half resolution + Bilinear
-
-
-    Medium = Full resolution + Mixed
-
-
-    High
-    = Full resolution + Anisotropic x8'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2423,6 +2429,7 @@ GameObject:
   - component: {fileID: 196911375517553405}
   - component: {fileID: 6770348570083933001}
   - component: {fileID: 794398800042122264}
+  - component: {fileID: 7986292176486951861}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2548,6 +2555,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7986292176486951861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506652695998749804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 794398800042122264}
+  textRaw: {fileID: 0}
+  code: REQUESTS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &5698475912568479961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,6 +2753,7 @@ GameObject:
   - component: {fileID: 2441856546744204728}
   - component: {fileID: 8349751250147930658}
   - component: {fileID: 5987323791398814499}
+  - component: {fileID: 5386310922403371517}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2856,6 +2881,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5386310922403371517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5794958877466262249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3477d89f2ee91dc478576d37e6dad29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textElement: {fileID: 5987323791398814499}
+  textRaw: {fileID: 0}
+  code: FRIENDS
+  dropdown: {fileID: 0}
+  dropdownCodes: []
 --- !u!1 &6291460592369356708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,6 +3105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4099880677952643467}
+  - component: {fileID: 6277459629236134919}
   m_Layer: 0
   m_Name: VerticalMenu
   m_TagString: Untagged
@@ -3086,6 +3129,20 @@ Transform:
   - {fileID: 2191942828600776330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6277459629236134919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152568753738256878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17902da5ef39b94e8c201732fc0e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageDropdown: {fileID: 0}
+  tables: []
 --- !u!1 &7168767962846364800
 GameObject:
   m_ObjectHideFlags: 0
