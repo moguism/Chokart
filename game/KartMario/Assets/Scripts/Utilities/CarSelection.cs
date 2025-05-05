@@ -37,7 +37,7 @@ public class CarSelection : MonoBehaviour
     private Color startVideoColor;
 
     private int index;
-    public static int characterIndex; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
+    public static int characterIndex = 0; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
 
     private bool showingCharacters = false;
 

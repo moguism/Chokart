@@ -182,6 +182,8 @@ public class PositionManager : NetworkBehaviour
     [ClientRpc(RequireOwnership = false)]
     private void NotifyAboutGameEndClientRpc(string json)
     {
+        LobbyManager.gameStarted = false;
+
         Debug.LogWarning("JSON1: " + json);
         victoryScreen.SetActive(true);
 
