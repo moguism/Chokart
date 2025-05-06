@@ -20,9 +20,13 @@
   clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
 }
 
+#home span {
+  color: rgb(0, 0, 0);
+}
+
 h1,
 h2 {
-  color: rgb(255, 255, 255);
+  color: white;
   text-shadow: 2px 0px 5px #001757;
   font-weight: 200;
   text-transform: uppercase;
