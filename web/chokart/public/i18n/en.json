@@ -27,6 +27,14 @@
     "chip-racing" : "Turbo with strategy",
   "chip-survival" : "Lethal collisions",
   "ranking-racing": "Riders ranking",
-  "ranking-survival": "Survivors ranking"
+  "ranking-survival": "Survivors ranking",
+  "signup-now"  : "Sign up now!",
+    "password" : "Password",
+    "nickname" : "Nickname",
+    "confirm-password" : "Confirm password",
+    "remember-me" : "Remember me",
+    "login-now" : "Log in now!",
+    "create-account" : "Create account",
+    "text-login" : "Create your profile, compete online, and download the game to play on PC and mobile. Start your adventure now!"
   
 }
