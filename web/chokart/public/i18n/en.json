@@ -18,5 +18,15 @@
   "doraemon-quote" : "Direct from the future has more traps in his pocket than a pop quiz. His motivation: to run away and get rid of Nobita.",
   "spamton-quote" : "The legend of aggressive marketing on wheels. You don't know if he's selling you a turbo or stealing your soul. His special: he launches giant ads that cover the entire screen.",
   "item" : "UNIQUE ITEM",
-  "skills" : "Skills" 
+  "skills" : "Skills" ,
+  "play-mode-title": "Game Modes",
+  "survival-mode-title":"Survival",
+  "survival-mode-description": "No laps, no finish line—just survival. It’s every driver for themselves in a high-stakes battle on wheels, where every hit matters and every second raises the tension. Fall behind, and you're out. The last one standing wins.",
+  "racing-mode-title":"Race",
+  "racing-mode-description": "A classic speed competition: three laps, one goal. Use your driving skills and the power-ups on the track to overtake, defend, and seize the lead at just the right moment. Speed alone won’t win the race—you’ll need timing, tactics, and a bit of luck.",
+    "chip-racing" : "Turbo with strategy",
+  "chip-survival" : "Lethal collisions",
+  "ranking-racing": "Riders ranking",
+  "ranking-survival": "Survivors ranking"
+  
 }

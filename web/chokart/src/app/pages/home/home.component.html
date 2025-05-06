@@ -51,43 +51,68 @@
 
   <br /><br />
   <div class="play-modes">
-    <h1>MODOS DE JUEGO</h1>
+    <img class="bg-img" src="/home/home-bg2.webp" alt="" />
+
+    <div class="title">
+      <h1>
+        {{ t("play-mode-title")
+        }}<img src="/icono-carrera.webp" height="70px" alt="" />
+      </h1>
+    </div>
     <div class="content">
       @if (!playModeSwitch) {
       <div @modeAnimation1 class="mode-content">
         <div class="mode-text">
-          <h2 class="mode-title">SURVIVAL</h2>
+          <h2 class="mode-title">{{ t("survival-mode-title") }}</h2>
+          <span class="chips">Colisiones letales</span>
+          <br /><br />
           <p class="mode-desc">
-            Quien quede último, gana, Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Animi quo, maxime laboriosam itaque excepturi vel
-            facere voluptatem odio doloremque aliquid sint distinctio facilis
-            reiciendis debitis quos similique exercitationem quam nesciunt.
+            {{ t("survival-mode-description") }}
           </p>
+          <br />
+          <div id="fifth" class="buttonBox">
+            <button>{{ t("ranking-survival") }}</button>
+          </div>
         </div>
-        <img
-          src="https://store-images.s-microsoft.com/image/apps.22126.14329949037963316.a8135a3c-31d9-4a17-a223-9d5c2fb44557.cb90dca0-6a9a-4a44-85f6-fa5721b3d2d8"
-          alt="Survival image"
-        />
+        <div class="clipped-image">
+          <img
+            src="https://store-images.s-microsoft.com/image/apps.22126.14329949037963316.a8135a3c-31d9-4a17-a223-9d5c2fb44557.cb90dca0-6a9a-4a44-85f6-fa5721b3d2d8"
+            alt="Survival"
+          />
+        </div>
       </div>
       } @else {
       <div @modeAnimation2 class="mode-content">
         <div class="mode-text">
-          <h2 class="mode-title">CARRERA</h2>
+          <h2 class="mode-title">{{ t("racing-mode-title") }}</h2>
+          <span class="chips">Colisiones letales</span>
+          <br /><br />
           <p class="mode-desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-            est, architecto odio accusamus atque eaque error praesentium natus a
-            placeat quos neque. Dolore, quae corrupti! Laborum fugit blanditiis
-            voluptatum architecto!
+            {{ t("racing-mode-description") }}
           </p>
+          <br />
+          <div id="fifth" class="buttonBox">
+            <button>{{ t("ranking-racing") }}</button>
+          </div>
         </div>
-        <img
-          src="https://www.desconsolados.com/wp-content/uploads/2019/11/Touring-Karts-Cover_1080p.jpg"
-          alt="Carrera image"
-        />
+        <div class="clipped-image">
+          <img
+            src="https://www.desconsolados.com/wp-content/uploads/2019/11/Touring-Karts-Cover_1080p.jpg"
+            alt="Carrera"
+          />
+        </div>
       </div>
       }
     </div>
-
     <app-kart-switch (switched)="onSwitchChange($event)"></app-kart-switch>
   </div>
 </div>
+<div
+  style="
+    height: 6rem;
+    background-color: #043da8;
+    position: relative;
+    z-index: 1;
+    margin-top: -100px;
+  "
+></div>
