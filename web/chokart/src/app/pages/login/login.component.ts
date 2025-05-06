@@ -12,16 +12,23 @@ import { CommonModule, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { PasswordValidatorService } from '../../services/password-validator.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NavbarComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NavbarComponent,
+    TranslocoModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  menuSeleccion: 'login' | 'register' = 'login';
+  menuSeleccion: 'login' | 'register' = 'register';
 
   emailOrNickname: string = '';
   password: string = '';

@@ -34,7 +34,16 @@
     "confirm-password" : "Confirm password",
     "remember-me" : "Remember me",
     "login-now" : "Log in now!",
+    "emailornickname" : "Nickname or email",
+    "login-button" : "Log in",
     "create-account" : "Create account",
-    "text-login" : "Create your profile, compete online, and download the game to play on PC and mobile. Start your adventure now!"
-  
+    "text-login" : "Create your profile, compete online, and download the game to play on PC and mobile. Start your adventure now!",
+    "mandatory-nickname" : "Nickname is required.",
+    "mandatory-email" : "Email is required.",
+    "invalid-email" : "Invalid email address.",
+    "mandatory-password" : "Password is required.",
+    "match-password" : "Passwords do not match.",
+    "min-password" : "Password must be at least 6 characters long.",
+        "change-to-login" : "Already have an account? Log in and get back on track here.",
+    "change-to-signup" : "New driver? Sign up and start racing here."
 }

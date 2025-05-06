@@ -28,12 +28,23 @@
   "chip-survival" : "Colisiones letales",
     "ranking-racing": "Ranking de corredores",
   "ranking-survival": "Ranking de supervivientes",
-  "signup-now"  : "¡Registrate ahora!",
+  "signup-now"  : "¡Registrate ya!",
     "password" : "Contraseña",
     "nickname" : "Apodo",
     "confirm-password" : "Confirmar contraseña",
     "remember-me" : "Recuérdame",
-    "login-now" : "¡Accede ahora!",
+    "login-now" : "¡Accede ya!",
+    "emailornickname" : "Apodo o correo",
+    "login-button" : "Iniciar sesión",
     "create-account" : "Crear cuenta",
-    "text-login" : "Crea tu perfil, compite online y descarga el juego para disfrutarlo en PC y móvil. ¡Empieza tu aventura ahora!"
+    "text-login" : "Crea tu perfil, compite online y descarga el juego para disfrutarlo en PC y móvil. ¡Empieza tu aventura ahora!",
+    "mandatory-nickname" : "El apodo es obligatorio.",
+    "mandatory-email" : "El correo electrónico es obligatorio.",
+    "invalid-email" : "El correo electrónico es inválido.",
+    "mandatory-password" : "La contraseña es obligatoria.",
+    "match-password" : "Las contraseñas no coinciden.",
+    "min-password" : "La contraseña debe tener mínimo 6 caracteres.",
+    "change-to-login" : "¿Ya tienes cuenta? Accede y vuelve a la pista por aquí.",
+    "change-to-signup" : "¿Nuevo piloto? Regístrate y juega aquí."
+    
 }
