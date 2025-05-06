@@ -29,7 +29,6 @@
   height: 300px;
   position: relative;
   top: -70px;
-  margin-left: 3rem;
   -webkit-filter: drop-shadow(5px 5px 5px #ffffff);
   filter: drop-shadow(5px 5px 5px #ffffff);
 }
