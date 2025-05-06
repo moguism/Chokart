@@ -40,7 +40,7 @@
 
   <div class="characters">
     <div class="text-characters">
-      <h1>{{ t("landing-h1-character") }}</h1>
+      <h2>{{ t("landing-h1-character") }}</h2>
       <p>{{ t("landing-p-character") }}</p>
     </div>
     <!--carrusel personajes-->
@@ -51,15 +51,43 @@
 
   <br /><br />
   <div class="play-modes">
-    <!--un switch con los dos modos-->
-    <h1>Diversión a tu manera</h1>
-    <div class="survival">
-      <h2>SURVIVAL</h2>
-      <p>Quien quede ultimo, gana</p>
+    <h1>MODOS DE JUEGO</h1>
+    <div class="content">
+      @if (!playModeSwitch) {
+      <div @modeAnimation1 class="mode-content">
+        <div class="mode-text">
+          <h2 class="mode-title">SURVIVAL</h2>
+          <p class="mode-desc">
+            Quien quede último, gana, Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Animi quo, maxime laboriosam itaque excepturi vel
+            facere voluptatem odio doloremque aliquid sint distinctio facilis
+            reiciendis debitis quos similique exercitationem quam nesciunt.
+          </p>
+        </div>
+        <img
+          src="https://store-images.s-microsoft.com/image/apps.22126.14329949037963316.a8135a3c-31d9-4a17-a223-9d5c2fb44557.cb90dca0-6a9a-4a44-85f6-fa5721b3d2d8"
+          alt="Survival image"
+        />
+      </div>
+      } @else {
+      <div @modeAnimation2 class="mode-content">
+        <div class="mode-text">
+          <h2 class="mode-title">CARRERA</h2>
+          <p class="mode-desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+            est, architecto odio accusamus atque eaque error praesentium natus a
+            placeat quos neque. Dolore, quae corrupti! Laborum fugit blanditiis
+            voluptatum architecto!
+          </p>
+        </div>
+        <img
+          src="https://www.desconsolados.com/wp-content/uploads/2019/11/Touring-Karts-Cover_1080p.jpg"
+          alt="Carrera image"
+        />
+      </div>
+      }
     </div>
-    <div class="racing">
-      <h2>CARRERA</h2>
-      <p>Gna quien llegue antes</p>
-    </div>
+
+    <app-kart-switch (switched)="onSwitchChange($event)"></app-kart-switch>
   </div>
 </div>

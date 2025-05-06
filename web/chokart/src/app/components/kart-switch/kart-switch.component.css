@@ -1,0 +1,260 @@
+/*SWTICH*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  font-size: calc(60px + (84 - 60) * (100vw - 320px) / (960 - 320));
+}
+
+input {
+  display: inline-block;
+}
+form {
+  margin-top: 1.5em;
+  text-align: center;
+}
+.sf {
+  background: repeating-linear-gradient(
+        90deg,
+        #ff7e7e,
+        #fbff27 0.5em,
+        #fff 0.5em,
+        #fff 1em
+      )
+      0 0.5em / 100% 0.1em,
+    repeating-linear-gradient(
+        120deg,
+        #ff7e7e,
+        #fbff20 0.29em,
+        #fff 0.3em,
+        #fff 0.59em,
+        #ff7e7e 0.6em
+      )
+      0 0.8em / 100% 0.1em,
+    repeating-linear-gradient(
+        120deg,
+        #fff,
+        #fff 0.49em,
+        rgba(255, 255, 255, 0) 0.5em,
+        rgba(255, 255, 255, 0) 0.99em,
+        #fff 1em
+      )
+      0 1.2em / 100% 0.05em,
+    radial-gradient(
+        100% 200% at 50% 100%,
+        #a8a0be 49%,
+        rgba(168, 160, 190, 0) 50%
+      ) -0.1em 0.27em / 1.5em 0.23em,
+    radial-gradient(
+        100% 200% at 50% 100%,
+        #bcb4d2 49%,
+        rgba(188, 180, 210, 0) 50%
+      )
+      0.8em 0.27em / 1.5em 0.23em,
+    radial-gradient(
+        100% 200% at 50% 100%,
+        #a8a0be 49%,
+        rgba(168, 160, 190, 0) 50%
+      )
+      1.8em 0.27em / 1.5em 0.23em,
+    radial-gradient(150% 200% at 50% 100%, #fff 49%, rgba(255, 255, 255, 0) 50%)
+      0em 0.16em / 0.75em 0.2em,
+    radial-gradient(150% 200% at 50% 100%, #fff 49%, rgba(255, 255, 255, 0) 50%)
+      0.75em 0.16em / 0.75em 0.2em,
+    radial-gradient(150% 200% at 50% 100%, #fff 49%, rgba(255, 255, 255, 0) 50%)
+      1.5em 0.16em / 0.75em 0.2em,
+    radial-gradient(150% 200% at 50% 100%, #fff 49%, rgba(255, 255, 255, 0) 50%)
+      2.25em 0.16em / 0.75em 0.2em,
+    linear-gradient(#6dc9ff 0.6em, #9cf56c 0.6em, #99ff62 0.9em, #b6c7c7 0.9em);
+  /* stripes */
+  /* road lines */
+  /* mountains */
+  /* clouds */
+  /* road, grass, sky */
+  background-repeat: no-repeat;
+  box-shadow: 0 0.05em 0 0.05em rgba(0, 0, 0, 0.2) inset,
+    0 0 0 0.05em rgba(255, 255, 255, 0.2);
+  font-size: 2em;
+  position: relative;
+  width: 3em;
+  height: 1.5em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  z-index: 0;
+}
+.sf,
+.sf:before {
+  border-radius: 0.75em;
+}
+.sf:before,
+.sf:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+.sf:before {
+  background: radial-gradient(
+      1.3em 1.3em at 50% 50%,
+      #b4b1b0 0.07em,
+      #5a5856 0.08em,
+      #5a5856 0.11em,
+      #b4b1b0 0.12em,
+      #b4b1b0 0.19em,
+      #5a5856 0.2em,
+      #5a5856 0.24em,
+      rgba(90, 88, 86, 0) 0.25em,
+      rgba(90, 88, 86, 0) 0.34em,
+      #2d2c2b 0.35em,
+      #2d2c2b 0.39em,
+      #b4b1b0 0.4em,
+      #b4b1b0 0.49em,
+      #2d2c2b 0.5em,
+      #2d2c2b 0.65em,
+      rgba(45, 44, 43, 0) 0.67em
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.65em 0.35em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.86em 0.44em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.95em 0.65em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.86em 0.86em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.65em 0.95em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.44em 0.86em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.12em 0.12em at 0.35em 0.65em,
+      #000 48%,
+      rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(0.12em 0.12em at 0.44em 0.44em, #000 48%, #b4b1b0 50%);
+  /* Center to outer tire */
+  /* 8 holes */
+  background-repeat: no-repeat;
+  transition: left 0.4s linear, transform 0.4s linear;
+  transform: rotate(0.5turn);
+  top: 0.1em;
+  left: 0.1em;
+  width: 1.3em;
+  height: 1.3em;
+  z-index: 2;
+}
+.sf:after {
+  background-image: radial-gradient(
+      0.7em 0.22em at 85% 37%,
+      #fff 49%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    radial-gradient(
+      1.2em 0.3em at 90% 52%,
+      #fff 49%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    radial-gradient(
+      0.6em 0.26em at 85% 68%,
+      #fff 49%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    radial-gradient(
+      0.9em 0.27em at 85% 35%,
+      #ffe000 49%,
+      rgba(255, 224, 0, 0) 50%
+    ),
+    radial-gradient(
+      1.6em 0.4em at 90% 52%,
+      #ffe000 49%,
+      rgba(255, 224, 0, 0) 50%
+    ),
+    radial-gradient(
+      0.8em 0.25em at 83% 70%,
+      #ffe000 49%,
+      rgba(255, 224, 0, 0) 50%
+    ),
+    radial-gradient(1em 0.3em at 76% 31%, #ff9000 49%, rgba(255, 144, 0, 0) 50%),
+    radial-gradient(2em 0.5em at 90% 52%, #ff9000 49%, rgba(255, 144, 0, 0) 50%),
+    radial-gradient(
+      1.1em 0.3em at 79% 73%,
+      #ff9000 49%,
+      rgba(255, 144, 0, 0) 50%
+    ),
+    radial-gradient(
+      1.4em 0.4em at 70% 25%,
+      #ff4c00 49%,
+      rgba(255, 76, 0, 0) 50%
+    ),
+    radial-gradient(
+      2.9em 0.7em at 100% 52%,
+      #ff4c00 49%,
+      rgba(255, 76, 0, 0) 50%
+    ),
+    radial-gradient(
+      1.6em 0.35em at 75% 76%,
+      #ff4c00 49%,
+      rgba(255, 76, 0, 0) 50%
+    );
+  /* white */
+  /* yellow */
+  /* orange */
+  /* red-orange */
+  background-size: 1.5em 1.5em;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  width: 1.5em;
+  height: 1.5em;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.33, 0.08, 1, 0.9),
+    opacity 0.4s linear;
+  transform: scale(0.25, 0.5);
+  transform-origin: 0 50%;
+  z-index: 1;
+}
+.sf:checked:before {
+  animation: spin 0.4s cubic-bezier(0.47, 0.04, 0.8, 0.39);
+  left: 1.6em;
+  transition: left 0.4s cubic-bezier(0.76, -0.6, 0.15, 1);
+  transform: rotate(1turn);
+}
+.sf:checked:after {
+  opacity: 1;
+  transform: scale(1.45, 1.15);
+  transition: transform 0.4s cubic-bezier(0.76, -0.6, 0.15, 1),
+    opacity 0s 0.16s linear;
+}
+.sf:focus {
+  outline: transparent;
+}
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
