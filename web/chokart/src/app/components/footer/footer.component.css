@@ -1,0 +1,8 @@
+footer {
+  clip-path: polygon(55% 10%, 65% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
+  height: 30rem;
+  width: 100%;
+  background-position: top;
+  background-image: url(/racing-pattern.webp);
+  background-size: cover;
+}

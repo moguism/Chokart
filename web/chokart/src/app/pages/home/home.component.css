@@ -11,9 +11,13 @@
 }
 
 #home {
-  background-image: url(https://media.vandal.net/i/1280x720/10-2023/18/202310182222449_5.jpg);
+  position: relative;
+  z-index: 8;
+  background-image: url(/poster.jpg);
   background-size: cover;
-  height: 100vh;
+  height: 110vh;
+  background-position-y: -130px;
+  clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
 }
 
 h1,
@@ -59,9 +63,15 @@ h2 {
 }
 
 .home-content {
+  z-index: 5;
+  position: relative;
+  top: -55px;
   width: 100%;
   background-image: url("/home/background-blue.jpg");
+  background-color: #043da8;
   background-size: 100%;
+  background-position-y: -169px;
+  background-repeat: no-repeat;
 }
 
 .home-content h2 {
@@ -84,6 +94,7 @@ h2 {
 .home-content h1 {
   font-size: 4rem;
   margin-bottom: 1rem;
+  color: var(--primary-color);
 }
 
 .home-content h2 {
@@ -91,7 +102,8 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.home-content p {
+.home-content p,
+button {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Arial,
     sans-serif;
@@ -111,19 +123,44 @@ h2 {
 }
 
 .play-modes {
-  padding: 5rem 0rem;
-  background-image: url("/home/home-bg2.webp");
-  background-size: cover;
-  margin-top: -85px;
-  color: #000000;
-  height: 100vh;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.bg-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.play-modes .content {
+  position: absolute;
+  top: 17rem;
+  left: 0;
+  width: 100%;
+  color: #000;
+}
+
+.play-modes .title {
+  position: absolute;
+  top: 8rem;
+  left: 0;
+  width: 100%;
+  color: #000;
+}
+
+.play-modes app-kart-switch {
+  position: absolute;
+  top: 70%;
+  width: 100%;
 }
 
 .play-modes .content h2 {
   text-shadow: none;
   font-size: 2.5rem;
-  color: var(--primary-color);
-  font-weight: 200;
+  color: black;
+  font-weight: 500;
   text-transform: uppercase;
   font-family: "Road Rage", sans-serif;
 }
@@ -152,9 +189,73 @@ h2 {
   flex: 1;
 }
 
-.play-modes img {
+.play-modes .clipped-image {
   margin-right: 6rem;
-  width: 27rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  width: 30rem;
+}
+
+.clipped-image img {
+  width: 100%;
+  height: auto;
+  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  border-radius: 20px;
+}
+
+.chips {
+  padding: 0.2rem 1.5rem;
+  background-color: #0f78f5;
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+}
+
+span {
+  text-shadow: none;
+  font-size: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+}
+/* FIFTH BUTTON */
+
+button {
+  width: fit-content;
+  padding: 0 1rem;
+  height: 42px;
+  background: var(--primary-color);
+  text-transform: uppercase;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  cursor: pointer;
+}
+
+#fifth {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s ease-in-out;
+}
+
+#fifth:before {
+  content: " ";
+  display: block;
+  width: 200px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  top: -10px;
+  left: -200px;
+  transform: rotate(-45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+#fifth:hover:before {
+  margin-left: 300%;
+}
+
+#fifth:hover {
+  border: 1px solid rgba(255, 255, 255, 1);
 }
