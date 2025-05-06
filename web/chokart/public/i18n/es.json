@@ -27,5 +27,13 @@
   "chip-racing" : "Turbo con estratégia",
   "chip-survival" : "Colisiones letales",
     "ranking-racing": "Ranking de corredores",
-  "ranking-survival": "Ranking de supervivientes"
+  "ranking-survival": "Ranking de supervivientes",
+  "signup-now"  : "¡Registrate ahora!",
+    "password" : "Contraseña",
+    "nickname" : "Apodo",
+    "confirm-password" : "Confirmar contraseña",
+    "remember-me" : "Recuérdame",
+    "login-now" : "¡Accede ahora!",
+    "create-account" : "Crear cuenta",
+    "text-login" : "Crea tu perfil, compite online y descarga el juego para disfrutarlo en PC y móvil. ¡Empieza tu aventura ahora!"
 }
