@@ -1,8 +1,8 @@
 @if(user)
 {
-    @if(user.steamId != "" && user.steamId != null)
+    @if(steamProfile != null)
     {
-        <p>Id: {{ steamId }}</p>
+        <p>Id: {{ user.steamId }}</p>
         <p>Nombre: {{ steamProfile.personaName }}</p>
         Avatar: <img [src]="steamProfile.avatarFull">
         <button (click)="removeSteamAccount()">Desvincular cuenta de Steam</button>

@@ -32,7 +32,7 @@ export class CharacterGalleriaComponent {
     },
     {
       name: 'Jinx',
-      image: 'characters/jinx.png',
+      image: 'characters/jinx.webp',
       miniImage: 'characters/jinx-mini.png',
 
       quoteKey: 'jinx-quote',

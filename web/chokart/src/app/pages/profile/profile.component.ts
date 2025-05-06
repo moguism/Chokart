@@ -20,7 +20,6 @@ export class ProfileComponent implements OnInit {
 
   user: User | null = null
 
-  steamId: string = ""
   steamProfile: SteamProfile | null = null
 
   STEAM_URL = "";
@@ -29,12 +28,6 @@ export class ProfileComponent implements OnInit {
       if(!this.authService.isAuthenticated())
       {
         this.router.navigateToUrl("login")
-      }
-
-      this.steamId = this.activatedRoute.snapshot.queryParamMap.get('steamId')
-      if(this.steamId != "" && this.steamId != null)
-      {
-        await this.getSteamDetails()
       }
 
       this.user = this.authService.getUser()
@@ -46,19 +39,27 @@ export class ProfileComponent implements OnInit {
 
   async getSteamDetails()
   {
-    const data = await this.steamService.getUserDetailsById(this.steamId)
-    console.log(data)
+      try
+      {
+      const data = await this.steamService.getUserDetailsById(this.user.steamId)
+      console.log(data)
 
-    this.steamProfile = {
-      personaName : data.personaName,
-      avatarFull: data.avatarFull,
-      avatar: data.avatar,
-      steamId: this.steamId
+      this.steamProfile = {
+        personaName : data.personaName,
+        avatarFull: data.avatarFull,
+        avatar: data.avatar,
+        steamId: this.user.steamId
+      }
+    }
+    catch(error)
+    {
+      console.warn(error)
     }
   }
 
   async removeSteamAccount()
   {
+    this.steamProfile = null
     await this.steamService.removeAccount()
     await this.getCurrentUser()
   }
@@ -67,6 +68,11 @@ export class ProfileComponent implements OnInit {
   {
     this.user = await this.userService.getCurrentUser(this.user.id)
     this.authService.saveUser(this.user)
+
+    if(this.user.steamId != null && this.user.steamId != "")
+    {
+      await this.getSteamDetails()
+    }
   }
 
 }
