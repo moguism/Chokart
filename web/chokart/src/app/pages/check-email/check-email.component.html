@@ -1,8 +1,16 @@
-<div class="mensaje">
-  <h2>¡Registro exitoso!</h2>
-  @if (this.email) {
-  <p>
-    Hemos enviado un correo de verificación a: <strong>{{ email }}</strong>
-  </p>
-  }
-</div>
+<section *transloco="let t">
+  <app-navbar></app-navbar>
+
+  <div class="content">
+    <h1>{{ t("check-success") }}</h1>
+    <hr />
+    <i class="pi pi-check-square"></i>
+
+    @if (this.email) {
+    <p>
+      {{ t("text-email") }} <strong>{{ email }}</strong>
+    </p>
+    }
+    <p>{{ t("text-check-email") }}</p>
+  </div>
+</section>
