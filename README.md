@@ -102,3 +102,4 @@
 ### Sexta semana (05/04 - 11/05)
     Lunes --> Mauricio soluciona bugs y exporta a Android. María diseña carrusel de personajes y vista inicio.
     Martes --> María termina página de inicio y vista registro.
+    Miércoles --> Mauricio incrusta el juego en la web.
