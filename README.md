@@ -100,4 +100,5 @@
     Viernes --> Mauricio termina la lista de amigos completa y hace el login con Steam. María implementa diseño de navbar.
     Sábado --> Mauricio traduce todo el juego y soluciona bugs. María traduce la web y diseña la página de inicio.
 ### Sexta semana (05/04 - 11/05)
-    Lunes --> Mauricio soluciona bugs y exporta a Android.
+    Lunes --> Mauricio soluciona bugs y exporta a Android. María diseña carrusel de personajes y vista inicio.
+    Martes --> María termina página de inicio y vista registro.
