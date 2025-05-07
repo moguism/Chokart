@@ -45,6 +45,12 @@
     "match-password" : "Las contraseñas no coinciden.",
     "min-password" : "La contraseña debe tener mínimo 6 caracteres.",
     "change-to-login" : "¿Ya tienes cuenta? Accede y vuelve a la pista por aquí.",
-    "change-to-signup" : "¿Nuevo piloto? Regístrate y juega aquí."
-    
+    "change-to-signup" : "¿Nuevo piloto? Regístrate y juega aquí.",
+    "play-now" : "Ya disponible",
+    "play-text" : "Comienza ya tu aventura y únete al ranking de los chokantes legendarios. ¿Tienes lo que hace falta para estar entre los mejores?",
+    "play-online" : "Juega online",
+    "pc" : "PC",
+    "mobile" : "Móvil",
+    "download-apk" : "Descarga .apk",
+    "download-pc" : "Descarga en tu PC"
 }
