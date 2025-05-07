@@ -3,39 +3,48 @@
 
   @if(user) {
 
-  <!--steam-->
-  @if(steamProfile != null) {
-  <p>Id: {{ user.steamId }}</p>
-  <p>Nombre: {{ steamProfile.personaName }}</p>
-  Avatar: <img [src]="steamProfile.avatarFull" />
+  <div class="user-box">
+    <!--steam-->
+    @if(steamProfile != null) {
 
-  <button id="remove-steam" (click)="removeSteamAccount()">
-    Desvincular cuenta de Steam
-  </button>
+    <img class="avatar" [src]="steamProfile.avatarFull" />
+    <!-- <p>Id: {{ user.steamId }}</p>-->
+    <p>{{ steamProfile.personaName }}</p>
 
-  } @else {
-  <!--info chokart-->
-  <p>{{ user.nickname }}</p>
-  <p>{{ user.email }}</p>
-
-  <div id="steam">
-    <a [href]="STEAM_URL">
+    <div class="card-button" (click)="removeSteamAccount()">
       <img
-        width="50px"
+        height="50px"
         src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
         alt="logo Steam"
+        style="align-self: end"
       />
-      Vincular con Steam
-    </a>
+      <span>Desvincular cuenta de Steam</span>
+    </div>
+
+    } @else {
+    <!--info chokart-->
+    <img class="avatar" [src]="user.avatarPath" alt="avatar usuario" />
+    <p>{{ user.nickname }}</p>
+
+    <div class="card-button">
+      <a [href]="STEAM_URL">
+        <img
+          width="50px"
+          src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+          alt="logo Steam"
+          style="align-self: end"
+        />
+        <span>Vincular con Steam</span>
+      </a>
+    </div>
+
+    }
+    <!--punto totales y correo-->
+    <p>Puntuación total: {{ user.totalPoints }}</p>
+
+    <!--cerrar sesion-->
+    <p (click)="this.logOut()">Cerrar la sesión actual</p>
   </div>
-
-  }
-  <!--punto totales y correo-->
-  <p>{{ user.totalPoints }}</p>
-
-  <!--cerrar sesion-->
-  <p (click)="this.logOut()">cerrar la sesión actual</p>
-
   <!--si no hay usuario-->
   } @else {
   <p>Cargando...</p>

@@ -1,0 +1,56 @@
+section {
+  background-image: url(/bg-profile.jpg);
+  background-size: cover;
+  min-height: 100vh;
+}
+
+p {
+  color: white;
+}
+
+.user-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.avatar {
+  width: 80px;
+  border-radius: 50%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-button {
+  background-image: linear-gradient(
+    to right,
+    rgb(209, 209, 209) 0%,
+    rgb(255, 255, 255) 40%,
+    rgb(255, 255, 255) 100%
+  );
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: black;
+  height: 5rem;
+  max-width: 15rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}

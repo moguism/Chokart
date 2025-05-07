@@ -101,11 +101,11 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: linear-gradient(180deg, #fbff21, #ff9900);
+    background: linear-gradient(180deg, #8c8c8ca6, #8888888d);
     padding: 20px 0;
     align-items: center;
     gap: 20px;
-    border-top: 2px solid white;
+    border-top: 2px solid rgb(0, 0, 0);
   }
 
   .nav-links.active {
@@ -121,90 +121,6 @@ Descr: A custom selector allowing users to choose their preferred language on a 
 Usage: codyhouse.co/license
 
 -------------------------------- */
-/* reset */
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-}
-
-* {
-  font: inherit;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-body {
-  background-color: hsl(0, 0%, 100%);
-  font-family: system-ui, sans-serif;
-  color: hsl(230, 7%, 23%);
-  font-size: 1rem;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1.2;
-  color: hsl(230, 13%, 9%);
-  font-weight: 700;
-}
-
-h1 {
-  font-size: 2.0736rem;
-}
-
-h2 {
-  font-size: 1.728rem;
-}
-
-h3 {
-  font-size: 1.25rem;
-}
-
-h4 {
-  font-size: 1.2rem;
-}
-
-ol,
-ul,
-menu {
-  list-style: none;
-}
-
-button,
-input,
-textarea,
-select {
-  background-color: transparent;
-  border-radius: 0;
-  color: inherit;
-  line-height: inherit;
-  appearance: none;
-}
-
-textarea {
-  resize: vertical;
-  overflow: auto;
-  vertical-align: top;
-}
-
-a {
-  color: hsl(250, 84%, 54%);
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-img,
-video,
-svg {
-  display: block;
-  max-width: 100%;
-}
 
 @media (min-width: 64rem) {
   body {
