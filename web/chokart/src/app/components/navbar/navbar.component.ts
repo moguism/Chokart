@@ -13,6 +13,8 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TranslatorService } from '../../services/translator.service';
 import { Language } from '../../models/language';
+import { User } from '../../models/user';
+import { CustomRouterService } from '../../services/custom-router.service';
 
 @Component({
   selector: 'app-navbar',
@@ -33,9 +35,11 @@ export class NavbarComponent implements OnInit {
   languages: Language[] = [];
   selectedLangIndex: number;
 
+  user: User | null = null;
+
   constructor(
     private authService: AuthService,
-    private websocketService: WebsocketService,
+    private router: CustomRouterService,
     private translocoService: TranslocoService,
     private translatorService: TranslatorService
   ) {}
@@ -50,6 +54,10 @@ export class NavbarComponent implements OnInit {
     const activeLang = this.translocoService.getActiveLang();
     this.languageSelected =
       this.translatorService.findLanguageIndex(activeLang);
+
+    if (this.authService.isAuthenticated()) {
+      this.user = this.authService.getUser();
+    }
   }
 
   isMenuOpen = false;
@@ -61,13 +69,6 @@ export class NavbarComponent implements OnInit {
   closeMenu() {
     this.isMenuOpen = false;
   }
-
-  /*async ngOnInit() {
-      if(this.authService.isAuthenticated() && !this.websocketService.isConnectedNative())
-      {
-        this.websocketService.connectNative()
-      }
-  }*/
 
   getFlagUrl(langCode: string): string {
     const map: Record<string, string> = {
