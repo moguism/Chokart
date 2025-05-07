@@ -71,6 +71,12 @@ export class LoginComponent {
     );
   }
 
+  async ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigateByUrl('profile');
+    }
+  }
+
   async login() {
     if (this.pressedEnter) return;
     this.pressedEnter = true;

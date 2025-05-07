@@ -9,7 +9,6 @@ import { GalleriaModule } from 'primeng/galleria';
 import { CharacterGalleriaComponent } from '../../components/character-galleria/character-galleria.component';
 import { KartSwitchComponent } from '../../components/kart-switch/kart-switch.component';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +20,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
     GalleriaModule,
     CharacterGalleriaComponent,
     KartSwitchComponent,
-    FooterComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
