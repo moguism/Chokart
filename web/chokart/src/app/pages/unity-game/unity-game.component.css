@@ -1,0 +1,13 @@
+.unity-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.unity-container iframe {
+    max-width: 100%;
+    max-height: 100%;
+    width: 970px;
+    height: 608px;
+}
