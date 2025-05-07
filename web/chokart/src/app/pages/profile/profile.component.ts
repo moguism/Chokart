@@ -82,4 +82,8 @@ export class ProfileComponent implements OnInit {
     this.authService.logout();
     this.router.navigateToUrl('/');
   }
+
+  navigateToUrl(url: string) {
+    this.router.navigateToUrl(url);
+  }
 }

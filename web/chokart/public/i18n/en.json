@@ -52,6 +52,8 @@
      "pc" : "PC",
      "mobile" : "Mobile",
      "download-apk" : "Download .apk",
-     "download-pc" : "Download to your PC"
-
+     "download-pc" : "Download to your PC",
+     "text-email" : "A verification email has been sent to ",
+     "text-check-email" : "To finish creating your account, check your email and access the link.",
+     "check-success" : "Registration successful!"
 }
