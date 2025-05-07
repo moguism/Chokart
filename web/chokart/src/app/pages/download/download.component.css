@@ -1,0 +1,19 @@
+#download {
+  min-height: 100vh;
+  background-image: url(/download/bg-download.jpg);
+  background-size: cover;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+p {
+  color: aliceblue;
+}
+
+.now {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

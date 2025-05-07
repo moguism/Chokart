@@ -1,1 +1,29 @@
-<p>download works!</p>
+<div id="download" *transloco="let t">
+  <app-navbar></app-navbar>
+  <div class="now">
+    <h1>{{ t("play-now") }}</h1>
+    <p>{{ t("play-text") }}</p>
+    <i class="pi pi-play-circle"></i>
+  </div>
+
+  <div class="mobile">
+    <div class="card-button">
+      <i class="pi pi-android" style="font-size: 2rem; align-self: end"></i>
+      <span>{{ t("download-APK") }}</span>
+    </div>
+    <div class="card-button">
+      <i class="pi pi-apple" style="font-size: 2rem; align-self: end"></i>
+      <span>{{ t("download-APK") }}</span>
+    </div>
+  </div>
+  <div class="pc">
+    <div class="card-button">
+      <i class="pi pi-microsoft" style="font-size: 2rem; align-self: end"></i>
+      <span>{{ t("download-PC") }}</span>
+    </div>
+    <div class="card-button">
+      <i class="pi pi-apple" style="font-size: 2rem; align-self: end"></i>
+      <span>{{ t("download-PC") }}</span>
+    </div>
+  </div>
+</div>
