@@ -12,7 +12,11 @@
         <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("media") }}</a>
       </li>
       <li>
+        @if (this.user != null || this.user != undefined) {
+        <a [routerLink]="'/profile'" (click)="closeMenu()">{{ t("login") }}</a>
+        } @else {
         <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("login") }}</a>
+        }
       </li>
     </ul>
 

@@ -13,66 +13,65 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  constructor(private userService: UserService, private authService: AuthService, private steamService: SteamService, private router: CustomRouterService, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private steamService: SteamService,
+    private router: CustomRouterService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  user: User | null = null
+  user: User | null = null;
 
-  steamProfile: SteamProfile | null = null
+  steamProfile: SteamProfile | null = null;
 
-  STEAM_URL = "";
+  STEAM_URL = '';
 
   async ngOnInit() {
-      if(!this.authService.isAuthenticated())
-      {
-        this.router.navigateToUrl("login")
-      }
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigateToUrl('login');
+    }
 
-      this.user = this.authService.getUser()
+    this.user = this.authService.getUser();
 
-      await this.getCurrentUser()
+    await this.getCurrentUser();
 
-      this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`
+    this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`;
   }
 
-  async getSteamDetails()
-  {
-      try
-      {
-      const data = await this.steamService.getUserDetailsById(this.user.steamId)
-      console.log(data)
+  async getSteamDetails() {
+    try {
+      const data = await this.steamService.getUserDetailsById(
+        this.user.steamId
+      );
+      console.log(data);
 
       this.steamProfile = {
-        personaName : data.personaName,
+        personaName: data.personaName,
         avatarFull: data.avatarFull,
         avatar: data.avatar,
-        steamId: this.user.steamId
-      }
-    }
-    catch(error)
-    {
-      console.warn(error)
+        steamId: this.user.steamId,
+      };
+    } catch (error) {
+      console.warn(error);
     }
   }
 
-  async removeSteamAccount()
-  {
-    this.steamProfile = null
-    await this.steamService.removeAccount()
-    await this.getCurrentUser()
+  async removeSteamAccount() {
+    this.steamProfile = null;
+    await this.steamService.removeAccount();
+    await this.getCurrentUser();
   }
 
-  async getCurrentUser()
-  {
-    this.user = await this.userService.getCurrentUser(this.user.id)
-    this.authService.saveUser(this.user)
+  async getCurrentUser() {
+    this.user = await this.userService.getCurrentUser(this.user.id);
+    this.authService.saveUser(this.user);
 
-    if(this.user.steamId != null && this.user.steamId != "")
-    {
-      await this.getSteamDetails()
+    if (this.user.steamId != null && this.user.steamId != '') {
+      await this.getSteamDetails();
     }
   }
-
 }
