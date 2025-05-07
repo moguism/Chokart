@@ -9,11 +9,11 @@
         <a [routerLink]="'/'" (click)="closeMenu()">{{ t("home") }}</a>
       </li>
       <li>
-        <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("media") }}</a>
+        <a [routerLink]="'/'" (click)="closeMenu()">{{ t("media") }}</a>
       </li>
       <li>
         @if (this.user != null || this.user != undefined) {
-        <a [routerLink]="'/profile'" (click)="closeMenu()">{{ t("login") }}</a>
+        <a [routerLink]="'/menu'" (click)="closeMenu()">Menu</a>
         } @else {
         <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("login") }}</a>
         }
@@ -21,10 +21,21 @@
     </ul>
 
     <div class="nav-end">
+      @if (this.user != null || this.user != undefined) {
+      <a [routerLink]="'/profile'" (click)="closeMenu()">
+        <img
+          src="/user-profile.svg"
+          style="margin-right: 10px; cursor: pointer; vertical-align: bottom"
+          alt="icono de perfil de usuario"
+      /></a>
+      }
+
+      <!--selector idioma-->
       <details
         #langSelector
         (toggle)="isMenuOpen = !isMenuOpen"
         class="custom-select"
+        style="margin-right: 5px"
       >
         <summary>
           <img
