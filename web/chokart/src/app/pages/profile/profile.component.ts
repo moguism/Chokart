@@ -7,11 +7,13 @@ import { SteamService } from '../../services/steam.service';
 import { ActivatedRoute } from '@angular/router';
 import { SteamProfile } from '../../models/steam-profile';
 import { environment } from '../../../environments/environment';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent, TranslocoModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -36,6 +38,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.user = this.authService.getUser();
+    console.log(this.user);
 
     await this.getCurrentUser();
 
@@ -73,5 +76,10 @@ export class ProfileComponent implements OnInit {
     if (this.user.steamId != null && this.user.steamId != '') {
       await this.getSteamDetails();
     }
+  }
+
+  logOut() {
+    this.authService.logout();
+    this.router.navigateToUrl('/');
   }
 }

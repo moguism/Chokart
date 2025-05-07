@@ -16,12 +16,12 @@
     <div class="buttons">
       <h2>{{ t("mobile") }}</h2>
       <div class="buttons-box">
-        <div class="card-button">
+        <div class="card-button" (click)="this.downloadFile('apk')">
           <span class="shop">.apk</span>
           <i class="pi pi-android" style="font-size: 2rem; align-self: end"></i>
           <span>ANDROID</span>
         </div>
-        <div class="card-button">
+        <div class="card-button" (click)="this.downloadFile('ipa')">
           <span class="shop">.ipa</span>
           <i class="pi pi-apple" style="font-size: 2rem; align-self: end"></i>
           <span>iOS</span>
@@ -29,7 +29,7 @@
       </div>
       <h2>{{ t("pc") }}</h2>
       <div class="buttons-box">
-        <div class="card-button">
+        <div class="card-button" (click)="this.downloadFile('exe')">
           <span class="shop">.exe</span>
           <i
             class="pi pi-microsoft"
@@ -37,7 +37,7 @@
           ></i>
           <span>WINDOWS</span>
         </div>
-        <div class="card-button">
+        <div class="card-button" (click)="this.downloadFile('app')">
           <span class="shop">.app</span>
           <i class="pi pi-apple" style="font-size: 2rem; align-self: end"></i>
           <span>MAC</span>

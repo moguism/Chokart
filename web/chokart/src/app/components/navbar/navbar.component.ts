@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   user: User | null = null;
 
   constructor(
-    public authService: AuthService,
+    private authService: AuthService,
     private router: CustomRouterService,
     private translocoService: TranslocoService,
     private translatorService: TranslatorService

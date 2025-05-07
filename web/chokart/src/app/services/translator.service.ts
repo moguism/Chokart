@@ -11,13 +11,11 @@ export class TranslatorService implements OnInit {
     {
       code: 'en',
       name: 'English',
-      emoji: '🌭',
       flag: 'https://flagcdn.com/w320/gb.png',
     },
     {
       code: 'es',
       name: 'Español',
-      emoji: '🥘',
       flag: 'https://flagcdn.com/w320/es.png',
     },
   ];
