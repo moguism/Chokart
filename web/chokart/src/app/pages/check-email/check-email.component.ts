@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-check-email',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent, TranslocoModule],
   templateUrl: './check-email.component.html',
   styleUrl: './check-email.component.css',
 })

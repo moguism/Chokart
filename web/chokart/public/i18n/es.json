@@ -52,5 +52,8 @@
     "pc" : "PC",
     "mobile" : "Móvil",
     "download-apk" : "Descarga .apk",
-    "download-pc" : "Descarga en tu PC"
+    "download-pc" : "Descarga en tu PC",
+    "text-email" : "Hemos enviado un correo de verificación a ",
+    "text-check-email" : "Para terminar el registro de tu cuenta, comprueba la bandeja (o spam) de tu correo y accede al link.",
+    "check-success" : "¡Registro exitoso!"
 }
