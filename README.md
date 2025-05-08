@@ -33,6 +33,7 @@
 - **MVVM en Angular:** https://medium.com/front-end-world/mvc-and-mvvm-patterns-in-angular-7397e0bc7b07
 
 # INSTRUCCIONES PARA EL DESARROLLO
+**MUY IMPORTANTE:** Poner todos los vídeos antes de abrir Unity, tal y como estaban, y luego borrarlos al cerrar cuando se vaya a subir algo al repo
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
 - Cuando se cree un clon, poner dentro de la carpeta de este un ".gitignore" con un asterisco. LOS CLONES COMPARTEN PREFERENCIAS (aparantemente)
 - Para mandar objetos a través de RPCs, hay que definir campos con \[SerializableField\]
@@ -103,3 +104,4 @@
     Lunes --> Mauricio soluciona bugs y exporta a Android. María diseña carrusel de personajes y vista inicio.
     Martes --> María termina página de inicio y vista registro.
     Miércoles --> Mauricio incrusta el juego en la web. María configura que la descarga de archivos en servidor, y diseña vistas de descarga y verificación de email.
+    Jueves --> Tutoría.
