@@ -15,6 +15,12 @@ p {
   align-items: center;
 }
 
+.logout
+{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .avatar {
   width: 80px;
   border-radius: 50%;
