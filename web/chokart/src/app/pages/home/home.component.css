@@ -1,0 +1,265 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  background-size: cover;
+  gap: 2rem;
+  font-family: "Road Rage", sans-serif;
+  font-size: 1.5rem;
+}
+
+#home {
+  position: relative;
+  z-index: 8;
+  background-image: url(/poster.jpg);
+  background-size: cover;
+  height: 110vh;
+  clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
+}
+
+#home span {
+  color: rgb(0, 0, 0);
+}
+
+h1,
+h2 {
+  color: white;
+  text-shadow: 2px 0px 5px #001757;
+  font-weight: 200;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+}
+
+.container img {
+  width: 20rem;
+}
+
+.links {
+  display: flex;
+  gap: 2rem;
+  justify-items: center;
+}
+
+.card-button {
+  background-image: linear-gradient(
+    to right,
+    rgb(209, 209, 209) 0%,
+    rgb(255, 255, 255) 40%,
+    rgb(255, 255, 255) 100%
+  );
+  padding: 0.5rem;
+  border-radius: 3px;
+  color: black;
+  width: 10rem;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.home-content {
+  z-index: 5;
+  position: relative;
+  top: -55px;
+  width: 100%;
+  background-image: url("/home/background-blue.jpg");
+  background-color: #043da8;
+  background-size: 100%;
+  background-position-y: -169px;
+  background-repeat: no-repeat;
+}
+
+.home-content h2 {
+  color: var(--primary-color);
+}
+
+.home-content h1 {
+  color: #0f78f5;
+}
+
+.home-content {
+  color: white;
+}
+
+.landing1 {
+  text-align: center;
+  padding: 5rem;
+}
+
+.home-content h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.home-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.home-content p,
+button {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Arial,
+    sans-serif;
+}
+
+.characters {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin: 2rem 10rem;
+  padding-bottom: 6rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-characters {
+  width: 45%;
+  margin: 0 3rem;
+}
+
+.play-modes {
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.bg-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.play-modes .content {
+  position: absolute;
+  top: 17rem;
+  left: 0;
+  width: 100%;
+  color: #000;
+}
+
+.play-modes .title {
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  width: 100%;
+  color: #000;
+}
+
+.play-modes app-kart-switch {
+  position: absolute;
+  top: 70%;
+  width: 100%;
+}
+
+.play-modes .content h2 {
+  text-shadow: none;
+  font-size: 2.5rem;
+  color: black;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+}
+
+.play-modes h1 {
+  text-shadow: none;
+  padding: 0rem 13rem;
+}
+
+.play-modes .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mode-content {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  padding: 0rem 13rem;
+  padding-bottom: 1rem;
+}
+
+.mode-text {
+  flex: 1;
+}
+
+.play-modes .clipped-image {
+  margin-right: 6rem;
+  width: 30rem;
+}
+
+.clipped-image img {
+  width: 100%;
+  height: auto;
+  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  border-radius: 20px;
+}
+
+.chips {
+  padding: 0.2rem 1.5rem;
+  background-color: #0f78f5;
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+}
+
+span {
+  text-shadow: none;
+  font-size: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+}
+/* FIFTH BUTTON */
+
+button {
+  width: fit-content;
+  padding: 0 1rem;
+  height: 42px;
+  background: var(--primary-color);
+  text-transform: uppercase;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  cursor: pointer;
+}
+
+#fifth {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s ease-in-out;
+}
+
+#fifth:before {
+  content: " ";
+  display: block;
+  width: 200px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  top: -10px;
+  left: -200px;
+  transform: rotate(-45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+#fifth:hover:before {
+  margin-left: 300%;
+}
+
+#fifth:hover {
+  border: 1px solid rgba(255, 255, 255, 1);
+}

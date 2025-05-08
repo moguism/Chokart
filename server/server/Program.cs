@@ -1,11 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using server.Models.Entities;
 using server.Models.Mappers;
 using server.Repositories;
 using server.Services;
 using server.Sockets;
-using server.Sockets.Game;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -21,9 +20,11 @@ namespace server
             builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddScoped<UserMapper>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<BattleService>();
+            builder.Services.AddScoped<FriendshipService>();
+            builder.Services.AddScoped<SteamService>();
 
             builder.Services.AddSingleton<WebSocketHandler>();
-            builder.Services.AddSingleton<GameNetwork>();
 
             builder.Services.AddTransient<PreAuthMiddleware>();
 
@@ -36,35 +37,34 @@ namespace server
             });
 
             // CONFIGURANDO JWT
-            builder.Services.AddAuthentication()
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     string key = Environment.GetEnvironmentVariable("JwtKey");
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-
-                        // INDICAMOS LA CLAVE
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                     };
+                })
+                .AddCookie("SteamCookie") // Este es el valor que necesita el navegador para ubicarse
+                .AddSteam("Steam", options =>
+                {
+                    options.ApplicationKey = Environment.GetEnvironmentVariable("STEAM_KEY");
+                    options.SignInScheme = "SteamCookie";
+                    options.CallbackPath = "/api/SteamAuth/steam-callback";
+                    options.CorrelationCookie.SameSite = SameSiteMode.None;
+                    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
                 });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            builder.Services.AddCors(
-                options =>
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                        ;
-                    })
-                );
 
             var app = builder.Build();
 
@@ -75,12 +75,13 @@ namespace server
                 app.UseSwaggerUI();
             }
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseHttpsRedirection();
             app.UseWebSockets();
             app.UseMiddleware<PreAuthMiddleware>();
 
-            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -100,21 +101,14 @@ namespace server
             using IServiceScope scope = serviceProvider.CreateScope();
             using Context dbContext = scope.ServiceProvider.GetService<Context>();
 
+            UnitOfWork unitOfWork = scope.ServiceProvider.GetService<UnitOfWork>();
+
             // Si no existe la base de datos, la creamos y ejecutamos el seeder
             if (dbContext.Database.EnsureCreated())
             {
                 Seeder seeder = new Seeder(dbContext);
                 await seeder.SeedAsync();
             }
-
-            // Por si se va la luz 😎
-            UnitOfWork unitOfWork = scope.ServiceProvider.GetService<UnitOfWork>();
-            ICollection<Battle> battles = await unitOfWork.BattleRepository.GetBattlesInProgressAsync();
-            foreach (Battle battle in battles)
-            {
-                unitOfWork.BattleRepository.Delete(battle);
-            }
-            await unitOfWork.SaveAsync();
         }
     }
 }

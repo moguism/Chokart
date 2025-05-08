@@ -16,15 +16,19 @@ public class Context : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserBattle> UsersBattles { get; set; }
     public DbSet<Character> Characters { get; set; }
+    public DbSet<Kart> Karts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 # if DEBUG
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
         optionsBuilder.UseSqlite($"DataSource={baseDir}{DATABASE_PATH}");
-#else
 
-            optionsBuilder.UseMySql(_settings.DatabaseConnection, ServerVersion.AutoDetect(_settings.DatabaseConnection));
+        //string key = "Server=db16516.public.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; SslMode=Preferred; ";
+        //optionsBuilder.UseMySql(key, ServerVersion.AutoDetect(key));
+#else
+string key = "Server=db16516.public.databaseasp.net; Database=db16516; Uid=db16516; Pwd=6Ct?k5%G+A2w; SslMode=Preferred; ";
+        optionsBuilder.UseMySql(key, ServerVersion.AutoDetect(key));
 #endif
     }
 

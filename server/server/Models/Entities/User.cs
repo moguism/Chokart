@@ -18,4 +18,10 @@ public class User
     public State State { get; set; }
     public ICollection<Friendship> Friendships { get; set; } = new List<Friendship>();
     public long TotalPoints { get; set; } = 0;
+
+    public bool Verified { get; set; } = false;
+    public string VerificationCode { get; set; } = "";
+
+    // Opciones para steam
+    public string SteamId { get; set; }
 }

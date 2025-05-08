@@ -1,34 +1,121 @@
+using Injecta;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
-public class GameStarter : MonoBehaviour
+public class GameStarter : NetworkBehaviour
 {
-    private readonly Dictionary<object, object> dict = new Dictionary<object, object>()
-    {
-        { "messageType", MessageType.GameStarted }
-    };
+    public List<GameObject> PossiblePrefabs = new List<GameObject>();
 
-    async void Start()
+    [Inject]
+    public WebsocketSingleton websocketSingleton;
+
+    [SerializeField]
+    private NetworkManager networkManager;
+
+    [SerializeField]
+    private UnityTransport unityTransport;
+
+    [SerializeField]
+    private GameObject startGameButton;
+
+    [SerializeField]
+    private PositionManager positionManager;
+
+    [SerializeField]
+    private SpawnBot botSpawner;
+
+    [SerializeField]
+    private GameObject[] spawners;
+
+    [Inject]
+    private LobbyManager lobbyManager;
+
+    void Start()
     {
-        if(Singleton.Instance != null && Singleton.Instance.isHost)
+        if (LobbyManager.isHost)
         {
-            GetComponentInParent<NetworkManager>().StartHost();
-            await CustomSerializer.Serialize(dict, true);
+            startGameButton.SetActive(true);
+
+            if (WebsocketSingleton.kartModelIndex != -1)
+            {
+                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
+            }
         }
 
-        
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+
+        RelayManager.StartRelay();
     }
 
-    public void StartClient(string ip)
+    public async void StartGame()
     {
-        print("IP: " + ip);
-        if (ip.Equals("::1"))
+        if(!LobbyManager.isHost)
         {
-            ip = "127.0.0.1";
+            return;
         }
-        GetComponentInParent<UnityTransport>().SetConnectionData(ip, 7777); // El puerto no debería cambiar
-        GetComponentInParent<NetworkManager>().StartClient();
+
+        startGameButton.SetActive(false);
+        OptionsSettings.shouldEnableStartButton = false;
+
+        lobbyManager.StartGame();
+
+        //LobbyManager.gameStarted = true;
+
+        int totalSpawned = 0;
+
+        for(int i = 0; i < positionManager.karts.Count; i++)
+        {
+            KartController kart = positionManager.karts[i];
+            Vector3 spawnerPosition = spawners[i].transform.position;
+
+            positionManager.ChangeValuesOfKart(spawnerPosition, kart.NetworkObjectId, 0, 0, 0, new int[0], true);
+
+            totalSpawned++;
+        }
+
+        // Relleno con bots hasta llegar al límite
+        if (LobbyManager.spawnBotsWhenStarting)
+        {
+            while(totalSpawned < LobbyManager.maxPlayers)
+            {
+                botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
+                totalSpawned++;
+            }
+        }
+
+        await UniTask.WaitForSeconds(1); // Podemos mostrar una pantalla de carga mientras, esto es para que los coches se creen y le de tiempo a notificar de su existencia
+
+        // Una vez que les he cambiado la posición, notifico de empezar la cuenta atrás
+        positionManager.InformAboutGameStart();
+    }
+
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        Debug.Log($"Cliente {clientId} desconectado.");
+
+        if(!LobbyManager.isHost)
+        {
+            if(clientId == 0 || clientId == 1)
+            {
+                print("El host se ha ido");
+                LobbiesSceneManager.showError = true;
+                SceneManager.LoadScene(2);
+            }
+        }
+        else 
+        {
+            if(LobbyManager.gameStarted && clientId != 0)
+            {
+                KartController kart = positionManager.karts.FirstOrDefault(k => k.OwnerClientId == clientId);
+                DetectCollision.CreateNewFinishKart(positionManager, kart, positionManager.karts.Count);
+                positionManager.CheckVictory(kart.NetworkObjectId);
+            }
+        }
     }
 }

@@ -1,0 +1,285 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Locales Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Locales
+  m_TableCollectionNameGuidString: ce09af175614af74bac9118bcbab45b0
+  m_Entries:
+  - m_Id: 28384301056
+    m_Key: HOST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3675474235392
+    m_Key: EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710567976960
+    m_Key: NICKNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3746806763520
+    m_Key: PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3842873102336
+    m_Key: LOGOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3911051513856
+    m_Key: GO_TO_LOG_IN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4073488519168
+    m_Key: REGISTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4137170636800
+    m_Key: LOGIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188076904448
+    m_Key: REMEMBER_ME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269685477376
+    m_Key: GO_TO_REGISTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5253832773632
+    m_Key: NICK_OR_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7968765498494976
+    m_Key: START_GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9398536526761984
+    m_Key: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9398691602763776
+    m_Key: DISPLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9399066514821120
+    m_Key: MASTER_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9399497987067904
+    m_Key: MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9402892194025472
+    m_Key: EFFECT_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403037069479936
+    m_Key: VOICE_CHAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403392167645184
+    m_Key: RESOLUTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403447700230144
+    m_Key: LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9404160970985472
+    m_Key: WINDOW_MODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9404565033455616
+    m_Key: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9407743309254656
+    m_Key: FULLSCREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9407866344968192
+    m_Key: BORDERLESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408069319921664
+    m_Key: WINDOWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408313763958784
+    m_Key: VSYNC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408527165952000
+    m_Key: GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408889851613184
+    m_Key: QUALITY_PRESET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409171511709696
+    m_Key: POTATO_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409255532007424
+    m_Key: LOW_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409356799283200
+    m_Key: MEDIUM_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409491927175168
+    m_Key: HIGH_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409574697570304
+    m_Key: ULTRA_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409691471187968
+    m_Key: CUSTOM_GRAPHICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410112206016512
+    m_Key: OFF_OPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410242262994944
+    m_Key: MSAA_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410314572795904
+    m_Key: MSAA_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410373498572800
+    m_Key: MSAA_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410499457716224
+    m_Key: TEXTURE_QUALITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410917617242112
+    m_Key: SHADOWS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9421068264935424
+    m_Key: TEXTURE_TOOLTIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9423714430357504
+    m_Key: WRONG_CREDENTIALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9425805039243264
+    m_Key: WITHOUT_ACCOUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9426015891099648
+    m_Key: SCAN_QR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9426209189793792
+    m_Key: OR_PRESS_HERE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9427365546823680
+    m_Key: UPPERCASE_PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9427688566951936
+    m_Key: USER_OR_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428130889863168
+    m_Key: MY_FRIENDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428293180067840
+    m_Key: FRIENDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428576652103680
+    m_Key: REQUESTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428586621964288
+    m_Key: INVITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9429826114293760
+    m_Key: RACE_MODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9429932049829888
+    m_Key: SURVIVAL_MODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430155782393856
+    m_Key: PLAY_WITH_BOTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430442752479232
+    m_Key: PLAY_WITHOUT_BOTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430683438419968
+    m_Key: LOBBY_CODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430887910739968
+    m_Key: JOIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9431949036097536
+    m_Key: CODE_RAW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432209351380992
+    m_Key: NEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432254821830656
+    m_Key: PREVIOUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432301865144320
+    m_Key: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432972916035584
+    m_Key: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9433716310282240
+    m_Key: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9434095651524608
+    m_Key: END_OF_MATCH
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2373127791036596442
+  references:
+    version: 2
+    RefIds:
+    - rid: 2373127791036596442
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1744019407166

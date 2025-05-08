@@ -1,0 +1,282 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Locales_es-ES
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-ES
+  m_SharedData: {fileID: 11400000, guid: ce09af175614af74bac9118bcbab45b0, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 28384301056
+    m_Localized: 'Hostear
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3675474235392
+    m_Localized: Email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3710567976960
+    m_Localized: Apodo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3746806763520
+    m_Localized: "Contrase\xF1a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3842873102336
+    m_Localized: "Cerrar sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3911051513856
+    m_Localized: "Ir a Inicio de Sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4073488519168
+    m_Localized: Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4137170636800
+    m_Localized: "Iniciar sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188076904448
+    m_Localized: "Recu\xE9rdame"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4269685477376
+    m_Localized: Ir a Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5253832773632
+    m_Localized: Apodo o email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7968765498494976
+    m_Localized: COMENZAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9398536526761984
+    m_Localized: "Atr\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9398691602763776
+    m_Localized: Pantalla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9399066514821120
+    m_Localized: Volumen General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9399497987067904
+    m_Localized: "Volumen de m\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9402892194025472
+    m_Localized: Volumen de efectos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403037069479936
+    m_Localized: Chat de voz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403392167645184
+    m_Localized: "Resoluci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9403447700230144
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9404160970985472
+    m_Localized: Modo de ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9404565033455616
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9407743309254656
+    m_Localized: Pantalla completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9407866344968192
+    m_Localized: Sin bordes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408069319921664
+    m_Localized: Ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408313763958784
+    m_Localized: Sinc. Vertical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408527165952000
+    m_Localized: "Gr\xE1ficos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408889851613184
+    m_Localized: "Modo Gr\xE1fico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409171511709696
+    m_Localized: Patata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409255532007424
+    m_Localized: Bajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409356799283200
+    m_Localized: Medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409491927175168
+    m_Localized: Alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409574697570304
+    m_Localized: Ultra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409691471187968
+    m_Localized: Personalizado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410112206016512
+    m_Localized: Apagado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410242262994944
+    m_Localized: 2x
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410314572795904
+    m_Localized: 4x
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410373498572800
+    m_Localized: 8x
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410499457716224
+    m_Localized: Calidad de las texturas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9410917617242112
+    m_Localized: Sombras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9421068264935424
+    m_Localized: "Hemos hechos nuestros propios modos gr\xE1ficos para\nque no tengas
+      que hacer que Chokart parezca \nMario 64 por tu cuenta :)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9423714430357504
+    m_Localized: CREDENCIALES INCORRECTAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9425805039243264
+    m_Localized: "\xBFSIN CUENTA?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9426015891099648
+    m_Localized: Escanea este QR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9426209189793792
+    m_Localized: "O pulsa aqu\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9427365546823680
+    m_Localized: "CONTRASE\xD1A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9427688566951936
+    m_Localized: USUARIO O EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428130889863168
+    m_Localized: Mis amigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428293180067840
+    m_Localized: Amigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428576652103680
+    m_Localized: Solicitudes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9428586621964288
+    m_Localized: Invitar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9429826114293760
+    m_Localized: Modo carrera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9429932049829888
+    m_Localized: Modo supervivencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430155782393856
+    m_Localized: Jugar con bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430442752479232
+    m_Localized: Jugar sin bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430683438419968
+    m_Localized: "C\xF3digo de la lobby"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9430887910739968
+    m_Localized: Unirse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9431949036097536
+    m_Localized: "C\xF3digo:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432209351380992
+    m_Localized: Siguiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432254821830656
+    m_Localized: Anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432301865144320
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9432972916035584
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9433716310282240
+    m_Localized: SALIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9434095651524608
+    m_Localized: FIN DE LA PARTIDA
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

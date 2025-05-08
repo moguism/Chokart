@@ -27,7 +27,13 @@
       "applicationUrl": "https://localhost:7048;http://localhost:5066",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "JwtKey": "dhasiuhdriawenidqwepouhedipauhseuidhasndiupawhedouiasdi"
+        "JwtKey": "dhasiuhdriawenidqwepouhedipauhseuidhasndiupawhedouiasdi",
+        "DefaultPassword": "123456",
+        "EmailHost": "smtp.gmail.com",
+        "EmailPort": "587",
+        "EmailAddress": "fortnitenotifier.moguism@gmail.com",
+        "EmailPassword": "wzxh rzps liit ahmr",
+        "STEAM_KEY": "332E3BA66E65E56A912DEC8879B14271"
       }
     },
     "IIS Express": {

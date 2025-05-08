@@ -1,12 +1,12 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using ProximityChat;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
-using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class KartController : BasicPlayer
 {
@@ -58,30 +58,102 @@ public class KartController : BasicPlayer
     public bool jumping = false;
     public bool isGrounded = true;
 
-    public bool canMove = true;
-
     // Para las posiciones
     public int totalLaps = 0;
     public int position = 0;
     public bool passedThroughFinishLine = false;
-    public List<MapTrigger> triggers = new List<MapTrigger>();
+    public List<int> triggers = new List<int>();
     public int lastTriggerIndex;
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
-
+   
     // Objetos
+    [Header("Objetos")]
     public string currentObject;
+    private TMP_Text objectText;
+    
+    public bool canBeHurt = true;
+    public bool activateInvencibilityFrames = false;
+
+    [SerializeField]
+    private float invencibilityTimerSeconds = 2.0f;
+    private float invencibilityTimer;
+
+    public List<Renderer> renders;
+    public ulong lastBombId;
+
+    // UI
+    public TMP_Text healthText;
+
+    // AI
+    public bool enableAI = false;
+    public KartAI ai;
+
+    // Selección
+    [SerializeField]
+    private int kartIndex;
+    public GameObject characters;
+
+    // Controles
+    public InputSystem_Actions playerControls;
+    private float jumpValueLastFrame;
+    private float jumpValue;
+
+    private Speedometer speedometer;
+    public Chronometer chronometer;
+    public CinemachineVirtualCamera kartCamera;
+
+    [Header("Health timer")]
+    private const float maxHealthTimer = 2.0f;
+    private float healthTimer;
+    private const float healthReduction = 1.0f;
+
+    [Header("Minimap")]
+    [SerializeField]
+    private Canvas canvasMask;
+
+    [Header("Otras opciones")]
+    public bool canMove = true;
+    public int totalKills = 0;
+    private TMP_Text killsText;
+    public string ownerName = "";
+    public int ownerId;
+
+    [SerializeField]
+    private VoiceNetworker voiceNetworker;
+    private bool isRecording = false;
 
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
-            CinemachineVirtualCamera camera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
-            camera.Follow = gameObject.transform;
-            camera.LookAt = gameObject.transform;
+            if (enableAI)
+            {
+                ai.enabled = true;
+                return;
+            }
+
+            if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+            {
+                return;
+            }
+
+            kartCamera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+            kartCamera.Follow = gameObject.transform;
+            kartCamera.LookAt = gameObject.transform;
 
             positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
+
+            speedometer = FindFirstObjectByType<Speedometer>();
+            speedometer.kart = this;
+
+            healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
+            killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
+            objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
+
+            var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
+            objectButton.onClick.AddListener(delegate { SpawnObject();});
         }
     }
 
@@ -92,21 +164,48 @@ public class KartController : BasicPlayer
             return;
         }
 
-        InformServerKartCreatedServerRpc();
+        healthTimer = maxHealthTimer;
 
-        var positionManager = GameObject.Find("Triggers");
-        positionManager.GetComponent<PositionManager>().karts.Add(this);
+        invencibilityTimer = invencibilityTimerSeconds;
+
+        maxHealth = health;
+        ownerName = LobbyManager.PlayerName;
+        ownerId = LobbyManager.PlayerId;
+
+        GetPositionManager();
+        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, AuthenticationService.Instance.PlayerId);
+        _positionManager.loadingScreen.SetActive(false);
+
+        // Si me han asignado un modelo que no es
+        if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+        {
+            InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
+            return;
+        }
+
+        playerControls = new InputSystem_Actions();
+        playerControls.Enable();
+
+        _positionManager.karts.Add(this);
 
         isMobile = Application.isMobilePlatform;
-        if (isMobile)
+
+        try
         {
-            Input.gyro.enabled = true;
-            //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+            Pedals pedals = FindFirstObjectByType<Pedals>();
+
+            if (isMobile)
+            {
+                Input.gyro.enabled = true;
+                pedals.kart = this;
+                //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+            }
+            else
+            {
+                Destroy(pedals.gameObject);
+            }
         }
-        else
-        {
-            Destroy(GameObject.Find("Buttons"));
-        }
+        catch { }
 
         postVolume = Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
@@ -127,39 +226,17 @@ public class KartController : BasicPlayer
             secondaryParticles.Add(p);
         }
 
-        // cronometro en marcha
-        Chronometer.instance.startTimer();
+        objectSpawner = FindFirstObjectByType<ObjectSpawner>();
 
-    }
-
-
-    // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
-    [ServerRpc]
-    void InformServerKartCreatedServerRpc(ServerRpcParams rpcParams = default)
-    {
-        // El servidor agrega el kart a la lista
-        print("Holaaaa");
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
-
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
-        if (kart == null)
+        if (enableAI)
         {
-            print("Agregando");
-            positionManager.karts.Add(this);
+            return;
         }
-    }
 
-    [ServerRpc]
-    void InformServerKartStatusServerRpc(Vector3 currentPositionToUpdate, ServerRpcParams rpcParams = default)
-    {
-        PositionManager positionManager = GameObject.Find("Triggers").GetComponent<PositionManager>();
+        chronometer = FindFirstObjectByType<Chronometer>();
 
-        KartController kart = positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == NetworkObjectId);
-        if (kart != null)
-        {
-            print("ME HA LLEGADO MENSAJE DEL COCHE " + NetworkObjectId);
-            kart.currentPosition = currentPositionToUpdate;
-        }
+        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+        FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
     void Update()
@@ -170,54 +247,135 @@ public class KartController : BasicPlayer
             Time.timeScale = time;
         }*/
 
-        if (!IsOwner)
+        if (!IsOwner || !canMove)
         {
             return;
         }
 
-        if (!canMove)
+        if (activateInvencibilityFrames)
         {
-            return;
+            canBeHurt = false;
+
+            invencibilityTimer -= Time.deltaTime;
+
+            if(invencibilityTimer <= 0.0f)
+            {
+                canBeHurt = true;
+                activateInvencibilityFrames = false;
+                invencibilityTimer = invencibilityTimerSeconds;
+            }
         }
+
 
         if (isMobile)
         {
             float gyroGravityX = Input.gyro.gravity.x;
             horizontalInput = Mathf.Clamp(gyroGravityX * 2f, -1f, 1f);
         }
-        else
+
+        // MOVIMIENTO DE IA
+        if (enableAI && ai != null)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
+            // esto no lo pilla bien 
+            horizontalInput = ai.HorizontalInput;
+            direction = ai.MoveDirection;
+            Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
+        else if(!isMobile)
+        {
+            horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
+            //horizontalInput = Input.GetAxis("Horizontal");
+        }
+
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
+        currentPosition = transform.position;
 
-        // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-        if (direction == 1 || Input.GetButton("Fire1"))
+        /*
+        if (enableAI)
         {
-            speed = acceleration;
-        }
-        else if (direction == -1 || Input.GetButton("Fire2"))
+            InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
+            return;
+        }*/
+
+        if (enableAI)
         {
-            speed = -acceleration;
+            if (direction == 1)
+            {
+                speed = acceleration;
+            }
+            else if (direction == -1)
+            {
+                speed = -acceleration;
+            }
+            else
+            {
+                speed = 0;
+            }
         }
         else
         {
-            speed = 0;
+            if (LobbyManager.gameStarted)
+            {
+                speed = acceleration;
+
+                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
+                {
+                    speed = 0;
+                }
+
+                // En cuanto se mueva por primera vez, activo el timer
+                if (!chronometer.timerOn)
+                {
+                    chronometer.StartTimer();
+                }
+            }
+            else
+            {
+                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
+                {
+                    speed = 0;
+                }
+                else
+                {
+                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
+                    {
+                        speed = acceleration;
+                    }
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
+                    {
+                        speed = -acceleration;
+                    }
+                }
+            }
         }
 
         // Para girar el modelo a la izquierda o la derecha
-        if (horizontalInput != 0)
+        if (horizontalInput != 0 && speed != 0)
         {
             int dir = horizontalInput > 0 ? 1 : -1;
             float amount = Mathf.Abs(horizontalInput);
             Steer(dir, amount);
         }
 
-        // AY MI MADRE EL DERRAPE
-        if ((Input.GetButtonDown("Jump") && !drifting) || (jumping && !drifting))
+        if (!enableAI)
         {
+            if (!ChatManager.isChatActive)
+            {
+                jumpValue = playerControls.Player.Jump.ReadValue<float>();
+            }
+        }
+        else
+        {
+            jumpValue = jumping ? 1f : 0f;
+        }
+
+        // AY MI MADRE EL DERRAPE
+        if ((jumpValue == 1 && !drifting && jumpValueLastFrame == 0) || (jumping && !drifting))
+        {
+
             print("SPEED: " + speed);
             print("Horizontal: " + horizontalInput);
 
@@ -237,7 +395,6 @@ public class KartController : BasicPlayer
 
             if (!isMobile)
             {
-
                 kartModel.parent.DOComplete();
                 kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
             }
@@ -256,7 +413,7 @@ public class KartController : BasicPlayer
         }
 
         // Solución un poquito rata pero bueno xD
-        if ((isMobile && !jumping && drifting) || (!isMobile && Input.GetButtonUp("Jump") && drifting))
+        if ((isMobile && !jumping && drifting) || (!isMobile && jumpValue == 0 && drifting))
         {
             print("HOLA: " + isMobile);
             Boost();
@@ -269,63 +426,100 @@ public class KartController : BasicPlayer
         // Para rotar el modelo con y sin derrape (qué coño es un Quaternion 😭)
         if (!drifting)
         {
-            kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            // Solo rota el kart si se está moviendo
+            if (Mathf.Abs(currentSpeed) > 0.1f)
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
+            }
+            else
+            {
+                kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90, kartModel.localEulerAngles.z), .2f);
+            }
+
+            //kartModel.localEulerAngles = Vector3.Lerp(kartModel.localEulerAngles, new Vector3(0, 90 + (horizontalInput * 15), kartModel.localEulerAngles.z), .2f);
         }
         else
         {
             float control = (driftDirection == 1) ? ExtensionMethods.Remap(horizontalInput, -1, 1, .5f, 2) : ExtensionMethods.Remap(horizontalInput, -1, 1, 2, .5f);
+
             kartModel.parent.localRotation = Quaternion.Euler(0, Mathf.LerpAngle(kartModel.parent.localEulerAngles.y, (control * 15) * driftDirection, .2f), 0);
         }
 
-        // Lo mismo pero con las ruedas y el volante
-        frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
-        frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
-        backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
-
-        steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
-
-        currentPosition = transform.position;
-
-        //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
-
-        if (Input.GetButtonDown("Fire3"))
+        // Pongo esto en un try-catch porque para testing he puesto un modelo sin nada de esto
+        try
         {
-            if (currentObject != "")
-            {
-                SpawnObject();
-                currentObject = "";
-            }
+            // Lo mismo pero con las ruedas y el volante
+            frontWheels.localEulerAngles = new Vector3(0, (horizontalInput * 15), frontWheels.localEulerAngles.z);
+            frontWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+            backWheels.localEulerAngles += new Vector3(0, 0, sphere.linearVelocity.magnitude / 2);
+
+            steeringWheel.localEulerAngles = new Vector3(-25, 90, ((horizontalInput * 45)));
+            //print("Soy el coche " + NetworkObjectId + " y estoy en " + currentPosition);
+        }
+        catch { }
+
+        if (playerControls.Player.Fire3.ReadValue<float>() != 0)
+        {
+            SpawnObject();
         }
 
-        InformServerKartStatusServerRpc(currentPosition);
+        InformServerKartStatusServerRpc(NetworkObjectId, currentPosition);
+
+        jumpValueLastFrame = jumpValue;
+
+        HandleHealthTimer();
+
+        try
+        {
+            killsText.text = totalKills.ToString();
+            healthText.text = Mathf.RoundToInt(health).ToString();
+            objectText.text = currentObject;
+        } catch { }
     }
 
-    private void SpawnObject()
+    private void HandleHealthTimer()
     {
+        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        {
+            return;
+        }
+        healthTimer -= Time.deltaTime;
+        if(healthTimer <= 0.0f)
+        {
+            health -= healthReduction;
+
+            if(health <= 0)
+            {
+                DetectCollision.DisableKart(_positionManager, this, true);
+                DispawnKartServerRpc(NetworkObjectId, 0);
+            }
+
+            healthTimer = maxHealthTimer;
+        }
+    }
+
+    public void SpawnObject()
+    {
+        if(currentObject == "")
+        {
+            return;
+        }
+
         print("Spawneando...");
 
         if (IsOwner)
         {
             SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
         }
-    }
 
-    [ServerRpc]
-    private void SpawnObjectServerRpc(string currentObject, Vector3 currentPosition, Vector3 destination, ulong kartId)
-    {
-        FindAnyObjectByType<ObjectSpawner>().SpawnObjectServerRpc(currentObject, currentPosition, destination, kartId);
+        currentObject = "";
     }
 
     // FixedUpdate es como el _physics_process de Godot (se ejecuta cada cierto tiempo, siempre el mismo)
     // Es la esfera la que hace todo
     private void FixedUpdate()
     {
-        if (!IsOwner)
-        {
-            return;
-        }
-
-        if (!canMove)
+        if (!IsOwner || !canMove)
         {
             return;
         }
@@ -349,8 +543,32 @@ public class KartController : BasicPlayer
 
         kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
         kartNormal.Rotate(0, transform.eulerAngles.y, 0);
-
     }
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+    private void LateUpdate()
+    {
+        try
+        {
+            // Para hablar por voz
+            if (OptionsSettings.shouldRecord)
+            {
+                if (!isRecording)
+                {
+                    voiceNetworker.StartRecording();
+                    isRecording = true;
+                }
+            }
+            else
+            {
+                isRecording = false;
+                //voiceNetworker.StopRecording();
+            }
+        }
+        catch
+        { }
+    }
+#endif
 
     public void Boost()
     {
@@ -358,10 +576,15 @@ public class KartController : BasicPlayer
 
         if (driftMode > 0)
         {
-            DOVirtual.Float(currentSpeed * 3, currentSpeed, .3f * driftMode, Speed); // Para aumentar la velocidad
+            DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
             DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
-            kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
-            kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+
+            try
+            {
+                kartModel.Find("Tube001").GetComponentInChildren<ParticleSystem>().Play(); // Tubo de escape (contaminación :c)
+                kartModel.Find("Tube002").GetComponentInChildren<ParticleSystem>().Play();
+            }
+            catch { }
         }
 
         // Una vez que ha hecho toda la pesca pone todo a sus valores por defecto
@@ -383,6 +606,10 @@ public class KartController : BasicPlayer
     // Para controlar cuánto tiene que girar en función de la "fuerza" del input
     public void Steer(int direction, float amount)
     {
+        if (speed < 0)
+        {
+            direction *= -1;
+        }
         rotate = (steering * direction) * amount;
     }
 
@@ -459,38 +686,4 @@ public class KartController : BasicPlayer
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position + transform.up, transform.position - (transform.up * 2));
     //}
-
-    // PARA MÓVILES
-    public void Accelerate()
-    {
-        direction = 1;
-    }
-
-    public void GoBackwards()
-    {
-        direction = -1;
-    }
-
-    public void NotMoveKart()
-    {
-        direction = 0;
-    }
-
-    public async void Jump()
-    {
-        //if (isGrounded)
-        //{
-        jumping = true;
-
-        kartModel.parent.DOComplete();
-        kartModel.parent.DOPunchPosition(transform.up * .2f, .3f, 5, 1);
-        await Task.Delay(1);
-        //}
-    }
-
-    public void StopJumping()
-    {
-        print("DEJO DE SALTAR");
-        jumping = false;
-    }
 }

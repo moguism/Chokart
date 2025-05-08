@@ -4,6 +4,7 @@ using server.Models.Entities;
 using server.Models.Helper;
 using server.Models.Mappers;
 using server.Repositories;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace server.Services;
@@ -34,6 +35,11 @@ public class UserService
     {
         User user = await _unitOfWork.UserRepository.GetByIdAsync(id);
         return user;
+    }
+
+    public async Task<User> GetFullUserByIdAsync(int userId)
+    {
+        return await _unitOfWork.UserRepository.GetUserById(userId);
     }
 
     public async Task<UserDto> GetUserByEmailAsync(string email)
@@ -84,6 +90,9 @@ public class UserService
 
             //ImageService imageService = new ImageService();
 
+            Guid uuid = Guid.NewGuid();
+            string uuidString = uuid.ToString();
+
             var newUser = new User
             {
                 Email = model.Email.ToLower(),
@@ -93,7 +102,8 @@ public class UserService
                 Password = PasswordHelper.Hash(model.Password),
                 //IsInQueue = false,  // por defecto al crearse
                 StateId = state.Id,
-                State = state
+                State = state,
+                VerificationCode = uuidString
             };
 
             //if (model.Image != null)
@@ -130,6 +140,32 @@ public class UserService
         }
 
         return user;
+    }
+
+    public async Task<bool> VerifyUserAsync(int userId, string code)
+    {
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        if(user == null || !user.VerificationCode.Equals(code))
+        {
+            return false;
+        }
+
+        user.Verified = true;
+
+        _unitOfWork.UserRepository.Update(user);
+        await _unitOfWork.SaveAsync();
+
+        return true;
+    }
+
+    public async Task<List<UserDto>> SearchUser(string search)
+    {
+
+        string searchSinTildes = Regex.Replace(search.Normalize(NormalizationForm.FormD), @"[^a-zA-z0-9 ]+", "");
+
+        var users = await _unitOfWork.UserRepository.SearchUser(searchSinTildes.ToLower());
+
+        return _userMapper.ToDto(users).ToList();
     }
 
     public UserDto ToDto(User user)

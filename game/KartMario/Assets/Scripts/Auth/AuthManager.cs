@@ -1,130 +1,68 @@
 using Injecta;
-using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class AuthManager : MonoBehaviour
 {
-    public static AuthManager instance;
+    public bool isLogged = false;
+    public bool isTryingToLog = true;
+    public static string token = "";
 
-    // Registro
-    public InputField emailInput;
-    public InputField nicknameInput;
-    public InputField passwordInput;
-
-    // Inicio de sesión
-    public InputField loginEmailOrNicknameInput;
-    public InputField loginPasswordInput;
-    public Toggle rememberMeToggle; // Recuérdame
-
-    public GameObject loginPanel;
-    public GameObject registerPanel;
+    public static UserDto user;
+    public static SteamProfile steamProfile;
 
     [Inject]
-    private Singleton Singleton { get; set; }
+    private WebsocketSingleton websocket;
 
-    void Start()
+    async void Start()
     {
-        Debug.Log(Singleton);
-
-        instance = this;
-
         // Intentar cargar el token guardado
-
         if (PlayerPrefs.HasKey("AccessToken"))
         {
-            string savedToken = PlayerPrefs.GetString("AccessToken");
-            Debug.Log("Token encontrado en PlayerPrefs: " + savedToken);
-            Debug.Log("Usuario autenticado automáticamente >:)");
-            StartCoroutine(ConnectToSocketCoroutine(savedToken));
+            token = PlayerPrefs.GetString("AccessToken");
+            Debug.Log("Token encontrado en PlayerPrefs: " + token);
+            Debug.Log("Usuario autenticado automï¿½ticamente >:)");
+
+            //StartCoroutine(ConnectToSocketCoroutine(savedToken));
+            bool couldSign = await GetUserAsync(PlayerPrefs.GetInt("ID"));
+
+            if (!couldSign)
+            {
+                isTryingToLog = false;
+                Logout();
+                return;
+            }
+
+            isLogged = true;
+
+            await websocket.ConnectToSocket(token);
         }
         else
         {
-            Debug.Log("No se ha encontrado el token. Debes iniciar sesión. Porfi inicia sesión. :c");
-        }
-    }
-
-    public void OnRegButton()
-    {
-        string email = emailInput.text.Trim();
-        string nickname = nicknameInput.text.Trim();
-        string password = passwordInput.text;
-
-        //Debug.Log("Email introducido: " + email);
-        //Debug.Log("Apodo introducido: " + nickname);
-        //Debug.Log("Contraseña introducida: " + password);
-
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-        {
-            Debug.LogError("El email o la contraseña están vacíos.");
-            return;
+            isLogged = false;
+            Debug.Log("No se ha encontrado el token. Debes iniciar sesiï¿½n. Porfi inicia sesiï¿½n. :c");
         }
 
-        RegisterRequest tempReg = new RegisterRequest()
-        {
-            Email = email,
-            Nickname = nickname,
-            Password = password
-        };
-
-        StartCoroutine(Register(tempReg));
+        isTryingToLog = false;
     }
 
-    public void OnLogInButton()
+    // Inicio de sesiï¿½n
+    public async Task<bool> LoginAsync(string emailOrNickname, string password, bool rememberMe)
     {
-        string emailOrNickname = loginEmailOrNicknameInput.text.Trim();
-        string password = loginPasswordInput.text;
+        if (emailOrNickname == "" || emailOrNickname == null || password == "" || password == null)
+        {
+            return false;
+        }
 
-        LoginRequest tempLog = new LoginRequest()
+        LoginRequest loginRequest = new LoginRequest()
         {
             EmailOrNickname = emailOrNickname,
             Password = password
         };
 
-        StartCoroutine(LoginAsync(tempLog));
-    }
 
-    // Registro
-    public IEnumerator Register(RegisterRequest register)
-    {
-        // Hace la petición, convierte los datos del registro a JSON y posteriormente a bytes y lo envía.
-        UnityWebRequest unityWebRequest = new UnityWebRequest(Singleton.API_URL + "Auth/register", "POST");
-        string jsonData = JsonUtility.ToJson(register);
-        Debug.Log("Datos registro: " + jsonData);
-
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
-
-        unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
-        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
-        unityWebRequest.SetRequestHeader("Content-Type", "application/json"); // Este Content-Type no sirve para cuando subamos avatares
-
-        yield return unityWebRequest.SendWebRequest();
-
-        if (unityWebRequest.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Registro exitoso: " + unityWebRequest.downloadHandler.text);
-            StartCoroutine(
-                LoginAsync(new LoginRequest()
-                {
-                    EmailOrNickname = register.Nickname,
-                    Password = register.Password
-                }
-            ));
-        }
-        else
-        {
-            Debug.LogError("Error en la solicitud: " + unityWebRequest.error);
-            Debug.LogError("Respuesta del servidor: " + unityWebRequest.downloadHandler.text);
-        }
-    }
-
-    // Inicio de sesión
-    public IEnumerator LoginAsync(LoginRequest loginRequest)
-    {
-        UnityWebRequest unityWebRequest = new UnityWebRequest(Singleton.API_URL + "Auth/login", "POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest(ENVIRONMENT.API_URL + "Auth/login", "POST");
         string jsonData = JsonUtility.ToJson(loginRequest);
         Debug.Log("Datos login: " + jsonData);
 
@@ -134,25 +72,28 @@ public class AuthManager : MonoBehaviour
         unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
 
-        yield return unityWebRequest.SendWebRequest();
+        await unityWebRequest.SendWebRequest();
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Inicio de sesión exitoso: " + unityWebRequest.downloadHandler.text);
+            Debug.Log("Inicio de sesiï¿½n exitoso: " + unityWebRequest.downloadHandler.text);
             string jsonResponse = unityWebRequest.downloadHandler.text;
 
-            LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse); // Obtiene únicamente el token del JSON response
-            Debug.Log("Token extraído: " + response.accessToken);
+            LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse); // Obtiene ï¿½nicamente el token del JSON response
+            Debug.Log("Token extraï¿½do: " + response.accessToken);
 
-            // Guardar el token en PlayerPrefs si el "recuérdame" está activado
-            if (rememberMeToggle.isOn)
+            // Guardar el token en PlayerPrefs si el "recuï¿½rdame" estï¿½ activado
+            if (rememberMe)
             {
+                PlayerPrefs.SetInt("ID", response.id);
                 PlayerPrefs.SetString("AccessToken", response.accessToken);
                 PlayerPrefs.Save();
                 Debug.Log("Token guardado en PlayerPrefs.");
 
-                StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
-                SceneManager.LoadScene(1); // Las lobbies
+                token = response.accessToken;
+
+                //StartCoroutine(ConnectToSocketCoroutine(response.accessToken));
+                await GetUserAsync(response.id);
             }
             else
             {
@@ -160,41 +101,100 @@ public class AuthManager : MonoBehaviour
             }
 
             //SaveTokenToFile(response.accessToken); // Guarda el token en un txt
+
+            return true;
         }
         else
         {
             Debug.LogError("Error en la solicitud: " + unityWebRequest.error);
             Debug.LogError("Respuesta del servidor: " + unityWebRequest.downloadHandler.text);
+            return false;
         }
     }
 
-    //public void SaveTokenToFile(string token)
-    //{
-    //    string filePath = Application.dataPath + "/AccessToken.txt";
-    //    File.WriteAllText(filePath, token);
-    //    Debug.Log("Token guardado en: " + filePath); // Por si me desubico xd
-    //}
-
-    // Pereza las corrutinas tu xD
-    private IEnumerator ConnectToSocketCoroutine(string token)
+    public async Task<bool> GetUserAsync(int id)
     {
-        Task connectTask = Singleton.ConnectToSocket(token);
-        yield return new WaitUntil(() => connectTask.IsCompleted);
+        UnityWebRequest unityWebRequest = await PrepareWebRequestAndSendAsync(ENVIRONMENT.API_URL + "User/" + id);
+
+        if (unityWebRequest.result == UnityWebRequest.Result.Success)
+        {
+            string jsonResponse = unityWebRequest.downloadHandler.text;
+            user = JsonUtility.FromJson<UserDto>(jsonResponse);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            await GetSteamProfile();
+
+            PlayerPrefs.SetString("PlayerName", user.nickname);
+            PlayerPrefs.Save();
+
+            // TODO: Mostrar un aviso si estÃ¡ baneado
+            LobbyManager.PlayerName = user.nickname;
+            LobbyManager.PlayerId = id;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    // Cerrar sesión
+    private async Task GetSteamProfile()
+    {
+        try
+        {
+            if (user.steamId != null && user.steamId != "")
+            {
+                UnityWebRequest steamRequest = await PrepareWebRequestAndSendAsync(ENVIRONMENT.API_URL + "SteamAuth/getId/" + user.steamId);
+                if (steamRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = steamRequest.downloadHandler.text;
+                    steamProfile = JsonUtility.FromJson<SteamProfile>(jsonResponse);
+
+                    if(steamProfile == null)
+                    {
+                        return;
+                    }
+
+                    user.nickname = steamProfile.personaName;
+
+                    Debug.Log("Nombre de Steam: " + user.nickname);
+                }
+            }
+        }
+        catch { }
+    }
+
+    private async Task<UnityWebRequest> PrepareWebRequestAndSendAsync(string path)
+    {
+        UnityWebRequest unityWebRequest = new UnityWebRequest(path, "GET");
+
+        unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
+        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
+        unityWebRequest.SetRequestHeader("Authorization", "Bearer " + token);
+
+        await unityWebRequest.SendWebRequest();
+
+        return unityWebRequest;
+    }
+
+    // Cerrar sesiï¿½n
     public void Logout()
     {
         if (PlayerPrefs.HasKey("AccessToken"))
         {
             PlayerPrefs.DeleteKey("AccessToken");
-            Debug.Log("A chuparla el token >:) ; Sesión cerrada.");
+            Debug.Log("A chuparla el token >:) ; Sesiï¿½n cerrada.");
+            isLogged = false;
+            token = "";
         }
         else
         {
-            Debug.Log("No se encontró ningún token. No hay sesión para cerrar :c");
+            Debug.Log("No se encontrï¿½ ningï¿½n token. No hay sesiï¿½n para cerrar :c");
         }
     }
-
-
 }

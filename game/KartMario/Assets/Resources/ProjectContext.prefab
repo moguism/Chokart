@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2218983881414912914}
-  - component: {fileID: 4287863481070870754}
+  - component: {fileID: 4683433207052924967}
   - component: {fileID: -1785096461884067188}
   - component: {fileID: 7574927874596328143}
+  - component: {fileID: 997468213644566341}
+  - component: {fileID: 6121902946783804654}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -34,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4287863481070870754
+--- !u!114 &4683433207052924967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +45,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 688360839623361399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6899b2f8d873024baa4acb31f55c05e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d8af97bb1bd56540aa5ec7fd91ce7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableObjectInstallers: []
@@ -62,7 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134fe03459edb554e8371003808d7ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singleton: {fileID: 7574927874596328143}
+  websocketSingleton: {fileID: 7574927874596328143}
+  lobbyManager: {fileID: 997468213644566341}
+  authManager: {fileID: 6121902946783804654}
 --- !u!114 &7574927874596328143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,4 +80,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delete: 1
-  isHost: 0
+--- !u!114 &997468213644566341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688360839623361399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6f8049afcf35e43a8112507a6e9e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasRelay: 0
+  lobbyCode: 
+--- !u!114 &6121902946783804654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688360839623361399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98d31f4b22747f4bb8d532cf090a544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLogged: 0
+  isTryingToLog: 1

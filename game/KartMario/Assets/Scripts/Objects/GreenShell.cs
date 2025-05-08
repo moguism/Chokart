@@ -9,7 +9,7 @@ public class GreenShell : BasicObject
     public GameObject parent;
     public float speed = 10;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (direction != null)
         {
@@ -19,19 +19,13 @@ public class GreenShell : BasicObject
             {
                 if (IsOwner)
                 {
-                    DespawnOnTimeServerRpc(NetworkObjectId);
+                    DespawnOnTimeServerRpc();
                 }
             }
         }
     }
 
-    [ServerRpc]
-    private void DespawnOnTimeServerRpc(ulong id)
-    {
-        FindAnyObjectByType<ObjectSpawner>().DespawnObjectServerRpc(id);
-    }
-
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (direction != null)
         {

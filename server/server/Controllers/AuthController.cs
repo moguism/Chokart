@@ -15,10 +15,17 @@ namespace server.Controllers
     public class AuthController : ControllerBase
     {
         private readonly TokenValidationParameters _tokenParameters;
+
         private readonly UserService _userService;
-        public AuthController(UserService userService, IOptionsMonitor<JwtBearerOptions> jwtOptions) {
+        private readonly FriendshipService _friendshipService;
+
+        private readonly EmailService _emailService = new EmailService();
+
+        public AuthController(UserService userService, IOptionsMonitor<JwtBearerOptions> jwtOptions, FriendshipService friendshipService)
+        {
             _userService = userService;
             _tokenParameters = jwtOptions.Get(JwtBearerDefaults.AuthenticationScheme).TokenValidationParameters;
+            _friendshipService = friendshipService;
         }
 
         // CREAR NUEVO USUARIO
@@ -49,6 +56,9 @@ namespace server.Controllers
 
             var userDto = _userService.ToDto(newUser);
 
+            // Mando un correo de verifición
+            await _emailService.CreateEmailUser(newUser.Email, newUser.Id, newUser.VerificationCode);
+
             return CreatedAtAction(nameof(Login), new { email = userDto.Email }, userDto);
         }
 
@@ -63,10 +73,13 @@ namespace server.Controllers
                 var user = await _userService.LoginAsync(model);
 
                 // Si el usuario es null, se devuelve Unauthorized
-                if (user == null || user.Banned)
+                if (user == null || user.Banned || !user.Verified)
                 {
                     return Unauthorized("Datos de inicio de sesión incorrectos.");
                 }
+
+                var friendships = await _friendshipService.GetFriendList(user.Id);
+                user.Friendships = friendships;
 
                 // Se crea el token JWT
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -95,6 +108,7 @@ namespace server.Controllers
                 // Se devuelve el resultado de inicio de sesión con el token y los datos del usuario
                 var loginResult = new LoginResult
                 {
+                    Id = user.Id,
                     AccessToken = stringToken,
                     User = _userService.ToDto(user)
                 };
@@ -107,6 +121,13 @@ namespace server.Controllers
                 // Si hay algún error, se devuelve Unauthorized
                 return Unauthorized("Datos de inicio de sesión incorrectos.");
             }
+        }
+
+        [HttpGet("verify/{id}/{code}")]
+        public async Task<bool> VerifyUser(int id, string code)
+        {
+            bool couldUpdate = await _userService.VerifyUserAsync(id, code);
+            return couldUpdate;
         }
     }
 }

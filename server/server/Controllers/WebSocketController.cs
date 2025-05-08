@@ -23,15 +23,21 @@ public class WebSocketController : ControllerBase
     // TODO: Cambiar el nickname por el JWT, poner el Authorize, y cambiar todo lo relativo a username por User, como en Mixdrop
 
     [Authorize]
-    [Route("{jwt}")]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public async Task ConnectAsync(string jwt)
+    [HttpGet]
+    public async Task ConnectAsync()
     {
+        Console.WriteLine("entro en el controlador");
+
         // Si la petición es de tipo websocket la aceptamos
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
+            Console.WriteLine("es peticion de websocket");
+
             // Aceptamos la solicitud
             WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+
+            Console.WriteLine("acepto peticion");
+
 
             User user = await GetAuthorizedUser();
 
@@ -40,11 +46,10 @@ public class WebSocketController : ControllerBase
                 return;
             }
 
-            string ip = HttpContext.Connection.RemoteIpAddress?.ToString();
-            Console.WriteLine("IP: " + ip);
+            Console.WriteLine("usuario no nulo " + user.Nickname);
 
             // Manejamos la solicitud.
-            await _webSocketHandler.HandleWebsocketAsync(webSocket, user, ip);
+            await _webSocketHandler.HandleWebsocketAsync(webSocket, user);
         }
         // En caso contrario la rechazamos
         else
@@ -64,7 +69,7 @@ public class WebSocketController : ControllerBase
         // Pilla el usuario de la base de datos
         User user = await _userService.GetBasicUserByIdAsync(int.Parse(idString));
 
-        if (user == null || user.Banned)
+        if (user == null || user.Banned || !user.Verified)
         {
             Console.WriteLine("Usuario baneado");
             return null;

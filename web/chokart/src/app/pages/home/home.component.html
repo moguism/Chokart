@@ -1,0 +1,118 @@
+<div id="home" *transloco="let t">
+  <app-navbar></app-navbar>
+
+  <div class="container">
+    <img src="/logo-chokart.png" alt="logo chokart" />
+
+    <h1>{{ t("play-free") }}</h1>
+
+    <div class="links">
+      <div class="card-button" (click)="this.router.navigateToUrl('/download')">
+        <i
+          class="pi pi-plus-circle"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span>{{ t("download-now") }}</span>
+      </div>
+      <div class="card-button" (click)="this.router.navigateToUrl('/login')">
+        <i
+          class="pi pi-chevron-circle-right"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span>{{ t("signup") }} </span>
+      </div>
+      <div class="card-button" (click)="this.router.navigateToUrl('/media')">
+        <i
+          class="pi pi-play-circle"
+          style="font-size: 2rem; align-self: end"
+        ></i>
+        <span>{{ t("watch-trailer") }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="home-content" *transloco="let t">
+  <div class="landing1">
+    <h1>{{ t("landing-h1") }}</h1>
+    <p>{{ t("landing-p1") }}</p>
+  </div>
+
+  <div class="characters">
+    <div class="text-characters">
+      <h2>{{ t("landing-h1-character") }}</h2>
+      <p>{{ t("landing-p-character") }}</p>
+    </div>
+    <!--carrusel personajes-->
+    <div>
+      <app-character-galleria></app-character-galleria>
+    </div>
+  </div>
+
+  <br /><br />
+  <div class="play-modes">
+    <img class="bg-img" src="/home/home-bg2.webp" alt="" />
+
+    <div class="title">
+      <h1>
+        {{ t("play-mode-title")
+        }}<img src="/icono-carrera.webp" height="70px" alt="" />
+      </h1>
+    </div>
+    <div class="content">
+      @if (!playModeSwitch) {
+      <div @modeAnimation1 class="mode-content">
+        <div class="mode-text">
+          <h2 class="mode-title">{{ t("survival-mode-title") }}</h2>
+          <span class="chips">Colisiones letales</span>
+          <br /><br />
+          <p class="mode-desc">
+            {{ t("survival-mode-description") }}
+          </p>
+          <br />
+          <div id="fifth" class="buttonBox">
+            <button>{{ t("ranking-survival") }}</button>
+          </div>
+        </div>
+        <div class="clipped-image">
+          <img
+            src="https://store-images.s-microsoft.com/image/apps.22126.14329949037963316.a8135a3c-31d9-4a17-a223-9d5c2fb44557.cb90dca0-6a9a-4a44-85f6-fa5721b3d2d8"
+            alt="Survival"
+          />
+        </div>
+      </div>
+      } @else {
+      <div @modeAnimation2 class="mode-content">
+        <div class="mode-text">
+          <h2 class="mode-title">{{ t("racing-mode-title") }}</h2>
+          <span class="chips">Colisiones letales</span>
+          <br /><br />
+          <p class="mode-desc">
+            {{ t("racing-mode-description") }}
+          </p>
+          <br />
+          <div id="fifth" class="buttonBox">
+            <button>{{ t("ranking-racing") }}</button>
+          </div>
+        </div>
+        <div class="clipped-image">
+          <img
+            src="https://www.desconsolados.com/wp-content/uploads/2019/11/Touring-Karts-Cover_1080p.jpg"
+            alt="Carrera"
+          />
+        </div>
+      </div>
+      }
+    </div>
+    <app-kart-switch (switched)="onSwitchChange($event)"></app-kart-switch>
+  </div>
+</div>
+<div
+  style="
+    height: 6rem;
+    background-color: #043da8;
+    position: relative;
+    z-index: 1;
+    margin-top: -100px;
+  "
+></div>

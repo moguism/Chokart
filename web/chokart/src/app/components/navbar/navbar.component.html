@@ -1,0 +1,70 @@
+<ng-container *transloco="let t">
+  <nav class="navbar">
+    <img src="logo-chokart.png" class="logo" alt="logo chokart" />
+
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+    <ul [class.active]="isMenuOpen" class="nav-links">
+      <li>
+        <a [routerLink]="'/'" (click)="closeMenu()">{{ t("home") }}</a>
+      </li>
+      <li>
+        <a [routerLink]="'/'" (click)="closeMenu()">{{ t("media") }}</a>
+      </li>
+      <li>
+        @if (this.user != null || this.user != undefined) {
+        <a [routerLink]="'/menu'" (click)="closeMenu()">Menu</a>
+        } @else {
+        <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("login") }}</a>
+        }
+      </li>
+    </ul>
+
+    <div class="nav-end">
+      @if (this.user != null || this.user != undefined) {
+      <a [routerLink]="'/profile'" (click)="closeMenu()">
+        <img
+          src="/user-profile.svg"
+          style="margin-right: 10px; cursor: pointer; vertical-align: bottom"
+          alt="icono de perfil de usuario"
+      /></a>
+      }
+
+      <!--selector idioma-->
+      <details
+        #langSelector
+        (toggle)="isMenuOpen = !isMenuOpen"
+        class="custom-select"
+        style="margin-right: 5px"
+      >
+        <summary>
+          <img
+            [src]="getFlagUrl(this.languages[languageSelected]?.code)"
+            style="width: 28px; height: auto; object-fit: contain"
+          />
+        </summary>
+
+        <div class="custom-select-options">
+          @for (lang of this.languages; track $index) { @if ($index !==
+          languageSelected) {
+          <input
+            type="radio"
+            class="rad"
+            name="lang"
+            [id]="'lang-' + $index"
+            [checked]="$index === languageSelected"
+            (change)="languageSelected = $index; onLanguageChanged()"
+          />
+          <label class="opt" [for]="'lang-' + $index">
+            <img [src]="getFlagUrl(lang.code)" />
+          </label>
+          } }
+        </div>
+      </details>
+
+      <a id="download" [routerLink]="'/download'" (click)="closeMenu()">
+        &nbsp;{{ t("download") }}</a
+      >
+    </div>
+  </nav>
+</ng-container>

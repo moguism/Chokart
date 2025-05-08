@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 647a92b75edfea741b637d9b66b0828e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148136
+  packageName: EZSoftBone
+  packageVersion: 1.6.0
+  assetPath: Assets/EZhex1991/EZSoftBone/Tests/Presets/Prefab1_Tree.prefab
+  uploadId: 458587

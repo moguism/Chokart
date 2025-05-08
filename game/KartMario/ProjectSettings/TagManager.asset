@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Kart
   - Object
+  - Map
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - Kart
   - Post
-  - 
+  - Icon
   - 
   - 
   - 
