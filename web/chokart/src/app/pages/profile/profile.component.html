@@ -23,7 +23,10 @@
 
     } @else {
     <!--info chokart-->
+    @if(user.avatarPath != "" && user.avatarPath != null)
+    {
     <img class="avatar" [src]="user.avatarPath" alt="avatar usuario" />
+    }
     <p>{{ user.nickname }}</p>
 
     <div class="card-button">
@@ -43,7 +46,7 @@
     <p>Puntuación total: {{ user.totalPoints }}</p>
 
     <!--cerrar sesion-->
-    <p (click)="this.logOut()">Cerrar la sesión actual</p>
+    <p class="logout" (click)="this.logOut()">Cerrar la sesión actual</p>
   </div>
   <!--si no hay usuario-->
   } @else {
