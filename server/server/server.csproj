@@ -20,4 +20,29 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+	  <Content Update="wwwroot/**/*">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+  </ItemGroup>
+
+	<!-- Tarea que se va a ejecutar antes de la compilación del proyecto -->
+	<Target Name="BuildAngular" BeforeTargets="Build">
+		<PropertyGroup>
+			<!-- Ruta del proyecto cliente relativa a donde está el archivo .csproj -->
+			<AngularAppPath>../../web/chokart</AngularAppPath>
+			<!-- Carpeta dentro del wwwroot donde se va a guardar el proyecto cliente
+construido -->
+			<WwwrootFolder>client</WwwrootFolder>
+			<!-- Si se compila en modo depuración pues construimos el cliente en modo
+depuración y lo mismo en el caso de que sea en modo producción -->
+			<AngularConfiguration Condition="'$(Configuration)' == 'Debug'">development</AngularConfiguration>
+			<AngularConfiguration Condition="'$(Configuration)' == 'Release'">
+				production
+			</AngularConfiguration>
+		</PropertyGroup>
+		<!-- Comando para construir el proyecto cliente y guardar los archivos generados
+dentro de la carpeta wwwroot del proyecto del servidor -->
+		<Exec Command="ng build --configuration $(AngularConfiguration) --output-path=&quot;$(ProjectDir)wwwroot/$(WwwrootFolder)&quot; --deploy-url /$(WwwrootFolder)/" WorkingDirectory="$(AngularAppPath)" ContinueOnError="False" />
+	</Target>
 </Project>

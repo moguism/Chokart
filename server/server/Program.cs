@@ -1,12 +1,12 @@
 ﻿
+using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using server.Models.Mappers;
 using server.Repositories;
 using server.Services;
 using server.Sockets;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace server
 {
@@ -14,6 +14,8 @@ namespace server
     {
         public static async Task Main(string[] args)
         {
+            Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddScoped<Context>();
@@ -87,9 +89,12 @@ namespace server
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.MapControllers();
 
-            app.UseStaticFiles();
+            app.Map("api/{**slug}", HandleApiFallbackAsync);
+            app.MapFallbackToFile("client/index.html");
 
             await SeedDataBaseAsync(app.Services);
 
@@ -109,6 +114,11 @@ namespace server
                 Seeder seeder = new Seeder(dbContext);
                 await seeder.SeedAsync();
             }
+        }
+
+        private static IResult HandleApiFallbackAsync(HttpContext context)
+        {
+            return Results.NotFound($"Cannot {context.Request.Method}{context.Request.Path}");
         }
     }
 }
