@@ -68,7 +68,7 @@ public class CarDamage : NetworkBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    /*public void OnCollisionEnter(Collision collision)
     {
         var parent = collision.gameObject.transform.parent;
         //Debug.Log(parent);
@@ -100,7 +100,7 @@ public class CarDamage : NetworkBehaviour
         //OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart);
 
         DeformCarServerRpc(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
-    }
+    }*/
 
     [ServerRpc(RequireOwnership = false)]
     public void DeformCarServerRpc(Vector3 collisionPoint, float collisionForce, bool isKart, ulong kartId)

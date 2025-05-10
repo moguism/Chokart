@@ -68,4 +68,9 @@ public class AuthManagerScene : MonoBehaviour
 
         isLogin = false;
     }
+
+    public void GoToRegister()
+    {
+        Application.OpenURL("https://www.playchokart.com/login");
+    }
 }
