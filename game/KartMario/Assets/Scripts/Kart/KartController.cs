@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using GLTFast.Schema;
 using ProximityChat;
 using System.Collections.Generic;
 using TMPro;
@@ -115,13 +116,10 @@ public class KartController : BasicPlayer
 
     [Header("Animaciones")]
     [SerializeField]
-    private GameObject leftArm;
+    private Animator animatorLeft;
 
     [SerializeField]
-    private GameObject rightArm;
-
-    private Quaternion originalRotationLeft;
-    private Quaternion originalRotationRight;
+    private Animator animatorRight;
 
     [Header("Otras opciones")]
     public bool canMove = true;
@@ -178,9 +176,6 @@ public class KartController : BasicPlayer
 
         invencibilityTimer = invencibilityTimerSeconds;
 
-        originalRotationLeft = leftArm.transform.rotation;
-        originalRotationRight = rightArm.transform.rotation;
-
         maxHealth = health;
         ownerName = LobbyManager.PlayerName;
         ownerId = LobbyManager.PlayerId;
@@ -220,7 +215,7 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        postVolume = Camera.main.GetComponent<PostProcessVolume>();
+        postVolume = UnityEngine.Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
 
         // Para asignar los distintos colores de las partículas
@@ -248,7 +243,7 @@ public class KartController : BasicPlayer
 
         chronometer = FindFirstObjectByType<Chronometer>();
 
-        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
         FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
@@ -300,20 +295,22 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        /*if (horizontalInput == 0)
+        if (horizontalInput == 0)
         {
-            leftArm.transform.rotation = originalRotationLeft;
-            rightArm.transform.rotation = originalRotationRight;
+            animatorLeft.Play("MovingLeftArmToLeg_Inverse");
+            animatorRight.Play("MovingRightArmToLef_Inverse");
         }
         else
         {
-            Quaternion targetLeft = originalRotationLeft * Quaternion.Euler(0, 0, horizontalInput * -10);  // Brazo izquierdo hacia abajo
-            Quaternion targetRight = originalRotationRight * Quaternion.Euler(0, 0, horizontalInput * 10); // Brazo derecho hacia arriba
-
-            leftArm.transform.rotation = Quaternion.Lerp(leftArm.transform.rotation, targetLeft, 0.1f);
-            rightArm.transform.rotation = Quaternion.Lerp(rightArm.transform.rotation, targetRight, 0.1f);
-        }*/
-
+            if(horizontalInput >= 0)
+            {
+                animatorLeft.Play("MovingLeftArmToLeg");
+            }
+            else
+            {
+                animatorRight.Play("MovingRightArmToLef");
+            }
+        }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
