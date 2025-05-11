@@ -3,19 +3,12 @@ using Injecta;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class CarSelection : MonoBehaviour
 {
-    public static KartModel[] cars;
     public static CharacterModel[] characters;
-
-    [SerializeField]
-    private KartModel[] _cars;
 
     [SerializeField]
     private CharacterModel[] _characters;
@@ -68,10 +61,25 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
-    private bool hasFinished = false;
+    public static bool hasFinished = false;
     private bool waiting = false;
 
     public static float audioSourceTime;
+
+    [SerializeField]
+    private GameObject colorSelection;
+
+    [SerializeField]
+    private Material kartMaterial;
+
+    [SerializeField]
+    private GameObject previousButton;
+
+    [SerializeField]
+    private GameObject nextButton;
+
+    [SerializeField]
+    private GameObject kart;
 
     private void Start()
     {
@@ -90,15 +98,13 @@ public class CarSelection : MonoBehaviour
             joinCodeText.text = LobbyManager.lobbyCode;
         }
 
-        cars = _cars.ToArray(); // Para que haga una copia
-        characters = _characters.ToArray();
+        characters = _characters.ToArray(); // Para que haga una copia
 
         videoPlayer.videoPlayer.SetDirectAudioVolume(0, 0.25f); // Para el volumen
         startVideoColor = videoRawImage.color;
 
         index = PlayerPrefs.GetInt("carIndex");
         characterIndex = PlayerPrefs.GetInt("characterIndex");
-        ManageCarVisibility();
 
         switch (LocalizationManager.languageCode)
         {
@@ -122,10 +128,10 @@ public class CarSelection : MonoBehaviour
 
     private void Update()
     {
-        if(shouldChangeCode)
+        if (shouldChangeCode)
         {
             timerCode -= Time.deltaTime;
-            if(timerCode <= 0.0f)
+            if (timerCode <= 0.0f)
             {
                 joinCodeText.text = originalText;
                 timerCode = maxTimer;
@@ -133,7 +139,7 @@ public class CarSelection : MonoBehaviour
             }
         }
 
-        if(hasFinished && lobbyManager.hasRelay)
+        if (hasFinished && lobbyManager.hasRelay)
         {
             SceneManager.LoadScene(3);
         }
@@ -146,59 +152,38 @@ public class CarSelection : MonoBehaviour
             return;
         }
 
-        if (!showingCharacters)
+        characterIndex++;
+        if (characterIndex >= _characters.Length)
         {
-            index++;
-            if (index >= _cars.Length)
-            {
-                index = 0;
-            }
+            characterIndex = 0;
         }
-        else
-        {
-            characterIndex++;
-            if (characterIndex >= _characters.Length)
-            {
-                characterIndex = 0;
-            }
-        }
+
         ManageVisibilityAndSave();
     }
 
     public void Prev()
     {
-        if(waiting)
+        if (waiting)
         {
             return;
         }
 
-        if (!showingCharacters)
+
+        characterIndex--;
+        if (characterIndex < 0)
         {
-            index--;
-            if (index < 0)
-            {
-                index = _cars.Length - 1;
-            }
+            characterIndex = _characters.Length - 1;
         }
-        else
-        {
-            characterIndex--;
-            if (characterIndex < 0)
-            {
-                characterIndex = _characters.Length - 1;
-            }
-        }
+
         ManageVisibilityAndSave();
     }
 
     public async void GoToGame()
     {
-        if(waiting)
+        if (waiting)
         {
             return;
         }
-
-        WebsocketSingleton.kartModelIndex = index;
 
         if (showingCharacters)
         {
@@ -219,6 +204,9 @@ public class CarSelection : MonoBehaviour
         }
         else
         {
+            colorSelection.SetActive(false);
+            previousButton.SetActive(true);
+            nextButton.SetActive(true);
             audioSource.Stop();
             showingCharacters = true;
             ManageVisibilityAndSave();
@@ -231,30 +219,15 @@ public class CarSelection : MonoBehaviour
         {
             ManageCharacterVisibility();
         }
-        else
-        {
-            ManageCarVisibility();
-        }
 
         SaveIndex();
-    }
-
-    private void ManageCarVisibility()
-    {
-        for (int i = 0; i < _cars.Length; i++)
-        {
-            _cars[i].car.SetActive(false);
-        }
-
-        _cars[index].car.SetActive(true);
-        //speedText.text = speedString + _cars[index].speed;
     }
 
     private async void ManageCharacterVisibility()
     {
         try
         {
-            _cars[index].car.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
+            kart.GetComponentInChildren<CharacterSelector>().SetCharacter(characterIndex, false);
 
             speedText.text = _characters[characterIndex].name;
 
@@ -285,6 +258,11 @@ public class CarSelection : MonoBehaviour
         catch { }
     }
 
+    public void OnColorSelected(Color color)
+    {
+        kartMaterial.color = color;
+    }
+
     private void SetVideoAndImageAvailability(bool imageOptions, bool videoOptions)
     {
         //backgroundImage.color = imageOptions ? Color.white : Color.black;
@@ -305,13 +283,6 @@ public class CarSelection : MonoBehaviour
         shouldChangeCode = true;
         joinCodeText.text = otherText;
     }
-}
-
-[System.Serializable]
-public class KartModel
-{
-    public GameObject car; // Por ahora esto es una referencia al modelo (digo por ahora porque probablemente se puede hacer mejor)
-    public float speed;
 }
 
 [System.Serializable]

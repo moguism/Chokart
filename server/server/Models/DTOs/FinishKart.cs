@@ -7,5 +7,5 @@ public class FinishKart
     public int Position { get; set; }
     public int Kills { get; set; }
     public int CharacterId { get; set; }
-    public int KartId { get; set; }
+
 }

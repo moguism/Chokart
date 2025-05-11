@@ -144,10 +144,10 @@ public class KartController : BasicPlayer
                 return;
             }
 
-            if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+            /*if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
             {
                 return;
-            }
+            }*/
 
             kartCamera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
             kartCamera.Follow = gameObject.transform;
@@ -190,11 +190,11 @@ public class KartController : BasicPlayer
         _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es
-        if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+        /*if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
         {
             InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
             return;
-        }
+        }*/
 
         playerControls = new InputSystem_Actions();
         playerControls.Enable();

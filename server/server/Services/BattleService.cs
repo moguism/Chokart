@@ -36,8 +36,7 @@ public class BattleService
                     UserId = finishKart.PlayerId,
                     TotalKills = finishKart.Kills,
                     Position = finishKart.Position,
-                    CharacterId = finishKart.CharacterId,
-                    KartId = finishKart.KartId
+                    CharacterId = finishKart.CharacterId
                 };
 
                 battle.BattleUsers.Add(userBattle);

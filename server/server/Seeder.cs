@@ -46,7 +46,6 @@ namespace server
             await SeedBattleStateAsync();
             await SeedCharactersAsync();
             await SeedTracksAsync();
-            await SeedKartsAsync();
             await SeedFriendshipsAsync();
             await _context.SaveChangesAsync();
         }
@@ -117,18 +116,6 @@ namespace server
             ];
 
             await _context.Characters.AddRangeAsync(characters);
-        }
-
-        private async Task SeedKartsAsync()
-        {
-            Kart[] karts = [
-                new Kart()
-                {
-                    Name = "Default"
-                }
-            ];
-
-            await _context.Karts.AddRangeAsync(karts);
         }
 
         private async Task SeedTracksAsync()

@@ -11,7 +11,6 @@ public class WebsocketSingleton : MonoBehaviour
 
     public bool delete = true;
 
-    public static int kartModelIndex = -1;
     public static bool connected = false;
 
     private VerticalMenu verticalMenu;

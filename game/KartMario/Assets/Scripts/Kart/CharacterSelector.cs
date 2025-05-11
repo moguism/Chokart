@@ -23,7 +23,7 @@ public class CharacterSelector : MonoBehaviour
     private void Start()
     {
         // Para que no lo haga nada más empiece el selector
-        if (WebsocketSingleton.kartModelIndex != -1)
+        if (CarSelection.hasFinished)
         {
             SetCharacter(CarSelection.characterIndex, true);
         }
