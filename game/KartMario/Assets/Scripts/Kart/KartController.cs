@@ -131,6 +131,7 @@ public class KartController : BasicPlayer
     [SerializeField]
     private VoiceNetworker voiceNetworker;
     private bool isRecording = false;
+    public int characterIndex;
 
     public override void OnNetworkSpawn()
     {
@@ -176,12 +177,14 @@ public class KartController : BasicPlayer
 
         invencibilityTimer = invencibilityTimerSeconds;
 
+        characterIndex = CarSelection.characterIndex;
+
         maxHealth = health;
         ownerName = LobbyManager.PlayerName;
         ownerId = LobbyManager.PlayerId;
 
         GetPositionManager();
-        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, AuthenticationService.Instance.PlayerId);
+        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, characterIndex, AuthenticationService.Instance.PlayerId);
         _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es

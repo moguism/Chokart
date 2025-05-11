@@ -123,7 +123,7 @@ namespace server
             Track[] tracks = [
                 new Track()
                 {
-                    Name = "Moo moo farm"
+                    Name = "Shy Guy Bazaar"
                 }
             ];
 

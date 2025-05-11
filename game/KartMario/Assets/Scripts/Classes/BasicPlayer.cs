@@ -35,7 +35,7 @@ public class BasicPlayer : NetworkBehaviour
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
-    protected void InformServerKartCreatedServerRpc(ulong kartId, string playerName, int userId, string playerId, ServerRpcParams rpcParams = default)
+    protected void InformServerKartCreatedServerRpc(ulong kartId, string playerName, int userId, int characterId, string playerId, ServerRpcParams rpcParams = default)
     {
         GetPositionManager();
 
@@ -46,6 +46,7 @@ public class BasicPlayer : NetworkBehaviour
             print("Agregando");
             (this as KartController).ownerName = playerName;
             (this as KartController).ownerId = userId;
+            (this as KartController).characterIndex = characterId;
             _positionManager.karts.Add(this as KartController);
             RelayManager.playersIds.Add(playerId);
         }

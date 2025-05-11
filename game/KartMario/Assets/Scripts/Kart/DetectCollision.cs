@@ -126,13 +126,18 @@ public class DetectCollision : NetworkBehaviour
         // TODO: No hacer desaparecer, sino darlo como Game Over
         if (kart.health <= 0 && LobbyManager.gamemode != Gamemodes.Race && LobbyManager.gameStarted)
         {
-            DisableKart(positionManager, kart, true);
-
-            //NotifyNewKillClientRpc(kartAggressor);
-            //CreateNewFinishKart(kart);
-
-            kart.DispawnKartServerRpc(kart.NetworkObjectId, kartAggressor);
+            DisableAndDespawnKart(kart, kartAggressor);
         }
+    }
+
+    public void DisableAndDespawnKart(KartController kart, ulong kartAggressor)
+    {
+        DisableKart(positionManager, kart, true);
+
+        //NotifyNewKillClientRpc(kartAggressor);
+        //CreateNewFinishKart(kart);
+
+        kart.DispawnKartServerRpc(kart.NetworkObjectId, kartAggressor);
     }
 
     public static void CreateNewFinishKart(PositionManager positionManager, KartController kart, int position)
@@ -154,7 +159,7 @@ public class DetectCollision : NetworkBehaviour
             playerName = playerName,
             position = position,
             kills = kart.totalKills,
-            characterId = CarSelection.characterIndex + 1,
+            characterId = kart.characterIndex + 1,
         });
     }
 
