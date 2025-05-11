@@ -5,5 +5,4 @@ public class FinishKart
     public int position;
     public int kills;
     public int characterId;
-    public int kartId;
 }

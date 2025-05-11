@@ -462,7 +462,6 @@ MonoBehaviour:
   code: UPPERCASE_PASSWORD
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &122653665
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,7 +990,6 @@ MonoBehaviour:
   code: WRONG_CREDENTIALS
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &495166277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,7 +1376,6 @@ MonoBehaviour:
   code: SCAN_QR
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &706851944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +2068,6 @@ MonoBehaviour:
   code: REMEMBER_ME
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1291566804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,7 +2834,6 @@ MonoBehaviour:
   code: OR_PRESS_HERE
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1480865211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2954,9 +2949,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 495166280}
-        m_TargetAssemblyTypeName: AuthManagerScene, Assembly-CSharp
-        m_MethodName: GoToRegister
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameStarter, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3565,7 +3560,6 @@ MonoBehaviour:
   code: USER_OR_EMAIL
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1788826352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,7 +3714,6 @@ MonoBehaviour:
   code: WITHOUT_ACCOUNT
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1817096812
 GameObject:
   m_ObjectHideFlags: 0
@@ -4023,7 +4016,6 @@ MonoBehaviour:
   code: LOGIN
   dropdown: {fileID: 0}
   dropdownCodes: []
-  dropdownSelectedText: {fileID: 0}
 --- !u!1 &2132040733
 GameObject:
   m_ObjectHideFlags: 0

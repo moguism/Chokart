@@ -9,7 +9,6 @@ using Cysharp.Threading.Tasks;
 
 public class GameStarter : NetworkBehaviour
 {
-    public List<GameObject> PossiblePrefabs = new List<GameObject>();
 
     [Inject]
     public WebsocketSingleton websocketSingleton;
@@ -40,11 +39,6 @@ public class GameStarter : NetworkBehaviour
         if (LobbyManager.isHost)
         {
             startGameButton.SetActive(true);
-
-            if (WebsocketSingleton.kartModelIndex != -1)
-            {
-                networkManager.NetworkConfig.PlayerPrefab = PossiblePrefabs.ElementAt(WebsocketSingleton.kartModelIndex);
-            }
         }
 
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;

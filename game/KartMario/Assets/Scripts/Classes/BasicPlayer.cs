@@ -14,7 +14,7 @@ public class BasicPlayer : NetworkBehaviour
     protected PositionManager _positionManager;
     protected ObjectSpawner objectSpawner;
 
-    [ServerRpc]
+    /*[ServerRpc]
     protected void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
     {
         if (starter == null)
@@ -31,7 +31,7 @@ public class BasicPlayer : NetworkBehaviour
         GameObject gameObject = Instantiate(prefab, position, Quaternion.identity);
 
         gameObject.GetComponent<NetworkObject>().SpawnWithOwnership(ownerId);
-    }
+    }*/
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]

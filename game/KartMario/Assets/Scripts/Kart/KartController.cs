@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using DG.Tweening;
+using GLTFast.Schema;
 using ProximityChat;
 using System.Collections.Generic;
 using TMPro;
@@ -67,12 +68,12 @@ public class KartController : BasicPlayer
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
-   
+
     // Objetos
     [Header("Objetos")]
     public string currentObject;
     private TMP_Text objectText;
-    
+
     public bool canBeHurt = true;
     public bool activateInvencibilityFrames = false;
 
@@ -113,6 +114,13 @@ public class KartController : BasicPlayer
     [SerializeField]
     private Canvas canvasMask;
 
+    [Header("Animaciones")]
+    [SerializeField]
+    private Animator animatorLeft;
+
+    [SerializeField]
+    private Animator animatorRight;
+
     [Header("Otras opciones")]
     public bool canMove = true;
     public int totalKills = 0;
@@ -134,10 +142,10 @@ public class KartController : BasicPlayer
                 return;
             }
 
-            if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+            /*if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
             {
                 return;
-            }
+            }*/
 
             kartCamera = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
             kartCamera.Follow = gameObject.transform;
@@ -153,7 +161,7 @@ public class KartController : BasicPlayer
             objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
 
             var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
-            objectButton.onClick.AddListener(delegate { SpawnObject();});
+            objectButton.onClick.AddListener(delegate { SpawnObject(); });
         }
     }
 
@@ -177,11 +185,11 @@ public class KartController : BasicPlayer
         _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es
-        if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
+        /*if (WebsocketSingleton.kartModelIndex != -1 && kartIndex != WebsocketSingleton.kartModelIndex)
         {
             InformServerAboutCharacterChangeServerRpc(NetworkObjectId, WebsocketSingleton.kartModelIndex, OwnerClientId, transform.position);
             return;
-        }
+        }*/
 
         playerControls = new InputSystem_Actions();
         playerControls.Enable();
@@ -207,7 +215,7 @@ public class KartController : BasicPlayer
         }
         catch { }
 
-        postVolume = Camera.main.GetComponent<PostProcessVolume>();
+        postVolume = UnityEngine.Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
 
         // Para asignar los distintos colores de las partículas
@@ -235,7 +243,7 @@ public class KartController : BasicPlayer
 
         chronometer = FindFirstObjectByType<Chronometer>();
 
-        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
+        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
         FindFirstObjectByType<PauseScreen>().kart = this;
     }
 
@@ -258,7 +266,7 @@ public class KartController : BasicPlayer
 
             invencibilityTimer -= Time.deltaTime;
 
-            if(invencibilityTimer <= 0.0f)
+            if (invencibilityTimer <= 0.0f)
             {
                 canBeHurt = true;
                 activateInvencibilityFrames = false;
@@ -281,12 +289,28 @@ public class KartController : BasicPlayer
             direction = ai.MoveDirection;
             Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
-        else if(!isMobile)
+        else if (!isMobile)
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
+        if (horizontalInput == 0)
+        {
+            animatorLeft.Play("MovingLeftArmToLeg_Inverse");
+            animatorRight.Play("MovingRightArmToLef_Inverse");
+        }
+        else
+        {
+            if(horizontalInput >= 0)
+            {
+                animatorLeft.Play("MovingLeftArmToLeg");
+            }
+            else
+            {
+                animatorRight.Play("MovingRightArmToLef");
+            }
+        }
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
@@ -333,7 +357,7 @@ public class KartController : BasicPlayer
             }
             else
             {
-                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
+                if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
                 }
@@ -474,21 +498,22 @@ public class KartController : BasicPlayer
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
             objectText.text = currentObject;
-        } catch { }
+        }
+        catch { }
     }
 
     private void HandleHealthTimer()
     {
-        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        if (LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
         {
             return;
         }
         healthTimer -= Time.deltaTime;
-        if(healthTimer <= 0.0f)
+        if (healthTimer <= 0.0f)
         {
             health -= healthReduction;
 
-            if(health <= 0)
+            if (health <= 0)
             {
                 DetectCollision.DisableKart(_positionManager, this, true);
                 DispawnKartServerRpc(NetworkObjectId, 0);
@@ -500,7 +525,7 @@ public class KartController : BasicPlayer
 
     public void SpawnObject()
     {
-        if(currentObject == "")
+        if (currentObject == "")
         {
             return;
         }

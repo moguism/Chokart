@@ -11,7 +11,6 @@ public class WebsocketSingleton : MonoBehaviour
 
     public bool delete = true;
 
-    public static int kartModelIndex = -1;
     public static bool connected = false;
 
     private VerticalMenu verticalMenu;
@@ -90,11 +89,11 @@ public class WebsocketSingleton : MonoBehaviour
         print("Tipo de mensaje: " + dict["messageType"]);
 
         int messageTypeInt = int.Parse(dict["messageType"].ToString());
-        MessageType messageType = (MessageType)messageTypeInt;
+        MessageTypeSocket messageType = (MessageTypeSocket)messageTypeInt;
 
         switch (messageType)
         {
-            case MessageType.FriendUpdate:
+            case MessageTypeSocket.FriendUpdate:
                 if(verticalMenu == null)
                 {
                     verticalMenu = FindFirstObjectByType<VerticalMenu>();
@@ -103,7 +102,7 @@ public class WebsocketSingleton : MonoBehaviour
                 await verticalMenu.RefreshFriendList();
                 break;
 
-            case MessageType.InviteToBattle:
+            case MessageTypeSocket.InviteToBattle:
                 if(verticalMenu == null)
                 {
                     verticalMenu = FindFirstObjectByType<VerticalMenu>();
