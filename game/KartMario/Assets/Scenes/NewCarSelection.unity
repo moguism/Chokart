@@ -6944,6 +6944,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
+      propertyPath: startingColor.g
+      value: 0.91147983
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531,
+        type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7005,12 +7010,12 @@ PrefabInstance:
     - target: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 236
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 284.1
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
@@ -7070,7 +7075,7 @@ PrefabInstance:
     - target: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 217.2
+      value: 221
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
@@ -7091,6 +7096,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlexibleColorPicker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617138, guid: 4214b57e615806c448ba9d993d629531,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

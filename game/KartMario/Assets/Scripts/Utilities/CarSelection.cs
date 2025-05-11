@@ -86,6 +86,9 @@ public class CarSelection : MonoBehaviour
         print(lobbyManager);
         maxTimer = timerCode;
 
+        colorSelection.GetComponent<FlexibleColorPicker>().startingColor = kartMaterial.color;
+        colorSelection.SetActive(true);
+
         audioSource.time = audioSourceTime + 0.7f;
         audioSource.Play();
 

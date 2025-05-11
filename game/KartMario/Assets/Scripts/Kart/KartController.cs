@@ -300,7 +300,7 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        if (horizontalInput == 0)
+        /*if (horizontalInput == 0)
         {
             leftArm.transform.rotation = originalRotationLeft;
             rightArm.transform.rotation = originalRotationRight;
@@ -312,7 +312,7 @@ public class KartController : BasicPlayer
 
             leftArm.transform.rotation = Quaternion.Lerp(leftArm.transform.rotation, targetLeft, 0.1f);
             rightArm.transform.rotation = Quaternion.Lerp(rightArm.transform.rotation, targetRight, 0.1f);
-        }
+        }*/
 
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
