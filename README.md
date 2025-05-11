@@ -106,3 +106,4 @@
     Miércoles --> Mauricio incrusta el juego en la web. María configura que la descarga de archivos en servidor, y diseña vistas de descarga y verificación de email.
     Jueves --> Tutoría.
     Sábado --> Mauricio, entre otras cosas, intenta replantear la estética del juego.
+    Domingo --> Mauricio implementa la nueva pista con muchas más mejoras estéticas: efectos, animaciones...
