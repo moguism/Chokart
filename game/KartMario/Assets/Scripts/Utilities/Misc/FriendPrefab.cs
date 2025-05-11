@@ -45,7 +45,7 @@ public class FriendPrefab : MonoBehaviour
 
     public async void InviteToMatch()
     {
-        dict["messageType"] = MessageType.InviteToBattle;
+        dict["messageType"] = MessageTypeSocket.InviteToBattle;
         await customSerializer.SerializeAndSendAsync(dict, true);
     }
 

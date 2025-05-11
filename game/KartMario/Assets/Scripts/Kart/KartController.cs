@@ -67,12 +67,12 @@ public class KartController : BasicPlayer
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
-   
+
     // Objetos
     [Header("Objetos")]
     public string currentObject;
     private TMP_Text objectText;
-    
+
     public bool canBeHurt = true;
     public bool activateInvencibilityFrames = false;
 
@@ -112,6 +112,16 @@ public class KartController : BasicPlayer
     [Header("Minimap")]
     [SerializeField]
     private Canvas canvasMask;
+
+    [Header("Animaciones")]
+    [SerializeField]
+    private GameObject leftArm;
+
+    [SerializeField]
+    private GameObject rightArm;
+
+    private Quaternion originalRotationLeft;
+    private Quaternion originalRotationRight;
 
     [Header("Otras opciones")]
     public bool canMove = true;
@@ -153,7 +163,7 @@ public class KartController : BasicPlayer
             objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
 
             var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
-            objectButton.onClick.AddListener(delegate { SpawnObject();});
+            objectButton.onClick.AddListener(delegate { SpawnObject(); });
         }
     }
 
@@ -167,6 +177,9 @@ public class KartController : BasicPlayer
         healthTimer = maxHealthTimer;
 
         invencibilityTimer = invencibilityTimerSeconds;
+
+        originalRotationLeft = leftArm.transform.rotation;
+        originalRotationRight = rightArm.transform.rotation;
 
         maxHealth = health;
         ownerName = LobbyManager.PlayerName;
@@ -258,7 +271,7 @@ public class KartController : BasicPlayer
 
             invencibilityTimer -= Time.deltaTime;
 
-            if(invencibilityTimer <= 0.0f)
+            if (invencibilityTimer <= 0.0f)
             {
                 canBeHurt = true;
                 activateInvencibilityFrames = false;
@@ -281,10 +294,24 @@ public class KartController : BasicPlayer
             direction = ai.MoveDirection;
             Debug.Log("COCHE " + kartIndex + " es ia y se tiene que mover a " + horizontalInput + "  y a esta direccion " + direction);
         }
-        else if(!isMobile)
+        else if (!isMobile)
         {
             horizontalInput = playerControls.Player.Move.ReadValue<Vector2>().x;
             //horizontalInput = Input.GetAxis("Horizontal");
+        }
+
+        if (horizontalInput == 0)
+        {
+            leftArm.transform.rotation = originalRotationLeft;
+            rightArm.transform.rotation = originalRotationRight;
+        }
+        else
+        {
+            Quaternion targetLeft = originalRotationLeft * Quaternion.Euler(0, 0, horizontalInput * -10);  // Brazo izquierdo hacia abajo
+            Quaternion targetRight = originalRotationRight * Quaternion.Euler(0, 0, horizontalInput * 10); // Brazo derecho hacia arriba
+
+            leftArm.transform.rotation = Quaternion.Lerp(leftArm.transform.rotation, targetLeft, 0.1f);
+            rightArm.transform.rotation = Quaternion.Lerp(rightArm.transform.rotation, targetRight, 0.1f);
         }
 
 
@@ -333,7 +360,7 @@ public class KartController : BasicPlayer
             }
             else
             {
-                if(direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
+                if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
                 }
@@ -474,21 +501,22 @@ public class KartController : BasicPlayer
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
             objectText.text = currentObject;
-        } catch { }
+        }
+        catch { }
     }
 
     private void HandleHealthTimer()
     {
-        if(LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
+        if (LobbyManager.gamemode != Gamemodes.Survival || !LobbyManager.gameStarted)
         {
             return;
         }
         healthTimer -= Time.deltaTime;
-        if(healthTimer <= 0.0f)
+        if (healthTimer <= 0.0f)
         {
             health -= healthReduction;
 
-            if(health <= 0)
+            if (health <= 0)
             {
                 DetectCollision.DisableKart(_positionManager, this, true);
                 DispawnKartServerRpc(NetworkObjectId, 0);
@@ -500,7 +528,7 @@ public class KartController : BasicPlayer
 
     public void SpawnObject()
     {
-        if(currentObject == "")
+        if (currentObject == "")
         {
             return;
         }
