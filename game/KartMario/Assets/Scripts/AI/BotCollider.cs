@@ -46,7 +46,7 @@ public class BotCollider : MonoBehaviour
     {
         if (other.CompareTag("Kart") && !self.Contains(other.gameObject))
         {
-            Debug.LogError(other);
+            //Debug.LogError(other);
             Vector3 direction = (other.transform.position - transform.position).normalized;
             if (direction != Vector3.zero)
             {

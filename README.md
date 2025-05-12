@@ -107,3 +107,5 @@
     Jueves --> Tutoría.
     Sábado --> Mauricio, entre otras cosas, intenta replantear la estética del juego.
     Domingo --> Mauricio implementa la nueva pista con muchas más mejoras estéticas: efectos, animaciones...
+### Séptima semana (12/05 - 18/05)
+    Lunes --> Mauricio implementa cel shading para que el juego luzca mejor.
