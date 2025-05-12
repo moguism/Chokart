@@ -598,14 +598,18 @@ public class KartController : BasicPlayer
     }
 #endif
 
-    public void Boost()
+    public void Boost(bool isPlatform = false)
     {
         drifting = false;
 
-        if (driftMode > 0)
+        if (driftMode > 0 || isPlatform)
         {
-            DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
-            DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
+            if (driftMode > 0)
+            {
+                //int driftmode = !isPlatform ? driftMode : 1;
+                DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
+                DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
+            }
 
             try
             {
@@ -616,9 +620,12 @@ public class KartController : BasicPlayer
         }
 
         // Una vez que ha hecho toda la pesca pone todo a sus valores por defecto
-        driftPower = 0;
-        driftMode = 0;
-        first = false; second = false; third = false;
+        if (!isPlatform)
+        {
+            driftPower = 0;
+            driftMode = 0;
+            first = false; second = false; third = false;
+        }
 
         foreach (ParticleSystem p in primaryParticles)
         {

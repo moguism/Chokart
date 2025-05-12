@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -66,3 +68,5 @@ public class ReverseAnimation : Editor
         Debug.Log("Animation reversed!");
     }
 }
+
+#endif
