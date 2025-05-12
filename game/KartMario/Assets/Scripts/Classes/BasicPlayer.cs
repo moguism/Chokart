@@ -14,7 +14,7 @@ public class BasicPlayer : NetworkBehaviour
     protected PositionManager _positionManager;
     protected ObjectSpawner objectSpawner;
 
-    [ServerRpc]
+    /*[ServerRpc]
     protected void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
     {
         if (starter == null)
@@ -31,11 +31,11 @@ public class BasicPlayer : NetworkBehaviour
         GameObject gameObject = Instantiate(prefab, position, Quaternion.identity);
 
         gameObject.GetComponent<NetworkObject>().SpawnWithOwnership(ownerId);
-    }
+    }*/
 
     // PARA PODER MANDARLE UN OBJETO HABRÍA QUE SERIALIZAR
     [ServerRpc]
-    protected void InformServerKartCreatedServerRpc(ulong kartId, string playerName, int userId, string playerId, ServerRpcParams rpcParams = default)
+    protected void InformServerKartCreatedServerRpc(ulong kartId, string playerName, int userId, int characterId, string playerId, ServerRpcParams rpcParams = default)
     {
         GetPositionManager();
 
@@ -46,6 +46,7 @@ public class BasicPlayer : NetworkBehaviour
             print("Agregando");
             (this as KartController).ownerName = playerName;
             (this as KartController).ownerId = userId;
+            (this as KartController).characterIndex = characterId;
             _positionManager.karts.Add(this as KartController);
             RelayManager.playersIds.Add(playerId);
         }

@@ -16,7 +16,6 @@ public class Context : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserBattle> UsersBattles { get; set; }
     public DbSet<Character> Characters { get; set; }
-    public DbSet<Kart> Karts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

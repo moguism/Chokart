@@ -26,7 +26,7 @@ PluginImporter:
       settings:
         DefaultValueInitialized: true
     WebGL:
-      enabled: 0
+      enabled: 1
       settings: {}
   userData: 
   assetBundleName: 
