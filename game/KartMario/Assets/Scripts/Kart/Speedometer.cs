@@ -44,6 +44,7 @@ public class Speedometer : MonoBehaviour
         if (kart == null || !kart.canMove)
         {
             speed = 0;
+            kart.dirtTrail.SetActive(true);
             OptionsSettings.ChangeMotorSpeed(0, 0);
             audioSource.Stop();
             return;
@@ -74,17 +75,24 @@ public class Speedometer : MonoBehaviour
             if (distance > 0.01 && absSpeed < minSpeed)
             {
                 speedText.text = "0,1 km/h";
+                kart.dirtTrail.SetActive(false);
             }
             else
             {
                 if (absSpeed < 1f)
                 {
                     speedText.text = absSpeed.ToString("F1") + " km/h";
+                    kart.dirtTrail.SetActive(false);
                 }
                 else
                 {
                     int roundedSpeed = Mathf.RoundToInt(absSpeed);
                     speedText.text = roundedSpeed.ToString() + " km/h";
+
+                    if(!kart.dirtTrail.activeSelf)
+                    {
+                        kart.dirtTrail.SetActive(true);
+                    }
 
                     try
                     {

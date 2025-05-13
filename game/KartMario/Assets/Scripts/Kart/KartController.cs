@@ -121,6 +121,8 @@ public class KartController : BasicPlayer
     [SerializeField]
     private Animator animatorRight;
 
+    public GameObject dirtTrail;
+
     [Header("Otras opciones")]
     public bool canMove = true;
     public int totalKills = 0;
