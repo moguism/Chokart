@@ -21,6 +21,11 @@ public class Speedometer : MonoBehaviour
     private Vector3 oldPosition;
     private const float minSpeed = 0.05f;
 
+    private bool shouldReduceAlpha = false;
+    private Color originalColor = new Color(221, 168, 134, 70);
+    private ParticleSystem trailRenderer;
+    private ParticleSystem.MainModule trailMainModule;
+
     private void Awake()
     {
         pointer = GameObject.Find("Pointer").GetComponent<RectTransform>();
@@ -44,10 +49,26 @@ public class Speedometer : MonoBehaviour
         if (kart == null || !kart.canMove)
         {
             speed = 0;
-            kart.dirtTrail.SetActive(true);
+            shouldReduceAlpha = true;
             OptionsSettings.ChangeMotorSpeed(0, 0);
             audioSource.Stop();
             return;
+        }
+
+        if(trailRenderer == null)
+        {
+            kart.dirtTrail.SetActive(true);
+            trailRenderer = kart.dirtTrail.GetComponent<ParticleSystem>();
+            trailMainModule = trailRenderer.main;
+        }
+
+        if(shouldReduceAlpha && trailMainModule.startColor.color.a >= 0)
+        {
+            trailMainModule.startColor = new Color(0, 0, 0, 0);
+        }
+        else if(!shouldReduceAlpha && trailMainModule.startColor.color.a < originalColor.a)
+        {
+            trailMainModule.startColor = new Color(0, 0, 0, originalColor.a);
         }
 
         //print("Velocidad actual: " + kart.currentSpeed);
@@ -75,24 +96,20 @@ public class Speedometer : MonoBehaviour
             if (distance > 0.01 && absSpeed < minSpeed)
             {
                 speedText.text = "0,1 km/h";
-                kart.dirtTrail.SetActive(false);
+                shouldReduceAlpha = true;
             }
             else
             {
                 if (absSpeed < 1f)
                 {
                     speedText.text = absSpeed.ToString("F1") + " km/h";
-                    kart.dirtTrail.SetActive(false);
+                    shouldReduceAlpha = true;
                 }
                 else
                 {
                     int roundedSpeed = Mathf.RoundToInt(absSpeed);
                     speedText.text = roundedSpeed.ToString() + " km/h";
-
-                    if(!kart.dirtTrail.activeSelf)
-                    {
-                        kart.dirtTrail.SetActive(true);
-                    }
+                    shouldReduceAlpha = false;
 
                     try
                     {
