@@ -4002,6 +4002,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kart
       objectReference: {fileID: 0}
+    - target: {fileID: 8522152231045485681, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9193125234719358039, guid: 34e1fc07c3883ed4792ed48ad4c6c50f,
         type: 3}
       propertyPath: m_LocalScale.x

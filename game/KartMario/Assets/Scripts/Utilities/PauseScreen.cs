@@ -22,6 +22,9 @@ public class PauseScreen : MonoBehaviour
     [SerializeField]
     private GameObject pauseButton;
 
+    [SerializeField]
+    private ChatManager chatManager;
+
     public KartController kart;
 
     public void Open()
@@ -50,6 +53,11 @@ public class PauseScreen : MonoBehaviour
             kart.playerControls.Mobile.Disable();
             kart.playerControls.UI.Disable();
             kart.playerControls.Disable();
+
+            chatManager.inputActions.Player.Disable();
+            chatManager.inputActions.Mobile.Disable();
+            chatManager.inputActions.UI.Disable();
+            chatManager.inputActions.Disable();
         }
         catch { }
     }

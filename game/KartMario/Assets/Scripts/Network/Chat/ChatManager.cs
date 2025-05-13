@@ -1,16 +1,45 @@
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.UI;
 
 public class ChatManager : NetworkBehaviour
 {
-    [SerializeField] ChatMessage chatMessagePrefab;
-    [SerializeField] CanvasGroup chatContent;
-    [SerializeField] TMP_InputField chatInput;
-    [SerializeField] GameObject components;
-    [SerializeField] GameObject minimap;
+    [Header("Panel")]
+    [SerializeField]
+    private Image panel;
 
-    private InputSystem_Actions inputActions;
+    [SerializeField]
+    private Color activePanelColor;
+
+    [SerializeField]
+    private Color inactivePanelColor;
+
+    [Header("Input")]
+    [SerializeField] 
+    private TMP_InputField chatInput;
+
+    [SerializeField]
+    private GameObject chatInputObject;
+
+    [Header("Scrollbar")]
+    [SerializeField]
+    private Image scrollbarFirstImage;
+
+    [SerializeField]
+    private Image scrollbarSecondImage;
+
+    [Header("Otras opciones")]
+    [SerializeField]
+    private ChatMessage chatMessagePrefab;
+
+    [SerializeField]
+    private CanvasGroup chatContent;
+
+    [SerializeField]
+    private GameObject closeButton;
+
+    public InputSystem_Actions inputActions;
     private string playerName;
 
     public static bool isChatActive = false;
@@ -65,8 +94,14 @@ public class ChatManager : NetworkBehaviour
 
     public void ShowChat(bool show)
     {
-        minimap.SetActive(!show);
-        components.SetActive(show);
         isChatActive = show;
+
+        scrollbarFirstImage.enabled = isChatActive;
+        scrollbarSecondImage.enabled = isChatActive;
+
+        chatInputObject.SetActive(isChatActive);
+        closeButton.SetActive(isChatActive);
+
+        panel.color = isChatActive ? activePanelColor : inactivePanelColor;
     }
 }
