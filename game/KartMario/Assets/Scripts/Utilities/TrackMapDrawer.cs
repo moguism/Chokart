@@ -3,7 +3,7 @@ using UnityEngine.UI.Extensions;
 using System.Collections.Generic;
 
 // dibuja el minimapa a partir de los triggers
-public class NewMonoBehaviourScript : MonoBehaviour
+public class TrackMapDrawer : MonoBehaviour
 {
 
     public Transform triggerParent; // El objeto que contiene los triggers

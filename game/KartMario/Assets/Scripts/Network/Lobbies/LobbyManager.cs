@@ -12,7 +12,7 @@ public class LobbyManager : MonoBehaviour
 {
     public static int maxPlayers = 8;
 
-    private Lobby currentLobby;
+    public Lobby currentLobby;
 
     private float heartBeatTimer;
     private float lobbyUpdateTimer = 2.0f;
