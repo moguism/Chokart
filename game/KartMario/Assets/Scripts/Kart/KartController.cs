@@ -255,6 +255,7 @@ public class KartController : BasicPlayer
 
         canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
         FindFirstObjectByType<PauseScreen>().kart = this;
+        FindFirstObjectByType<MinimapCamera>().player = gameObject;
     }
 
     void Update()
