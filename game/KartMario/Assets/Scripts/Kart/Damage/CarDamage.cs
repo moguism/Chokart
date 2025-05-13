@@ -30,6 +30,9 @@ public class CarDamage : NetworkBehaviour
     [SerializeField]
     private KartController kart;
 
+    [SerializeField]
+    private GameObject impactParticlePrefab;
+
     public void Start()
     {
 
@@ -68,7 +71,7 @@ public class CarDamage : NetworkBehaviour
         }
     }
 
-    /*public void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         var parent = collision.gameObject.transform.parent;
         //Debug.Log(parent);
@@ -80,7 +83,7 @@ public class CarDamage : NetworkBehaviour
         {
             isKart = false;
 
-            if(collision.gameObject.CompareTag("Map"))
+            if(collision.gameObject.CompareTag("Map") || (parent != null && parent.gameObject.CompareTag("Map")))
             {
                 return;
             }
@@ -99,8 +102,13 @@ public class CarDamage : NetworkBehaviour
 
         //OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart);
 
-        DeformCarServerRpc(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
-    }*/
+        Vector3 collisionPoint = collision.contacts[0].point;
+
+        GameObject explosionEffect = Instantiate(impactParticlePrefab, collisionPoint, Quaternion.identity);
+        Destroy(explosionEffect, 2f);
+
+        DeformCarServerRpc(collisionPoint, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
+    }
 
     [ServerRpc(RequireOwnership = false)]
     public void DeformCarServerRpc(Vector3 collisionPoint, float collisionForce, bool isKart, ulong kartId)
