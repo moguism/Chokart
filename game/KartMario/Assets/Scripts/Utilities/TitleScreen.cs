@@ -197,8 +197,8 @@ public class TitleScreen : MonoBehaviour
             AuthManagerScene.audioSourceTime = audioSource.time;
             AuthManagerScene.videoTime = backgroundVideo.videoPlayer.time;
 
-            backgroundVideo.videoPlayer.url = null;
-            backgroundVideo.videoPlayer.targetTexture.Release();
+            /*backgroundVideo.videoPlayer.url = null;
+            backgroundVideo.videoPlayer.targetTexture.Release();*/
 
             TransitionManager.Instance().Transition(1, transitionSettings, 0);
         }

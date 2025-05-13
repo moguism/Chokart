@@ -14,6 +14,8 @@ public class BasicPlayer : NetworkBehaviour
     protected PositionManager _positionManager;
     protected ObjectSpawner objectSpawner;
 
+    private MinimapManager minimap;
+
     /*[ServerRpc]
     protected void InformServerAboutCharacterChangeServerRpc(ulong kartId, int desiredIndex, ulong ownerId, Vector3 position, ServerRpcParams rpcParams = default)
     {
@@ -50,6 +52,19 @@ public class BasicPlayer : NetworkBehaviour
             _positionManager.karts.Add(this as KartController);
             RelayManager.playersIds.Add(playerId);
         }
+
+        ReloadMinimapClientRpc();
+    }
+
+    [ClientRpc]
+    private void ReloadMinimapClientRpc()
+    {
+        if(minimap == null)
+        {
+            minimap = FindFirstObjectByType<MinimapManager>();
+        }
+
+        minimap.UpdatePlayerPositions();
     }
 
     [ServerRpc]

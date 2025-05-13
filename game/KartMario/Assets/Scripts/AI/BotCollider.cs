@@ -16,7 +16,6 @@ public class BotCollider : MonoBehaviour
     private Quaternion targetHeadRotation;
     private Quaternion targetHairRotation;
     private bool isRotating = false;
-    private bool shouldRotate;
 
     private void Start()
     {
@@ -32,13 +31,12 @@ public class BotCollider : MonoBehaviour
         {
             head.transform.rotation = Quaternion.Slerp(head.transform.rotation, targetHeadRotation, Time.deltaTime * rotationSpeed);
             hair.transform.rotation = Quaternion.Slerp(hair.transform.rotation, targetHairRotation, Time.deltaTime * rotationSpeed);
-            shouldRotate = true;
         }
-        else if(parent.horizontalInput == 0 && shouldRotate)
+        else if(parent.horizontalInput == 0)
         {
             head.transform.rotation = Quaternion.Slerp(head.transform.rotation, originalHeadRotation, Time.deltaTime * rotationSpeed);
             hair.transform.rotation = Quaternion.Slerp(hair.transform.rotation, originalHairRotation, Time.deltaTime * rotationSpeed);
-            shouldRotate = false;
+            //shouldRotate = false;
         }
     }
 
