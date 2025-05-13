@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Unity.Netcode;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.UI;
 
 public class MinimapManager : MonoBehaviour
 {
@@ -13,23 +13,36 @@ public class MinimapManager : MonoBehaviour
     [Header("Icono")]
     public GameObject minimapDotPrefab; // Prefab punto rojo
 
-    private List<RectTransform> minimapDots = new List<RectTransform>();
-    private List<Transform> playerCars = new List<Transform>();
+    private readonly List<RectTransform> minimapDots = new List<RectTransform>();
+    private readonly List<Transform> playerCars = new List<Transform>();
+
+    private List<KartController> clients = new List<KartController>();
+
+    private CharacterSelector characterSelector;
 
     private void Start()
     {
         Debug.Log("MinimapManager Iniciado");
-        InvokeRepeating(nameof(UpdatePlayerPositions), 0f, 0.5f); // posición  actualizada cada 0.5s
+        //InvokeRepeating(nameof(UpdatePlayerPositions), 0f, 0.5f); // posición  actualizada cada 0.5s
     }
 
-    private void UpdatePlayerPositions()
+    public void UpdatePlayerPositions()
     {
         playerCars.Clear();
 
-        // todos los jugadores conectados (hay que poner los jugadores de la lobbie)
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        for(int i = 0; i < minimapDots.Count; i++)
         {
-            var player = client.PlayerObject;
+            Destroy(minimapDots[i].gameObject);
+        }
+
+        minimapDots.Clear();
+
+        clients = FindObjectsByType<KartController>(FindObjectsSortMode.None).ToList();
+
+        // todos los jugadores conectados (hay que poner los jugadores de la lobbie)
+        foreach (var client in clients)
+        {
+            /*var player = client.PlayerObject;
             if (player != null)
             {
                 var kartController = player.GetComponentInChildren<KartController>();
@@ -38,17 +51,28 @@ public class MinimapManager : MonoBehaviour
                     playerCars.Add(kartController.transform);
                     CreateMinimapDotForPlayer(kartController.transform); 
                 }
-            }
+            }*/
+
+            playerCars.Add(client.transform);
+            CreateMinimapDotForPlayer(client.transform, client.characterIndex);
         }
     }
 
     // le pone un punto rojo al jugador
-    private void CreateMinimapDotForPlayer(Transform playerCar)
+    private void CreateMinimapDotForPlayer(Transform playerCar, int characterIndex)
     {
-        if (!minimapDots.Exists(dot => dot.transform == playerCar))
+        if (!minimapDots.Exists(dot => dot.transform.Equals(playerCar)))
         {
             // agrega punto rojo al canvas
             GameObject dot = Instantiate(minimapDotPrefab, minimapCanvas);
+
+            if(characterSelector == null)
+            {
+                characterSelector = FindObjectsByType<CharacterSelector>(FindObjectsSortMode.None).FirstOrDefault(ch => ch.isHud);
+            }
+
+            dot.GetComponent<RawImage>().texture = characterSelector.textures[characterIndex];
+
             RectTransform dotRectTransform = dot.GetComponent<RectTransform>();
             minimapDots.Add(dotRectTransform);
 

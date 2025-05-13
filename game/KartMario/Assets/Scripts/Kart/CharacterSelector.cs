@@ -6,8 +6,7 @@ public class CharacterSelector : MonoBehaviour
     [SerializeField]
     private GameObject[] possibleCharacters; // Esta lista debe estar en el mismo orden que la está en el selector de personajes
 
-    [SerializeField]
-    private Texture[] textures; // Esta lista, exclusiva para la HUD y el minimap, también lo tiene que estar
+    public Texture[] textures; // Esta lista, exclusiva para la HUD y el minimap, también lo tiene que estar
 
     [SerializeField]
     private RawImage spriteImage;
@@ -15,9 +14,7 @@ public class CharacterSelector : MonoBehaviour
     [SerializeField]
     private KartController parent;
 
-    [SerializeField]
-    private bool isHud = true;
-
+    public bool isHud = true;
     private readonly System.Random _random = new();
 
     private void Start()
