@@ -79,4 +79,13 @@ public class CharacterSelector : MonoBehaviour
             spriteImage.texture = textures[index];
         }
     }
+
+    public Texture GetCharacterTexture(int index)
+    {
+        if (index >= 0 && index < textures.Length)
+        {
+            return textures[index];
+        }
+        return null; 
+    }
 }

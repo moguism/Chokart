@@ -18,6 +18,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  color: white !important;
 }
 
 .nav-links {
@@ -101,15 +102,24 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: linear-gradient(180deg, #8c8c8ca6, #8888888d);
     padding: 20px 0;
     align-items: center;
     gap: 20px;
-    border-top: 2px solid rgb(0, 0, 0);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease-in-out, opacity 0.3s ease;
+    display: flex;
   }
 
   .nav-links.active {
-    display: flex;
+    transform: translateX(0%);
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
