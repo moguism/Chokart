@@ -161,10 +161,15 @@ public class KartController : BasicPlayer
 
             healthText = GameObject.Find("HealthText").GetComponent<TMP_Text>();
             killsText = GameObject.Find("KillsText").GetComponent<TMP_Text>();
-            objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
 
-            var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
-            objectButton.onClick.AddListener(delegate { SpawnObject(); });
+            try
+            {
+                objectText = GameObject.Find("ObjectsText").GetComponent<TMP_Text>();
+
+                var objectButton = GameObject.Find("ObjectRectangle").GetComponent<Button>();
+                objectButton.onClick.AddListener(delegate { SpawnObject(); });
+            }
+            catch { }
         }
     }
 
