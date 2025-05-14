@@ -109,4 +109,4 @@
     Domingo --> Mauricio implementa la nueva pista con muchas más mejoras estéticas: efectos, animaciones...
 ### Séptima semana (12/05 - 18/05)
     Lunes --> Mauricio implementa cel shading para que el juego luzca mejor.
-    Martes --> Mauricio empieza a implementar el feedback del horizonte de sucesos, entre otras cosas.
+    Martes --> Mauricio implementa el feedback del horizonte de sucesos y pone más efectos, entre otras cosas. María implementa el minimapa en 2D y comienza a hacer la web responsiva
