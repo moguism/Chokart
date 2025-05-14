@@ -2182,7 +2182,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startGameButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1723140983}
     - target: {fileID: 3565882172464468530, guid: c03a0aef2eb16d546bb7b21dd8b46d01,
         type: 3}
       propertyPath: voiceChatToggle
