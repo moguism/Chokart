@@ -33,8 +33,6 @@ public class KartAI : NetworkBehaviour
         }
 
         botDrift = Random.value < 0.5f;
-
-        Debug.Log("IA el coche bot es ", kart);
     }
 
     private void Start()
@@ -89,6 +87,7 @@ public class KartAI : NetworkBehaviour
         }
 
         Debug.Log("COCHE " + kart.GetComponentIndex() + " LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
+        Debug.Log("COCHE " + kart + " va a " + destination);
         kart.horizontalInput = HorizontalInput;
         kart.direction = MoveDirection;
 

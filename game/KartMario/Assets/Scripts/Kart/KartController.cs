@@ -35,7 +35,7 @@ public class KartController : BasicPlayer
 
     [Header("Parameters")]
 
-    public float acceleration = 30f;
+    public float acceleration = 25f;
     public float steering = 80f;
     public float gravity = 10f;
     public LayerMask layerMask;
