@@ -253,7 +253,7 @@ public class KartController : BasicPlayer
 
         chronometer = FindFirstObjectByType<Chronometer>();
 
-        canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
+        //canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
         FindFirstObjectByType<PauseScreen>().kart = this;
         FindFirstObjectByType<MinimapCamera>().player = gameObject;
     }
