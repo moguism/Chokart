@@ -134,6 +134,7 @@ public class KartController : BasicPlayer
     private VoiceNetworker voiceNetworker;
     private bool isRecording = false;
     public int characterIndex;
+    public bool isHost;
 
     public override void OnNetworkSpawn()
     {
@@ -191,7 +192,7 @@ public class KartController : BasicPlayer
         ownerId = LobbyManager.PlayerId;
 
         GetPositionManager();
-        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, characterIndex, AuthenticationService.Instance.PlayerId);
+        InformServerKartCreatedServerRpc(NetworkObjectId, ownerName, ownerId, characterIndex, AuthenticationService.Instance.PlayerId, LobbyManager.isHost);
         _positionManager.loadingScreen.SetActive(false);
 
         // Si me han asignado un modelo que no es
@@ -254,8 +255,10 @@ public class KartController : BasicPlayer
         chronometer = FindFirstObjectByType<Chronometer>();
 
         //canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
+        //FindFirstObjectByType<MinimapCamera>().player = gameObject;
+
         FindFirstObjectByType<PauseScreen>().kart = this;
-        FindFirstObjectByType<MinimapCamera>().player = gameObject;
+        FindFirstObjectByType<LifeBar>().kart = this;
     }
 
     void Update()

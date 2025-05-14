@@ -68,11 +68,6 @@ public class FinishLine : MapTrigger
             kart.totalLaps++;
             bool disable = false;
 
-            if (lapPanel.activeSelf)
-            {
-                lapText.text = $"{kart.totalLaps-1}/{totalLapsToWin}";
-            }
-
             if (LobbyManager.gamemode == Gamemodes.Race && LobbyManager.gameStarted)
             {
 
@@ -104,6 +99,22 @@ public class FinishLine : MapTrigger
             kart.triggers = new List<int>() { 0 };
             kart.totalLaps++;
             Debug.LogWarning("El coche " + kartId + " ha dado " + kart.totalLaps + " vueltas");
+
+            if (lapPanel.activeSelf && LobbyManager.gameStarted)
+            {
+                string text = $"{kart.totalLaps}/{totalLapsToWin}";
+                if (LobbyManager.isHost && kart.isHost)
+                {
+                    if(kart.isHost)
+                    {
+                        lapText.text = text;
+                    }
+                }
+                else
+                {
+                    lapText.text = text;
+                }
+            }
 
             if (disable)
             {
