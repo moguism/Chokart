@@ -20,12 +20,6 @@ public class MinimapManager : MonoBehaviour
 
     private CharacterSelector characterSelector;
 
-    private void Start()
-    {
-        Debug.Log("MinimapManager Iniciado");
-        //InvokeRepeating(nameof(UpdatePlayerPositions), 0f, 0.5f); // posición  actualizada cada 0.5s
-    }
-
     public void UpdatePlayerPositions()
     {
         playerCars.Clear();
@@ -39,26 +33,14 @@ public class MinimapManager : MonoBehaviour
 
         clients = FindObjectsByType<KartController>(FindObjectsSortMode.None).ToList();
 
-        // todos los jugadores conectados (hay que poner los jugadores de la lobbie)
         foreach (var client in clients)
         {
-            /*var player = client.PlayerObject;
-            if (player != null)
-            {
-                var kartController = player.GetComponentInChildren<KartController>();
-                if (kartController != null)
-                {
-                    playerCars.Add(kartController.transform);
-                    CreateMinimapDotForPlayer(kartController.transform); 
-                }
-            }*/
 
             playerCars.Add(client.transform);
             CreateMinimapDotForPlayer(client.transform, client.characterIndex);
         }
     }
 
-    // le pone un punto rojo al jugador
     private void CreateMinimapDotForPlayer(Transform playerCar, int characterIndex)
     {
         if (!minimapDots.Exists(dot => dot.transform.Equals(playerCar)))
@@ -76,7 +58,7 @@ public class MinimapManager : MonoBehaviour
             RectTransform dotRectTransform = dot.GetComponent<RectTransform>();
             minimapDots.Add(dotRectTransform);
 
-            Debug.Log("Minimap Dot instanciado para: " + playerCar.name); // Confirmación
+            Debug.Log("Minimap Dot instanciado para: " + playerCar.name);
         }
     }
 
@@ -94,8 +76,6 @@ public class MinimapManager : MonoBehaviour
             Vector2 minimapPos = new Vector2(offset.x, offset.z) * mapScale;
 
             dot.anchoredPosition = minimapPos;
-
-            Debug.Log($"Jugador {i + 1} en el minimapa en la posición: {minimapPos}");
         }
     }
 }

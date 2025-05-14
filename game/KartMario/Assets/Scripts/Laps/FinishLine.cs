@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,7 +9,24 @@ public class FinishLine : MapTrigger
     [SerializeField]
     private int totalLapsToWin = 3;
 
+    // el numero de vueltas
+    public GameObject lapPanel;              
+    public TextMeshProUGUI lapText;
+
     public List<MapTrigger> triggers = new List<MapTrigger>();
+
+    private void Start()
+    {
+        // activar u ocultar según el modo de juego
+        if (LobbyManager.gamemode == Gamemodes.Race)
+        {
+            lapPanel.SetActive(true);
+        }
+        else
+        {
+            lapPanel.SetActive(false);
+        }
+    }
 
     public new void OnTriggerEnter(Collider other)
     {
@@ -50,8 +68,14 @@ public class FinishLine : MapTrigger
             kart.totalLaps++;
             bool disable = false;
 
+            if (lapPanel.activeSelf)
+            {
+                lapText.text = $"{kart.totalLaps-1}/{totalLapsToWin}";
+            }
+
             if (LobbyManager.gamemode == Gamemodes.Race && LobbyManager.gameStarted)
             {
+
                 if (kart.totalLaps == totalLapsToWin)
                 {
                     disable = true;
