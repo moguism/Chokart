@@ -30,7 +30,7 @@
 - **Minimapa:** https://www.youtube.com/watch?v=YNbuhDiaXg4
 - **Chat de texto:** https://www.youtube.com/watch?v=ATiBSj_KHv8
 - **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
-- **MVVM en Angular:** https://medium.com/front-end-world/mvc-and-mvvm-patterns-in-angular-7397e0bc7b07
+- **Barra de vida Unity:** https://youtu.be/EW4kSSiPgJs
 
 # INSTRUCCIONES PARA EL DESARROLLO
 **MUY IMPORTANTE:** Poner todos los vídeos antes de abrir Unity, tal y como estaban, y luego borrarlos al cerrar cuando se vaya a subir algo al repo
@@ -109,4 +109,5 @@
     Domingo --> Mauricio implementa la nueva pista con muchas más mejoras estéticas: efectos, animaciones...
 ### Séptima semana (12/05 - 18/05)
     Lunes --> Mauricio implementa cel shading para que el juego luzca mejor.
-    Martes --> Mauricio implementa el feedback del horizonte de sucesos y pone más efectos, entre otras cosas. María implementa el minimapa en 2D y comienza a hacer la web responsiva
+    Martes --> Mauricio implementa el feedback del horizonte de sucesos y pone más efectos, entre otras cosas. María implementa el minimapa en 2D y comienza a hacer la web responsiva.
+    Miércoles --> María implementa una barra de vida, mostrar el número de vueltas en modo carrera, modifica interfaz e intenta mejorar los bugs de la IA.
