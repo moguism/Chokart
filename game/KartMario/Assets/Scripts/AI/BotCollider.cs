@@ -18,12 +18,16 @@ public class BotCollider : MonoBehaviour
     private bool isRotating = false;
     private bool shouldRotate = false;
 
+    private float rotationTimer = 1f;
+    private float maxRotationTimer;
+
     private void Start()
     {
         originalHeadRotation = head.transform.rotation;
         originalHairRotation = hair.transform.rotation;
         targetHeadRotation = originalHeadRotation;
         targetHairRotation = originalHairRotation;
+        maxRotationTimer = rotationTimer;
     }
 
     private void Update()
@@ -36,11 +40,14 @@ public class BotCollider : MonoBehaviour
         }
         else if(parent.horizontalInput == 0 && shouldRotate)
         {
-            head.transform.rotation = Quaternion.Slerp(head.transform.rotation, originalHeadRotation, Time.deltaTime * rotationSpeed);
+            rotationTimer -= Time.deltaTime;
+
+            head.transform.rotation = Quaternion.Slerp(hair.transform.rotation, originalHeadRotation, Time.deltaTime * rotationSpeed);
             hair.transform.rotation = Quaternion.Slerp(hair.transform.rotation, originalHairRotation, Time.deltaTime * rotationSpeed);
 
-            if(hair.transform.rotation == originalHairRotation)
+            if(rotationTimer <= 0.0f)
             {
+                rotationTimer = maxRotationTimer;
                 shouldRotate = false;
             }
         }
@@ -51,13 +58,16 @@ public class BotCollider : MonoBehaviour
         if (other.CompareTag("Kart") && !self.Contains(other.gameObject))
         {
             //Debug.LogError(other);
-            Vector3 direction = (other.transform.position - transform.position).normalized;
+            Vector3 direction = other.transform.position - transform.position;
             if (direction != Vector3.zero)
             {
+                //Quaternion lookRotation = Quaternion.FromToRotation(transform.forward, direction);
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
+
                 // Limit the rotation based on the original rotation
                 targetHeadRotation = LimitRotation(originalHeadRotation, lookRotation, maxRotationAngle);
                 targetHairRotation = LimitRotation(originalHairRotation, lookRotation, maxRotationAngle);
+
                 isRotating = true;
             }
         }
