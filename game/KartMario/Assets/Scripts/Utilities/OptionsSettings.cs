@@ -10,10 +10,20 @@ public class OptionsSettings : MonoBehaviour
     [SerializeField]
     private GameObject startGameButton;
 
+    [SerializeField]
+    private GameObject resolutionObject;
+
     public static bool shouldEnableStartButton = true;
 
     // La idea es que se como el REMATCH, por ejemplo, que tienes la opción de habilitar o deshabilitar el chat de voz en los ajustes
     public static bool shouldRecord = false;
+
+    private void Start()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Destroy(resolutionObject);
+#endif
+    }
 
     public void ManageVoiceChat()
     {

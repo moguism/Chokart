@@ -2194,7 +2194,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startGameButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1723140983}
     - target: {fileID: 3565882172464468530, guid: c03a0aef2eb16d546bb7b21dd8b46d01,
         type: 3}
       propertyPath: voiceChatToggle
@@ -4413,7 +4413,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1647724491}
   m_HandleRect: {fileID: 1647724490}
   m_Direction: 2
-  m_Value: 0.9999992
+  m_Value: 1
   m_Size: 0.905
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6810,11 +6810,11 @@ RectTransform:
   - {fileID: 1862835554}
   m_Father: {fileID: 1586687685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 124.6, y: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -88.42, y: 0}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &447864702
 GameObject:
   m_ObjectHideFlags: 0
@@ -18808,7 +18808,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31.9, y: -2.14}
+  m_AnchoredPosition: {x: 31.900024, y: -2.14}
   m_SizeDelta: {x: 150.422, y: 64.034}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1862835555
@@ -18831,7 +18831,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/3
+  m_text: 1/3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bd5305cb948bb9b4cbe924a4522ba80a, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: bd5305cb948bb9b4cbe924a4522ba80a, type: 2}
@@ -19000,6 +19000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillBarLife: {fileID: 105196448}
+  kart: {fileID: 0}
 --- !u!1 &1876059536
 GameObject:
   m_ObjectHideFlags: 0
