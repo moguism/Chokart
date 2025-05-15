@@ -110,7 +110,7 @@ public class MapTrigger : NetworkBehaviour
         
     }
 
-    private MapTrigger GetNextTrigger(KartController kart)
+    public MapTrigger GetNextTrigger(KartController kart)
     {
         int nextIndex = 0;
         if (kart.passedThroughFinishLine)
