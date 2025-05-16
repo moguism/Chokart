@@ -8,7 +8,7 @@ public class BotCollider : MonoBehaviour
     [SerializeField] private GameObject hair;
     [SerializeField] private List<GameObject> self;
     [SerializeField] private float rotationSpeed = 2f;
-    [SerializeField] private float maxRotationAngle = 45f;
+    [SerializeField] private float maxRotationAngle = 20f;
 
     private Quaternion originalHeadRotation;
     private Quaternion originalHairRotation;
@@ -18,10 +18,10 @@ public class BotCollider : MonoBehaviour
     private bool isRotating = false;
     private bool shouldRotate = false;
 
-    private float rotationTimer = 1f;
+    private float rotationTimer = 1.5f;
     private float maxRotationTimer;
 
-    private void Start()
+    /*private void Start()
     {
         originalHeadRotation = head.transform.rotation;
         originalHairRotation = hair.transform.rotation;
@@ -87,5 +87,5 @@ public class BotCollider : MonoBehaviour
             return Quaternion.Slerp(original, target, t);
         }
         return target;
-    }
+    }*/
 }
