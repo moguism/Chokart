@@ -77,7 +77,10 @@ public class GameStarter : NetworkBehaviour
         {
             while(totalSpawned < LobbyManager.maxPlayers)
             {
-                botSpawner.Spawn(spawners[totalSpawned].transform.position, false);
+                Vector3 position = spawners[totalSpawned].transform.position;
+                position.y -= 0.9f;
+
+                botSpawner.Spawn(position, false);
                 totalSpawned++;
             }
         }
