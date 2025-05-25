@@ -111,3 +111,6 @@
     Lunes --> Mauricio implementa cel shading para que el juego luzca mejor.
     Martes --> Mauricio implementa el feedback del horizonte de sucesos y pone más efectos, entre otras cosas. María implementa el minimapa en 2D y comienza a hacer la web responsiva.
     Miércoles --> María implementa una barra de vida, mostrar el número de vueltas en modo carrera, modifica interfaz e intenta mejorar los bugs de la IA.
+    Domingo --> Al igual que los días anteriores, Mauricio soluciona bugs como el que los bots no spawneen volando.
+### Octava semana (19/05 - 25/05)
+    Lunes --> Mauricio hace el informe de PowerBi.

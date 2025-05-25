@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BotCollider : MonoBehaviour
 {
@@ -7,42 +7,52 @@ public class BotCollider : MonoBehaviour
     [SerializeField] private GameObject head;
     [SerializeField] private GameObject hair;
     [SerializeField] private List<GameObject> self;
-    [SerializeField] private float rotationSpeed = 2f;
-    [SerializeField] private float maxRotationAngle = 45f;
 
-    private Quaternion originalHeadRotation;
-    private Quaternion originalHairRotation;
+    [SerializeField]
+    private Animator headAnimator;
 
-    private Quaternion targetHeadRotation;
-    private Quaternion targetHairRotation;
-    private bool isRotating = false;
+    [SerializeField]
+    private Animator hairAnimator;
+
+    private Vector3 angle;
+    private bool rotateToRight;
     private bool shouldRotate = false;
-
-    private void Start()
-    {
-        originalHeadRotation = head.transform.rotation;
-        originalHairRotation = hair.transform.rotation;
-        targetHeadRotation = originalHeadRotation;
-        targetHairRotation = originalHairRotation;
-    }
 
     private void Update()
     {
-        if (isRotating)
+        if (!shouldRotate)
         {
-            head.transform.rotation = Quaternion.Slerp(head.transform.rotation, targetHeadRotation, Time.deltaTime * rotationSpeed);
-            hair.transform.rotation = Quaternion.Slerp(hair.transform.rotation, targetHairRotation, Time.deltaTime * rotationSpeed);
-            shouldRotate = true;
+            return;
         }
-        else if(parent.horizontalInput == 0 && shouldRotate)
-        {
-            head.transform.rotation = Quaternion.Slerp(head.transform.rotation, originalHeadRotation, Time.deltaTime * rotationSpeed);
-            hair.transform.rotation = Quaternion.Slerp(hair.transform.rotation, originalHairRotation, Time.deltaTime * rotationSpeed);
 
-            if(hair.transform.rotation == originalHairRotation)
+        if (angle == Vector3.zero)
+        {
+            if (!rotateToRight)
             {
-                shouldRotate = false;
+                hairAnimator.Play("HairToLeft_Inverse");
+                headAnimator.Play("HeadToLeft_Inverse");
             }
+            else
+            {
+                hairAnimator.Play("HairToRight_Inverse");
+                headAnimator.Play("HeadToRight_Inverse");
+            }
+        }
+        else
+        {
+            if (angle.x < 0)
+            {
+                hairAnimator.Play("HairToLeft");
+                headAnimator.Play("HeadToLeft");
+                rotateToRight = false;
+            }
+            else
+            {
+                hairAnimator.Play("HairToRight");
+                headAnimator.Play("HeadToRight");
+                rotateToRight = true;
+            }
+            //Debug.LogError(angle);
         }
     }
 
@@ -51,31 +61,14 @@ public class BotCollider : MonoBehaviour
         if (other.CompareTag("Kart") && !self.Contains(other.gameObject))
         {
             //Debug.LogError(other);
-            Vector3 direction = (other.transform.position - transform.position).normalized;
-            if (direction != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                // Limit the rotation based on the original rotation
-                targetHeadRotation = LimitRotation(originalHeadRotation, lookRotation, maxRotationAngle);
-                targetHairRotation = LimitRotation(originalHairRotation, lookRotation, maxRotationAngle);
-                isRotating = true;
-            }
+            Vector3 direction = other.transform.position - transform.position;
+            angle = direction;
+            shouldRotate = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isRotating = false;
-    }
-
-    private Quaternion LimitRotation(Quaternion original, Quaternion target, float maxAngle)
-    {
-        float angle = Quaternion.Angle(original, target);
-        if (angle > maxAngle)
-        {
-            float t = maxAngle / angle;
-            return Quaternion.Slerp(original, target, t);
-        }
-        return target;
+        angle = Vector3.zero;
     }
 }

@@ -7,11 +7,6 @@ public class SpawnBot : MonoBehaviour
     private GameObject spawnedObject;
     public Transform spawnPosition;
 
-    public void SpawnButton()
-    {
-        Spawn(spawnPosition.position, true);
-    }
-
     public void Spawn(Vector3 position, bool canMove)
     {
         spawnedObject = Instantiate(botPrefab, position, Quaternion.identity);

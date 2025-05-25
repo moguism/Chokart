@@ -64,18 +64,22 @@ public class MinimapManager : MonoBehaviour
 
     private void Update()
     {
-        if (playerCars.Count == 0 || minimapDots.Count == 0) return;
-
-        for (int i = 0; i < playerCars.Count; i++)
+        try
         {
-            Transform playerCar = playerCars[i];
-            RectTransform dot = minimapDots[i];
+            if (playerCars.Count == 0 || minimapDots.Count == 0) return;
 
-            // posición relativa del jugador con respecto al origen
-            Vector3 offset = playerCar.position - origin.position;
-            Vector2 minimapPos = new Vector2(offset.x, offset.z) * mapScale;
+            for (int i = 0; i < playerCars.Count; i++)
+            {
+                Transform playerCar = playerCars[i];
+                RectTransform dot = minimapDots[i];
 
-            dot.anchoredPosition = minimapPos;
+                // posición relativa del jugador con respecto al origen
+                Vector3 offset = playerCar.position - origin.position;
+                Vector2 minimapPos = new Vector2(offset.x, offset.z) * mapScale;
+
+                dot.anchoredPosition = minimapPos;
+            }
         }
+        catch { }
     }
 }
