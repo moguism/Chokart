@@ -512,9 +512,12 @@ public class KartController : BasicPlayer
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
             objectText.text = currentObject;
+            positionText.text = position.ToString() + "º";
         }
         catch { }
     }
+
+
 
     private void HandleHealthTimer()
     {
@@ -732,4 +735,7 @@ public class KartController : BasicPlayer
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position + transform.up, transform.position - (transform.up * 2));
     //}
+
+    // ordinarios en ingles y español
+  
 }

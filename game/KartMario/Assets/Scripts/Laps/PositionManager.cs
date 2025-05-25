@@ -103,11 +103,14 @@ public class PositionManager : NetworkBehaviour
             kart.positionText = GameObject.Find("PositionValue").GetComponent<TMP_Text>();
         }
 
-        if (kart.totalLaps >= 1 && !kart.enableAI)
+        if (!kart.enableAI)
         {
             kart.positionText.text = newPosition.ToString();
+           
         }
     }
+
+   
 
     public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset = false)
     {
