@@ -105,12 +105,32 @@ public class PositionManager : NetworkBehaviour
 
         if (!kart.enableAI)
         {
-            kart.positionText.text = newPosition.ToString();
+            kart.positionText.text = GetOrdinal(newPosition);
            
         }
     }
 
-   
+    private string GetOrdinal(int number)
+    {
+        if (LocalizationManager.languageCode == "en-US")
+        {
+
+            switch (number)
+            {
+                case 1: return number + "st";
+                case 2: return number + "nd";
+                case 3: return number + "rd";
+                default: return number + "th";
+            }
+        }
+        else
+        {
+            return number + "º";
+        }
+    }
+
+
+
 
     public void ChangeValuesOfKart(Vector3 newPosition, ulong kartId, int lastTriggerIndex, int position, int totalLaps, int[] triggers, bool reset = false)
     {
