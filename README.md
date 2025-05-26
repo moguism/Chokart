@@ -114,3 +114,5 @@
     Domingo --> Al igual que los días anteriores, Mauricio soluciona bugs como el que los bots no spawneen volando.
 ### Octava semana (19/05 - 25/05)
     Lunes --> Mauricio hace el informe de PowerBi.
+    Domingo --> María coloca un falso suelo para evitar caidas en la pista y comienza a mejorar interfaz.
+### Octava semana (26/05 - 01/06)
