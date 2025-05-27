@@ -116,3 +116,5 @@
     Lunes --> Mauricio hace el informe de PowerBi.
     Domingo --> María coloca un falso suelo para evitar caidas en la pista y comienza a mejorar interfaz.
 ### Octava semana (26/05 - 01/06)
+    Lunes --> María añade modelo 3D del item box y termina de mejorar interfaz.
+    Martes --> María mejora la IA.
