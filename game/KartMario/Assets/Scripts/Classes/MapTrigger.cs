@@ -129,6 +129,8 @@ public class MapTrigger : NetworkBehaviour
             }
         }
 
+        Debug.Log("EL SIGUIENTE DESTINO ES : " + nextTrigger.index);
+
         return nextTrigger;
     }
 

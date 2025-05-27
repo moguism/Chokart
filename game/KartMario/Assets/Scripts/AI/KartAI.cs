@@ -22,7 +22,11 @@ public class KartAI : NetworkBehaviour
     /*[SerializeField]*/
     private KartController kart; // el coche
 
-    public float speed = 2000;
+    // atascos
+    float stuckCheckInterval = 2f;
+    float stuckTimer = 0f;
+    Vector3 lastPosition;
+    bool isStuck = false;
 
     private void Awake()
     {
@@ -46,7 +50,8 @@ public class KartAI : NetworkBehaviour
         if (!destination || !kart || !kart.enableAI) return;
 
         Vector3 localTarget = kart.transform.InverseTransformPoint(destination.position);
-        HorizontalInput = Mathf.Clamp(localTarget.x, -1f, 1f) * steerSensitivity;
+        float distance = localTarget.magnitude;
+        HorizontalInput = Mathf.Clamp(localTarget.x / distance, -1f, 1f) * steerSensitivity;
 
         MoveDirection = (localTarget.z > 0.5f) ? 1 : (localTarget.z < -0.5f ? -1 : 0);
         /*
@@ -79,12 +84,12 @@ public class KartAI : NetworkBehaviour
         }*/
 
         // que no se quede yendo marcha atras sino que gire
-        float angle = Vector3.Angle(kart.transform.forward, (destination.position - kart.transform.position).normalized);
+        /*float angle = Vector3.Angle(kart.transform.forward, (destination.position - kart.transform.position).normalized);
         if (MoveDirection == -1 && angle > 90f)
         {
             HorizontalInput = -HorizontalInput;
             MoveDirection = 1;
-        }
+        }*/
 
         Debug.Log("COCHE " + kart.GetComponentIndex() + " LE ENVIA LA DIRECCION" + HorizontalInput + " y " + MoveDirection);
         Debug.Log("COCHE " + kart + " va a " + destination);
@@ -92,6 +97,25 @@ public class KartAI : NetworkBehaviour
         kart.direction = MoveDirection;
 
     }
+
+    private void OnDrawGizmos()
+    {
+        if (destination != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, destination.position);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(lastPosition, 0.2f);
+
+            if (isStuck)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireCube(transform.position, Vector3.one);
+            }
+        }
+    }
+
+
 
 
     public void UpdateDestination()
