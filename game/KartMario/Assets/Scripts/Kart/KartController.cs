@@ -35,7 +35,7 @@ public class KartController : BasicPlayer
 
     [Header("Parameters")]
 
-    public float acceleration = 25f;
+    public float acceleration = 10f;
     public float steering = 80f;
     public float gravity = 10f;
     public LayerMask layerMask;
@@ -356,11 +356,23 @@ public class KartController : BasicPlayer
         {
             if (LobbyManager.gameStarted)
             {
-                speed = acceleration;
+                //speed = acceleration;
 
-                if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
+                if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
                 {
                     speed = 0;
+                }
+                else
+                {
+                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
+                    {
+                        speed = acceleration;
+                    }
+                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
+                    {
+                        speed = -acceleration;
+                    }
                 }
 
                 // En cuanto se mueva por primera vez, activo el timer
@@ -512,9 +524,12 @@ public class KartController : BasicPlayer
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
             objectText.text = currentObject;
+            positionText.text = position.ToString() + "º";
         }
         catch { }
     }
+
+
 
     private void HandleHealthTimer()
     {
@@ -618,7 +633,7 @@ public class KartController : BasicPlayer
             if (driftMode > 0)
             {
                 //int driftmode = !isPlatform ? driftMode : 1;
-                DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
+                DOVirtual.Float(currentSpeed * 2, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
                 DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
             }
 
@@ -726,10 +741,5 @@ public class KartController : BasicPlayer
     {
         postProfile.GetSetting<ChromaticAberration>().intensity.value = x;
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawLine(transform.position + transform.up, transform.position - (transform.up * 2));
-    //}
+  
 }
