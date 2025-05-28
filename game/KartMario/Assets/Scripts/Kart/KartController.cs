@@ -73,6 +73,9 @@ public class KartController : BasicPlayer
     [Header("Objetos")]
     public string currentObject;
     private TMP_Text objectText;
+    public ObjectImages objectImages;
+    private string lastObject = "";
+
 
     public bool canBeHurt = true;
     public bool activateInvencibilityFrames = false;
@@ -253,6 +256,9 @@ public class KartController : BasicPlayer
         }
 
         chronometer = FindFirstObjectByType<Chronometer>();
+
+        objectImages = GameObject.Find("ObjectImages").GetComponent<ObjectImages>();
+
 
         //canvasMask.worldCamera = GameObject.Find("MinimapCamera").GetComponent<UnityEngine.Camera>();
         //FindFirstObjectByType<MinimapCamera>().player = gameObject;
@@ -524,6 +530,14 @@ public class KartController : BasicPlayer
             killsText.text = totalKills.ToString();
             healthText.text = Mathf.RoundToInt(health).ToString();
             objectText.text = currentObject;
+            Debug.Log("OBJETO ACTUAL pq cambia texto " + currentObject);
+
+            if (currentObject != lastObject)
+            {
+                objectImages.UpdateObjectIcon(currentObject);
+                lastObject = currentObject;
+            }
+
             positionText.text = position.ToString() + "º";
         }
         catch { }

@@ -161,22 +161,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpawnRanges:
-  - objectName: "Caparaz\xF3n"
+  - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
       type: 3}
-  - objectName: Turbo
-    minPosition: 0
-    maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 75c8c4e1307b6a048a9fe875b433d11d,
-      type: 3}
-  - objectName: "Cambia posici\xF3n"
+  - objectName: "Cambiar posici\xF3n"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
       type: 3}
-  - objectName: "Poci\xF3n salud"
+  - objectName: "Poci\xF3n de vida"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
@@ -186,12 +181,12 @@ MonoBehaviour:
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
       type: 3}
-  - objectName: Invulnerable
+  - objectName: "Protecci\xF3n"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
       type: 3}
-  - objectName: Distorsion
+  - objectName: Ataque distorsivo
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
@@ -1800,6 +1795,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c580152e48f093f4a86b4926425ce77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &77719802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77719803}
+  - component: {fileID: 77719805}
+  - component: {fileID: 77719804}
+  m_Layer: 5
+  m_Name: ObjectIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &77719803
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77719802}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2138729069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &77719804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77719802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 97aa6be0788b9974da777231bcafbc7f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &77719805
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77719802}
+  m_CullTransparentMesh: 1
 --- !u!1 &78110506
 GameObject:
   m_ObjectHideFlags: 0
@@ -4650,8 +4720,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1647724491}
   m_HandleRect: {fileID: 1647724490}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9049999
+  m_Value: 0.9999992
+  m_Size: 0.905
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6916,33 +6986,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305792945}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &305940381 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2704919623043984305, guid: 343508c55c97b5b498f40ed4ff4df759,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885251889}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &305940382
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 305940381}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &349378882
 GameObject:
   m_ObjectHideFlags: 0
@@ -7133,6 +7176,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 349802252}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1829079486}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1829079485}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 343508c55c97b5b498f40ed4ff4df759,
     type: 3}
 --- !u!4 &349802250 stripped
@@ -8309,6 +8360,83 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 519186426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &523377839 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1937374043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &523377840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523377839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawnRanges:
+  - objectName: Proyectil
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+      type: 3}
+  - objectName: "Cambiar posici\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
+      type: 3}
+  - objectName: "Poci\xF3n de vida"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
+      type: 3}
+  - objectName: Invisibilidad
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: "Protecci\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: Ataque distorsivo
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
+      type: 3}
+  - objectName: Bomba
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
+  positionManager: {fileID: 276881112}
+  glitchEffect: {fileID: 1633900390}
+--- !u!65 &523377841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523377839}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 36.4749, y: 36.475006, z: 36.475006}
+  m_Center: {x: 4.0941496, y: 0.12153819, z: 18.237503}
 --- !u!1 &540708664
 GameObject:
   m_ObjectHideFlags: 0
@@ -8812,6 +8940,83 @@ MonoBehaviour:
   dropdown: {fileID: 0}
   dropdownCodes: []
   dropdownSelectedText: {fileID: 0}
+--- !u!1 &551538008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1308393725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &551538009
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551538008}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 36.4749, y: 36.475006, z: 36.475006}
+  m_Center: {x: 4.0941496, y: 0.12159923, z: 18.237503}
+--- !u!114 &551538010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551538008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawnRanges:
+  - objectName: Proyectil
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+      type: 3}
+  - objectName: "Cambiar posici\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
+      type: 3}
+  - objectName: "Poci\xF3n de vida"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
+      type: 3}
+  - objectName: Invisibilidad
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: "Protecci\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: Ataque distorsivo
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
+      type: 3}
+  - objectName: Bomba
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
+  positionManager: {fileID: 276881112}
+  glitchEffect: {fileID: 1633900390}
 --- !u!1 &553624885
 GameObject:
   m_ObjectHideFlags: 0
@@ -10398,6 +10603,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793143919}
   m_CullTransparentMesh: 1
+--- !u!1 &797403784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1585246567}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &797403785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797403784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawnRanges:
+  - objectName: Proyectil
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+      type: 3}
+  - objectName: "Cambiar posici\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
+      type: 3}
+  - objectName: "Poci\xF3n de vida"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
+      type: 3}
+  - objectName: Invisibilidad
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: "Protecci\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: Ataque distorsivo
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
+      type: 3}
+  - objectName: Bomba
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
+  positionManager: {fileID: 276881112}
+  glitchEffect: {fileID: 1633900390}
+--- !u!65 &797403786
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797403784}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 36.4749, y: 36.475006, z: 36.475006}
+  m_Center: {x: 4.0942106, y: 0.12135509, z: 18.237503}
 --- !u!1001 &804151193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13151,6 +13433,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1070961013}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2075274986}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2075274985}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 343508c55c97b5b498f40ed4ff4df759,
     type: 3}
 --- !u!4 &1070961011 stripped
@@ -15372,6 +15662,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1308393728}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 551538010}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 551538009}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 343508c55c97b5b498f40ed4ff4df759,
     type: 3}
 --- !u!4 &1308393726 stripped
@@ -17074,6 +17372,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1585246570}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 797403786}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 797403785}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 343508c55c97b5b498f40ed4ff4df759,
     type: 3}
 --- !u!4 &1585246568 stripped
@@ -18123,6 +18429,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 1
       addedObject: {fileID: 1882166765}
+    - targetCorrespondingSourceObject: {fileID: 8424778923415513261, guid: 48143920766f9f14a8a4f8d6219c73c0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2138729069}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48143920766f9f14a8a4f8d6219c73c0, type: 3}
 --- !u!4 &1586687681 stripped
@@ -19240,22 +19550,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpawnRanges:
-  - objectName: "Caparaz\xF3n"
+  - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
       type: 3}
-  - objectName: Turbo
-    minPosition: 0
-    maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 75c8c4e1307b6a048a9fe875b433d11d,
-      type: 3}
-  - objectName: "Cambia posici\xF3n"
+  - objectName: "Cambiar posici\xF3n"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
       type: 3}
-  - objectName: "Poci\xF3n salud"
+  - objectName: "Poci\xF3n de vida"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
@@ -19265,12 +19570,12 @@ MonoBehaviour:
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
       type: 3}
-  - objectName: Invulnerable
+  - objectName: "Protecci\xF3n"
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
       type: 3}
-  - objectName: Distorsion
+  - objectName: Ataque distorsivo
     minPosition: 0
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
@@ -21982,6 +22287,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821951879}
   m_CullTransparentMesh: 1
+--- !u!1 &1829079484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+    type: 3}
+  m_PrefabInstance: {fileID: 349802249}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1829079485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829079484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawnRanges:
+  - objectName: Proyectil
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+      type: 3}
+  - objectName: "Cambiar posici\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
+      type: 3}
+  - objectName: "Poci\xF3n de vida"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
+      type: 3}
+  - objectName: Invisibilidad
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: "Protecci\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: Ataque distorsivo
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
+      type: 3}
+  - objectName: Bomba
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
+  positionManager: {fileID: 276881112}
+  glitchEffect: {fileID: 1633900390}
+--- !u!65 &1829079486
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829079484}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 36.4749, y: 36.475006, z: 36.475006}
+  m_Center: {x: 4.0941496, y: 0.12208751, z: 18.237503}
 --- !u!1 &1830946590
 GameObject:
   m_ObjectHideFlags: 0
@@ -22191,6 +22573,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7623697821502673859, guid: f91cf52569e0c4c488986ab3d742d08b, type: 3}
+--- !u!224 &1854820013 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8424778923415513261, guid: 48143920766f9f14a8a4f8d6219c73c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1586687680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1862835553
 GameObject:
   m_ObjectHideFlags: 0
@@ -22696,10 +23084,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1885251893}
-    - targetCorrespondingSourceObject: {fileID: 2704919623043984305, guid: 343508c55c97b5b498f40ed4ff4df759,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 305940382}
     - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
         type: 3}
       insertIndex: -1
@@ -22972,6 +23356,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1937374046}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 523377841}
+    - targetCorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 523377840}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 343508c55c97b5b498f40ed4ff4df759,
     type: 3}
 --- !u!4 &1937374044 stripped
@@ -23765,6 +24157,83 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &2075274984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3766178264923816737, guid: 343508c55c97b5b498f40ed4ff4df759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1070961010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2075274985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075274984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b25168bdf43c94abd07fe7811d73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSpawnRanges:
+  - objectName: Proyectil
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+      type: 3}
+  - objectName: "Cambiar posici\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 498be9a92810e224a81a8ddc1ad08e52,
+      type: 3}
+  - objectName: "Poci\xF3n de vida"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 5ad8d217a79d0e94d9d0ac3b6ed5e50c,
+      type: 3}
+  - objectName: Invisibilidad
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 4d4ae02240d6ca248adf903b4f928be5,
+      type: 3}
+  - objectName: "Protecci\xF3n"
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: ec2be103309d85f4e972edd1838a0faa,
+      type: 3}
+  - objectName: Ataque distorsivo
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
+      type: 3}
+  - objectName: Bomba
+    minPosition: 0
+    maxPosition: 12
+    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+      type: 3}
+  positionManager: {fileID: 276881112}
+  glitchEffect: {fileID: 1633900390}
+--- !u!65 &2075274986
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075274984}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 36.4749, y: 36.475006, z: 36.475006}
+  m_Center: {x: 4.0941496, y: 0.12208751, z: 18.237503}
 --- !u!114 &2101113112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23891,6 +24360,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137584888}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2138729068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138729069}
+  - component: {fileID: 2138729070}
+  m_Layer: 5
+  m_Name: ObjectImages
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2138729069
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138729068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 77719803}
+  m_Father: {fileID: 1854820013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 11}
+  m_SizeDelta: {x: 120, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2138729070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138729068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b05e9deb5bf6046aff85a11ca42913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectIconImage: {fileID: 77719804}
+  defaultSprite: {fileID: 0}
+  greenShellSprite: {fileID: 21300000, guid: d5a5c9a5df2e88d4c80f3805bc881949, type: 3}
+  bombSprite: {fileID: 21300000, guid: 89418e2f9ed5f72408b73c23991cb98b, type: 3}
+  invisivilitySprite: {fileID: 21300000, guid: 23665ab900dbae54a88d858502020cca, type: 3}
+  positionChangerSprite: {fileID: 21300000, guid: 453b4acb71f5d374daebbc81fc3cea04,
+    type: 3}
+  distorsionSprite: {fileID: 21300000, guid: d1f169ad2e8f8a349afebf7c05192fe3, type: 3}
+  healthPotionSprite: {fileID: 21300000, guid: 97aa6be0788b9974da777231bcafbc7f, type: 3}
+  invulnerabilitySprite: {fileID: 21300000, guid: ea3091d1b0ca4b64587bd304007a9bd6,
+    type: 3}
+  speedBoostSprite: {fileID: 21300000, guid: c9308856d1a9788419ebd958aa4bfc5e, type: 3}
 --- !u!1 &2141599315
 GameObject:
   m_ObjectHideFlags: 0
