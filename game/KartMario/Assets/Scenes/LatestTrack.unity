@@ -164,7 +164,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -445,6 +445,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.000030517578
       objectReference: {fileID: 0}
+    - target: {fileID: 4443300954618822795, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -14.9999695
+      objectReference: {fileID: 0}
     - target: {fileID: 4443300954650613715, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
         type: 3}
       propertyPath: m_IsActive
@@ -708,7 +713,7 @@ PrefabInstance:
     - target: {fileID: 8865139757581395582, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15
+      value: -14.9999695
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8382,7 +8387,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -8983,7 +8988,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -10625,7 +10630,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -19553,7 +19558,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -22309,7 +22314,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
@@ -24179,7 +24184,7 @@ MonoBehaviour:
   - objectName: Proyectil
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 5de144915e124c94cbfbcebd6dc45e3b,
+    prefab: {fileID: 7286340212471223011, guid: af191b167eec48640b65f07ca9c34609,
       type: 3}
   - objectName: "Cambiar posici\xF3n"
     minPosition: 0
