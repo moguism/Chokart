@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    // Aquí van los distintos objetos (un poco fullero I know xD)
+    // AquÃ­ van los distintos objetos (un poco fullero I know xD)
     #region Lista de objetos
 
     [System.Serializable] // Para que salgan en el inspector
@@ -86,7 +86,10 @@ public class ObjectSpawner : MonoBehaviour
 
     public void SpawnObject(string objectName, Vector3 spawnPosition, Vector3 desiredPosition, ulong ownerId)
     {
-        GameObject spawnedObject = Instantiate(objectSpawnRanges.FirstOrDefault(o => o.objectName == objectName).prefab, spawnPosition, Quaternion.identity);
+        Quaternion rotation = Quaternion.LookRotation(desiredPosition);
+
+        GameObject spawnedObject = Instantiate(objectSpawnRanges.FirstOrDefault(o => o.objectName == objectName).prefab, spawnPosition, rotation);
+
         bool alreadyAdded = false;
 
         if (spawnedObject != null)
@@ -118,6 +121,7 @@ public class ObjectSpawner : MonoBehaviour
                     else
                     {
                         shell.direction = desiredPosition;
+                        shell.parent = spawnedObject;
                         shell.UseObject();
                     }
                 }
