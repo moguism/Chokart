@@ -32,6 +32,11 @@
 - **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
 - **Barra de vida Unity:** https://youtu.be/EW4kSSiPgJs
 
+
+# COPYRIGHT
+- Modelo 3D bala de jinx (proyectil): https://sketchfab.com/3d-models/jinxs-bullet-5e6a98a547ba4bccb63a687a6d56d4df
+
+
 # INSTRUCCIONES PARA EL DESARROLLO
 **MUY IMPORTANTE:** Poner todos los vídeos antes de abrir Unity, tal y como estaban, y luego borrarlos al cerrar cuando se vaya a subir algo al repo
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
