@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-verification',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './verification.component.html',
   styleUrl: './verification.component.css'
 })

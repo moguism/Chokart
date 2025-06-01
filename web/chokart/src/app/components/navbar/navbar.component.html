@@ -18,6 +18,12 @@
         <a [routerLink]="'/login'" (click)="closeMenu()">{{ t("login") }}</a>
         }
       </li>
+      <li>
+        @if(isAdmin())
+        {
+          <a [routerLink]="'/admin'" (click)="closeMenu()">Admin</a>
+        }
+      </li>
     </ul>
 
     <div class="nav-end">

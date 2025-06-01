@@ -1,140 +1,122 @@
 <section *transloco="let t">
-  <app-navbar></app-navbar>
+    <app-navbar style="margin-bottom: 100px;"></app-navbar>
 
-  @if(user) {
+    @if(user) {
+    <div class="user-box">
+        <!--steam-->
+        @if(steamProfile != null) {
 
-  @if(isAdmin())
-  {
-    <button (click)="customRouter.navigateToUrl('admin')">Ir a la vista de administración</button>
-  }
+        <img class="avatar" [src]="steamProfile.avatarFull" />
+        <!-- <p>Id: {{ user.steamId }}</p>-->
+        <p>{{ steamProfile.personaName }}</p>
 
-  <div class="user-box">
-    <!--steam-->
-    @if(steamProfile != null) {
+        <div class="card-button" (click)="removeSteamAccount()">
+            <img height="50px"
+                src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                alt="logo Steam" style="align-self: end" />
+            <span>Desvincular cuenta de Steam</span>
+        </div>
 
-    <img class="avatar" [src]="steamProfile.avatarFull" />
-    <!-- <p>Id: {{ user.steamId }}</p>-->
-    <p>{{ steamProfile.personaName }}</p>
+        } @else {
+        <!--info chokart-->
+        @if(user.avatarPath != "" && user.avatarPath != null)
+        {
+        <img class="avatar" [src]="user.avatarPath" alt="avatar usuario" />
+        }
+        <p>{{ user.nickname }}</p>
 
-    <div class="card-button" (click)="removeSteamAccount()">
-      <img
-        height="50px"
-        src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
-        alt="logo Steam"
-        style="align-self: end"
-      />
-      <span>Desvincular cuenta de Steam</span>
-    </div>
+        <div class="card-button">
+            <a [href]="STEAM_URL">
+                <img width="50px"
+                    src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                    alt="logo Steam" style="align-self: end" />
+                <span>Vincular con Steam</span>
+            </a>
+        </div>
 
-    } @else {
-    <!--info chokart-->
-    @if(user.avatarPath != "" && user.avatarPath != null)
-    {
-    <img class="avatar" [src]="user.avatarPath" alt="avatar usuario" />
-    }
-    <p>{{ user.nickname }}</p>
+        }
+        <!--punto totales y correo-->
+        <!--<p>Puntuación total: {{ user.totalPoints }}</p>-->
+        <p>Correo electrónico: {{ user.email }}</p>
 
-    <div class="card-button">
-      <a [href]="STEAM_URL">
-        <img
-          width="50px"
-          src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
-          alt="logo Steam"
-          style="align-self: end"
-        />
-        <span>Vincular con Steam</span>
-      </a>
-    </div>
+        <div class="column">
 
-    }
-    <!--punto totales y correo-->
-    <!--<p>Puntuación total: {{ user.totalPoints }}</p>-->
-    <p>Correo electrónico: {{ user.email }}</p>
+            <h2>Info</h2>
+            <fieldset class="info">
+                <form [formGroup]="userForm">
 
-    <div class="column">
-
-                <h2>Info</h2>
-                <fieldset class="info">
-                    <form [formGroup]="userForm">
-
-                        <div class="profile-row">
-
-                            <label for="nickname">Nickname:
-                                <input type="text" [value]="user.nickname" formControlName="nickname" [readonly]="!isEditing">
-                            </label>
-
-                            <label for="email">Email:
-                                <input id="email" type="email" formControlName="email" [readonly]="!isEditing" [value]="user.email" />
-                            </label>
-
-                        </div>
-
-                        <div class="profile-row-buttons">
-                            
-                            <button type="button" [ngClass]="isEditing ? 'btn-edit' : 'btn-secondary'" class="form-button"
-                                (click)="edit()">
-                                {{ isEditing? t("cancel-edition") : t("edit") }}
-                            </button>
-                            
-                            <!-- <button type="submit" class="form-button" [hidden]="!isEditing || userForm.invalid">
-                                Guardar Cambios
-                            </button> -->
-                        
-                        </div>
-                    </form>
-                </fieldset>
-                
-                <fieldset class="info">
                     <div class="profile-row">
-                        <label>{{t("password")}}: <input type="password" placeholder="***********" [readonly]="!isEditing"></label>
-                        <button type="button" class="form-button" style="float: right;" (click)="showEditPassword()"> {{t("change-password")}} </button>
+
+                        <label for="nickname">Nickname:
+                            <input type="text" [value]="user.nickname" formControlName="nickname"
+                                [readonly]="!isEditing">
+                        </label>
+
+                        <label for="email">Email:
+                            <input id="email" type="email" formControlName="email" [readonly]="!isEditing"
+                                [value]="user.email" />
+                        </label>
+
                     </div>
-                </fieldset>
-                
+                </form>
                 <div id="newPassword" [hidden]="isNewPasswordHidden">
-                    
+
                     <fieldset class="info">
                         <form [formGroup]="passwordForm" (ngSubmit)="editPassword()">
-                            
+
                             <div class="new-password-row">
                                 <label>{{t("new-password")}}</label>
-                            
+
                                 <div class="new-password-columm">
-                                    <input type="password" formControlName="newPassword" required [placeholder]="t('change-password')" />
-                                    
-                                    <div class="error" 
+                                    <input type="password" formControlName="newPassword" required
+                                        [placeholder]="t('change-password')" />
+
+                                    <div class="error"
                                         *ngIf="passwordForm.get('newPassword')?.hasError('minlength') && passwordForm.get('newPassword')?.touched">
                                         {{t("password-minimum")}}
                                     </div>
                                 </div>
                                 <div class="new-password-columm">
-                                    <input class="icon-input" [placeholder]="t('repeat-password')" type="password" formControlName="confirmPassword" />
-                                    
-                                    <div class="error" 
+                                    <input class="icon-input" [placeholder]="t('repeat-password')" type="password"
+                                        formControlName="confirmPassword" />
+
+                                    <div class="error"
                                         *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched">
                                         {{t("password-do-not-match")}}
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- <div class="centered-button">
                                 <button type="submit" class="form-button" [disabled]="">Actualizar</button>
                             </div> -->
-                        
+
                         </form>
                     </fieldset>
                 </div>
+                <div class="profile-row-buttons">
 
-                <div class="centered-button">
-                    <button class="rainbow-button" (click)="updateUser()">{{t("save-changes")}}</button>
+                    <button type="button" [ngClass]="isEditing ? 'btn-edit' : 'btn-secondary'" class="form-button"
+                        (click)="edit()">
+                        {{ isEditing? t("cancel-edition") : t("edit") }}
+                    </button>
+
+                    <!-- <button type="submit" class="form-button" [hidden]="!isEditing || userForm.invalid">
+                                Guardar Cambios
+                            </button> -->
+
                 </div>
+            </fieldset>
+            <div class="centered-button">
+                <button class="rainbow-button" (click)="updateUser()">{{t("save-changes")}}</button>
             </div>
+        </div>
 
-    <!--cerrar sesion-->
-    <p class="logout" (click)="this.logOut()">Cerrar la sesión actual</p>
-  </div>
-  <!--si no hay usuario-->
-  } @else {
-  <p>Cargando...</p>
-  }
+        <!--cerrar sesion-->
+        <p class="logout" (click)="this.logOut()">Cerrar la sesión actual</p>
+    </div>
+    <!--si no hay usuario-->
+    } @else {
+    <p>Cargando...</p>
+    }
 </section>

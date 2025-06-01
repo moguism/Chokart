@@ -60,6 +60,12 @@ export class ProfileComponent implements OnInit {
     this.user = this.authService.getUser();
     console.log(this.user);
 
+    if(this.user == null)
+    {
+      this.logOut();
+      this.router.navigateToUrl('login');
+    }
+
     await this.getCurrentUser();
 
     this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`;
@@ -107,8 +113,19 @@ export class ProfileComponent implements OnInit {
   async updateUser(): Promise<void> {
     const role = this.user?.role.toString();
     const formData = new FormData();
-    formData.append("Nickname", this.userForm.value.nickname)
-    formData.append("Email", this.userForm.value.email)
+
+    let shouldReload = false;
+
+    const nickname = this.userForm.value.nickname;
+    const mail = this.userForm.value.email;
+
+    if(this.user.nickname != nickname || this.user.email != mail)
+    {
+      shouldReload = true;
+    }
+
+    formData.append("Nickname", nickname)
+    formData.append("Email", mail)
     const newPassword = this.passwordForm.get('newPassword')?.value
     
     if (newPassword) {
@@ -118,16 +135,21 @@ export class ProfileComponent implements OnInit {
       }
       
       formData.append("Password", newPassword)
+      shouldReload = true
     }
 
     if (role) formData.append("Role", role)
 
     await this.userService.updateUser(formData, this.user.id)
-    this.logOut() // Recargo siempre
+    if(shouldReload)
+    {
+      this.logOut() // Recargo siempre
+    }
   }
 
   edit() {
     this.isEditing = !this.isEditing;
+    this.isNewPasswordHidden = !this.isNewPasswordHidden;
     if (!this.isEditing) { // restaura los datos
       this.userForm.reset(this.user);
     }
@@ -140,14 +162,5 @@ export class ProfileComponent implements OnInit {
       console.error("Error: El campo de la contraseña está vacío.");
       return;
     }
-  }
-
-  showEditPassword() {
-    this.isNewPasswordHidden = !this.isNewPasswordHidden;
-  }
-
-  isAdmin()
-  {
-    return this.authService.isAdmin()
   }
 }
