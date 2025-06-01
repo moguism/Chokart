@@ -79,6 +79,92 @@ public class UserController : ControllerBase
         return Ok(new { users = result });
 
     }
+
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<UserDto> UpdateUser([FromForm] RegisterDto user, int id)
+    {
+        try
+        {
+            user.Id = id;
+
+            User currentUser = await GetAuthorizedUser();
+
+            if (currentUser == null)
+            {
+                return null;
+            }
+
+            // Si no es admin y está intentando modificar a otro usuario
+            if (!currentUser.Role.Equals("Admin") && user.Id != currentUser.Id)
+            {
+                return null;
+            }
+
+            string role = "User";
+            if (currentUser.Role.Equals("Admin"))
+            {
+                role = user.Role;
+            }
+
+            if (currentUser.Id == user.Id)
+            {
+                return await _userService.UpdateUser(user, currentUser, role);
+            }
+            else
+            {
+                // Para los admin
+                User oldUser = await _userService.GetBasicUserByIdAsync(user.Id);
+                return await _userService.UpdateUser(user, oldUser, role);
+            }
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    // Solo pueden usar este método los usuarios cuyo rol sea admin
+    [Authorize(Roles = "Admin")]
+    [HttpPut("modifyUserRole")]
+    public async Task<IActionResult> ModifyUserRole(ModifyRoleRequest request)
+    {
+        try
+        {
+            if (request.NewRole == "User" || request.NewRole == "Admin")
+            {
+                await _userService.ModifyUserRoleAsync(request.UserId, request.NewRole);
+                return Ok("Rol de usuario actualizado correctamente.");
+            }
+            else
+            {
+                return BadRequest("El nuevo rol debe ser User o Admin");
+            }
+
+        }
+        catch (InvalidOperationException)
+        {
+            return BadRequest("No pudo modificarse el rol del usuario.");
+        }
+    }
+
+    // Elimina un usuario
+    [Authorize(Roles = "Admin")]
+    [HttpPut("banUser/{userId}")]
+    public async Task<IActionResult> BanUser(int userId)
+    {
+        try
+        {
+            await _userService.BanUserAsync(userId);
+
+            return Ok("Usuario baneado correctamente.");
+        }
+        catch (InvalidOperationException)
+        {
+            return BadRequest("No se pudo banear al usuario");
+        }
+    }
+
     private async Task<User> GetAuthorizedUser()
     {
         System.Security.Claims.ClaimsPrincipal currentUser = this.User;

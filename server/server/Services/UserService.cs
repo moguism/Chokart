@@ -4,6 +4,7 @@ using server.Models.Entities;
 using server.Models.Helper;
 using server.Models.Mappers;
 using server.Repositories;
+using server.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,6 +14,7 @@ public class UserService
 {
     private readonly UnitOfWork _unitOfWork;
     private readonly UserMapper _userMapper;
+    private readonly EmailService _emailService = new EmailService();
 
     Regex emailRegex = new(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
     public UserService(UnitOfWork unitOfWork, UserMapper userMapper)
@@ -158,6 +160,126 @@ public class UserService
         return true;
     }
 
+    // Actualizar usuario
+    public async Task<UserDto> UpdateUser(RegisterDto model, User existingUser, string role)
+    {
+        // validacion email
+
+        if (!emailRegex.IsMatch(model.Email))
+        {
+            throw new Exception("Email no valido.");
+        }
+
+        if (model.Password != null && model.Password != "" && model.Password.Length < 6)
+        {
+            throw new Exception("La contraseña no es válida");
+        }
+
+        try
+        {
+            bool sendEmail = false;
+
+            // Verifica si el usuario ya existe
+            if (!model.Email.Equals(existingUser.Email))
+            {
+                var otherUser = await GetUserByEmailAsync(model.Email.ToLower());
+
+                if (otherUser != null)
+                {
+                    throw new Exception("El usuario ya existe.");
+                }
+
+                sendEmail = true;
+            }
+
+            ImageService imageService = new ImageService();
+
+            existingUser.Email = model.Email.ToLower();
+            existingUser.Nickname = model.Nickname.ToLower();
+            existingUser.Role = role;
+
+            if (model.Password != null && model.Password != "")
+            {
+                existingUser.Password = PasswordHelper.Hash(model.Password);
+            }
+
+            if(sendEmail)
+            {
+                existingUser.Verified = false;
+                await _emailService.CreateEmailUser(existingUser.Email, existingUser.Id, existingUser.VerificationCode);
+            }
+
+            _unitOfWork.UserRepository.Update(existingUser);
+            await _unitOfWork.SaveAsync();
+
+            UserSocket socket = WebSocketHandler.USER_SOCKETS.FirstOrDefault(u => u.User.Id == existingUser.Id);
+            if (socket != null)
+            {
+                socket.User = existingUser;
+            }
+
+            return _userMapper.ToDto(existingUser);
+
+        }
+        catch (DbUpdateException ex)
+        {
+            // Log más detallado del error
+            Console.WriteLine($"Error al guardar el usuario: {ex.InnerException?.Message}");
+            throw new Exception("Error al registrar el usuario. Verifica los datos ingresados.");
+        }
+    }
+
+    // Modificar el rol del usuario
+    public async Task ModifyUserRoleAsync(int userId, string newRole)
+    {
+        var existingUser = await _unitOfWork.UserRepository.GetUserById(userId);
+
+
+        if (existingUser == null)
+        {
+            throw new InvalidOperationException("Usuario con ID:" + userId + "no encontrado.");
+        }
+
+        // Console.WriteLine("ID del usuario: " + existingUser.Id);
+
+        if (!string.IsNullOrEmpty(newRole))
+        {
+            existingUser.Role = newRole;
+        }
+        else
+        {
+            return;
+        }
+
+        UserSocket socket = WebSocketHandler.USER_SOCKETS.FirstOrDefault(u => u.User.Id == userId);
+        if (socket != null)
+        {
+            socket.User.Role = newRole;
+        }
+
+        _unitOfWork.UserRepository.Update(existingUser);
+        await _unitOfWork.SaveAsync();
+    }
+
+    // Banear usuario
+    public async Task BanUserAsync(int userId)
+    {
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new InvalidOperationException("El usuario no existe.");
+        }
+
+        user.Banned = !user.Banned;
+        Console.WriteLine("Estado de baneo: " + user.Banned);
+
+        _unitOfWork.UserRepository.Update(user);
+
+        await _unitOfWork.SaveAsync();
+    }
+
+    // Buscar usuario
     public async Task<List<UserDto>> SearchUser(string search)
     {
 
