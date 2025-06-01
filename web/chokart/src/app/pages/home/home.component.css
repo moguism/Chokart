@@ -256,13 +256,13 @@ button {
   transition: all 0.2s ease-in-out;
 }
 
-#fifth:hover:before {
+/*#fifth:hover:before {
   margin-left: 300%;
 }
 
 #fifth:hover {
   border: 1px solid rgba(255, 255, 255, 1);
-}
+}*/
 
 @media (max-width: 768px) {
   .container h1 {

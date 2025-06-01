@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async updateUser(formData: FormData, id: number): Promise<any> {
-    return this.api.putWithImage<any>(`User/${id}`, formData);
+    return await this.api.putWithImage<any>(`User/${id}`, formData);
   }
 
   // devuelve todos los usuarios
@@ -63,16 +63,16 @@ export class UserService {
   }
 
   // Modificar rol del usuario
-  modifyRole(id: number, newRole: string): Promise<any> {
+  async modifyRole(id: number, newRole: string): Promise<any> {
     const body = {
         userId: id,
         newRole: newRole
     }
-    return this.api.put(`User/modifyUserRole`, body)
+    return await this.api.put(`User/modifyUserRole`, body)
   }
 
   // Banear usuario
-  banUserAsync(userId: number){
-    return this.api.put(`User/banUser/${userId}`)
+  async banUserAsync(userId: number){
+    return await this.api.put(`User/banUser/${userId}`)
   }
 }
