@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { FriendshipService } from '../../services/friendship.service';
 import { Friend } from '../../models/friend';
 import { CustomRouterService } from '../../services/custom-router.service';
+import { SweetalertService } from '../../services/sweetalert.service';
 
 @Component({
   selector: 'app-menu',
@@ -42,6 +43,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private router: CustomRouterService, private userService: UserService,
     public authService: AuthService,
     private friendshipService: FriendshipService,
+    private sweetAlertService: SweetalertService
   ) { }
 
   // TODO: Redirigir al login si no ha iniciado sesión
@@ -119,12 +121,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     // Para recibir la notificación ya se encarga "processMesage", y de actualizar la lista
 
     const nickname = friend.receiverUser?.nickname || friend.senderUser?.nickname;
-
     const confirmed = window.confirm(`¿Seguro que quieres dejar de ser amigo de ${nickname}?`);
   
     if (confirmed) {
       await this.friendshipService.removeFriendById(friend.id)
-      alert(`Has dejado de ser amigo de ${nickname}.`);
+      this.sweetAlertService.showAlert('Info', `Has dejado de ser amigo de ${nickname}.`, 'info');
     } 
   }
 

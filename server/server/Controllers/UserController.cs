@@ -50,6 +50,23 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
+    [HttpGet("allUsers")]
+    public async Task<IActionResult> GetAllUsersAsync()
+    {
+
+        User currentUser = await GetAuthorizedUser();
+
+        if (currentUser == null)
+        {
+            return null;
+        }
+
+        var users = await _userService.GetAllUsersAsync(currentUser);
+
+        return Ok(users);
+    }
+
+    [Authorize]
     [HttpGet("search")]
     public async Task<IActionResult> SearchUser([FromQuery] string query)
     {

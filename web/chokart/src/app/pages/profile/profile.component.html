@@ -3,6 +3,11 @@
 
   @if(user) {
 
+  @if(isAdmin())
+  {
+    <button (click)="customRouter.navigateToUrl('admin')">Ir a la vista de administración</button>
+  }
+
   <div class="user-box">
     <!--steam-->
     @if(steamProfile != null) {

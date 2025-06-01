@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     private router: CustomRouterService,
     private formBuild: FormBuilder,
     private passwordValidator: PasswordValidatorService,
-    private customRouter: CustomRouterService
+    public customRouter: CustomRouterService
   ) {
     this.userForm = this.formBuild.group({
       nickname: ['', Validators.required],
@@ -144,5 +144,10 @@ export class ProfileComponent implements OnInit {
 
   showEditPassword() {
     this.isNewPasswordHidden = !this.isNewPasswordHidden;
+  }
+
+  isAdmin()
+  {
+    return this.authService.isAdmin()
   }
 }

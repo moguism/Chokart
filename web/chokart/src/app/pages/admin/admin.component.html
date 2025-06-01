@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<br>
+<div class="panel-top">
+    - ADMINISTRACIÓN -
+</div>
+
+<hr>
+
+<div class="container">
+    <h3 style="text-align: center;">Lista de usuarios</h3>
+
+    <div class="table-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Rol</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (user of users; track $index) {
+                <tr>
+                    <td data-label="ID">{{user.id}}</td>
+                    <td data-label="Nombre">{{user.nickname}}</td>
+                    <td data-label="Email">{{user.email}}</td>
+                    <td data-label="Estado">
+                        @if (user.banned) {
+                        Baneado
+                        } @else {
+                        No baneado
+                        }
+                    </td>
+                    <td data-label="Rol">
+                        <select name="Rol" [id]="user.id" [(ngModel)]="user.role">
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </td>
+                    <td data-label="Acción">
+                        <div class="center-button">
+                            <button class="form-button" (click)="modifyUserRole(user.id, user.role)">Actualizar</button>
+                            <button class="form-button" (click)="banUser(user.id)">Cambiar estado</button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>

@@ -23,6 +23,12 @@ public class UserService
         _userMapper = userMapper;
     }
 
+    public async Task<List<UserDto>> GetAllUsersAsync(User currentUser)
+    {
+        var users = await _unitOfWork.UserRepository.GetAllUsersAsync(currentUser.Id);
+        return _userMapper.ToDto(users).ToList();
+    }
+
     public async Task<UserDto> GetUserByNicknameAsync(string nickname)
     {
         var user = await _unitOfWork.UserRepository.GetByNicknameAsync(nickname);
