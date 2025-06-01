@@ -1,2 +1,2 @@
-Página web (con MVVM)
+Página web (responsive del home)
 Arreglar IA de los bots
