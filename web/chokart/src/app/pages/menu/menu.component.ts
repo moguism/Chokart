@@ -7,15 +7,15 @@ import { User } from '../../models/user';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
-import { FriendshipService } from '../../services/friendship.service';
 import { Friend } from '../../models/friend';
 import { CustomRouterService } from '../../services/custom-router.service';
-import { SweetalertService } from '../../services/sweetalert.service';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { FriendCardComponent } from '../../components/friend-card/friend-card.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NavbarComponent, FriendCardComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   queryuser: string = '';
   queryfriend: string = '';
 
-  menuSelector: string = 'myFriends';  // myFriends, searchUsers, friendRequest, battleRequest
+  menuSelector: string = 'friendRequest';  // myFriends, searchUsers, friendRequest, battleRequest
 
 
   public readonly IMG_URL = environment.apiImg;
@@ -42,8 +42,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   constructor(private webSocketService: WebsocketService,
     private router: CustomRouterService, private userService: UserService,
     public authService: AuthService,
-    private friendshipService: FriendshipService,
-    private sweetAlertService: SweetalertService
   ) { }
 
   // TODO: Redirigir al login si no ha iniciado sesión
@@ -116,30 +114,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.searchFriend("")
   }
 
-  async removeFriend(friend: Friend) {
-    // En el servidor se llamaría a un método para borrar la amistad, ( wesoque ->) el cual llamaría al socket del otro usuario para notificarle
-    // Para recibir la notificación ya se encarga "processMesage", y de actualizar la lista
-
-    const nickname = friend.receiverUser?.nickname || friend.senderUser?.nickname;
-    const confirmed = window.confirm(`¿Seguro que quieres dejar de ser amigo de ${nickname}?`);
-  
-    if (confirmed) {
-      await this.friendshipService.removeFriendById(friend.id)
-      this.sweetAlertService.showAlert('Info', `Has dejado de ser amigo de ${nickname}.`, 'info');
-    } 
-  }
-
-  async addFriend(user: User) {
-    // Hago una petición para que cree el amigo, ( wesoque ->) y en back el servidor debería notificar a ambos usuarios enviando la lista de amigos
-    const response = await this.friendshipService.addFriend(user)
-    console.log("Respuesta de agregar al amigo: ", response)
-  }
-
-  async acceptFriendship(id: number) {
-    const response = await this.friendshipService.acceptFriendship(id)
-    console.log("Respuesta de aceptar al amigo: ", response)
-  }
-
   askForInfo(messageType: MessageType) {
     console.log("Mensaje pedido: ", messageType)
     this.webSocketService.sendNative(messageType.toString())
@@ -147,13 +121,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.messageReceived$?.unsubscribe();
-  }
-
-  visitUserPorfile(user: User | null)
-  {
-    if(user){
-      this.router.navigateToUrl("profile/" +user?.id  );
-    }
   }
 
   async getSearchedUsers(queryuser: string): Promise<User[]> {

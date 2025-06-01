@@ -24,7 +24,7 @@ p {
   font-size: 0.8rem;
 }
 
-.container {
+.container-login {
   background-image: url("/login-bg.png");
   background-size: cover;
   min-height: 100vh;

@@ -1,0 +1,46 @@
+<div class="col-sm-6 col-lg-4">
+    <div class="card hover-img">
+        <div class="card-body p-4 text-center border-bottom">
+            <h5 class="fw-semibold mb-0" style="font-size: xx-large !important">{{
+                friendName }}</h5>
+            @if(canDelete)
+            {
+                <button (click)="removeFriend()">Borrar amigo</button>
+            }
+            @if(canAdd)
+            {
+                <button (click)="addFriend()">Enviar solicitud</button>
+            }
+            @if(canAccept)
+            {
+                <button (click)="acceptFriendship()">Aceptar solicitud</button>
+            }
+        </div>
+        <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+            <li class="position-relative">
+                <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold"
+                    href="javascript:void(0)">
+                    <i class="ti ti-brand-facebook"></i>
+                </a>
+            </li>
+            <li class="position-relative">
+                <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold "
+                    href="javascript:void(0)">
+                    <i class="ti ti-brand-instagram"></i>
+                </a>
+            </li>
+            <li class="position-relative">
+                <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold "
+                    href="javascript:void(0)">
+                    <i class="ti ti-brand-github"></i>
+                </a>
+            </li>
+            <li class="position-relative">
+                <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold "
+                    href="javascript:void(0)">
+                    <i class="ti ti-brand-twitter"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
