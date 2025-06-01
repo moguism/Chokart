@@ -12,7 +12,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { PasswordValidatorService } from '../../services/password-validator.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { SweetalertService } from '../../services/sweetalert.service';
 
 @Component({
@@ -51,7 +51,8 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private passwordValidator: PasswordValidatorService,
-    private sweetAlertService: SweetalertService
+    private sweetAlertService: SweetalertService,
+    private translocoService: TranslocoService
   ) {
     this.registerForm = this.formBuilder.group(
       {
@@ -100,11 +101,11 @@ export class LoginComponent {
         localStorage.setItem('jwtToken', this.jwt);
       }
 
-      this.sweetAlertService.showAlert('Éxito', 'Inicio de sesión exitoso', 'success');
+      this.sweetAlertService.showAlert(this.translocoService.translate("success"), this.translocoService.translate("login-success"), 'success');
 
       this.router.navigateByUrl('');
     } else {
-      this.sweetAlertService.showAlert('Error', 'Datos incorrectos', 'error');
+      this.sweetAlertService.showAlert('Error', this.translocoService.translate("login-error"), 'error');
       this.pressedEnter = false;
     }
   }

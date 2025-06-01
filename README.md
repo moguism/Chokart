@@ -125,4 +125,4 @@
     Martes --> María mejora la IA.
     Miércoles --> María añade los iconos de los objetos y arregla el selector de color de coche.
     Jueves --> María mete modelo 3D del proyectil y lo alinea con su dirección de disparo.
-    Domingo --> Mauricio hace la lógica de la vista de admin, el perfil y pone más estilos a la web.
+    Domingo --> Mauricio hace la lógica faltante de la web y termina los estilos y las traducciones.

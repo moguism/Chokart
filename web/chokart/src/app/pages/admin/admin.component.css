@@ -1,97 +1,53 @@
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
 
-.panel-top{
-    font-size: 3rem;
-    text-align: center;
-}
-
-.container{
-    display: grid;
-    justify-content: center;
-    font-size: 2rem;
-}
-
-table{
-    border-spacing: 1.5rem;
-    background-color: #302244;
-    border: 5px solid transparent;
-    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
-    border-image-slice: 1;
-    margin: 20px auto;
-}
-
-.avatar{
-    width: 50px;
-    height: 50px;
-    border: 2px solid white;
-    border-radius: 5px;
-}
-
-select{
-    font-size: 1.5rem;
-    height: 40px;
-}
-
-.form-button{
-    font-size: 1.5rem;
-    box-shadow: 4px 4px 0 white;
-    width: 150px;
-}
-
-.center-button{
+.card {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
 }
 
-.table-list{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 auto;
-    width: 100%;
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
 }
 
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
 
-@media screen and (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
 
-    thead {
-        display: none;
-    }
-
-    tr {
-        border: 2px solid white;
-        margin-bottom: 15px;
-        padding: 10px;
-        background-color: #302244;
-    }
-
-    td {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        border-bottom: 1px solid white;
-    }
-
-    td:last-child {
-        border-bottom: none;
-    }
-
-    td::before {
-        margin-right: 25px;
-        content: attr(data-label);
-        font-weight: bold;
-        color: #b8fd33;
-    }
-
-    .form-button{
-        width: 100px;
-        font-size: 1.1rem;
-    }
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
 }
