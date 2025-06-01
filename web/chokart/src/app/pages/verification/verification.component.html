@@ -1,16 +1,20 @@
+<div class="main">
 <app-navbar></app-navbar>
-@if(!loading)
-{
-    @if(couldVerify)
+
+    @if(!loading)
     {
-        <p>Mail verificado correctamente :D</p>
+        @if(couldVerify)
+        {
+            <h1>Mail verificado correctamente :D</h1>
+        }
+        @else 
+        {
+            <h1>No se pudo verificar el mail</h1>
+        }
     }
     @else 
     {
-        <p>No se puedo verificar el mail</p>
+        <h1>Cargando...</h1>
     }
-}
-@else 
-{
-    <p>Cargando...</p>
-}
+
+</div>

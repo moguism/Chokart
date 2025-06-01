@@ -1,53 +1,61 @@
-<app-navbar></app-navbar>
-<br>
-<div class="panel-top">
-    - ADMINISTRACIÓN -
-</div>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<div class="main">
+    <app-navbar></app-navbar>
 
-<hr>
-
-<div class="container">
-    <h3 style="text-align: center;">Lista de usuarios</h3>
-
-    <div class="table-list">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Estado</th>
-                    <th>Rol</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (user of users; track $index) {
-                <tr>
-                    <td data-label="ID">{{user.id}}</td>
-                    <td data-label="Nombre">{{user.nickname}}</td>
-                    <td data-label="Email">{{user.email}}</td>
-                    <td data-label="Estado">
-                        @if (user.banned) {
-                        Baneado
-                        } @else {
-                        No baneado
-                        }
-                    </td>
-                    <td data-label="Rol">
-                        <select name="Rol" [id]="user.id" [(ngModel)]="user.role">
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                        </select>
-                    </td>
-                    <td data-label="Acción">
-                        <div class="center-button">
-                            <button class="form-button" (click)="modifyUserRole(user.id, user.role)">Actualizar</button>
-                            <button class="form-button" (click)="banUser(user.id)">Cambiar estado</button>
-                        </div>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-0 white-text" style="font-size: xx-large !important">Usuarios</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table no-wrap user-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border-0 text-uppercase font-medium pl-4">ID</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Nombre</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Estado</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Rol</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody style="color: transparent !important; background-color: transparent !important">
+                                @for(user of users; track $index)
+                                {
+                                    <tr>
+                                        <td class="pl-4 white-text">{{ user.id }}</td>
+                                        <td>
+                                            <h5 class="font-medium mb-0 white-text" style="font-size: x-large;">{{ user.nickname }}</h5>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted white-text">{{ user.email }}</span><br>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted white-text">{{ user.banned ? 'Baneado' : "No baneado" }}</span><br>
+                                        </td>
+                                        <td>
+                                            <select class="form-control category-select" [id]="user.id" [(ngModel)]="user.role">
+                                                <option value="Admin">Admin</option>
+                                                <option value="User">User</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" (click)="banUser(user.id)"
+                                                class="btn btn-outline-info btn-circle btn-lg btn-circle"><i
+                                                    class="fa fa-key"></i> </button>
+                                            <button type="button" (click)="modifyUserRole(user.id, user.role)"
+                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
+                                                    class="fa fa-edit"></i> </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>

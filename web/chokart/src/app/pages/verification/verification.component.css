@@ -1,0 +1,11 @@
+h1
+{
+    color: white;
+    text-align: center;
+}
+
+.main {
+  background-image: url(/bg-profile.jpg);
+  background-size: cover;
+  min-height: 100vh;
+}
