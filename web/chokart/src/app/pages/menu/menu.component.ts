@@ -11,11 +11,12 @@ import { Friend } from '../../models/friend';
 import { CustomRouterService } from '../../services/custom-router.service';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FriendCardComponent } from '../../components/friend-card/friend-card.component';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [FormsModule, NavbarComponent, FriendCardComponent],
+  imports: [FormsModule, NavbarComponent, FriendCardComponent, TranslocoModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })

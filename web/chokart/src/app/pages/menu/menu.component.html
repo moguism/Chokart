@@ -2,7 +2,7 @@
 
 @if(user != null)
 {
-<div class="main">
+<div class="main" *transloco="let t">
     <app-navbar></app-navbar>
     <div class="container">
         <div>
@@ -15,7 +15,7 @@
                             id="pills-profile-tab" data-bs-toggle="pill" type="button" role="tab" aria-selected="true"
                             (click)="menuSelector='friendRequest'">
                             <i class="fa fa-user me-2 fs-6"></i>
-                            <span class="d-none d-md-block">Solicitudes</span>
+                            <span class="d-none d-md-block">{{t("friend-requests")}}</span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -24,7 +24,7 @@
                             id="pills-followers-tab" data-bs-toggle="pill" type="button" role="tab" tabindex="-1"
                             (click)="menuSelector='searchUsers'">
                             <i class="fa fa-heart me-2 fs-6"></i>
-                            <span class="d-none d-md-block">Buscar amigos</span>
+                            <span class="d-none d-md-block">{{t("search-friends")}}</span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -33,7 +33,7 @@
                             id="pills-friends-tab" data-bs-toggle="pill" type="button" role="tab" aria-selected="false"
                             tabindex="-1" (click)="menuSelector='myFriends'">
                             <i class="fa fa-users me-2 fs-6"></i>
-                            <span class="d-none d-md-block">Amigos</span>
+                            <span class="d-none d-md-block">{{t("friends")}}</span>
                         </button>
                     </li>
                 </ul>
@@ -50,7 +50,7 @@
                     {
                         <form class="position-relative" (submit)="searchFriend(queryfriend)">
                             <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh"
-                                placeholder="Buscar amigos" required="" [(ngModel)]="queryfriend"
+                                [placeholder]="t('search-friends')" required="" [(ngModel)]="queryfriend"
                                 [ngModelOptions]="{standalone: true}">
                             <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
                         </form>
@@ -58,7 +58,7 @@
                     @else {
                         <form class="position-relative" (submit)="getSearchedUsers(queryuser)">
                             <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh"
-                                placeholder="Buscar usuarios" required="" [(ngModel)]="queryuser"
+                                [placeholder]="t('search-users')" required="" [(ngModel)]="queryuser"
                                 [ngModelOptions]="{standalone: true}">
                             <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
                         </form>
@@ -70,12 +70,12 @@
                     @switch (menuSelector) {
                         @case ('myFriends') {
                             @if(acceptedFriends.length < 1) { 
-                                <p class="menu-text">No tienes amigos :/</p>
+                                <p class="menu-text">{{t("no-friends")}}</p>
                             }
                             @else if(searchedFriends)
                             {
                                 @if (searchedFriends.length<1) { 
-                                    <p class="menu-text">Ninguno se llama asi :/</p>
+                                    <p class="menu-text">{{t("no-name")}}</p>
                                 }
                                 @else {
                                     @for (friend of acceptedFriends; track $index) {
@@ -89,7 +89,7 @@
                             @if(searchedUsers)
                             {
                                 @if (searchedUsers.length<1) { 
-                                    <p class="menu-text"> No se encontraron usuarios</p> 
+                                    <p class="menu-text">{{t("no-name")}}</p> 
                                 }
                                 @else {
                                     @for (searchedUser of searchedUsers; track $index)
@@ -100,14 +100,14 @@
                                 }
                             }
                             @else {
-                                <p class="menu-text">Busca a algún usuario</p>
+                                <p class="menu-text">{{t("search-users")}}</p>
                             }
                         }
                         @case ('friendRequest') {
                             <div style="margin-top: 20px;">
                                 @if(pendingFriends.length < 1)
                                 {
-                                    <p class="menu-text">No tienes solicitudes de amistad :/</p>
+                                    <p class="menu-text">{{t("no-requests")}}</p>
                                 }
                                 @else {
                                     @for(friend of pendingFriends; track $index)

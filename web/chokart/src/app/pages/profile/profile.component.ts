@@ -7,7 +7,7 @@ import { SteamService } from '../../services/steam.service';
 import { SteamProfile } from '../../models/steam-profile';
 import { environment } from '../../../environments/environment';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordValidatorService } from '../../services/password-validator.service';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
     private formBuild: FormBuilder,
     private passwordValidator: PasswordValidatorService,
     public customRouter: CustomRouterService,
-    private sweetAlertService: SweetalertService
+    private sweetAlertService: SweetalertService,
+    private translocoService: TranslocoService
   ) {
     this.userForm = this.formBuild.group({
       nickname: ['', Validators.required],
@@ -145,7 +146,7 @@ export class ProfileComponent implements OnInit {
     await this.userService.updateUser(formData, this.user.id)
     if(shouldReload)
     {
-      this.sweetAlertService.showAlert('Info', "Cerrando sesión", 'info')
+      this.sweetAlertService.showAlert('Info', this.translocoService.translate("closing-session"), 'info')
       this.logOut() // Recargo siempre
     }
 

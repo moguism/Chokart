@@ -1,13 +1,14 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FriendshipService } from '../../services/friendship.service';
 import { SweetalertService } from '../../services/sweetalert.service';
 import { Friend } from '../../models/friend';
 import { User } from '../../models/user';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-friend-card',
   standalone: true,
-  imports: [],
+  imports: [TranslocoModule],
   templateUrl: './friend-card.component.html',
   styleUrl: './friend-card.component.css'
 })
@@ -20,18 +21,18 @@ export class FriendCardComponent {
   @Input() user: User
   @Input() friend: Friend
 
-  constructor(private friendshipService: FriendshipService, private sweetAlertService: SweetalertService) { }
+  constructor(private friendshipService: FriendshipService, private sweetAlertService: SweetalertService, private translocoService: TranslocoService) { }
 
   async removeFriend() {
     // En el servidor se llamaría a un método para borrar la amistad, ( wesoque ->) el cual llamaría al socket del otro usuario para notificarle
     // Para recibir la notificación ya se encarga "processMesage", y de actualizar la lista
 
     const nickname = this.friend.receiverUser?.nickname || this.friend.senderUser?.nickname;
-    const confirmed = window.confirm(`¿Seguro que quieres dejar de ser amigo de ${nickname}?`);
+    const confirmed = window.confirm(`${this.translocoService.translate("remove-friend-sure")} ${nickname}?`);
 
     if (confirmed) {
       await this.friendshipService.removeFriendById(this.friend.id)
-      this.sweetAlertService.showAlert('Info', `Has dejado de ser amigo de ${nickname}.`, 'info');
+      this.sweetAlertService.showAlert('Info', `${this.translocoService.translate("friend-removed")} ${nickname}.`, 'info');
     }
   }
 

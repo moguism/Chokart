@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *transloco="let t">
     <app-navbar></app-navbar>
 @if(user)
 {
@@ -19,7 +19,7 @@
                                             <img height="50px"
                                                 src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
                                                 alt="logo Steam" style="align-self: end" />
-                                            <span>Desvincular cuenta de Steam</span>
+                                            <span>{{t("remove-steam")}}</span>
                                         </div>
                                     }
                                     @else {
@@ -28,11 +28,11 @@
                                                 <img width="50px"
                                                     src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
                                                     alt="logo Steam" style="align-self: end" />
-                                                <span>Vincular con Steam</span>
+                                                <span>{{t("add-steam")}}</span>
                                             </a>
                                         </div>
                                     }
-                                    <a class="btn btn-outline-primary" (click)="logOut()">Cerrar sesión</a>
+                                    <a class="btn btn-outline-primary" (click)="logOut()">{{t("logout")}}</a>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <form [formGroup]="userForm">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Usuario</h6>
+                                        <h6 class="mb-0">Nickname</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" class="form-control" formControlName="nickname" [readOnly]="!isEditing" [value]="user.nickname">
@@ -62,12 +62,12 @@
                             <form [formGroup]="passwordForm">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Contraseña</h6>
+                                        <h6 class="mb-0">{{t("password")}}</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="password" class="form-control" formControlName="newPassword" required [readOnly]="!isEditing" [placeholder]="isEditing ? 'Deja en blanco para no modificarla' : '******'">
+                                        <input type="password" class="form-control" formControlName="newPassword" required [readOnly]="!isEditing" [placeholder]="isEditing ? t('dont-edit-password') : '******'">
                                         <div class="error" *ngIf="passwordForm.get('newPassword')?.hasError('minlength') && passwordForm.get('newPassword')?.touched">
-                                            Minimo 6 caracteres
+                                            {{t("password-minimum")}}
                                         </div>
                                     </div>
                                 </div>
@@ -75,12 +75,12 @@
                                 {
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Repetir contraseña</h6>
+                                            <h6 class="mb-0">{{t("repeat-password")}}</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="password" class="form-control" formControlName="confirmPassword" required>
                                             <div class="error" *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched">
-                                                Las contraseñas no coinciden
+                                                {{t("password-do-not-match")}}
                                             </div>
                                         </div>
                                     </div>
@@ -91,10 +91,10 @@
                                 <div class="col-sm-9 text-secondary">
                                     @if(isEditing)
                                     {
-                                    <input type="button" (click)="updateUser()"  class="btn btn-primary px-4" value="Guardar cambios">
+                                    <input type="button" (click)="updateUser()"  class="btn btn-primary px-4" [value]="t('save-changes')">
                                     }
                                     @else {
-                                    <input type="button" (click)="edit()" class="btn btn-primary px-4" value="Editar">
+                                    <input type="button" (click)="edit()" class="btn btn-primary px-4" [value]="t('edit')">
                                     }
                                 </div>
                             </div>
@@ -106,6 +106,6 @@
     </div>
 }
 @else {
-    <p style="color: white">Cargando...</p>
+    <p style="color: white">{{t("loading")}}</p>
 }
 </div>

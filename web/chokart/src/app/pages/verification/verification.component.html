@@ -1,20 +1,20 @@
-<div class="main">
+<div class="main" *transloco="let t">
 <app-navbar></app-navbar>
 
     @if(!loading)
     {
         @if(couldVerify)
         {
-            <h1>Mail verificado correctamente :D</h1>
+            <h1>{{t("mail-verified")}}</h1>
         }
         @else 
         {
-            <h1>No se pudo verificar el mail</h1>
+            <h1>{{t("mail-not-verified")}}</h1>
         }
     }
     @else 
     {
-        <h1>Cargando...</h1>
+        <h1>{{t("loading")}}</h1>
     }
 
 </div>

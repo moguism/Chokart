@@ -1,19 +1,19 @@
-<div class="col-sm-6 col-lg-4">
+<div class="col-sm-6 col-lg-4" *transloco="let t">
     <div class="card hover-img">
         <div class="card-body p-4 text-center border-bottom">
             <h5 class="fw-semibold mb-0" style="font-size: xx-large !important">{{
                 friendName }}</h5>
             @if(canDelete)
             {
-                <button (click)="removeFriend()">Borrar amigo</button>
+                <button (click)="removeFriend()">{{t("remove-friend")}}</button>
             }
             @if(canAdd)
             {
-                <button (click)="addFriend()">Enviar solicitud</button>
+                <button (click)="addFriend()">{{t("send-friendship")}}</button>
             }
             @if(canAccept)
             {
-                <button (click)="acceptFriendship()">Aceptar solicitud</button>
+                <button (click)="acceptFriendship()">{{t("accept-friend")}}</button>
             }
         </div>
         <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">

@@ -1,5 +1,5 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<div class="main">
+<div class="main" *transloco="let t">
     <app-navbar></app-navbar>
 
     <div class="container">
@@ -14,11 +14,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="border-0 text-uppercase font-medium pl-4">ID</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Nombre</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Nickname</th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Estado</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Rol</th>
-                                    <th scope="col" class="border-0 text-uppercase font-medium">Acción</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{{t("state")}}</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{{t("role")}}</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">{{t("action")}}</th>
                                 </tr>
                             </thead>
                             <tbody style="color: transparent !important; background-color: transparent !important">
@@ -33,7 +33,7 @@
                                             <span class="text-muted white-text">{{ user.email }}</span><br>
                                         </td>
                                         <td>
-                                            <span class="text-muted white-text">{{ user.banned ? 'Baneado' : "No baneado" }}</span><br>
+                                            <span class="text-muted white-text">{{ user.banned ? t("banned") : t("not-banned") }}</span><br>
                                         </td>
                                         <td>
                                             <select class="form-control category-select" [id]="user.id" [(ngModel)]="user.role">
