@@ -43,12 +43,14 @@ public class Invisibility : BasicObject
     }
 
     [ClientRpc]
-    private void InformClientAboutChangeClientRpc(ulong kartId, bool active)
+    private void InformClientAboutChangeClientRpc(ulong kartId, bool shouldBeVisibleToOthers)
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         if (kart != null)
         {
-            DisableOnEnableRenders(kart, active);
+            bool isLocalPlayer = kart.IsOwner;
+            bool shouldRender = isLocalPlayer || shouldBeVisibleToOthers;
+            DisableOnEnableRenders(kart, shouldRender);
         }
     }
 

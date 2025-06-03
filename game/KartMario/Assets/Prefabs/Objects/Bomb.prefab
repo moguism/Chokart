@@ -103,15 +103,15 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   owner: 0
   networkObject: {fileID: 5892217538899386661}
-  radiusTimer: 20
-  radiusIncrease: 0.1
-  bombCollider: {fileID: 4354055170961977181}
-  exploded: 0
   damageOutput: 100
   targetTime: 10
   direction: {x: 0, y: 0, z: 0}
   parent: {fileID: 3262044357405134002}
   speed: 1
+  radiusTimer: 20
+  radiusIncrease: 0.1
+  bombCollider: {fileID: 4354055170961977181}
+  exploded: 0
 --- !u!135 &4354055170961977181
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class GreenShell : BasicObject
     {
         if (direction != null)
         {
-            Debug.DrawRay(parent.transform.position, direction.normalized * 2, Color.green);
+             Debug.DrawRay(parent.transform.position, direction.normalized * 2, Color.green);
 
             parent.transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
         }
