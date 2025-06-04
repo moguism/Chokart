@@ -3,7 +3,12 @@
   overflow: visible;
 }
 
+.galleria {
+  overflow: visible; /* <--- añade esto si no está */
+}
+
 .carrusel {
+  overflow: visible;
   background-image: url("/home/carrusel-bg.webp");
   width: 626px;
   height: 342px;
@@ -100,4 +105,39 @@
   font-size: 1.5rem;
   padding: 3px 12px;
   margin: 0.4rem 0;
+}
+
+@media (max-width: 768px) {
+  .carrusel {
+    width: 350px;
+    background-size: cover;
+    height: 100vh;
+    background-image: url("/carrusel-bg-mobile.png");
+  }
+
+  .character-card {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    height: auto;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .character-img {
+    height: 35vh;
+    top: -28px;
+    margin-bottom: 1rem;
+  }
+
+  .info p {
+    margin: auto;
+  }
+
+  .info h2 {
+    text-align: center;
+  }
+
+  :host ::ng-deep .p-galleria-thumbnails-content {
+    width: 100%;
+  }
 }

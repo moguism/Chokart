@@ -1,8 +1,74 @@
 footer {
   clip-path: polygon(55% 10%, 65% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
-  height: 30rem;
+  height: 20rem;
   width: 100%;
   background-position: top;
   background-image: url(/racing-pattern.webp);
   background-size: cover;
+  clip-path: polygon(38% 10%, 55% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
+  z-index: 200;
+}
+
+.footer-container {
+  background-color: #f4f4f4;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: #2230af;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.ratings img {
+  height: 40px;
+  margin: 0 5px;
+}
+
+.language-selector {
+  margin-top: 10px;
+}
+
+.language-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ratings {
+    margin: 10px 0;
+  }
 }
