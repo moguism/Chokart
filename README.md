@@ -128,4 +128,4 @@
     Domingo --> Mauricio hace la lógica faltante de la web y termina los estilos y las traducciones.
 ### Décima semana (02/06 - 08/06)
     Martes --> María añade modelo 3D de bomba e invisibilidad y arregla errores.
-    Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs. 
+    Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs. María aregla la IA y hace mejoras en la pista, y hace responsivo el inicio de la web.
