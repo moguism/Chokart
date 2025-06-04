@@ -68,7 +68,7 @@ h2 {
 .home-content {
   z-index: 5;
   position: relative;
-  top: -55px;
+  margin-top: -3rem;
   width: 100%;
   background-image: url("/home/background-blue.jpg");
   background-color: #043da8;
