@@ -36,10 +36,12 @@ a {
 }
 
 .card-button {
-  background-image: linear-gradient(to right,
-      rgb(209, 209, 209) 0%,
-      rgb(255, 255, 255) 40%,
-      rgb(255, 255, 255) 100%);
+  background-image: linear-gradient(
+    to right,
+    rgb(209, 209, 209) 0%,
+    rgb(255, 255, 255) 40%,
+    rgb(255, 255, 255) 100%
+  );
   padding: 0.5rem;
   border-radius: 3px;
   color: black;
@@ -62,4 +64,12 @@ a {
   background-image: url(/bg-profile.jpg);
   background-size: cover;
   min-height: 100vh;
+}
+
+h6 {
+  font-size: 2rem;
+}
+
+.card {
+  margin-top: 2rem;
 }

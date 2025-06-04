@@ -95,6 +95,10 @@
     display: block;
   }
 
+  #download {
+    display: none;
+  }
+
   .nav-links {
     display: none;
     position: absolute;
@@ -251,4 +255,10 @@ Usage: codyhouse.co/license
 
 .rad:checked + .opt {
   background-color: #ffeb3b;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    justify-content: space-around;
+  }
 }
