@@ -127,4 +127,5 @@
     Jueves --> María mete modelo 3D del proyectil y lo alinea con su dirección de disparo.
     Domingo --> Mauricio hace la lógica faltante de la web y termina los estilos y las traducciones.
 ### Décima semana (02/06 - 08/06)
-    Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs.
+    Martes --> María añade modelo 3D de bomba e invisibilidad y arregla errores.
+    Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs. 
