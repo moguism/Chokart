@@ -64,7 +64,7 @@ public class KartController : BasicPlayer
     public int position = 0;
     public bool passedThroughFinishLine = false;
     public List<int> triggers = new List<int>();
-    public int lastTriggerIndex;
+    public int lastTriggerIndex = -1;
     public float distanceToNextTrigger;
     public TMP_Text positionText;
     public Vector3 currentPosition;
@@ -646,7 +646,7 @@ public class KartController : BasicPlayer
             if (driftMode > 0)
             {
                 //int driftmode = !isPlatform ? driftMode : 1;
-                DOVirtual.Float(currentSpeed * 2, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
+                DOVirtual.Float(currentSpeed * 3, currentSpeed, 1.5f * driftMode, Speed); // Para aumentar la velocidad
                 DOVirtual.Float(0, 1, .5f, ChromaticAmount).OnComplete(() => DOVirtual.Float(1, 0, .5f, ChromaticAmount)); // Dios como me encanta el bloom xD
             }
 
