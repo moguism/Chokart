@@ -20,12 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewCarSelection.unity
     guid: ba1d0153ed427aa4db23951a78fd32ee
-  - enabled: 1
-    path: Assets/Scenes/NostalgicTrack.unity
-    guid: a193b603430c12246b7590350165b51c
-  - enabled: 1
-    path: Assets/Scenes/NewTrack.unity
-    guid: 9aad6b7f422aaba43b3c4de100ca8d82
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5a57bf569ddd6774d8ee4ac276b18d32,
       type: 2}

@@ -139,7 +139,13 @@ public class Speedometer : MonoBehaviour
         else if (audioSource.isPlaying)
         {
             audioSource.Stop();
-            OptionsSettings.ChangeMotorSpeed(0, 0);
+
+            try
+            {
+                OptionsSettings.ChangeMotorSpeed(0, 0);
+            }
+            catch
+            { }
         }
 
         oldPosition = kart.currentPosition;
