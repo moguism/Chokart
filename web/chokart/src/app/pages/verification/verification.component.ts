@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { TranslocoModule } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-verification',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent, TranslocoModule],
   templateUrl: './verification.component.html',
   styleUrl: './verification.component.css'
 })

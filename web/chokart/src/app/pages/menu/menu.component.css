@@ -1,184 +1,134 @@
-* {
-    font-size: 1.5rem;
+body {
+    padding-top: 20px;
 }
 
-/*avatar y nickname*/
-.cabecera {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 1rem 6rem;
-    
+.img-fluid {
+    max-width: 100%;
+    height: auto;
 }
 
-.cabecera img {
-    border: 2px solid white;
-    border-radius: 5px;
-    width: 120px;
-    height: 120px;
+.card {
+    margin-bottom: 30px;
 }
 
-.cabecera span{
-    flex: 1;
-    font-size: 2.5rem;
+.overflow-hidden {
+    overflow: hidden !important;
 }
 
-.container {
-    margin: 1rem 6rem;
-    display: flex;
+.main {
+    background-image: url(/bg-profile.jpg);
+    background-size: cover;
+    min-height: 100vh;
 }
 
-/*menu lateral*/
-aside {
-    background-color: rgb(133, 133, 133);
-    /*background-image: linear-gradient(rgb(124, 29, 0), rgb(126, 126, 0), rgb(0, 58, 145));*/
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-}
-
-aside div {
-    align-items: center;
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-}
-
-aside div:hover {
-    background-color: rgb(102, 102, 102);
-    cursor: pointer;
-}
-
-aside img {
-    width: 30px;
-}
-
-/*contenido*/
-
-.seccionAmigos {
-    margin: 0rem 1rem;
-    width: 100%;
-}
-
-/*amigos*/
-
-.busquedaUsuarios form {
-    display: flex;
-    gap: 10px;
-}
-
-.listaUsuarios{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
-.tarjetaUsuario {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 7.5px;
-    background-color: rgb(36, 39, 82);
-    width: 300px;
-}
-
-
-.tarjetaConectado {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 7.5px;
-    background-color: rgb(36, 82, 59);
-    width: 300px;
-}
-.mostrarNoti{
-    position: relative;
-}
-.notificacionNum{
-    background-color: rgb(201, 73, 73);
+.menu-text
+{
     color: white;
-    text-align: center;
-    border-radius: 50%;
-    position: absolute;
-    height: 1.2rem;
-    width: 1.2rem;
-    line-height: 1.2rem;
-    left: 1.8rem;
-    top: 0.4rem;
 }
 
-.contenedorAvatar:hover{
-    cursor: pointer;
+.p-0 {
+    padding: 0 !important;
 }
 
-.tarjetaJugando {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 7.5px;
-    background-color: rgb(82, 71, 36);
-    width: 300px;
+.mt-n5 {
+    margin-top: -3rem !important;
 }
 
-.tarjetaBatalla {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 7.5px;
-    background-color: rgb(130, 28, 177);
-    width: 300px;
+.linear-gradient {
+    background-image: linear-gradient(#50b2fc, #f44c66);
 }
 
-
-.contenedorAvatar{
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.rounded-circle {
+    border-radius: 50% !important;
 }
 
-.avatar{
-    border: 2px solid white;
-    border-radius: 5px;
-    height: 60px;
-    width: 60px;
-    vertical-align: middle;
+.align-items-center {
+    align-items: center !important;
 }
 
-.nickname{
-    flex: 1;
-    font-size: 2rem;
-    text-align: center;
-    cursor: pointer;
+.justify-content-center {
+    justify-content: center !important;
 }
 
-.contenedorIcono{
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.d-flex {
+    display: flex !important;
 }
 
-.icono{
-    width: 32px;
-    cursor: pointer;
-    vertical-align: middle;
-
+.rounded-2 {
+    border-radius: 7px !important;
 }
 
-::ng-deep .tooltip{
-    background-color: #686868;
-    border-radius: 5px;
-    text-align: center;
+.bg-light-info {
+    --bs-bg-opacity: 1;
+    background-color: rgba(235, 243, 254, 1) !important;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}
+
+.overflow-hidden {
+    overflow: hidden !important;
+}
+
+.border {
+    border: 1px solid #ebf1f6 !important;
+}
+
+.fs-6 {
+    font-size: 1.25rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.user-profile-tab .nav-item .nav-link.active {
+    color: #5d87ff;
+    border-bottom: 2px solid #5d87ff;
+}
+
+.mb-9 {
+    margin-bottom: 20px !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.fs-4 {
+    font-size: 1rem !important;
+}
+
+.card,
+.bg-light {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.fs-2 {
+    font-size: .75rem !important;
+}
+
+.rounded-4 {
+    border-radius: 4px !important;
+}
+
+.ms-7 {
+    margin-left: 30px !important;
 }

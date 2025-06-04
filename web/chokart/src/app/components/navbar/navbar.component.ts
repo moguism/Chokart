@@ -3,12 +3,10 @@ import { FormsModule } from '@angular/forms';
 
 import {
   RouterLink,
-  RouterLinkActive,
   RouterLinkWithHref,
   RouterModule,
 } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { WebsocketService } from '../../services/websocket.service';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TranslatorService } from '../../services/translator.service';
@@ -90,5 +88,10 @@ export class NavbarComponent implements OnInit {
     this.translocoService.setActiveLang(language.code);
 
     this.langSelector.nativeElement.removeAttribute('open');
+  }
+
+  isAdmin()
+  {
+    return this.authService.isAdmin()
   }
 }

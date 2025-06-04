@@ -32,6 +32,11 @@
 - **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
 - **Barra de vida Unity:** https://youtu.be/EW4kSSiPgJs
 
+
+# COPYRIGHT
+- Modelo 3D bala de jinx (proyectil): https://sketchfab.com/3d-models/jinxs-bullet-5e6a98a547ba4bccb63a687a6d56d4df
+
+
 # INSTRUCCIONES PARA EL DESARROLLO
 **MUY IMPORTANTE:** Poner todos los vídeos antes de abrir Unity, tal y como estaban, y luego borrarlos al cerrar cuando se vaya a subir algo al repo
 - Para los colliders, ponerlos como un GameObject hijo, y que luego el padre tenga el tag y el script con las propiedades (seguramente esto se pueda hacer mejor xD)
@@ -114,3 +119,12 @@
     Domingo --> Al igual que los días anteriores, Mauricio soluciona bugs como el que los bots no spawneen volando.
 ### Octava semana (19/05 - 25/05)
     Lunes --> Mauricio hace el informe de PowerBi.
+    Domingo --> María coloca un falso suelo para evitar caidas en la pista y comienza a mejorar interfaz.
+### Novena semana (26/05 - 01/06)
+    Lunes --> María añade modelo 3D del item box y termina de mejorar interfaz.
+    Martes --> María mejora la IA.
+    Miércoles --> María añade los iconos de los objetos y arregla el selector de color de coche.
+    Jueves --> María mete modelo 3D del proyectil y lo alinea con su dirección de disparo.
+    Domingo --> Mauricio hace la lógica faltante de la web y termina los estilos y las traducciones.
+### Décima semana (02/06 - 08/06)
+    Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs.

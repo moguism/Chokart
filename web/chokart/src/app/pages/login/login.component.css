@@ -24,7 +24,7 @@ p {
   font-size: 0.8rem;
 }
 
-.container {
+.container-login {
   background-image: url("/login-bg.png");
   background-size: cover;
   min-height: 100vh;
@@ -161,4 +161,37 @@ label {
 input.ng-invalid.ng-touched {
   border: 2px solid red;
   outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .content {
+    padding: 20px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .form-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .checkbox-wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .change {
+    text-align: center;
+    display: block;
+  }
 }

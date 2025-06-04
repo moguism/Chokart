@@ -1,55 +1,111 @@
-<section *transloco="let t">
-  <app-navbar></app-navbar>
-
-  @if(user) {
-
-  <div class="user-box">
-    <!--steam-->
-    @if(steamProfile != null) {
-
-    <img class="avatar" [src]="steamProfile.avatarFull" />
-    <!-- <p>Id: {{ user.steamId }}</p>-->
-    <p>{{ steamProfile.personaName }}</p>
-
-    <div class="card-button" (click)="removeSteamAccount()">
-      <img
-        height="50px"
-        src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
-        alt="logo Steam"
-        style="align-self: end"
-      />
-      <span>Desvincular cuenta de Steam</span>
+<div class="main" *transloco="let t">
+    <app-navbar></app-navbar>
+@if(user)
+{
+    <div class="container">
+        <div class="main-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img [src]="steamProfile != null ? steamProfile.avatarFull : 'user-icon.png'" alt="Admin"
+                                    class="rounded-circle p-1 bg-primary" width="110">
+                                <div class="mt-3">
+                                    <h4>{{ steamProfile != null ? steamProfile.personaName : user.nickname }}</h4>
+                                    @if(steamProfile != null)
+                                    {
+                                        <div class="card-button" (click)="removeSteamAccount()">
+                                            <img height="50px"
+                                                src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                                                alt="logo Steam" style="align-self: end" />
+                                            <span>{{t("remove-steam")}}</span>
+                                        </div>
+                                    }
+                                    @else {
+                                        <div class="card-button">
+                                            <a [href]="STEAM_URL">
+                                                <img width="50px"
+                                                    src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                                                    alt="logo Steam" style="align-self: end" />
+                                                <span>{{t("add-steam")}}</span>
+                                            </a>
+                                        </div>
+                                    }
+                                    <a class="btn btn-outline-primary" (click)="logOut()">{{t("logout")}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form [formGroup]="userForm">
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nickname</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" formControlName="nickname" [readOnly]="!isEditing" [value]="user.nickname">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="email" class="form-control" formControlName="email" [readOnly]="!isEditing" [value]="user.email">
+                                    </div>
+                                </div>
+                            </form>
+                            <form [formGroup]="passwordForm">
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">{{t("password")}}</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="password" class="form-control" formControlName="newPassword" required [readOnly]="!isEditing" [placeholder]="isEditing ? t('dont-edit-password') : '******'">
+                                        <div class="error" *ngIf="passwordForm.get('newPassword')?.hasError('minlength') && passwordForm.get('newPassword')?.touched">
+                                            {{t("password-minimum")}}
+                                        </div>
+                                    </div>
+                                </div>
+                                @if(isEditing)
+                                {
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">{{t("repeat-password")}}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="password" class="form-control" formControlName="confirmPassword" required>
+                                            <div class="error" *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched">
+                                                {{t("password-do-not-match")}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </form>
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9 text-secondary">
+                                    @if(isEditing)
+                                    {
+                                    <input type="button" (click)="updateUser()"  class="btn btn-primary px-4" [value]="t('save-changes')">
+                                    }
+                                    @else {
+                                    <input type="button" (click)="edit()" class="btn btn-primary px-4" [value]="t('edit')">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    } @else {
-    <!--info chokart-->
-    @if(user.avatarPath != "" && user.avatarPath != null)
-    {
-    <img class="avatar" [src]="user.avatarPath" alt="avatar usuario" />
-    }
-    <p>{{ user.nickname }}</p>
-
-    <div class="card-button">
-      <a [href]="STEAM_URL">
-        <img
-          width="50px"
-          src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
-          alt="logo Steam"
-          style="align-self: end"
-        />
-        <span>Vincular con Steam</span>
-      </a>
-    </div>
-
-    }
-    <!--punto totales y correo-->
-    <p>Puntuación total: {{ user.totalPoints }}</p>
-
-    <!--cerrar sesion-->
-    <p class="logout" (click)="this.logOut()">Cerrar la sesión actual</p>
-  </div>
-  <!--si no hay usuario-->
-  } @else {
-  <p>Cargando...</p>
-  }
-</section>
+}
+@else {
+    <p style="color: white">{{t("loading")}}</p>
+}
+</div>
