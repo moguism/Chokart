@@ -36,22 +36,15 @@ public class MapTrigger : NetworkBehaviour
             bool alreadyAdded = false;
             bool shouldContinue = true;
 
-            if (kart.triggers.Contains(index))
+            if (!kart.triggers.Contains(index))
             {
-                kart.triggers.Remove(index);
-
-                // Recalcula quién es el próximo trigger
-                if (IsOwner || kart.enableAI)
-                {
-                    MapTrigger lastTrigger = finishLine.triggers.TakeWhile(x => x != this).DefaultIfEmpty(finishLine.triggers[^1]).LastOrDefault();
-                    lastTrigger.ChangeIndexAndCalculatePosition(kart);
-                    shouldContinue = false;
-                }
-            }
-            else
-            {
-                alreadyAdded = true;
                 kart.triggers.Add(index);
+            }
+
+            // Siempre actualizar el índice y el destino
+            if (IsOwner || kart.enableAI)
+            {
+                ChangeIndexAndCalculatePosition(kart);
             }
 
             // Si es la línea de meta, la agrego si no lo he hecho ya

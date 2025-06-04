@@ -9,7 +9,7 @@ public class Speedometer : MonoBehaviour
     public TMP_Text speedText;
 
     public float maxKmH = 140f;
-    public float maxSpeed = 140f;
+    public float maxSpeed = 120f;
     public float minRotation = -316.3f;
     public float maxRotation = -45.1f;
     public float smoothSpeed = 5f; // esto lo que hace es que la aguja gire progresivamente y no de golpe
@@ -36,7 +36,7 @@ public class Speedometer : MonoBehaviour
 
     private void Update()
     {
-        //print("velosidad : " + speed);
+        Debug.Log("velosidad : " + speed);
         // cuando va marcha atras
 
         /*if (speed < 0)
@@ -48,7 +48,7 @@ public class Speedometer : MonoBehaviour
 
         if (kart == null || !kart.canMove)
         {
-            speed = 0;
+            speed = 0; 
             shouldReduceAlpha = true;
             OptionsSettings.ChangeMotorSpeed(0, 0);
             audioSource.Stop();
