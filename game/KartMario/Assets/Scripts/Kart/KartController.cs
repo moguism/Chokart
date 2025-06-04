@@ -113,10 +113,6 @@ public class KartController : BasicPlayer
     private float healthTimer;
     private const float healthReduction = 1.0f;
 
-    [Header("Minimap")]
-    [SerializeField]
-    private Canvas canvasMask;
-
     [Header("Animaciones")]
     [SerializeField]
     private Animator animatorLeft;
@@ -315,20 +311,23 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
-        if (horizontalInput == 0)
+        if(animatorLeft != null)
         {
-            animatorLeft.Play("MovingLeftArmToLeg_Inverse");
-            animatorRight.Play("MovingRightArmToLef_Inverse");
-        }
-        else
-        {
-            if(horizontalInput >= 0)
+            if (horizontalInput == 0)
             {
-                animatorLeft.Play("MovingLeftArmToLeg");
+                animatorLeft.Play("MovingLeftArmToLeg_Inverse");
+                animatorRight.Play("MovingRightArmToLef_Inverse");
             }
             else
             {
-                animatorRight.Play("MovingRightArmToLef");
+                if (horizontalInput >= 0)
+                {
+                    animatorLeft.Play("MovingLeftArmToLeg");
+                }
+                else
+                {
+                    animatorRight.Play("MovingRightArmToLef");
+                }
             }
         }
 

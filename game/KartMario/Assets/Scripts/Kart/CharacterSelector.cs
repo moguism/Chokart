@@ -26,11 +26,6 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (!isHud) { spriteImage.transform.rotation = Quaternion.Euler(90, 0, 0); }
-    }
-
     public void SetCharacter(int index, bool destroy)
     {
         try

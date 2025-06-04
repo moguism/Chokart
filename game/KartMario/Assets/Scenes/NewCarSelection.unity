@@ -6404,16 +6404,14 @@ MonoBehaviour:
     clip: get_jinxed.mp4
   - name: Spamton
     clip: spamton.mp4
-  - name: Pyro
-    clip: pyro.mp4
-  - name: Six
-    clip: 
-  - name: Shrek
-    clip: 
-  - name: Pingu
-    clip: 
   - name: Alastor
-    clip: 
+    clip: alastor.mp4
+  - name: Shrek
+    clip: shrek.mp4
+  - name: Pingu
+    clip: pingu.mp4
+  - name: Lefty
+    clip: lefty.mp4
   speedText: {fileID: 2129844028}
   kartBase: {fileID: 450116724}
   videoPlayer: {fileID: 1634069206}

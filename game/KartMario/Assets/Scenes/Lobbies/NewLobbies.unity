@@ -275,6 +275,7 @@ MonoBehaviour:
   code: HOST
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &98029997
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +678,7 @@ MonoBehaviour:
   code: PLAY_WITH_BOTS
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &297806212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,6 +1202,7 @@ MonoBehaviour:
   code: RACE_MODE
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &556770032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,6 +1359,7 @@ MonoBehaviour:
   code: PLAY_WITHOUT_BOTS
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &706240143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,6 +2160,7 @@ MonoBehaviour:
   code: JOIN
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1139618901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2774,7 @@ MonoBehaviour:
   code: SURVIVAL_MODE
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1437249101
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,6 +3150,7 @@ MonoBehaviour:
   code: LOBBY_CODE
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1 &1687612264
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,6 +3980,7 @@ MonoBehaviour:
   code: BACK
   dropdown: {fileID: 0}
   dropdownCodes: []
+  dropdownSelectedText: {fileID: 0}
 --- !u!1001 &351642386607453115
 PrefabInstance:
   m_ObjectHideFlags: 0

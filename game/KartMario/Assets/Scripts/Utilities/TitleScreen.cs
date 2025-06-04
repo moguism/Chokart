@@ -106,13 +106,16 @@ public class TitleScreen : MonoBehaviour
             if (brokenScreen.activeInHierarchy)
             {
                 brokenScreen.SetActive(false);
-                backgroundImage.SetActive(false);
 
                 buttons.SetActive(true);
 
                 backgroundVideo.PlayVideo();
 
                 OptionsSettings.ChangeMotorSpeed(0, 0);
+
+                await UniTask.WaitForEndOfFrame();
+
+                backgroundImage.SetActive(false);
             }
             return;
         }
