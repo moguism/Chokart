@@ -68,9 +68,9 @@ h2 {
 .home-content {
   z-index: 5;
   position: relative;
-  margin-top: -3rem;
+  margin-top: -3.5rem;
   width: 100%;
-  background-image: url("/home/background-blue.jpg");
+  background-image: url("/home/background-blue.png");
   background-color: #043da8;
   background-size: 100%;
   background-position-y: -169px;
@@ -235,6 +235,8 @@ button {
   outline: none;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   cursor: pointer;
+  position: relative;
+  z-index: 5;
 }
 
 #fifth {

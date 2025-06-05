@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CustomRouterService } from '../../services/custom-router.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ButtonModule } from 'primeng/button';
@@ -21,6 +21,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     GalleriaModule,
     CharacterGalleriaComponent,
     KartSwitchComponent,
+    RouterModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

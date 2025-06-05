@@ -1,0 +1,123 @@
+.main {
+  background-image: url("/admin/admin-bg.webp");
+  background-size: cover;
+  min-height: 100vh;
+}
+h1,
+h3 {
+  color: var(--primary-color);
+  font-weight: 200;
+}
+/*
+Iconos diseñados por https://www.flaticon.es/autores/iconsmeet desde https://www.flaticon.es/
+*/
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 5px;
+  margin: 0 2rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin: 1rem 0;
+  letter-spacing: 0.2rem;
+}
+
+h3 {
+  margin: 1rem 0;
+  font-weight: 300;
+}
+
+.list {
+  margin: auto;
+  width: fit-content;
+  color: rgb(0, 0, 0);
+}
+
+.cardUser {
+  min-width: 250px;
+  width: 300px;
+  height: 4rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem;
+  background-color: rgb(255, 255, 255);
+  border: var(--primary-color);
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid rgb(90, 211, 255);
+  clip-path: polygon(100% 0%, 100% 83%, 90% 100%, 0 100%, 0 0);
+  font-family: "Road Rage", sans-serif;
+}
+
+.cardUser .level {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background-color: var(--primary-color-text);
+  color: white;
+  border-radius: 50%;
+  line-height: 30px;
+  font-family: "Road Rage", sans-serif;
+}
+
+.nickname {
+  font-family: "Road Rage", sans-serif;
+  font-size: 1.5rem;
+}
+
+.cardUser .avatar {
+  width: 1.8em;
+  height: 1.8em;
+  border: 2px solid white;
+}
+
+.gold {
+  width: 1.8em;
+  height: 1.8em;
+  border: 3px solid gold;
+  background: linear-gradient(145deg, #ffd700, #f2c600, #e6ac00);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.silver {
+  width: 1.8em;
+  height: 1.8em;
+  border: 3px solid silver;
+  background: linear-gradient(145deg, #dcdcdc, #c0c0c0, #a9a9a9);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.bronze {
+  width: 1.8em;
+  height: 1.8em;
+  border: 3px solid #cd7f32;
+  background: linear-gradient(145deg, #cd7f32, #b87333, #8b4513);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.cardUser .xp {
+  margin-left: auto;
+  font-family: "Road Rage", sans-serif;
+  font-size: 1.3rem;
+}
+
+.cardUser .range {
+  width: 35px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
