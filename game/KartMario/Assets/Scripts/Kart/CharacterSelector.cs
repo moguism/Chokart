@@ -46,10 +46,10 @@ public class CharacterSelector : MonoBehaviour
                     {
                         possibleCharacters[i].SetActive(false);
                     }
-                    else
+                    /*else
                     {
                         Destroy(possibleCharacters[i]);
-                    }
+                    }*/
                 }
 
                 GameObject active = possibleCharacters[index];

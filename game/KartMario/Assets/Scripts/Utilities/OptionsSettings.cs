@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -18,11 +19,19 @@ public class OptionsSettings : MonoBehaviour
     // La idea es que se como el REMATCH, por ejemplo, que tienes la opción de habilitar o deshabilitar el chat de voz en los ajustes
     public static bool shouldRecord = false;
 
+    public static bool showExplosions = true;
+
     private void Start()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         Destroy(resolutionObject);
 #endif
+        if(PlayerPrefs.HasKey("EXPLOSIONS"))
+        {
+            string value = PlayerPrefs.GetString("EXPLOSIONS");
+            showExplosions = bool.Parse(value);
+        }
+
     }
 
     public void ManageVoiceChat()
@@ -47,5 +56,13 @@ public class OptionsSettings : MonoBehaviour
         {
             startGameButton.SetActive(true);
         }
+    }
+
+    public void ChangeExplosions(bool enable)
+    {
+        showExplosions = enable;
+
+        PlayerPrefs.SetString("EXPLOSIONS", showExplosions.ToString());
+        PlayerPrefs.Save();
     }
 }

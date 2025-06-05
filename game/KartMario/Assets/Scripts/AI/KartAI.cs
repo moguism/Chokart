@@ -98,7 +98,7 @@ public class KartAI : NetworkBehaviour
 
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (destination != null)
         {
@@ -113,7 +113,7 @@ public class KartAI : NetworkBehaviour
                 Gizmos.DrawWireCube(transform.position, Vector3.one);
             }
         }
-    }
+    }*/
 
 
 

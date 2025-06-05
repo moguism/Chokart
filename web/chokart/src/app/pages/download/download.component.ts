@@ -23,4 +23,9 @@ export class DownloadComponent {
       console.error('Error durante la descarga', error);
     });
   }
+
+  goToGame()
+  {
+    window.open("https://moguism.itch.io/chokart")
+  }
 }
