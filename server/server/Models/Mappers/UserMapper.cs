@@ -26,10 +26,28 @@ public class UserMapper
         };
     }
 
+    public UserDtoRanking ToDtoRanking(User user)
+    {
+        return new UserDtoRanking
+        {
+            Id = user.Id,
+            Nickname = user.Nickname,
+            AvatarPath = user.AvatarPath,          
+            TotalPoints = user.TotalPoints,
+            SteamId = user.SteamId
+        };
+    }
+
     //Pasar la lista de usuarios a dtos
     public IEnumerable<UserDto> ToDto(IEnumerable<User> users)
     {
         return users.Select(ToDto);
+    }
+
+    //Para el ranking
+    public IEnumerable<UserDtoRanking> ToDtoRanking(IEnumerable<User> users)
+    {
+        return users.Select(ToDtoRanking);
     }
 
 

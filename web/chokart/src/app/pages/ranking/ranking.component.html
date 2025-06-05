@@ -1,0 +1,51 @@
+<div class="main" *transloco="let t">
+  <app-navbar></app-navbar>
+  <header>
+    <div>
+      <h1>Ranking</h1>
+      <h3>{{ t("ranking-quote") }}</h3>
+    </div>
+  </header>
+
+  @if(ranking) {
+  <div class="container">
+    <br />
+    <div class="list">
+      @for (user of ranking; track $index) {
+      <div class="cardUser">
+        @switch ($index) { @case (0) {
+        <img class="range" src="images/gold_star.webp" alt="gold" />
+        } @case (1) {
+        <img class="range" src="images/silver_star.webp" alt="silver" />
+        } @case (2) {
+        <img class="range" src="images/bronze_star.webp" alt="bronze" />
+        } @default {
+        <span class="level">{{ $index + 1 }}</span>
+        } }
+
+        <!-- <img
+          [src]="'user-icon.png'"
+          alt="avatar"
+          [className]="
+            $index === 0
+              ? 'gold'
+              : $index === 1
+              ? 'silver'
+              : $index === 2
+              ? 'bronze'
+              : 'avatar'
+          "
+        />
+-->
+        <span class="nickname"> {{ user.nickname }}</span>
+
+        <span class="xp"> {{ user.totalPoints }} XP </span>
+      </div>
+
+      }
+    </div>
+  </div>
+  } @else {
+  <p style="color: white">{{ t("loading") }}</p>
+  }
+</div>

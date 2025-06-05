@@ -97,5 +97,6 @@
   "dont-edit-password": "Leave empty in order not to change it",
   "remove-steam": "Disassociate Steam account",
   "add-steam": "Add Steam account",
-  "logout": "Logout"
+  "logout": "Logout",
+  "ranking-quote": "Play and win to get to the top `⎚ᴗ⎚´"
 }
