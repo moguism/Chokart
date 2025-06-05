@@ -112,6 +112,26 @@ namespace server
                 new Character()
                 {
                     Name = "Jinx"
+                },
+                new Character()
+                {
+                    Name = "Shrek"
+                },
+                new Character()
+                {
+                    Name = "Alastor"
+                },
+                new Character()
+                {
+                    Name = "Pingu"
+                },
+                new Character()
+                {
+                    Name = "Lefty"
+                },
+                new Character()
+                {
+                    Name = "Spamton"
                 }
             ];
 
