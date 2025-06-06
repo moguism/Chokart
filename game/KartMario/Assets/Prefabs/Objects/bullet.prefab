@@ -145,7 +145,7 @@ MonoBehaviour:
   targetTime: 5
   direction: {x: 0, y: 0, z: 0}
   parent: {fileID: 7286340212471223011}
-  speed: 12
+  speed: 20
 --- !u!65 &2989735064372384770
 BoxCollider:
   m_ObjectHideFlags: 0
