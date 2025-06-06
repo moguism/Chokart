@@ -39,6 +39,9 @@ public class ChatManager : NetworkBehaviour
     [SerializeField]
     private GameObject closeButton;
 
+    [SerializeField]
+    private GameObject lapCounter;
+
     public InputSystem_Actions inputActions;
     private string playerName;
 
@@ -101,6 +104,8 @@ public class ChatManager : NetworkBehaviour
 
         chatInputObject.SetActive(isChatActive);
         closeButton.SetActive(isChatActive);
+
+        lapCounter.SetActive(!isChatActive);
 
         panel.color = isChatActive ? activePanelColor : inactivePanelColor;
     }

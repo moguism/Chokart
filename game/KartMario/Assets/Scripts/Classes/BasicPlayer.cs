@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
@@ -52,9 +53,34 @@ public class BasicPlayer : NetworkBehaviour
             (this as KartController).isHost = isHost;
             _positionManager.karts.Add(this as KartController);
             RelayManager.playersIds.Add(playerId);
+
+            SetKartCharacterClientRpc(_positionManager.karts.Select(k => k.NetworkObjectId).ToArray(), _positionManager.karts.Select(k => k.characterIndex).ToArray());
         }
 
         ReloadMinimapClientRpc();
+    }
+
+    [ClientRpc]
+    private void SetKartCharacterClientRpc(ulong[] kartIds, int[] characterIds)
+    {
+        try
+        {
+            for (int i = 0; i < kartIds.Length; i++)
+            {
+                ulong kartId = kartIds[i];
+                int characterId = characterIds[i];
+
+                var kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(K => K.NetworkObjectId == kartId);
+                if (kart != null)
+                {
+                    kart.GetComponentInChildren<CharacterSelector>().SetCharacter(characterId, false);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
 
     [ClientRpc]

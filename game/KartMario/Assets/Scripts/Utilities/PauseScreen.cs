@@ -8,9 +8,6 @@ public class PauseScreen : MonoBehaviour
     private GameObject screen;
 
     [SerializeField]
-    private GameObject minimap;
-
-    [SerializeField]
     private TransitionSettings transition;
 
     [SerializeField]
@@ -41,8 +38,8 @@ public class PauseScreen : MonoBehaviour
     {
         await positionManager.ExitGame();
         DisableControls();
-        NetworkManager.Singleton.Shutdown();
         TransitionManager.Instance().Transition(2, transition, 0);
+        NetworkManager.Singleton.Shutdown();
     }
 
     private void DisableControls()
@@ -64,7 +61,6 @@ public class PauseScreen : MonoBehaviour
 
     private void SetAvailability(bool map, bool pause)
     {
-        minimap.SetActive(map);
         pauseButton.SetActive(map);
         hud.SetActive(map);
         kart.canMove = map;

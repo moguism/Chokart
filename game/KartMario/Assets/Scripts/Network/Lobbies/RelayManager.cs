@@ -51,6 +51,7 @@ public class RelayManager : MonoBehaviour
         else
         {
             NetworkManager.Singleton.StartClient();
+            Destroy(FindFirstObjectByType<OptionsSettings>().startGameButton);
         }
     }
 

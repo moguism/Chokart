@@ -60,6 +60,9 @@ public class LobbiesSceneManager : MonoBehaviour
         }
 
         LobbyManager.gameStarted = false;
+
+        lobbyManager.currentLobby = null;
+        lobbyManager.hasRelay = false;
     }
 
     public void CreateLobby()

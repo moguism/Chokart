@@ -1,7 +1,6 @@
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class DistorsionObject : BasicObject
 {
@@ -27,19 +26,7 @@ public class DistorsionObject : BasicObject
             return;
         }
 
-        System.Random random = new();
-
-        KartController victim = availableKarts[random.Next(0, availableKarts.Count)];
-
-        var parameters = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                TargetClientIds = new ulong[] { victim.OwnerClientId }
-            }
-        };
-
-        ApplyDistorsionClientRpc(parameters);
+        ApplyDistorsionClientRpc(kartId, positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).isHost);
 
         if(IsOwner)
         {
@@ -48,8 +35,26 @@ public class DistorsionObject : BasicObject
     }
 
     [ClientRpc]
-    private void ApplyDistorsionClientRpc(ClientRpcParams clientRpcParams = default)
+    private void ApplyDistorsionClientRpc(ulong atacker, bool atackerIsHost)
     {
+        KartController notVictimKart = positionManager.karts.FirstOrDefault(k => k.NetworkBehaviourId == atacker);
+        
+        // La única manera de que no sea null es que o sea el host, o es el mismo cliente
+        if(notVictimKart != null)
+        {
+            if(LobbyManager.isHost)
+            {
+                if(atackerIsHost)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
         if(glitchEffect == null)
         {
             glitchEffect = GameObject.Find("GlitchEffect").GetComponentInChildren<CustomVideoPlayer>();
