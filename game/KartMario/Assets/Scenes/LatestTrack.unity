@@ -194,7 +194,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -8316,7 +8316,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -8917,7 +8917,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -10667,7 +10667,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -19687,7 +19687,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -22443,7 +22443,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -24116,7 +24116,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
