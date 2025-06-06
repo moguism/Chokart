@@ -194,7 +194,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -4689,8 +4689,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1647724491}
   m_HandleRect: {fileID: 1647724490}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.905
+  m_Value: 1.0000008
+  m_Size: 0.9049999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6680,6 +6680,114 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!1 &280355997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 280355998}
+  - component: {fileID: 280356001}
+  - component: {fileID: 280356000}
+  - component: {fileID: 280355999}
+  m_Layer: 0
+  m_Name: FakeCeiling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &280355998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280355997}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.16755629, y: 0.22076364, z: 0.038529426, w: 0.9600541}
+  m_LocalPosition: {x: 384.3, y: 51.9, z: -332.8}
+  m_LocalScale: {x: 42.25, y: 1, z: 268.6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1198075366}
+  m_LocalEulerAnglesHint: {x: -19.8, y: 25.9, z: 0}
+--- !u!65 &280355999
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280355997}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &280356000
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280355997}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &280356001
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280355997}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &301542963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2254430276601699786, guid: 53982f717038e834a85d1c4eca5c677e,
@@ -8275,7 +8383,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -8876,7 +8984,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -10454,7 +10562,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -14106,7 +14214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screen: {fileID: 447864702}
-  minimap: {fileID: 0}
   transition: {fileID: 11400000, guid: b577ec7af0d48c34a9d31ce17f830a8d, type: 2}
   positionManager: {fileID: 276881112}
   hud: {fileID: 1586687683}
@@ -14703,6 +14810,7 @@ Transform:
   - {fileID: 18789010}
   - {fileID: 730852285}
   - {fileID: 864231147}
+  - {fileID: 280355998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1213358761
@@ -18893,7 +19001,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -21649,7 +21757,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
@@ -23304,7 +23412,7 @@ MonoBehaviour:
   - objectName: Bomba
     minPosition: 0
     maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
+    prefab: {fileID: 3262044357405134002, guid: c2943abb01c4c43438adb24db925b7b8,
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}

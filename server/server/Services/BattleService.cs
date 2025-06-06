@@ -8,6 +8,7 @@ namespace server.Services;
 public class BattleService
 {
     private readonly UnitOfWork _unitOfWork;
+    private readonly BattleService battleService;
 
     public BattleService(UnitOfWork unitOfWork)
     {
@@ -52,5 +53,10 @@ public class BattleService
         }
     }
 
-    
+    public async Task<ICollection<Battle>> GetEndedBattlesByUserAsync(int userId)
+    {
+        return await _unitOfWork.BattleRepository.GetEndedBattlesByUserAsync(userId);
+    }
+
+
 }
