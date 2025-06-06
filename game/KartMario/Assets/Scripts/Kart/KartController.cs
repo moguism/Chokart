@@ -1,6 +1,5 @@
 ﻿using Cinemachine;
 using DG.Tweening;
-using GLTFast.Schema;
 using ProximityChat;
 using System.Collections.Generic;
 using TMPro;

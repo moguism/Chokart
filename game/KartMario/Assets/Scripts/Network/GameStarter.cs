@@ -101,7 +101,6 @@ public class GameStarter : NetworkBehaviour
             if(clientId == 0 || clientId == 1)
             {
                 print("El host se ha ido");
-                LobbiesSceneManager.showError = true;
                 SceneManager.LoadScene(2);
             }
         }
@@ -114,5 +113,7 @@ public class GameStarter : NetworkBehaviour
                 positionManager.CheckVictory(kart.NetworkObjectId);
             }
         }
+
+        FindFirstObjectByType<MinimapManager>().UpdatePlayerPositions();
     }
 }

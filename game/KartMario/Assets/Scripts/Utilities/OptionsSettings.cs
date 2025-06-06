@@ -8,8 +8,7 @@ public class OptionsSettings : MonoBehaviour
     [SerializeField]
     private Toggle voiceChatToggle;
 
-    [SerializeField]
-    private GameObject startGameButton;
+    public GameObject startGameButton;
 
     [SerializeField]
     private GameObject resolutionObject;
@@ -52,7 +51,7 @@ public class OptionsSettings : MonoBehaviour
 
     public void ManageAvailability()
     {
-        if(shouldEnableStartButton)
+        if(startGameButton != null)
         {
             startGameButton.SetActive(true);
         }
