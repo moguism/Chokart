@@ -104,8 +104,11 @@ public class CarDamage : NetworkBehaviour
 
         Vector3 collisionPoint = collision.contacts[0].point;
 
-        GameObject explosionEffect = Instantiate(impactParticlePrefab, collisionPoint, Quaternion.identity);
-        Destroy(explosionEffect, 2f);
+        if (OptionsSettings.showExplosions)
+        {
+            GameObject explosionEffect = Instantiate(impactParticlePrefab, collisionPoint, Quaternion.identity);
+            Destroy(explosionEffect, 2f);
+        }
 
         DeformCarServerRpc(collisionPoint, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
     }

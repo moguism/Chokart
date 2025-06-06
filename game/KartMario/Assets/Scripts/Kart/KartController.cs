@@ -1,6 +1,5 @@
 ﻿using Cinemachine;
 using DG.Tweening;
-using GLTFast.Schema;
 using ProximityChat;
 using System.Collections.Generic;
 using TMPro;
@@ -35,7 +34,7 @@ public class KartController : BasicPlayer
 
     [Header("Parameters")]
 
-    public float acceleration = 10f;
+    public float acceleration = 20f;
     public float steering = 80f;
     public float gravity = 10f;
     public LayerMask layerMask;
@@ -290,7 +289,6 @@ public class KartController : BasicPlayer
             }
         }
 
-
         if (isMobile)
         {
             float gyroGravityX = Input.gyro.gravity.x;
@@ -311,6 +309,8 @@ public class KartController : BasicPlayer
             //horizontalInput = Input.GetAxis("Horizontal");
         }
 
+#if !UNITY_WEBGL || UNITY_EDITOR
+
         if(animatorLeft != null)
         {
             if (horizontalInput == 0)
@@ -330,6 +330,7 @@ public class KartController : BasicPlayer
                 }
             }
         }
+#endif
 
         // La colisión es la que se mueve y nosotros la seguimos (sinceramente npi de por qué todo dios lo hace así)
         transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);

@@ -58,6 +58,11 @@ public class LobbiesSceneManager : MonoBehaviour
         {
             await websocket.ConnectToSocket(AuthManager.token);
         }
+
+        LobbyManager.gameStarted = false;
+
+        lobbyManager.currentLobby = null;
+        lobbyManager.hasRelay = false;
     }
 
     public void CreateLobby()

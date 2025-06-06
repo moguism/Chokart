@@ -48,12 +48,12 @@ public class MinimapManager : MonoBehaviour
             // agrega punto rojo al canvas
             GameObject dot = Instantiate(minimapDotPrefab, minimapCanvas);
 
-            if(characterSelector == null)
+            /*if(characterSelector == null)
             {
                 characterSelector = FindObjectsByType<CharacterSelector>(FindObjectsSortMode.None).FirstOrDefault(ch => ch.isHud);
             }
 
-            dot.GetComponent<RawImage>().texture = characterSelector.textures[characterIndex];
+            dot.GetComponent<RawImage>().texture = characterSelector.textures[characterIndex];*/
 
             RectTransform dotRectTransform = dot.GetComponent<RectTransform>();
             minimapDots.Add(dotRectTransform);

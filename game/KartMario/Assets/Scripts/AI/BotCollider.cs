@@ -25,6 +25,11 @@ public class BotCollider : MonoBehaviour
             return;
         }
 
+        if(headAnimator == null || hairAnimator == null)
+        {
+            return;
+        }
+
         if (angle == Vector3.zero)
         {
             if (!rotateToRight)

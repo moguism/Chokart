@@ -1,5 +1,6 @@
 using EasyTransition;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,11 +20,35 @@ public class VictoryScreen : MonoBehaviour
 
     public List<FinishKart> finishKarts = new();
 
-    /*void Start()
+    [Header("Timer")]
+    private const float MAX_TIMER = 10;
+    private float timer;
+
+    [SerializeField]
+    private TMP_Text timerText;
+
+    void Start()
     {
-        gameObject.SetActive(false);
-        return;
-    }*/
+        timer = MAX_TIMER;
+    }
+
+    private void Update()
+    {
+        if(gameObject.activeInHierarchy)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = Mathf.RoundToInt(timer).ToString();
+
+            if(timer <= 0.0f)
+            {
+                CloseButton();
+            }
+        }
+        else
+        {
+            timer = MAX_TIMER;
+        }
+    }
 
     public void SetFinishKarts()
     {

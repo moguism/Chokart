@@ -102,7 +102,7 @@ public class FinishLine : MapTrigger
 
             if (lapPanel.activeSelf && LobbyManager.gameStarted)
             {
-                string text = $"{kart.totalLaps}/{totalLapsToWin}";
+                string text = $"{kart.totalLaps - 1}/{totalLapsToWin}";
                 if (LobbyManager.isHost && kart.isHost)
                 {
                     if(kart.isHost)

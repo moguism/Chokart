@@ -275,6 +275,10 @@ MonoBehaviour:
     m_Localized: END OF THE MATCH
     m_Metadata:
       m_Items: []
+  - m_Id: 21440588059906048
+    m_Localized: Explosions
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,7 @@ public class CharacterSelector : MonoBehaviour
     [SerializeField]
     private RawImage spriteImage;
 
-    [SerializeField]
-    private KartController parent;
+    public KartController parent;
 
     public bool isHud = true;
     private readonly System.Random _random = new();
@@ -46,10 +46,10 @@ public class CharacterSelector : MonoBehaviour
                     {
                         possibleCharacters[i].SetActive(false);
                     }
-                    else
+                    /*else
                     {
                         Destroy(possibleCharacters[i]);
-                    }
+                    }*/
                 }
 
                 GameObject active = possibleCharacters[index];
