@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
@@ -23,47 +24,54 @@ public class MapTrigger : NetworkBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(!LobbyManager.isHost)
+        try
         {
-            return;
-        }
-
-        var parent = other.gameObject.transform.parent;
-        if (parent && parent.CompareTag("Kart"))
-        {
-            Debug.Log("Ha entrado en el trigger " + index + " el coche " + parent.name);
-            var kart = parent.GetComponentInChildren<KartController>();
-            bool alreadyAdded = false;
-            bool shouldContinue = true;
-
-            if (!kart.triggers.Contains(index))
-            {
-                kart.triggers.Add(index);
-            }
-
-            // Siempre actualizar el índice y el destino
-            if (IsOwner || kart.enableAI)
-            {
-                ChangeIndexAndCalculatePosition(kart);
-            }
-
-            // Si es la línea de meta, la agrego si no lo he hecho ya
-            if (Equals(finishLine) && !alreadyAdded && kart.triggers.Count != 0)
-            {
-                kart.triggers.Insert(0, index);
-                shouldContinue = true;
-            }
-
-            if (!shouldContinue)
+            if (!LobbyManager.isHost)
             {
                 return;
             }
 
-            if (IsOwner || kart.enableAI)
+            var parent = other.gameObject.transform.parent;
+            if (parent && parent.CompareTag("Kart"))
             {
-                // Debug.Log("Trigger IA activado por " + kart + "  ES OWNER : " + IsOwner);
-                ChangeIndexAndCalculatePosition(kart);
+                Debug.Log("Ha entrado en el trigger " + index + " el coche " + parent.name);
+                var kart = parent.GetComponentInChildren<KartController>();
+                bool alreadyAdded = false;
+                bool shouldContinue = true;
+
+                if (!kart.triggers.Contains(index))
+                {
+                    kart.triggers.Add(index);
+                }
+
+                // Siempre actualizar el índice y el destino
+                if (IsOwner || kart.enableAI)
+                {
+                    ChangeIndexAndCalculatePosition(kart);
+                }
+
+                // Si es la línea de meta, la agrego si no lo he hecho ya
+                if (Equals(finishLine) && !alreadyAdded && kart.triggers.Count != 0)
+                {
+                    kart.triggers.Insert(0, index);
+                    shouldContinue = true;
+                }
+
+                if (!shouldContinue)
+                {
+                    return;
+                }
+
+                if (IsOwner || kart.enableAI)
+                {
+                    // Debug.Log("Trigger IA activado por " + kart + "  ES OWNER : " + IsOwner);
+                    ChangeIndexAndCalculatePosition(kart);
+                }
             }
+        }
+        catch(Exception e)
+        {
+            Debug.Log("Excepción: " + e);
         }
     }
 
