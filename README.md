@@ -131,3 +131,4 @@
     Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs. María aregla la IA y hace mejoras en la pista, y hace responsivo el inicio de la web.
     Jueves --> Mauricio exporta el juego a web y lo sube a itch.io después de solucionar bugs.
     Viernes --> Mauricio soluciona más bugs.
+    Sábado --> Mauricio soluciona el último bug reportado.

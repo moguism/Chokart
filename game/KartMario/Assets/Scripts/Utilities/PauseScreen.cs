@@ -42,7 +42,7 @@ public class PauseScreen : MonoBehaviour
         NetworkManager.Singleton.Shutdown();
     }
 
-    private void DisableControls()
+    public void DisableControls()
     {
         try
         {

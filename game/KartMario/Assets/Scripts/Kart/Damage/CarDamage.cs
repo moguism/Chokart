@@ -110,7 +110,7 @@ public class CarDamage : NetworkBehaviour
             Destroy(explosionEffect, 2f);
         }
 
-        DeformCarServerRpc(collisionPoint, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
+        //DeformCarServerRpc(collisionPoint, Mathf.Clamp01(colStrength / maxCollisionStrength), isKart, kart.NetworkObjectId);
     }
 
     [ServerRpc(RequireOwnership = false)]

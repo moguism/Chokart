@@ -525,9 +525,19 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 7927039913112621848, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
         type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 697715910}
+    - target: {fileID: 7927039913112621848, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
+        type: 3}
       propertyPath: otherCanvas
       value: 
       objectReference: {fileID: 1020223477}
+    - target: {fileID: 7927039913112621848, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
+        type: 3}
+      propertyPath: pauseScreen
+      value: 
+      objectReference: {fileID: 1112670197}
     - target: {fileID: 7927039913112621848, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
         type: 3}
       propertyPath: transitionSettings
@@ -4689,8 +4699,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1647724491}
   m_HandleRect: {fileID: 1647724490}
   m_Direction: 2
-  m_Value: 1.0000008
-  m_Size: 0.9049999
+  m_Value: 1
+  m_Size: 0.905
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9643,6 +9653,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &697715910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 538198429059282158, guid: 7cef3c9b53fa67049a2cb50b3b7b9224,
+    type: 3}
+  m_PrefabInstance: {fileID: 24754378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &701573130
 GameObject:
   m_ObjectHideFlags: 0
