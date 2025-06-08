@@ -31,26 +31,14 @@ public class LobbiesSceneManager : MonoBehaviour
     private Color initialColor;
     private string initialText;
 
-    private string errorText;
-
     private async void Start()
     {
         initialColor = placeholderText.color;
         initialText = placeholderText.text;
 
-        switch (LocalizationManager.languageCode)
-        {
-            case "es-ES":
-                errorText = "Fuiste expulsado";
-                break;
-            case "en-US":
-                errorText = "You were kicked";
-                break;
-        }
-
         if (showError)
         {
-            ChangePlaceholderValues(Color.red, errorText);
+            ChangePlaceholderValues(Color.red, "Error");
             showError = false;
         }
 
