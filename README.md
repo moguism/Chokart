@@ -116,7 +116,7 @@
 ### Décima semana (02/06 - 08/06)
     Martes --> María añade modelo 3D de bomba e invisibilidad y arregla errores.
     Miércoles --> Mauricio importa los modelos 3D de Miguel y soluciona bugs. María aregla la IA y hace mejoras en la pista, y hace responsivo el inicio de la web.
-    Jueves --> Mauricio exporta el juego a web y lo sube a itch.io después de solucionar bugs.
-    Viernes --> Mauricio soluciona más bugs.
+    Jueves --> Mauricio exporta el juego a web y lo sube a itch.io después de solucionar bugs. María hace el ranking de jugadores y arregla bugs. Tutoría.
+    Viernes --> Mauricio soluciona más bugs. María aregla modelo 3D de bomba, velocidad del proyectil y más arreglos en la pista para evitar fallos de control de coches.
     Sábado --> Mauricio soluciona el último bug reportado.
     Domingo --> Mauricio prepara la documentación y soluciona bugs.
