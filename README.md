@@ -119,4 +119,4 @@
     Jueves --> Mauricio exporta el juego a web y lo sube a itch.io después de solucionar bugs.
     Viernes --> Mauricio soluciona más bugs.
     Sábado --> Mauricio soluciona el último bug reportado.
-    Domingo --> Mauricio prepara la documentación.
+    Domingo --> Mauricio prepara la documentación y soluciona bugs.
