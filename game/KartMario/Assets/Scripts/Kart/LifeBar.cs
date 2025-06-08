@@ -10,8 +10,8 @@ public class LifeBar : MonoBehaviour
     
     void Start()
     {
-        // maxHealth = kart.maxHealth;     
-        maxHealth = 150f;
+        //maxHealth = kart.maxHealth;     
+        maxHealth = 300f;
     }
 
     void Update()
