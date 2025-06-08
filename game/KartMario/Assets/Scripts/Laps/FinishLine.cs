@@ -47,8 +47,9 @@ public class FinishLine : MapTrigger
 
         //ChangeIndexAndCalculatePosition(kart);
 
+        var list = kart.triggers.Where(t => t != -1).Distinct().ToList();
         // Solo cuenta una vuelta si ha activado todos los triggers (en orden, que es lo que hace "SequenceEqual") antes de cruzar la meta
-        if (kart.triggers.SequenceEqual(triggers.Select(t => t.index).ToList()) || !kart.passedThroughFinishLine)
+        if (list.Count == triggers.Count || !kart.passedThroughFinishLine)
         {
             NotifyLapCompletedServerRpc(kart.NetworkObjectId);
             ChangeIndexAndCalculatePosition(kart);
@@ -102,7 +103,7 @@ public class FinishLine : MapTrigger
 
             if (lapPanel.activeSelf && LobbyManager.gameStarted)
             {
-                string text = $"{kart.totalLaps - 1}/{totalLapsToWin}";
+                string text = $"{kart.totalLaps - 1}/{totalLapsToWin - 1}";
                 if (LobbyManager.isHost && kart.isHost)
                 {
                     if(kart.isHost)

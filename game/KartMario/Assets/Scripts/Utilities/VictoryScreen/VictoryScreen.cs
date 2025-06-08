@@ -18,6 +18,9 @@ public class VictoryScreen : MonoBehaviour
     [SerializeField]
     private GameObject playerItem;
 
+    [SerializeField]
+    private PauseScreen pauseScreen;
+
     public List<FinishKart> finishKarts = new();
 
     [Header("Timer")]
@@ -69,6 +72,9 @@ public class VictoryScreen : MonoBehaviour
         print("Cerrando...");
         otherCanvas.enabled = true;
         NetworkManager.Singleton.Shutdown();
+
+        pauseScreen.DisableControls();
+
         TransitionManager.Instance().Transition(2, transitionSettings, 0); // Las lobbies
     }
 }
