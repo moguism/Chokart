@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
+using EasyTransition;
 using Injecta;
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,6 +30,9 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private RawImage videoRawImage;
     private Color startVideoColor;
+
+    [SerializeField]
+    private TransitionSettings transition;
 
     private int index;
     public static int characterIndex = 0; // En este caso, como el personaje es un cosmético no hace falta guardarlo en el websocket (simplemente se instancia encima del coche)
@@ -104,7 +109,7 @@ public class CarSelection : MonoBehaviour
         characters = _characters.ToArray(); // Para que haga una copia
 
         videoPlayer.videoPlayer.SetDirectAudioVolume(0, 0.25f); // Para el volumen
-        startVideoColor = videoRawImage.color;
+        startVideoColor = new Color(videoRawImage.color.r, videoRawImage.color.g, videoRawImage.color.b, 1);
 
         index = PlayerPrefs.GetInt("carIndex");
         characterIndex = PlayerPrefs.GetInt("characterIndex");
@@ -236,6 +241,7 @@ public class CarSelection : MonoBehaviour
 
             if (videoPlayer.videoPlayer.url == null || videoPlayer.videoPlayer.url == "")
             {
+                glitchPlayer.videoPlayer.enabled = true;
                 glitchAudio.Play();
                 glitchPlayer.PlayVideo();
 
@@ -285,6 +291,11 @@ public class CarSelection : MonoBehaviour
         originalText = joinCodeText.text;
         shouldChangeCode = true;
         joinCodeText.text = otherText;
+    }
+
+    public void Exit(){
+        lobbyManager.LeaveLobby(true);
+        TransitionManager.Instance().Transition(2, transition, 0);
     }
 }
 
