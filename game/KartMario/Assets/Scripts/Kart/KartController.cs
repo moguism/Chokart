@@ -185,7 +185,7 @@ public class KartController : BasicPlayer
 
         characterIndex = CarSelection.characterIndex;
 
-        maxHealth = health;
+        //maxHealth = health;
         ownerName = LobbyManager.PlayerName;
         ownerId = LobbyManager.PlayerId;
 

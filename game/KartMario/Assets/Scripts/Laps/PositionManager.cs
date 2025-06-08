@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -106,9 +107,34 @@ public class PositionManager : NetworkBehaviour
         if (!kart.enableAI)
         {
             kart.positionText.text = GetOrdinal(newPosition);
-           
+
+        }
+
+
+        // Cambia aceleracion segun posicion
+        if (LobbyManager.gameStarted)
+        {
+            UpdateAcceleration(kart);
         }
     }
+
+   
+    private void UpdateAcceleration(KartController kart)
+    {
+       int totalPlayers = karts.Count;
+
+        float minAccel = 70f; // min aceleracion
+        float maxAccel = 80f; // max aceleracion
+
+        float factor = 0f;
+
+        if (totalPlayers > 1)
+            factor = (float)(kart.position - 1) / (totalPlayers - 1);
+        kart.acceleration = Mathf.Lerp(minAccel, maxAccel, factor);
+
+        Debug.Log($"Kart {kart.GetComponentIndex()} (posicion {kart.position} aceleracion nueva: {kart.acceleration}");
+    }
+
 
     private string GetOrdinal(int number)
     {

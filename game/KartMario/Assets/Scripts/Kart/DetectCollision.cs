@@ -118,7 +118,12 @@ public class DetectCollision : NetworkBehaviour
     private void NotifyHealthChangedClientRpc(float damage, ulong kartId, ulong kartAggressor, ClientRpcParams clientRpcParams = default)
     {
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
-        kart.health -= damage;
+        if(damage < 0 && kart.health-damage > kart.maxHealth){
+            kart.health = kart.maxHealth;
+        } else{
+            kart.health -= damage;
+        }
+        
         kart.activateInvencibilityFrames = true;
 
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);

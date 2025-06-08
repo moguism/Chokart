@@ -26,6 +26,10 @@ public class HealthPotion : BasicObject
         KartController kart = FindObjectsByType<KartController>(FindObjectsSortMode.None).FirstOrDefault(k => k.NetworkObjectId == kartId);
         kart.health += healthChange;
 
+        if(kart.health > kart.maxHealth){
+            kart.health = kart.maxHealth;
+        }
+
         Debug.LogWarning("La nueva vida es: " + kart.health + ". El id es: " + kart.NetworkObjectId);
     }
 

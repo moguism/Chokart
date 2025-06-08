@@ -47,8 +47,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   owner: 0
   networkObject: {fileID: 5892217538899386661}
-  healthChange: 200
-  healthChanger: {fileID: 0}
+  healthChange: 100
+  positionManager: {fileID: 0}
 --- !u!1 &3262044357405134002
 GameObject:
   m_ObjectHideFlags: 0

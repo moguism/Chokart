@@ -69,7 +69,18 @@ public class LobbiesSceneManager : MonoBehaviour
         bool joined = await lobbyManager.JoinLobbyByCode(joinCode.text);
         if(!joined)
         {
-            ChangePlaceholderValues(Color.red, "No hay lobbies");
+            joinCode.text = "";
+            switch(LocalizationManager.languageCode){
+                case "es-ES":
+                    ChangePlaceholderValues(Color.red, "No hay sala disponible");
+                    break;
+                case "en-US":
+                    ChangePlaceholderValues(Color.red, "No lobby available");
+                    break;
+                default:
+                    ChangePlaceholderValues(Color.red, "No hay sala disponible");
+                    break;
+            }
             return;
         }
 
