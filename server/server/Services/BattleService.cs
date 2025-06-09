@@ -41,6 +41,10 @@ public class BattleService
                     CharacterId = finishKart.CharacterId
                 };
 
+                User player = await _unitOfWork.UserRepository.GetUserById(finishKart.PlayerId);
+                player.TotalPoints = finishKart.Kills + (battlePetition.FinishKarts.Count() - finishKart.Position)+1;
+                _unitOfWork.UserRepository.Update(player);
+
                 battle.BattleUsers.Add(userBattle);
             }
 
