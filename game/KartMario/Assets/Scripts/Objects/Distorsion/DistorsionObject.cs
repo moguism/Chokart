@@ -10,6 +10,22 @@ public class DistorsionObject : BasicObject
     public PositionManager positionManager;
     public CustomVideoPlayer glitchEffect;
 
+    private float timer = 10f;
+
+    public bool isDistorsioning = false;
+
+    private void Update()
+    {
+        if(isDistorsioning){
+
+            timer -= Time.deltaTime;
+            isDistorsioning = true;
+
+            if (timer <= 0.0f){
+                isDistorsioning = false;
+            }
+        } 
+    }
     public new void UseObject()
     {
         print("Usada distorsión");
@@ -27,7 +43,7 @@ public class DistorsionObject : BasicObject
         }
 
         ApplyDistorsionClientRpc(kartId, positionManager.karts.FirstOrDefault(k => k.NetworkObjectId == kartId).isHost);
-
+        isDistorsioning = true;
         if(IsOwner)
         {
             DespawnOnTimeServerRpc();
@@ -65,5 +81,6 @@ public class DistorsionObject : BasicObject
         DistorsionEffect effect = distorsion.GetComponentInChildren<DistorsionEffect>();
         effect.glitchEffect = glitchEffect;
         effect.active = true;
+        isDistorsioning = true;
     }
 }

@@ -31,6 +31,9 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField]
     private CustomVideoPlayer glitchEffect;
 
+    [SerializeField]
+    private ObjectImages objectImages;
+
     private void OnTriggerEnter(Collider other)
     {
         var parent = other.gameObject.transform.parent;
@@ -162,6 +165,7 @@ public class ObjectSpawner : MonoBehaviour
                                     invulnerability.parent = kart;
                                     invulnerability.positionManager = positionManager;
                                     invulnerability.UseObject();
+                                   
                                 }
                                 else
                                 {
@@ -170,6 +174,7 @@ public class ObjectSpawner : MonoBehaviour
                                     {
                                         invisibility.parent = kart;
                                         invisibility.UseObject();
+                                        
                                     }
                                     else
                                     {
@@ -180,7 +185,6 @@ public class ObjectSpawner : MonoBehaviour
                                             screenDistorsion.positionManager = positionManager;
                                             screenDistorsion.glitchEffect = glitchEffect;
                                             screenDistorsion.UseObject();
-
                                             objectsSpawned.Add(screenDistorsion);
                                             alreadyAdded = true;
                                         }
@@ -190,7 +194,6 @@ public class ObjectSpawner : MonoBehaviour
                         }
                     }
                 }
-
                 if (!alreadyAdded) { objectsSpawned.Add(basic); }
             }
         }

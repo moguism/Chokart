@@ -9,16 +9,20 @@ public class Invisibility : BasicObject
     [SerializeField]
     private float timer;
 
+    public bool isTransparent = false;
+
     void Update()
     {
         if (parent != null)
         {
             timer -= Time.deltaTime;
+            isTransparent = true;
 
             DisableOnEnableRenders(parent, false);
 
             if (timer <= 0.0f)
             {
+                isTransparent = false;
                 DisableOnEnableRenders(parent, true);
 
                 InformClientAboutChangeClientRpc(parent.NetworkObjectId, true);
