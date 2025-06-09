@@ -51,6 +51,7 @@ public class LobbiesSceneManager : MonoBehaviour
 
         lobbyManager.currentLobby = null;
         lobbyManager.hasRelay = false;
+        LobbyManager.lobbyCode = "";
     }
 
     public void CreateLobby()

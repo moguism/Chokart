@@ -1,8 +1,9 @@
 # DOCUMENTACIÓN
 - [**Presentación del proyecto**](https://github.com/moguism/Chokart/blob/develop/documentation/Presentacion.pdf)
+- [**Informe de PowerBi**](https://github.com/moguism/Chokart/blob/develop/documentation/InformeChokart.pbix)
+- [**Tutorial de uso de la aplicación**](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 - [Horizonte de sucesos](https://youtu.be/Hvsa6Z8EmTk)
-- [Tutorial de uso de la aplicación](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [Más datos](https://github.com/moguism/Chokart/tree/develop/documentation)
 
 # BIBLIOGRAFÍA
@@ -120,4 +121,6 @@
     Jueves --> Mauricio exporta el juego a web y lo sube a itch.io después de solucionar bugs. María hace el ranking de jugadores y arregla bugs. Tutoría.
     Viernes --> Mauricio soluciona más bugs. María aregla modelo 3D de bomba, velocidad del proyectil y más arreglos en la pista para evitar fallos de control de coches.
     Sábado --> Mauricio soluciona el último bug reportado.
-    Domingo --> Mauricio prepara la documentación y soluciona bugs.
+    Domingo --> Mauricio prepara la documentación y soluciona bugs. María configura la velocidad del kart según posición, límite máximo de vida, botón de salir en selección y alguna mejora más para el usuario.
+### Undécima semana (09/06 - 15/06)
+    Lunes --> María añade efectos al usar los items.
