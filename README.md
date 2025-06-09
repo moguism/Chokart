@@ -122,5 +122,5 @@
     Viernes --> Mauricio soluciona más bugs. María aregla modelo 3D de bomba, velocidad del proyectil y más arreglos en la pista para evitar fallos de control de coches.
     Sábado --> Mauricio soluciona el último bug reportado.
     Domingo --> Mauricio prepara la documentación y soluciona bugs. María configura la velocidad del kart según posición, límite máximo de vida, botón de salir en selección y alguna mejora más para el usuario.
-### Undécima semana (09/06 - 15/06)
-    Lunes --> María añade efectos al usar los items.
+### Última semana (09/06 - 13/06)
+    Lunes --> María añade efectos al usar los items. Mauricio prepara las builds finales.
