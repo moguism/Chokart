@@ -1,5 +1,6 @@
 # DOCUMENTACIÓN
 - [**Presentación del proyecto**](https://github.com/moguism/Chokart/blob/develop/documentation/Presentacion.pdf)
+- [**Informe de PowerBi**](https://github.com/moguism/Chokart/blob/develop/documentation/InformeChokart.pbix)
 - [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 - [Horizonte de sucesos](https://youtu.be/Hvsa6Z8EmTk)
 - [Tutorial de uso de la aplicación](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
