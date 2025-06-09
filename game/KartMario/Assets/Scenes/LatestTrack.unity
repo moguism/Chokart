@@ -198,6 +198,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!1 &1947745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8533,6 +8534,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!65 &523377841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9134,6 +9136,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!1 &564670581
 GameObject:
   m_ObjectHideFlags: 0
@@ -10832,6 +10835,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!65 &797403786
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16764,6 +16768,81 @@ MonoBehaviour:
   dropdown: {fileID: 0}
   dropdownCodes: []
   dropdownSelectedText: {fileID: 0}
+--- !u!1 &1527033982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1527033983}
+  - component: {fileID: 1527033985}
+  - component: {fileID: 1527033984}
+  m_Layer: 5
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1527033983
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527033982}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2138729069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 235.8, y: -36.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1527033984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527033982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8352941}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 30bf0cb5026c2b043a0e651558f36e17, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1527033985
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527033982}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1541724340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19347,6 +19426,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!1 &1647724489
 GameObject:
   m_ObjectHideFlags: 0
@@ -22103,6 +22183,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!65 &1829079486
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23758,6 +23839,7 @@ MonoBehaviour:
       type: 3}
   positionManager: {fileID: 276881112}
   glitchEffect: {fileID: 1633900390}
+  objectImages: {fileID: 2138729070}
 --- !u!65 &2075274986
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24043,6 +24125,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 77719803}
+  - {fileID: 1527033983}
   m_Father: {fileID: 1854820013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -24063,6 +24146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectIconImage: {fileID: 77719804}
+  objectEffectImage: {fileID: 1527033984}
   defaultSprite: {fileID: 0}
   greenShellSprite: {fileID: 21300000, guid: d5a5c9a5df2e88d4c80f3805bc881949, type: 3}
   bombSprite: {fileID: 21300000, guid: 89418e2f9ed5f72408b73c23991cb98b, type: 3}
@@ -24074,6 +24158,10 @@ MonoBehaviour:
   invulnerabilitySprite: {fileID: 21300000, guid: ea3091d1b0ca4b64587bd304007a9bd6,
     type: 3}
   speedBoostSprite: {fileID: 21300000, guid: c9308856d1a9788419ebd958aa4bfc5e, type: 3}
+  invisivilityEffect: {fileID: 21300000, guid: 4389d5593244c444cadc0001b9990ea3, type: 3}
+  distorsionEffect: {fileID: 21300000, guid: f6615a8b4b7c1e043bec709178459325, type: 3}
+  invulnerabilityEffect: {fileID: 21300000, guid: 30bf0cb5026c2b043a0e651558f36e17,
+    type: 3}
 --- !u!1 &2141599315
 GameObject:
   m_ObjectHideFlags: 0

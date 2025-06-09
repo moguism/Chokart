@@ -578,6 +578,7 @@ public class KartController : BasicPlayer
         if (IsOwner)
         {
             SpawnObjectServerRpc(currentObject, currentPosition, transform.TransformDirection(Vector3.forward), NetworkObjectId);
+            objectImages.UpdateObjectEffect(currentObject);
         }
 
         currentObject = "";
