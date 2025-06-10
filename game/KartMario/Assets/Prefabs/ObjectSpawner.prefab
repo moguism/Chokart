@@ -236,9 +236,6 @@ MonoBehaviour:
     maxPosition: 12
     prefab: {fileID: 3262044357405134002, guid: cc661098bc2d8f443bf3b36f5eee3449,
       type: 3}
-  - objectName: distorsion
-    minPosition: 0
-    maxPosition: 12
-    prefab: {fileID: 3262044357405134002, guid: 1409a8dcc7100c24e8df2d74d730af8d,
-      type: 3}
   positionManager: {fileID: 0}
+  glitchEffect: {fileID: 0}
+  objectImages: {fileID: 0}
