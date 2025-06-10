@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using server.Models.DTOs;
-using server.Models.Entities;
-using server.Services;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace server.Controllers;
 
@@ -15,73 +6,37 @@ namespace server.Controllers;
 [ApiController]
 public class DownloadController : ControllerBase
 {
-    private readonly TokenValidationParameters _tokenParameters;
-
-    private readonly UserService _userService;
-    private readonly FriendshipService _friendshipService;
-
-    private readonly EmailService _emailService = new EmailService();
-
-    public DownloadController()
-    {
-    }
-
     // [Authorize] // si queremos que este logueado
     [HttpGet("{platform}")]
     public IActionResult DownloadFile(string platform)
     {
-        string folder = "GameDownloadFiles";
-        string filePath = "";
+        string filePath;
 
         switch (platform.ToLower())
         {
                 //android
             case "apk":
-                filePath = Path.Combine(folder, "chokart.apk");
+                filePath = "https://drive.google.com/file/d/1iGe3Gg7AI_XUKxA065Es9DHiaJjRjNJS/view?usp=sharing";
                 break;
                 //windows
             case "exe":
-                filePath = Path.Combine(folder, "chokart.exe");
+                filePath = "https://drive.google.com/file/d/1PZiMjDM3grZOa7gQ3K1zsNVvIbe3o5mg/view?usp=drive_link";
                 break;
                 //iphone
             case "ipa":
-                filePath = Path.Combine(folder, "chokart.ipa");
+                filePath = "https://drive.google.com/file/d/1QPa6MJn_6-ZByqLnS80zHBhvlGxYQMIG/view?usp=drive_link";
                 break;
                 //mac
             case "app":
-                filePath = Path.Combine(folder, "chokart.app");
+                filePath = "https://drive.google.com/file/d/1gEQ8yzYPZegIVNhBto1XfeeeZ5B4gPpl/view?usp=drive_link";
+                break;
+            case "linux":
+                filePath = "https://drive.google.com/file/d/1gaD-xKQMGF3pm3r2JoLNHOphXCfTKzXr/view?usp=drive_link";
                 break;
             default:
-                return NotFound("Plataforma no válida");
+                return null;
         }
 
-        if (!System.IO.File.Exists(filePath))
-        {
-            return NotFound("Archivo no encontrado");
-        }
-
-        var fileBytes = System.IO.File.ReadAllBytes(filePath);
-        var fileName = Path.GetFileName(filePath);
-
-        return File(fileBytes, "application/octet-stream", fileName);
+        return Ok(filePath);
     }
-
-    private async Task<User> GetAuthorizedUser()
-    {
-        System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-        string firstClaim = currentUser.Claims.First().ToString();
-        string idString = firstClaim.Substring(firstClaim.IndexOf("nameidentifier:") + "nameIdentifier".Length + 2);
-
-        // Pilla el usuario de la base de datos
-        User user = await _userService.GetBasicUserByIdAsync(int.Parse(idString));
-
-        if (user == null || user.Banned || !user.Verified)
-        {
-            Console.WriteLine("Usuario baneado");
-            return null;
-        }
-
-        return user;
-    }
-
 }

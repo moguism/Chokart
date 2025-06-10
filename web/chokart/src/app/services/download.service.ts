@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,22 +11,18 @@ export class DownloadService {
     const url = `Download/${platform}`;
 
     try {
-      const result = await this.api.get(url, {}, 'blob');
+    
+      const result = await this.api.get(url, {}, 'text');
+      
+      console.log("RESULT:" , result)
 
       const file: any = result.data;
 
-      if (file instanceof Blob) {
-        const a = document.createElement('a');
-        const objectUrl = URL.createObjectURL(file);
-
-        a.href = objectUrl;
-        a.download = `chokart.${platform}`;
-        a.click();
-
-        URL.revokeObjectURL(objectUrl);
-      } else {
-        console.error('La respuesta no es un Blob válido');
+      if(file && file != "")
+      {
+        window.open(file, "_blank")
       }
+
     } catch (error) {
       console.error('Error al intentar descargar el archivo:', error);
     }

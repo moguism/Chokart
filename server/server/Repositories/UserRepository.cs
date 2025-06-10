@@ -73,6 +73,15 @@ public class UserRepository : Repository<User, int>
             .FirstOrDefaultAsync(user => user.Id == id);
     }
 
+    public async Task<User> GetUserByIdNoTraking(int id)
+    {
+        return await GetQueryable()
+        .AsNoTracking()
+            .Include(user => user.Friendships)
+            //.Include(user => user.State)
+            .FirstOrDefaultAsync(user => user.Id == id);
+    }
+
     /*public async Task<User> GetUserInQueueAsync()
     {
         return await GetQueryable()

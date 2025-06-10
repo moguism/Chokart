@@ -30,7 +30,7 @@ public class BattleController : ControllerBase
             return;
         }
 
-        await _battleService.CreateBattleAsync(battlePetition);
+        await _battleService.CreateBattleAsync(battlePetition, user.Id);
     }
 
     private async Task<User> GetAuthorizedUser()

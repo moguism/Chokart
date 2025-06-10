@@ -4,6 +4,7 @@
 - [**Tutorial de uso de la aplicación**](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 - [Horizonte de sucesos](https://youtu.be/Hvsa6Z8EmTk)
+- [Vídeo entrega final](https://youtu.be/iO8UnfiiAeg)
 - [Más datos](https://github.com/moguism/Chokart/tree/develop/documentation)
 
 # BIBLIOGRAFÍA
@@ -122,5 +123,6 @@
     Viernes --> Mauricio soluciona más bugs. María aregla modelo 3D de bomba, velocidad del proyectil y más arreglos en la pista para evitar fallos de control de coches.
     Sábado --> Mauricio soluciona el último bug reportado.
     Domingo --> Mauricio prepara la documentación y soluciona bugs. María configura la velocidad del kart según posición, límite máximo de vida, botón de salir en selección y alguna mejora más para el usuario.
-### Undécima semana (09/06 - 15/06)
-    Lunes --> María añade efectos al usar los items.
+### Última semana (09/06 - 13/06)
+    Lunes --> María añade iconos al usar los items. Mauricio prepara las builds finales. 
+    Martes --> Grabamos el vídeo final. María arregla puntos del ranking.
