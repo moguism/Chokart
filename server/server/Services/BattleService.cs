@@ -1,7 +1,7 @@
 ﻿using server.Models.DTOs;
 using server.Models.Entities;
-using server.Models.Mappers;
 using server.Repositories;
+using System.Numerics;
 
 namespace server.Services;
 
@@ -15,10 +15,12 @@ public class BattleService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task CreateBattleAsync(BattlePetition battlePetition)
+    public async Task CreateBattleAsync(BattlePetition battlePetition, int actualUserId)
     {
         try
         {
+            var actualUser = await _unitOfWork.UserRepository.GetUserByIdNoTraking(actualUserId);
+
             Battle battle = new Battle()
             {
                 GameModeId = battlePetition.GameMode,
@@ -41,9 +43,23 @@ public class BattleService
                     CharacterId = finishKart.CharacterId
                 };
 
-                User player = await _unitOfWork.UserRepository.GetUserById(finishKart.PlayerId);
-                player.TotalPoints = finishKart.Kills + (battlePetition.FinishKarts.Count() - finishKart.Position)+1;
-                _unitOfWork.UserRepository.Update(player);
+                int points = finishKart.Kills + (battlePetition.FinishKarts.Count() - finishKart.Position) + 1;
+
+                if (finishKart.PlayerId == actualUser.Id)
+                {
+                    actualUser.TotalPoints += points;
+                    _unitOfWork.UserRepository.Update(actualUser);
+                }
+                else
+                {
+                    var player = await _unitOfWork.UserRepository.GetUserByIdNoTraking(finishKart.PlayerId);
+
+                    if (player != null)
+                    {
+                        player.TotalPoints += points;
+                        _unitOfWork.UserRepository.Update(player);
+                    }
+                }
 
                 battle.BattleUsers.Add(userBattle);
             }
@@ -51,11 +67,12 @@ public class BattleService
             await _unitOfWork.BattleRepository.InsertAsync(battle);
             await _unitOfWork.SaveAsync();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e);
         }
     }
+
 
     public async Task<ICollection<Battle>> GetEndedBattlesByUserAsync(int userId)
     {

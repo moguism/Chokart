@@ -41,7 +41,7 @@ public class UserService
 
     public async Task<User> GetBasicUserByIdAsync(int id)
     {
-        User user = await _unitOfWork.UserRepository.GetByIdAsync(id);
+        User user = await _unitOfWork.UserRepository.GetUserByIdNoTraking(id);
         return user;
     }
 
