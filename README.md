@@ -125,4 +125,4 @@
     Domingo --> Mauricio prepara la documentación y soluciona bugs. María configura la velocidad del kart según posición, límite máximo de vida, botón de salir en selección y alguna mejora más para el usuario.
 ### Última semana (09/06 - 13/06)
     Lunes --> María añade iconos al usar los items. Mauricio prepara las builds finales. 
-    Martes --> Grabamos el vídeo final.
+    Martes --> Grabamos el vídeo final. María arregla puntos del ranking.
