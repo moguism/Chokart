@@ -1,6 +1,9 @@
 El informe de PowerBi se encuentra en el archivo **InformeChokart.pbix**.
 Otros datos importantes sobre el proyecto son:
 
+# GDD (Game Design Document)
+Este es el tipo de documento que se suele desarrollar a la hora de diseñar un juego. Pese a ser breve, dado que no pudimos realizar nada Figma por el tipo de proyecto por el que optamos, a continuación se encuentra su enlace: https://docs.google.com/document/d/1GODSsCyT0VcFTm_HZN4cWRkCTXWDr54CkAqr7UotYNI/edit?tab=t.0
+
 # COPYRIGHT
 - Modelo 3D bala de jinx (proyectil): https://sketchfab.com/3d-models/jinxs-bullet-5e6a98a547ba4bccb63a687a6d56d4df
 
