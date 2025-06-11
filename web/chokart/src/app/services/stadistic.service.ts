@@ -51,7 +51,7 @@ export class StadisticService {
       const b: Battle = {
         id: battle.id,
         isAgainstBot: battle.isAgainstBot,
-        userBattles: battle.userBattles,
+        userBattles: userBattles,
         createdAt: battle.createdAt,
         finishedAt: battle.finishedAt,
         trackId: battle.trackId,

@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { SweetalertService } from '../../services/sweetalert.service';
 import { StadisticService } from '../../services/stadistic.service';
 import { UserBattle } from '../../models/user-battle';
+import { Battle } from '../../models/battle';
 
 @Component({
   selector: 'app-profile',
@@ -70,7 +71,7 @@ export class ProfileComponent implements OnInit {
   isNewPasswordHidden = true; // Mostrar div de cambiar contraseña
   isEditing = false; //modo edición
 
-  userBattles: UserBattle[] = [];
+  battles: Battle[] = [];
   async ngOnInit() {
     if (!this.authService.isAuthenticated()) {
       this.router.navigateToUrl('login');
@@ -88,8 +89,8 @@ export class ProfileComponent implements OnInit {
 
     this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`;
 
-    this.userBattles = await this.stadisticService.getBattles(this.user.id);
-    console.log(this.userBattles);
+    this.battles = await this.stadisticService.getBattles(this.user.id);
+    console.log(this.battles);
   }
 
   async getSteamDetails() {
