@@ -5,7 +5,7 @@
   flex-direction: column;
   color: white;
   background-size: cover;
-  gap: 2rem;
+  gap: 4rem;
   font-family: "Road Rage", sans-serif;
   font-size: 1.5rem;
 }
@@ -13,7 +13,7 @@
 #home {
   position: relative;
   z-index: 8;
-  background-image: url(/poster.jpg);
+  background-image: url(/poster.webp);
   background-size: cover;
   height: 110vh;
   clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
@@ -220,6 +220,10 @@ span {
   font-family: "Road Rage", sans-serif;
 }
 /* FIFTH BUTTON */
+
+a {
+  text-decoration: none;
+}
 
 button {
   width: fit-content;
