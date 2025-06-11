@@ -1,34 +1,43 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Result } from '../models/result';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
   private BASE_URL = environment.apiUrl;
 
   private readonly USER_KEY = 'user';
   private readonly TOKEN_KEY = 'jwtToken';
 
-  jwt: string | null = ""
+  jwt: string | null = '';
 
   constructor(private http: HttpClient) {
-    let token: string | null = localStorage.getItem("token")
+    let token: string | null = localStorage.getItem('token');
     if (token) {
-      this.jwt = token
+      this.jwt = token;
     }
   }
 
   deleteToken() {
     this.jwt = null;
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
   }
 
-  async get<T = void>(path: string, params: any = {}, responseType: any = null): Promise<Result<T>> {
+  async get<T = void>(
+    path: string,
+    params: any = {},
+    responseType: any = null
+  ): Promise<Result<T>> {
     const url = `${this.BASE_URL}${path}`;
     const request$ = this.http.get(url, {
       params: new HttpParams({ fromObject: params }),
@@ -39,41 +48,56 @@ export class ApiService {
     return this.sendRequest<T>(request$);
   }
 
-  async post<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
+  async post<T = void>(
+    path: string,
+    body: Object = {},
+    contentType = null
+  ): Promise<Result<T>> {
     const url = `${this.BASE_URL}${path}`;
     const request$ = this.http.post(url, body, {
       headers: this.getHeader(contentType),
-      observe: 'response'
-    });
-
-    return this.sendRequest<T>(request$);
-  }
-
-  async postWithImage<T = void>(path: string, body: Object = {}): Promise<Result<T>> {
-    const url = `${this.BASE_URL}${path}`;
-    const request$ = this.http.post(url, body, {
-      headers: this.getHeader(null, ""),
       observe: 'response',
-      responseType: 'text'
+    });
+
+    return this.sendRequest<T>(request$);
+  }
+
+  async postWithImage<T = void>(
+    path: string,
+    body: Object = {}
+  ): Promise<Result<T>> {
+    const url = `${this.BASE_URL}${path}`;
+    const request$ = this.http.post(url, body, {
+      headers: this.getHeader(null, ''),
+      observe: 'response',
+      responseType: 'text',
     });
     return this.sendRequest<T>(request$);
   }
 
-  async put<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
+  async put<T = void>(
+    path: string,
+    body: Object = {},
+    contentType = null
+  ): Promise<Result<T>> {
     const url = `${this.BASE_URL}${path}`;
     const request$ = this.http.put(url, body, {
       headers: this.getHeader(contentType),
-      observe: 'response'
+      observe: 'response',
     });
 
     return this.sendRequest<T>(request$);
   }
 
-  async putWithImage<T = void>(path: string, body: Object = {}, contentType = null): Promise<Result<T>> {
+  async putWithImage<T = void>(
+    path: string,
+    body: Object = {},
+    contentType = null
+  ): Promise<Result<T>> {
     const url = `${this.BASE_URL}${path}`;
     const request$ = this.http.put(url, body, {
-      headers: this.getHeader(contentType, ""),
-      observe: 'response'
+      headers: this.getHeader(contentType, ''),
+      observe: 'response',
     });
     return this.sendRequest<T>(request$);
   }
@@ -83,13 +107,15 @@ export class ApiService {
     const request$ = this.http.delete(url, {
       params: new HttpParams({ fromObject: params }),
       headers: this.getHeader(),
-      observe: 'response'
+      observe: 'response',
     });
 
     return this.sendRequest<T>(request$);
   }
 
-  private async sendRequest<T = void>(request$: Observable<HttpResponse<any>>): Promise<Result<T>> {
+  private async sendRequest<T = void>(
+    request$: Observable<HttpResponse<any>>
+  ): Promise<Result<T>> {
     let result: Result<T>;
 
     try {
@@ -120,22 +146,23 @@ export class ApiService {
     return result;
   }
 
-  public getHeader(accept = null, contentType = "application/json"): HttpHeaders {
+  public getHeader(
+    accept = null,
+    contentType = 'application/json'
+  ): HttpHeaders {
     let header: any = {};
 
     // Para cuando haya que poner un JWT
-    console.log("JWT: ", this.jwt)
+    // console.log("JWT: ", this.jwt)
     header['Authorization'] = `Bearer ${this.jwt}`;
 
-    if (accept)
-      header['Accept'] = accept;
+    if (accept) header['Accept'] = accept;
 
-    if (contentType && contentType !== "")
-      header['Content-Type'] = contentType;
+    if (contentType && contentType !== '') header['Content-Type'] = contentType;
 
-    const headerObject = new HttpHeaders(header)
+    const headerObject = new HttpHeaders(header);
 
-    console.log("HEADER OBJECT: ", headerObject);
+    // console.log('HEADER OBJECT: ', headerObject);
 
     return headerObject;
   }
