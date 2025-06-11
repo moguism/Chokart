@@ -16,11 +16,11 @@ public class DownloadController : ControllerBase
         {
                 //android
             case "apk":
-                filePath = "https://drive.google.com/file/d/1iGe3Gg7AI_XUKxA065Es9DHiaJjRjNJS/view?usp=sharing";
+                filePath = "https://drive.google.com/file/d/1Awyo15AyV2rOi65oi6I38Yx_L1-kJaJq/view?usp=sharing";
                 break;
                 //windows
             case "exe":
-                filePath = "https://drive.google.com/file/d/1PZiMjDM3grZOa7gQ3K1zsNVvIbe3o5mg/view?usp=drive_link";
+                filePath = "https://drive.google.com/file/d/1sudF6Xhur9MEJ69wgiL80zesfBopPxe2/view?usp=sharing";
                 break;
                 //iphone
             case "ipa":

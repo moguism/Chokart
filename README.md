@@ -126,3 +126,4 @@
 ### Última semana (09/06 - 13/06)
     Lunes --> María añade iconos al usar los items. Mauricio prepara las builds finales. 
     Martes --> Grabamos el vídeo final. María arregla puntos del ranking.
+    Miércoles --> Mauricio da los últimos toques al juego.

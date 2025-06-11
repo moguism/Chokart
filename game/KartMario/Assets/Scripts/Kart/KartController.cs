@@ -568,7 +568,7 @@ public class KartController : BasicPlayer
 
     public void SpawnObject()
     {
-        if (currentObject == "")
+        if (currentObject == "" || enableAI)
         {
             return;
         }

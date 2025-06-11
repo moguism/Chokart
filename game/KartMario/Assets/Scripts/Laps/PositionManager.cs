@@ -124,7 +124,7 @@ public class PositionManager : NetworkBehaviour
        int totalPlayers = karts.Count;
 
         float minAccel = 70f; // min aceleracion
-        float maxAccel = 80f; // max aceleracion
+        float maxAccel = 70f; // max aceleracion
 
         float factor = 0f;
 
