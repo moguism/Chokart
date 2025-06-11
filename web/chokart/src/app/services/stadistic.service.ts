@@ -55,6 +55,7 @@ export class StadisticService {
         createdAt: battle.createdAt,
         finishedAt: battle.finishedAt,
         trackId: battle.trackId,
+        gameModeId: battle.gameModeId,
       };
       battles.push(b);
     }

@@ -21,6 +21,7 @@ public class BattleMapper
             battleDto.UserId = user.Id;
             battleDto.TrackId = battle.TrackId;
 
+
             battleDtos.Add(battleDto);
 
         }
@@ -40,6 +41,7 @@ public class BattleMapper
             battleDto.CreatedAt = battle.CreatedAt;
             battleDto.FinishedAt = battle.FinishedAt;
             battleDto.TrackId = battle.TrackId;
+            battleDto.GameModeId = battle.GameModeId;
 
             var users = userBattleMapper.ToDto(battle.BattleUsers);
             battleDto.UsersBattles = users;

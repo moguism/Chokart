@@ -13,4 +13,6 @@ public class BattleDto
     public DateTime CreatedAt { get; set; }
     public DateTime FinishedAt { get; set; }
     public int TrackId { get; set; }
+
+    public int GameModeId { get; set; }
 }
