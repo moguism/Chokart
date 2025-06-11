@@ -7,27 +7,33 @@
     <h1>{{ t("play-free") }}</h1>
 
     <div class="links">
-      <div class="card-button" (click)="this.router.navigateToUrl('/download')">
-        <i
-          class="pi pi-plus-circle"
-          style="font-size: 2rem; align-self: end"
-        ></i>
-        <span>{{ t("download-now") }}</span>
-      </div>
-      <div class="card-button" (click)="this.router.navigateToUrl('/login')">
-        <i
-          class="pi pi-chevron-circle-right"
-          style="font-size: 2rem; align-self: end"
-        ></i>
-        <span>{{ t("signup") }} </span>
-      </div>
-      <div class="card-button" (click)="this.router.navigateToUrl('/media')">
-        <i
-          class="pi pi-play-circle"
-          style="font-size: 2rem; align-self: end"
-        ></i>
-        <span>{{ t("watch-trailer") }}</span>
-      </div>
+      <a [routerLink]="['/download']">
+        <div class="card-button">
+          <i
+            class="pi pi-plus-circle"
+            style="font-size: 2rem; align-self: end"
+          ></i>
+          <span>{{ t("download-now") }}</span>
+        </div></a
+      >
+      <a [routerLink]="['/login']">
+        <div class="card-button">
+          <i
+            class="pi pi-chevron-circle-right"
+            style="font-size: 2rem; align-self: end"
+          ></i>
+          <span>{{ t("signup") }} </span>
+        </div></a
+      >
+      <a [routerLink]="['/media']">
+        <div class="card-button">
+          <i
+            class="pi pi-play-circle"
+            style="font-size: 2rem; align-self: end"
+          ></i>
+          <span>{{ t("watch-trailer") }}</span>
+        </div></a
+      >
     </div>
   </div>
 </div>
