@@ -21,6 +21,7 @@ namespace server
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddScoped<UserMapper>();
+            builder.Services.AddScoped<BattleMapper>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<BattleService>();
             builder.Services.AddScoped<FriendshipService>();

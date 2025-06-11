@@ -26,7 +26,7 @@ export class RankingComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.ranking = await this.stadisticService.getRanking();
-    console.log(this.ranking);
+    // console.log(this.ranking);
 
     this.isLog = this.authService.isAuthenticated();
   }

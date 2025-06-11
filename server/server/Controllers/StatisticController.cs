@@ -29,11 +29,18 @@ public class StadisticController : ControllerBase
         return Ok(users);
     }
 
-    //[Authorize]
-    [HttpGet("userBattles/{userId}")]
-    public async Task<IActionResult> GetPositionDistribution(int userId)
+    [Authorize]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBattlesByUser()
     {
-        var battles = await _battleService.GetEndedBattlesByUserAsync(userId);
+        User user = await GetAuthorizedUser();
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        var battles = await _battleService.GetEndedBattlesByUserAsync(user.Id);
         return Ok(battles);
     }
 

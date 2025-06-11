@@ -1,5 +1,6 @@
 ﻿using server.Models.DTOs;
 using server.Models.Entities;
+using server.Models.Mappers;
 using server.Repositories;
 using System.Numerics;
 
@@ -8,11 +9,12 @@ namespace server.Services;
 public class BattleService
 {
     private readonly UnitOfWork _unitOfWork;
-    private readonly BattleService battleService;
+    private readonly BattleMapper _battleMapper;
 
-    public BattleService(UnitOfWork unitOfWork)
+    public BattleService(UnitOfWork unitOfWork, BattleMapper battleMapper)
     {
         _unitOfWork = unitOfWork;
+        _battleMapper = battleMapper;
     }
 
     public async Task CreateBattleAsync(BattlePetition battlePetition, int actualUserId)
@@ -74,9 +76,11 @@ public class BattleService
     }
 
 
-    public async Task<ICollection<Battle>> GetEndedBattlesByUserAsync(int userId)
+    public async Task<ICollection<BattleDto>> GetEndedBattlesByUserAsync(int userId)
     {
-        return await _unitOfWork.BattleRepository.GetEndedBattlesByUserAsync(userId);
+        var battles = await _unitOfWork.BattleRepository.GetEndedBattlesByUserAsync(userId);
+        var battleDtos = _battleMapper.ToDtoWithAllInfo(battles); 
+        return battleDtos;
     }
 
 

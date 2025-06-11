@@ -11,18 +11,15 @@ export class DownloadService {
     const url = `Download/${platform}`;
 
     try {
-    
       const result = await this.api.get(url, {}, 'text');
-      
-      console.log("RESULT:" , result)
+
+      // console.log("RESULT:" , result)
 
       const file: any = result.data;
 
-      if(file && file != "")
-      {
-        window.open(file, "_blank")
+      if (file && file != '') {
+        window.open(file, '_blank');
       }
-
     } catch (error) {
       console.error('Error al intentar descargar el archivo:', error);
     }

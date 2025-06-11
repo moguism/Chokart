@@ -90,12 +90,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   processFriends() {
-    console.log(this.user.friendships);
+    // console.log(this.user.friendships);
     this.friendsRaw = this.user.friendships;
 
     this.acceptedFriends = [];
     this.pendingFriends = [];
-    console.log(this.friendsRaw);
+    // console.log(this.friendsRaw);
     for (const friend of this.friendsRaw) {
       if (friend.accepted) {
         this.acceptedFriends.push(friend);
@@ -106,14 +106,14 @@ export class MenuComponent implements OnInit, OnDestroy {
         }
       }
     }
-    console.log('amigos: ', this.acceptedFriends);
-    console.log('solicitudes: ', this.pendingFriends);
+    //  console.log('amigos: ', this.acceptedFriends);
+    //  console.log('solicitudes: ', this.pendingFriends);
 
     this.searchFriend('');
   }
 
   askForInfo(messageType: MessageType) {
-    console.log('Mensaje pedido: ', messageType);
+    //console.log('Mensaje pedido: ', messageType);
     this.webSocketService.sendNative(messageType.toString());
   }
 
@@ -123,7 +123,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   async getSearchedUsers(queryuser: string): Promise<User[]> {
     const result = await this.userService.searchUser(queryuser);
-    console.log(result);
+    //  console.log(result);
 
     this.searchedUsers = result;
 
