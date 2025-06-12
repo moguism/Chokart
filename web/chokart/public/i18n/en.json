@@ -102,5 +102,8 @@
   "title-chart-character": "Your All-Star Characters",
   "profile-title": "Your Profile",
   "info-favourite": "Your favourite character is ",
-  "info-ranking": "Your ranking score is "
+  "info-ranking": "Your ranking score is ",
+
+  "time-played": "Times you have played",
+  "average-position": "Average of your position in races"
 }

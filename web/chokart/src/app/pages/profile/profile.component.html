@@ -7,6 +7,7 @@
         {{ t("profile-title") }}
       </h1>
       <div class="row">
+        <!--sesion-->
         <div class="col-lg-4">
           <div class="card">
             <div class="card-body">
@@ -19,7 +20,7 @@
                   "
                   alt="Admin"
                   class="rounded-circle p-1 bg-primary"
-                  width="110"
+                  width="100"
                 />
                 <div class="mt-3">
                   <h4>
@@ -44,7 +45,7 @@
                     <a [href]="STEAM_URL">
                       <img
                         width="50px"
-                        src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                        src="Steam-logo.webp"
                         alt="logo Steam"
                         style="align-self: end"
                       />
@@ -63,6 +64,7 @@
             </div>
           </div>
         </div>
+        <!--editar datos-->
         <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
@@ -173,41 +175,77 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 mt-4">
-          <h1>
-            {{ t("title-chart-character") }}
-          </h1>
-          <div style="max-width: 300px">
-            <app-chart-pie
-              *ngIf="characterMap"
-              [characterUsageStats]="getCharacterUsageStats(battles)"
-              [characterMap]="characterMap"
-            >
-            </app-chart-pie>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-info">
-              <h1>
-                {{ t("info-favourite") }} {{ this.favouriteCharacter.name }}
-              </h1>
-              <img
-                height="80px"
-                width="80px"
-                style="
-                  border-radius: 50%;
-                  border: 3px solid var(--primary-color);
-                "
-                src="{{ this.favouriteCharacter.miniImage }}"
-                alt="favourite character"
-              />
+        <div class="row mt-4">
+          <!-- Izquierda: gráfica -->
+          <div class="col-lg-4 d-flex flex-column align-items-center">
+            <h1 style="text-align: center">
+              {{ t("title-chart-character") }}
+            </h1>
+            <div style="max-width: 300px; margin: auto">
+              <app-chart-pie
+                *ngIf="characterMap"
+                [characterUsageStats]="getCharacterUsageStats(battles)"
+                [characterMap]="characterMap"
+              >
+              </app-chart-pie>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-info">
-              <h1>{{ t("info-ranking") }} {{ this.user.totalPoints }} XP</h1>
+          <!-- Centro: personaje favorito + card vacía -->
+          <div class="col-lg-4 d-flex flex-column gap-3">
+            <div class="card" style="flex: 1">
+              <div class="card-info">
+                <h1>
+                  {{ t("info-favourite") }} {{ this.favouriteCharacter.name }}
+                </h1>
+                <img
+                  height="80px"
+                  width="80px"
+                  style="
+                    border-radius: 50%;
+                    border: 3px solid var(--primary-color);
+                  "
+                  src="{{ this.favouriteCharacter.miniImage }}"
+                  alt="favourite character"
+                />
+              </div>
+            </div>
+
+            <div class="card" style="flex: 1">
+              <div class="card-info">
+                <h1>{{ t("average-position") }}</h1>
+                <h1>{{ this.averagePosition }}</h1>
+              </div>
+            </div>
+          </div>
+
+          <!-- Derecha: veces jugadas + puntuación -->
+          <div class="col-lg-4 d-flex flex-column gap-3">
+            <div class="card">
+              <div class="card-info">
+                <h1>{{ t("info-ranking") }} {{ this.user.totalPoints }}XP</h1>
+              </div>
+            </div>
+            <div class="card">
+              <h1 style="text-align: center">{{ t("time-played") }}</h1>
+              <div class="mode-bar-container">
+                <div
+                  class="mode-bar race"
+                  [ngStyle]="{ width: racePercentage + '%' }"
+                  *ngIf="racePercentage > 0"
+                ></div>
+                <div
+                  class="mode-bar survival"
+                  [ngStyle]="{ width: survivalPercentage + '%' }"
+                  *ngIf="survivalPercentage > 0"
+                ></div>
+              </div>
+              <div class="mode-labels">
+                <span class="label race">Carrera ({{ raceCount }})</span>
+                <span class="label survival"
+                  >Survival ({{ survivalCount }})</span
+                >
+              </div>
             </div>
           </div>
         </div>

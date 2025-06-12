@@ -103,5 +103,8 @@
   "profile-title": "Tu perfil",
 
   "info-favourite": "Tu personaje favorito es ",
-  "info-ranking": "Tu puntuación en el ranking es "
+  "info-ranking": "Tu puntuación en el ranking es ",
+
+  "time-played": "Veces que has jugado",
+  "average-position": "Media de tu posición en carreras"
 }

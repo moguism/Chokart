@@ -87,6 +87,14 @@ export class ProfileComponent implements OnInit {
 
   favouriteCharacter: Character;
 
+  raceCount = 0;
+  survivalCount = 0;
+
+  racePercentage: number = 0;
+  survivalPercentage: number = 0;
+
+  averagePosition: number = 0;
+
   async ngOnInit() {
     if (!this.authService.isAuthenticated()) {
       this.router.navigateToUrl('login');
@@ -108,6 +116,20 @@ export class ProfileComponent implements OnInit {
 
     const usage = this.getCharacterUsageStats(this.battles);
 
+    this.battles.forEach((b) => {
+      if (b.gameModeId == 0) {
+        this.raceCount += 1;
+      } else if (b.gameModeId == 1) {
+        this.survivalCount += 1;
+      }
+    });
+
+    this.averagePosition = this.getAveragePosition(this.battles);
+
+    const total = this.raceCount + this.survivalCount;
+    this.racePercentage = (this.raceCount / total) * 100;
+    this.survivalPercentage = (this.survivalCount / total) * 100;
+
     let maxUsage = 0;
     let favCharId: number | null = null;
 
@@ -118,8 +140,6 @@ export class ProfileComponent implements OnInit {
         favCharId = charId;
       }
     }
-
-    // Si se encontró personaje favorito, asignarlo
     if (favCharId !== null) {
       this.favouriteCharacter = this.characterData.find(
         (c) => c.id === favCharId
@@ -151,6 +171,25 @@ export class ProfileComponent implements OnInit {
       }
     }
     return usage;
+  }
+
+  getAveragePosition(battles: Battle[]) {
+    let totalPosition = 0;
+    let count = 0;
+
+    for (const battle of battles) {
+      for (const ub of battle.userBattles) {
+        if (ub.userId === this.user.id) {
+          totalPosition += ub.position;
+          count++;
+          break;
+        }
+      }
+    }
+
+    if (count === 0) return 0;
+
+    return totalPosition / count;
   }
 
   async getSteamDetails() {

@@ -1,7 +1,6 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-chart-pie',

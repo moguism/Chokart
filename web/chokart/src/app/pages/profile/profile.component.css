@@ -4,6 +4,10 @@ section {
   min-height: 100vh;
 }
 
+.container {
+  padding-bottom: 3rem;
+}
+
 .user-box {
   display: flex;
   flex-direction: column;
@@ -59,7 +63,7 @@ a {
   align-items: center;
 }
 
-.card-info h1 {
+.card h1 {
   color: #0d6efd;
   margin: 0 1rem;
   text-align: center;
@@ -86,4 +90,53 @@ h6 {
 
 h1 {
   color: var(--primary-color);
+}
+
+.mode-bar-container {
+  margin: 0.3rem 1.3rem;
+  display: flex;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+}
+
+.mode-bar {
+  height: 100%;
+}
+
+.mode-bar.race {
+  background-color: var(--primary-color);
+}
+
+.mode-bar.survival {
+  background-color: #ef5350;
+}
+
+.mode-labels {
+  margin: 0.5rem 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.label.race {
+  color: #42a5f5;
+}
+
+.label.survival {
+  color: #ef5350;
+}
+
+.col-lg-4.d-flex.justify-content-center.gap-3 {
+  gap: 1rem; /* espacio entre cards */
+}
+
+.col-lg-4.d-flex.justify-content-center.gap-3 .card {
+  flex: 1;
+  max-width: 150px;
+}
+
+.col-lg-4.d-flex.flex-column.gap-3 {
+  gap: 1rem;
 }
