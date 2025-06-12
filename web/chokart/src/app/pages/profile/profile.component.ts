@@ -18,8 +18,11 @@ import { PasswordValidatorService } from '../../services/password-validator.serv
 import { CommonModule } from '@angular/common';
 import { SweetalertService } from '../../services/sweetalert.service';
 import { StadisticService } from '../../services/stadistic.service';
-import { UserBattle } from '../../models/user-battle';
 import { Battle } from '../../models/battle';
+import { ChartModule } from 'primeng/chart';
+import { ChartPieComponent } from '../../components/chart-pie/chart-pie.component';
+import { characters } from '../../data/characters';
+import { Character } from '../../models/character';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +32,8 @@ import { Battle } from '../../models/battle';
     TranslocoModule,
     ReactiveFormsModule,
     CommonModule,
+    ChartModule,
+    ChartPieComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
@@ -60,6 +65,10 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  characterData = characters;
+
+  characterMap = {};
+
   user: User | null = null;
 
   steamProfile: SteamProfile | null = null;
@@ -72,6 +81,12 @@ export class ProfileComponent implements OnInit {
   isEditing = false; //modo edición
 
   battles: Battle[] = [];
+
+  pieChartData: number[] = [];
+  pieChartLabels: string[] = [];
+
+  favouriteCharacter: Character;
+
   async ngOnInit() {
     if (!this.authService.isAuthenticated()) {
       this.router.navigateToUrl('login');
@@ -90,7 +105,52 @@ export class ProfileComponent implements OnInit {
     this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`;
 
     this.battles = await this.stadisticService.getBattles(this.user.id);
-    console.log(this.battles);
+
+    const usage = this.getCharacterUsageStats(this.battles);
+
+    let maxUsage = 0;
+    let favCharId: number | null = null;
+
+    for (const [charIdStr, count] of Object.entries(usage)) {
+      const charId = parseInt(charIdStr);
+      if (count > maxUsage) {
+        maxUsage = count;
+        favCharId = charId;
+      }
+    }
+
+    // Si se encontró personaje favorito, asignarlo
+    if (favCharId !== null) {
+      this.favouriteCharacter = this.characterData.find(
+        (c) => c.id === favCharId
+      );
+    }
+
+    for (const character of this.characterData) {
+      this.characterMap[character.id] = character.name;
+    }
+
+    this.pieChartLabels = Object.keys(usage).map((id) => `Character ${id}`);
+    this.pieChartData = Object.values(usage);
+  }
+
+  getCharacterUsageStats(battles: Battle[]): { [characterId: number]: number } {
+    const usage: { [characterId: number]: number } = {};
+
+    for (const battle of battles) {
+      for (const ub of battle.userBattles) {
+        if (ub.userId == this.user.id) {
+          const characterId = ub.characterId;
+          if (usage[characterId]) {
+            usage[characterId]++;
+          } else {
+            usage[characterId] = 1;
+          }
+          break;
+        }
+      }
+    }
+    return usage;
   }
 
   async getSteamDetails() {

@@ -4,10 +4,6 @@ section {
   min-height: 100vh;
 }
 
-p {
-  color: white;
-}
-
 .user-box {
   display: flex;
   flex-direction: column;
@@ -54,6 +50,20 @@ a {
   justify-content: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
+.card-info {
+  padding: 1rem 0;
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-info h1 {
+  color: #0d6efd;
+  margin: 0 1rem;
+  text-align: center;
+}
 
 .card-button:hover {
   cursor: pointer;
@@ -72,4 +82,8 @@ h6 {
 
 .card {
   margin-top: 2rem;
+}
+
+h1 {
+  color: var(--primary-color);
 }

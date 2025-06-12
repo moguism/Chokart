@@ -98,5 +98,9 @@
   "remove-steam": "Disassociate Steam account",
   "add-steam": "Add Steam account",
   "logout": "Logout",
-  "ranking-quote": "Play and win to get to the top `⎚ᴗ⎚´"
+  "ranking-quote": "Play and win to get to the top `⎚ᴗ⎚´",
+  "title-chart-character": "Your All-Star Characters",
+  "profile-title": "Your Profile",
+  "info-favourite": "Your favourite character is ",
+  "info-ranking": "Your ranking score is "
 }

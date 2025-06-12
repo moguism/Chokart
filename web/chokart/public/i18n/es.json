@@ -98,5 +98,10 @@
   "remove-steam": "Desvincular cuenta de Steam",
   "add-steam": "Vincular con Steam",
   "logout": "Cerrar sesión",
-  "ranking-quote": "Juega y gana para estar en el top `⎚ᴗ⎚´"
+  "ranking-quote": "Juega y gana para estar en el top `⎚ᴗ⎚´",
+  "title-chart-character": "Tus personajes estrella",
+  "profile-title": "Tu perfil",
+
+  "info-favourite": "Tu personaje favorito es ",
+  "info-ranking": "Tu puntuación en el ranking es "
 }

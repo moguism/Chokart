@@ -3,6 +3,9 @@
   @if(user) {
   <div class="container">
     <div class="main-body">
+      <h1 style="text-align: center; font-size: 3.5rem">
+        {{ t("profile-title") }}
+      </h1>
       <div class="row">
         <div class="col-lg-4">
           <div class="card">
@@ -30,7 +33,7 @@
                   <div class="card-button" (click)="removeSteamAccount()">
                     <img
                       height="50px"
-                      src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA"
+                      src="steam-logo.webp"
                       alt="logo Steam"
                       style="align-self: end"
                     />
@@ -167,6 +170,44 @@
                   }
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mt-4">
+          <h1>
+            {{ t("title-chart-character") }}
+          </h1>
+          <div style="max-width: 300px">
+            <app-chart-pie
+              *ngIf="characterMap"
+              [characterUsageStats]="getCharacterUsageStats(battles)"
+              [characterMap]="characterMap"
+            >
+            </app-chart-pie>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-info">
+              <h1>
+                {{ t("info-favourite") }} {{ this.favouriteCharacter.name }}
+              </h1>
+              <img
+                height="80px"
+                width="80px"
+                style="
+                  border-radius: 50%;
+                  border: 3px solid var(--primary-color);
+                "
+                src="{{ this.favouriteCharacter.miniImage }}"
+                alt="favourite character"
+              />
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-info">
+              <h1>{{ t("info-ranking") }} {{ this.user.totalPoints }} XP</h1>
             </div>
           </div>
         </div>

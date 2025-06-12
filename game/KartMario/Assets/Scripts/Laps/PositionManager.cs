@@ -124,7 +124,7 @@ public class PositionManager : NetworkBehaviour
        int totalPlayers = karts.Count;
 
         float minAccel = 70f; // min aceleracion
-        float maxAccel = 70f; // max aceleracion
+        float maxAccel = 80f; // max aceleracion
 
         float factor = 0f;
 
@@ -138,7 +138,7 @@ public class PositionManager : NetworkBehaviour
 
     private string GetOrdinal(int number)
     {
-        if (LocalizationManager.languageCode == "en-US")
+       /* if (LocalizationManager.languageCode == "en-US")
         {
 
             switch (number)
@@ -150,9 +150,9 @@ public class PositionManager : NetworkBehaviour
             }
         }
         else
-        {
+        {*/
             return number + "º";
-        }
+        //}
     }
 
 
