@@ -1,14 +1,20 @@
-# DOCUMENTACIÓN
+# CHOKART
+Un juego multijugador online 3D, mezcla entre Mario Kart y Burnout 3: **compite en una carrera y lucha por ser el último en sobrevivir**😈\
+Disfruta de las mecánicas originales diseñadas por nosotros, juega con un roaster de personajes que no verás en ninguna otra parte y, lo más importante, disfruta 😊
+
+![WhatsApp Image 2025-06-11 at 11 45 26 (1)](https://github.com/user-attachments/assets/d498fa86-5e7d-4a6b-8e55-15d5e932b279)
+
+## DOCUMENTACIÓN
 - [**Vídeo entrega final**](https://youtu.be/iO8UnfiiAeg)
-- [**Presentación del proyecto**](https://github.com/moguism/Chokart/blob/develop/documentation/Presentacion.pdf)
+- [**Presentación del proyecto (con objetivos y tecnologías utilizadas, entre otras cosas)**](https://github.com/moguism/Chokart/blob/develop/documentation/Presentacion.pdf)
 - [**Tutorial de uso de la aplicación**](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [**Esquema Entidad-Relación**](https://github.com/moguism/Chokart/blob/develop/server/db/UML.png)
 - [**Informe de PowerBi**](https://github.com/moguism/Chokart/blob/develop/documentation/InformeChokart.pbix)
-- [Anteproyecto](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
+- [**Anteproyecto**](https://docs.google.com/document/d/1ZWACRzPDTwt8a97s82Cpn6ed4qErex9zcNQTD0BgSEI/edit?usp=sharing)
 - [Horizonte de sucesos](https://youtu.be/Hvsa6Z8EmTk)
 - [Más datos](https://github.com/moguism/Chokart/tree/develop/documentation)
 
-# BIBLIOGRAFÍA
+## BIBLIOGRAFÍA
 - **Bindings:** https://docs.unity3d.com/Manual/class-InputManager.html
 - **Movimiento del coche:** https://www.youtube.com/watch?v=Ki-tWT50cEQ&list=PL1R2qsKCcUCKY1p7URUct96O0dorgQnO6
 - **Importar modelos 3D:** https://www.youtube.com/watch?v=CVz2a0Orl_M, https://www.youtube.com/watch?v=sZ8lvoUtGYg
@@ -38,7 +44,7 @@
 - **Menú de configuración:** https://github.com/KarlRamstedt/Modular-Options-Menu
 - **Barra de vida Unity:** https://youtu.be/EW4kSSiPgJs
 
-# DIARIO DE DESARROLLO
+## DIARIO DE DESARROLLO
 ### Semana de preparativos (10/03 - 16/03)
     Miércoles --> Votamos y sale adelante esta idea.
     Viernes --> Mauricio empieza con el movimiento básico del coche sin mucho éxito, y María investiga el multijugador. Nos familiarizamos con Unity.
