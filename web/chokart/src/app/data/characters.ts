@@ -1,6 +1,6 @@
 export const characters = [
   {
-    id: 6,
+    id: 1,
     name: 'Jinx',
     image: 'characters/jinx.webp',
     miniImage: 'characters/jinx-mini.png',
@@ -28,7 +28,7 @@ export const characters = [
     quoteKey: 'pingu-quote',
   },
   {
-    id: 1,
+    id: 6,
     name: 'Lefty',
     image: 'characters/lefty.webp',
     miniImage: 'characters/lefty-mini.png',
