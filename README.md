@@ -133,4 +133,5 @@ Disfruta de las mecánicas originales diseñadas por nosotros, juega con un roas
 ### Última semana (09/06 - 13/06)
     Lunes --> María añade iconos al usar los items. Mauricio prepara las builds finales. 
     Martes --> Grabamos el vídeo final. María arregla puntos del ranking.
-    Miércoles --> Mauricio da los últimos toques al juego.
+    Miércoles --> Mauricio da los últimos toques al juego. María añade estadísticas del juego en perfil de usuario.
+    Jueves --> María añade galería, footer y arregla bugs de estadísticas.
