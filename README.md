@@ -5,7 +5,7 @@ Disfruta de las mecánicas originales diseñadas por nosotros, juega con un roas
 ![WhatsApp Image 2025-06-11 at 11 45 26 (1)](https://github.com/user-attachments/assets/d498fa86-5e7d-4a6b-8e55-15d5e932b279)
 
 ## DOCUMENTACIÓN
-- [**Vídeo entrega final**](https://youtu.be/iO8UnfiiAeg)
+- [**Vídeo entrega final**](https://youtu.be/oopjfN414yU)
 - [**Presentación del proyecto (con objetivos y tecnologías utilizadas, entre otras cosas)**](https://github.com/moguism/Chokart/blob/develop/documentation/Presentacion.pdf)
 - [**Tutorial de uso de la aplicación**](https://www.canva.com/design/DAGpwgqWQxo/nqnxxCNZYLzYvj-jt-QyBg/edit?utm_content=DAGpwgqWQxo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 - [**Esquema Entidad-Relación**](https://github.com/moguism/Chokart/blob/develop/server/db/UML.png)
