@@ -209,20 +209,26 @@ public class KartController : BasicPlayer
 
         try
         {
-            Pedals pedals = FindFirstObjectByType<Pedals>();
+            if(!enableAI)
+            {
+                Pedals pedals = FindFirstObjectByType<Pedals>();
 
-            if (isMobile)
-            {
-                Input.gyro.enabled = true;
-                pedals.kart = this;
-                //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
-            }
-            else
-            {
-                Destroy(pedals.gameObject);
+                if (true)
+                {
+                    Input.gyro.enabled = true;
+                    pedals.kart = this;
+                    //Screen.orientation = ScreenOrientation.LandscapeLeft; // Para rotar la pantalla
+                }
+                else
+                {
+                    Destroy(pedals.gameObject);
+                }
             }
         }
-        catch { }
+        catch(System.Exception e) 
+        {
+            Debug.LogError(e);
+        }
 
         postVolume = UnityEngine.Camera.main.GetComponent<PostProcessVolume>();
         postProfile = postVolume.profile;
@@ -360,50 +366,29 @@ public class KartController : BasicPlayer
         }
         else
         {
+            if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
+            {
+                speed = 0;
+            }
+            else
+            {
+                // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
+                if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
+                {
+                    speed = acceleration;
+                }
+                else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
+                {
+                    speed = -acceleration;
+                }
+            }
+
             if (LobbyManager.gameStarted)
             {
-                //speed = acceleration;
-
-                if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
-                {
-                    speed = 0;
-                }
-                else
-                {
-                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
-                    {
-                        speed = acceleration;
-                    }
-                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
-                    {
-                        speed = -acceleration;
-                    }
-                }
-
                 // En cuanto se mueva por primera vez, activo el timer
                 if (!chronometer.timerOn)
                 {
                     chronometer.StartTimer();
-                }
-            }
-            else
-            {
-                if (direction != 1 && direction != -1 && playerControls.Player.Fire1.ReadValue<float>() == 0 && playerControls.Player.Fire2.ReadValue<float>() == 0)
-                {
-                    speed = 0;
-                }
-                else
-                {
-                    // Moverse palante (en el vídeo lo del else no viene pero es que si no es muy cutre)
-                    if (direction == 1 || playerControls.Player.Fire1.ReadValue<float>() != 0)
-                    {
-                        speed = acceleration;
-                    }
-                    else if (direction == -1 || playerControls.Player.Fire2.ReadValue<float>() != 0)
-                    {
-                        speed = -acceleration;
-                    }
                 }
             }
         }
