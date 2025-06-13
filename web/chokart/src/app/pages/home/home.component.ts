@@ -10,6 +10,7 @@ import { CharacterGalleriaComponent } from '../../components/character-galleria/
 import { KartSwitchComponent } from '../../components/kart-switch/kart-switch.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { ItemsCardsComponent } from '../../components/items-cards/items-cards.component';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,8 @@ import { FooterComponent } from '../../components/footer/footer.component';
     CharacterGalleriaComponent,
     KartSwitchComponent,
     RouterModule,
+    FooterComponent,
+    ItemsCardsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

@@ -175,9 +175,11 @@
             </div>
           </div>
         </div>
-        <div class="row mt-4">
+        <div class="stats-grid mt-4">
           <!-- Izquierda: gráfica -->
-          <div class="col-lg-4 d-flex flex-column align-items-center">
+          <div
+            class="stats-column col-lg-4 d-flex flex-column align-items-center"
+          >
             <h1 style="text-align: center">
               {{ t("title-chart-character") }}
             </h1>
@@ -192,7 +194,8 @@
           </div>
 
           <!-- Centro: personaje favorito + card vacía -->
-          <div class="col-lg-4 d-flex flex-column gap-3">
+          <div class="stats-column col-lg-4 d-flex flex-column gap-3">
+            @if (this.favouriteCharacter) {
             <div class="card" style="flex: 1">
               <div class="card-info">
                 <h1>
@@ -210,17 +213,24 @@
                 />
               </div>
             </div>
+            }
 
             <div class="card" style="flex: 1">
               <div class="card-info">
                 <h1>{{ t("average-position") }}</h1>
-                <h1>{{ this.averagePosition }}</h1>
+                @if (this.averagePosition <=0) {
+                <h1 style="color: red; font-size: 2rem">{{ t("no-data") }}</h1>
+                } @else {
+                <h1 style="color: var(--primary-color); font-size: 3.5rem">
+                  {{ this.averagePosition }}
+                </h1>
+                }
               </div>
             </div>
           </div>
 
           <!-- Derecha: veces jugadas + puntuación -->
-          <div class="col-lg-4 d-flex flex-column gap-3">
+          <div class="stats-column col-lg-4 d-flex flex-column gap-3">
             <div class="card">
               <div class="card-info">
                 <h1>{{ t("info-ranking") }} {{ this.user.totalPoints }}XP</h1>

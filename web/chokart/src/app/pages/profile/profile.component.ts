@@ -206,7 +206,7 @@ export class ProfileComponent implements OnInit {
         steamId: this.user.steamId,
       };
     } catch (error) {
-      console.warn(error);
+      console.log(error);
     }
   }
 

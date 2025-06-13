@@ -8,6 +8,7 @@ import { CheckEmailComponent } from './pages/check-email/check-email.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { RankingComponent } from './pages/ranking/ranking.component';
+import { MediaComponent } from './pages/media/media.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,7 +19,7 @@ export const routes: Routes = [
   { path: 'checkEmail', component: CheckEmailComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'admin', component: AdminComponent },
-  // {path: 'play', component: PlayComponent}
+  { path: 'media', component: MediaComponent },
   { path: 'ranking', component: RankingComponent },
   // {path: 'dashboard', component: DashboardComponent}
 ];
