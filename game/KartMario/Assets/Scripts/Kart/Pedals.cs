@@ -8,21 +8,37 @@ public class Pedals : MonoBehaviour
 
     public void Accelerate()
     {
+        if(!kart.canMove)
+        {
+            return;
+        }
         kart.direction = 1;
     }
 
     public void GoBackwards()
     {
+        if (!kart.canMove)
+        {
+            return;
+        }
         kart.direction = -1;
     }
 
     public void NotMoveKart()
     {
+        if (!kart.canMove)
+        {
+            return;
+        }
         kart.direction = 0;
     }
 
     public async void Jump()
     {
+        if (!kart.canMove)
+        {
+            return;
+        }
         //if (isGrounded)
         //{
         kart.jumping = true;
