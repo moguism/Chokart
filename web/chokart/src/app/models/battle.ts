@@ -7,4 +7,5 @@ export interface Battle {
   createdAt: Date;
   finishedAt: Date;
   trackId: number;
+  gameModeId: number;
 }

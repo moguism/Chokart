@@ -7819,6 +7819,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8263010945338249729, guid: f81108bc58f48b44498f9686fefa5c83,
         type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263010945338249729, guid: f81108bc58f48b44498f9686fefa5c83,
+        type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}

@@ -115,11 +115,15 @@ namespace server
                 },
                 new Character()
                 {
-                    Name = "Shrek"
+                    Name = "Spamton"
                 },
                 new Character()
                 {
                     Name = "Alastor"
+                },
+                new Character()
+                {
+                    Name = "Shrek"
                 },
                 new Character()
                 {
@@ -128,10 +132,6 @@ namespace server
                 new Character()
                 {
                     Name = "Lefty"
-                },
-                new Character()
-                {
-                    Name = "Spamton"
                 }
             ];
 

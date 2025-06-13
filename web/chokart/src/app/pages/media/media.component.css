@@ -1,0 +1,198 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  background-size: cover;
+  gap: 2rem;
+  font-family: "Road Rage", sans-serif;
+}
+
+#home {
+  position: relative;
+  z-index: 1;
+  background-image: url(/media/track1.webp);
+  background-size: cover;
+  height: 100vh;
+  background-position: center;
+}
+
+#home p {
+  text-align: center;
+  max-width: 700px;
+  font-size: 1.2rem;
+  text-shadow: 0px 0px 3px black;
+}
+
+#home span {
+  color: rgb(0, 0, 0);
+}
+
+h1,
+h2 {
+  color: white;
+  text-shadow: 2px 0px 5px #001757;
+  font-weight: 200;
+  font-size: 5rem;
+  text-transform: uppercase;
+  font-family: "Road Rage", sans-serif;
+  text-align: center;
+}
+
+.media-content {
+  background-image: url(/media/bg-media.webp);
+  position: relative;
+  margin-top: -100px;
+  padding-top: 110px;
+  z-index: 10;
+  min-height: 100vh;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-areas:
+    "a a b c"
+    "a a d e"
+    "f g j j"
+    "h i j j";
+  gap: 15px;
+  max-width: 1000px;
+  margin: auto;
+  padding-bottom: 10rem;
+}
+
+.platforms {
+  display: flex;
+  gap: 3rem;
+}
+
+.gallery ::ng-deep p-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery ::ng-deep .p-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-a {
+  grid-area: a;
+}
+.item-b {
+  grid-area: b;
+}
+.item-c {
+  grid-area: c;
+}
+.item-d {
+  grid-area: d;
+}
+.item-e {
+  grid-area: e;
+}
+.item-f {
+  grid-area: f;
+}
+.item-g {
+  grid-area: g;
+}
+.item-h {
+  grid-area: h;
+}
+.item-i {
+  grid-area: i;
+}
+.item-j {
+  grid-area: j;
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-areas: none;
+    grid-template-columns: 1fr;
+  }
+
+  .gallery > div {
+    grid-area: unset !important;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  .media-content {
+    margin-top: -429px;
+    padding: 431px 3% 1%;
+  }
+}
+
+@media (max-width: 468px) {
+  .media-content {
+    margin-top: -249px;
+    padding: 271px 3% 1%;
+  }
+}
+
+.footer {
+  margin-top: -90px;
+  padding-top: 130px;
+  background-image: url(/media/white-bg_1.webp);
+  z-index: 20;
+  position: relative;
+  background-size: cover;
+  min-height: fit-content;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 130px 2rem 1rem 2rem;
+}
+
+.follow {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 2rem;
+  max-width: 900px;
+}
+
+.links {
+  height: 50px;
+  text-align: center;
+}
+
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.links img {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.links img:hover {
+  transform: scale(1.05);
+}
+
+.copy {
+  color: gray;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+hr {
+  max-width: 1400px;
+  width: 100%;
+}

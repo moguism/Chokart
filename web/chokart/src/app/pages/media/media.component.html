@@ -1,0 +1,122 @@
+<div *transloco="let t">
+  <div id="home">
+    <app-navbar></app-navbar>
+
+    <div class="container">
+      <br />
+      <h1>{{ t("media") }}</h1>
+
+      <p>
+        {{ t("media-quote") }}
+      </p>
+    </div>
+  </div>
+
+  <div class="media-content">
+    <h2>{{ t("screenshots") }}</h2>
+    <div class="gallery">
+      <div class="item-a">
+        <p-image src="/poster.webp" alt="Imagen 1" [preview]="true" />
+      </div>
+      <div class="item-b">
+        <p-image
+          src="/media/cap6_resultado.webp"
+          alt="Imagen 2"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-c">
+        <p-image
+          src="/media/cap7_resultado.webp"
+          alt="Imagen 3"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-d">
+        <p-image
+          src="/media/track3_resultado.webp"
+          alt="Imagen 4"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-e">
+        <p-image
+          src="/media/cap1_resultado.webp"
+          alt="Imagen 5"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-f">
+        <p-image
+          src="/media/cap8_resultado.webp"
+          alt="Imagen 6"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-g">
+        <p-image
+          src="/media/cap3_resultado.webp"
+          alt="Imagen 7"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-h">
+        <p-image
+          src="/media/cap2_resultado.webp"
+          alt="Imagen 8"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-i">
+        <p-image
+          src="/media/cap5_resultado.webp"
+          alt="Imagen 9"
+          [preview]="true"
+        />
+      </div>
+      <div class="item-j">
+        <p-image
+          src="/media/cap9_resultado.webp"
+          alt="Imagen 10"
+          [preview]="true"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="follow">
+      <div>
+        <h3 style="color: var(--primary-color); font-size: 3rem">
+          {{ t("followus") }}
+        </h3>
+        <div class="links">
+          <a href="https://discord.gg/RCNwTh5Z" target="_blank">
+            <img src="/icons/discord.webp" height="50px" alt="discord" />
+          </a>
+          <a href="https://github.com/moguism/Chokart" target="_blank"
+            ><img src="/icons/github.webp" height="50px" alt="github"
+          /></a>
+        </div>
+      </div>
+      <p>{{ t("follow-quote") }}</p>
+    </div>
+    <br />
+    <h3 style="font-size: 2rem">{{ t("no-shop") }}</h3>
+    <br />
+    <div class="platforms">
+      <img src="icons/windows.webp" alt="windows" height="30px" />
+      <img src="icons/android.webp" alt="android" height="30px" />
+      <img src="icons/web.webp" alt="web" height="30px" />
+      <img src="icons/linux.webp" alt="linux" height="30px" />
+      <img src="icons/apple.webp" alt="apple" height="30px" />
+    </div>
+    <br />
+    <hr />
+
+    <div class="copy">
+      <p>{{ t("copyright") }}</p>
+      <p>&copy;2025 | Moshiro</p>
+    </div>
+  </div>
+</div>

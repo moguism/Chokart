@@ -15,7 +15,10 @@ public class UserBattleMapper
             UserId = user.UserId,
             UserName = user.User.Nickname,
             UserImage = user.User.AvatarPath,
-            CharacterId = user.CharacterId
+            CharacterId = user.CharacterId,
+            Position = user.Position,
+            TotalKills = user.TotalKills,
+            TimePlayed = user.TimePlayed
         };
     }
 

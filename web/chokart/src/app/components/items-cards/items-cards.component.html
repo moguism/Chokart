@@ -1,0 +1,45 @@
+<div class="cards" *transloco="let t">
+  <ng-container *ngFor="let obj of objects; let i = index">
+    <input
+      type="radio"
+      name="card"
+      [id]="'card-' + (i + 1)"
+      [checked]="i === 0"
+    />
+  </ng-container>
+
+  <div class="circle-container">
+    <ng-container *ngFor="let obj of objects">
+      <div><img [src]="obj.image" [alt]="t(obj.name)" /></div>
+    </ng-container>
+  </div>
+
+  <div class="contents">
+    <ng-container *ngFor="let obj of objects; let i = index">
+      <article>
+        <h2>{{ t(obj.name) }}</h2>
+        <ul>
+          <li>
+            {{ t(obj.description) }}
+          </li>
+        </ul>
+        <div class="buttons">
+          <label
+            [attr.for]="
+              'card-' + (((i - 1 + objects.length) % objects.length) + 1)
+            "
+            [title]="t(objects[(i - 1 + objects.length) % objects.length].name)"
+          >
+            &#10094;
+          </label>
+          <label
+            [attr.for]="'card-' + (((i + 1) % objects.length) + 1)"
+            [title]="t(objects[(i + 1) % objects.length].name)"
+          >
+            &#10095;
+          </label>
+        </div>
+      </article>
+    </ng-container>
+  </div>
+</div>

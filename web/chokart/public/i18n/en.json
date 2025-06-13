@@ -98,5 +98,46 @@
   "remove-steam": "Disassociate Steam account",
   "add-steam": "Add Steam account",
   "logout": "Logout",
-  "ranking-quote": "Play and win to get to the top `⎚ᴗ⎚´"
+  "ranking-quote": "Play and win to get to the top `⎚ᴗ⎚´",
+  "title-chart-character": "Your All-Star Characters",
+  "profile-title": "Your Profile",
+  "info-favourite": "Your favourite character is ",
+  "info-ranking": "Your ranking score is ",
+
+  "time-played": "Times you have played",
+  "average-position": "Average of your position in races",
+
+  "no-data": "No data yet :(",
+
+  "media-quote": "Stay on track with the latest screenshots, trailers, and exclusive Chokart content.",
+
+  "copyright": "This website and the featured game have been developed solely for educational purposes.",
+  "no-shop": "Chokart can be downloaded for free and does not contain any purchases or paid content.",
+  "screenshots": "Screenshots",
+
+  "followus": "Follow us!",
+
+  "follow-quote": "Access unique materials and discover how the game was built step by step, combining creativity, design and programming.",
+
+  "greenShell": "Projectile",
+  "greenShell-des": "Aim and shoot a bullet to hit the opponent and deal damage.",
+
+  "distorsion": "Distortion Attack",
+  "distorsion-des": "Disorients your opponents by blurring their vision for a few seconds.",
+
+  "healthPotion": "Health Potion",
+  "healthPotion-des": "Restores a portion of your health instantly upon use.",
+
+  "invisibility": "Invisibility",
+  "invisibility-des": "Hides you for a short time, making it hard for opponents to detect or attack you.",
+
+  "invulnerability": "Protection",
+  "invulnerability-des": "Activates a temporary shield that blocks all incoming damage.",
+
+  "bomb": "Bomb",
+  "bomb-des": "Detonates on contact, dealing damage and knocking back nearby enemies.",
+
+  "positionChanger": "Position Swap",
+  "positionChanger-des": "Swaps your location with another player — perfect for confusing or causing them to fall.",
+  "obj-title": "What you need, right when you need it."
 }

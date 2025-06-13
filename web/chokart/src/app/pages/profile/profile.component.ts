@@ -18,7 +18,11 @@ import { PasswordValidatorService } from '../../services/password-validator.serv
 import { CommonModule } from '@angular/common';
 import { SweetalertService } from '../../services/sweetalert.service';
 import { StadisticService } from '../../services/stadistic.service';
-import { UserBattle } from '../../models/user-battle';
+import { Battle } from '../../models/battle';
+import { ChartModule } from 'primeng/chart';
+import { ChartPieComponent } from '../../components/chart-pie/chart-pie.component';
+import { characters } from '../../data/characters';
+import { Character } from '../../models/character';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +32,8 @@ import { UserBattle } from '../../models/user-battle';
     TranslocoModule,
     ReactiveFormsModule,
     CommonModule,
+    ChartModule,
+    ChartPieComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
@@ -59,6 +65,10 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  characterData = characters;
+
+  characterMap = {};
+
   user: User | null = null;
 
   steamProfile: SteamProfile | null = null;
@@ -70,7 +80,21 @@ export class ProfileComponent implements OnInit {
   isNewPasswordHidden = true; // Mostrar div de cambiar contraseña
   isEditing = false; //modo edición
 
-  userBattles: UserBattle[] = [];
+  battles: Battle[] = [];
+
+  pieChartData: number[] = [];
+  pieChartLabels: string[] = [];
+
+  favouriteCharacter: Character;
+
+  raceCount = 0;
+  survivalCount = 0;
+
+  racePercentage: number = 0;
+  survivalPercentage: number = 0;
+
+  averagePosition: number = 0;
+
   async ngOnInit() {
     if (!this.authService.isAuthenticated()) {
       this.router.navigateToUrl('login');
@@ -88,8 +112,84 @@ export class ProfileComponent implements OnInit {
 
     this.STEAM_URL = `${environment.apiUrl}SteamAuth/login/${this.user.id}/${this.user.verificationCode}`;
 
-    this.userBattles = await this.stadisticService.getBattles(this.user.id);
-    console.log(this.userBattles);
+    this.battles = await this.stadisticService.getBattles(this.user.id);
+
+    const usage = this.getCharacterUsageStats(this.battles);
+
+    this.battles.forEach((b) => {
+      if (b.gameModeId == 0) {
+        this.raceCount += 1;
+      } else if (b.gameModeId == 1) {
+        this.survivalCount += 1;
+      }
+    });
+
+    this.averagePosition = this.getAveragePosition(this.battles);
+
+    const total = this.raceCount + this.survivalCount;
+    this.racePercentage = (this.raceCount / total) * 100;
+    this.survivalPercentage = (this.survivalCount / total) * 100;
+
+    let maxUsage = 0;
+    let favCharId: number | null = null;
+
+    for (const [charIdStr, count] of Object.entries(usage)) {
+      const charId = parseInt(charIdStr);
+      if (count > maxUsage) {
+        maxUsage = count;
+        favCharId = charId;
+      }
+    }
+    if (favCharId !== null) {
+      this.favouriteCharacter = this.characterData.find(
+        (c) => c.id === favCharId
+      );
+    }
+
+    for (const character of this.characterData) {
+      this.characterMap[character.id] = character.name;
+    }
+
+    this.pieChartLabels = Object.keys(usage).map((id) => `Character ${id}`);
+    this.pieChartData = Object.values(usage);
+  }
+
+  getCharacterUsageStats(battles: Battle[]): { [characterId: number]: number } {
+    const usage: { [characterId: number]: number } = {};
+
+    for (const battle of battles) {
+      for (const ub of battle.userBattles) {
+        if (ub.userId == this.user.id) {
+          const characterId = ub.characterId;
+          if (usage[characterId]) {
+            usage[characterId]++;
+          } else {
+            usage[characterId] = 1;
+          }
+          break;
+        }
+      }
+    }
+    return usage;
+  }
+
+  getAveragePosition(battles: Battle[]) {
+    let totalPosition = 0;
+    let count = 0;
+
+    for (const battle of battles) {
+      for (const ub of battle.userBattles) {
+        if (ub.userId === this.user.id) {
+          totalPosition += ub.position;
+          count++;
+          break;
+        }
+      }
+    }
+
+    if (count === 0) return 0;
+
+    return totalPosition / count;
   }
 
   async getSteamDetails() {
@@ -106,7 +206,7 @@ export class ProfileComponent implements OnInit {
         steamId: this.user.steamId,
       };
     } catch (error) {
-      console.warn(error);
+      console.log(error);
     }
   }
 

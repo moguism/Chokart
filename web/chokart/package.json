@@ -23,6 +23,7 @@
     "@popperjs/core": "^2.11.8",
     "@primeng/themes": "^18.0.2",
     "bootstrap": "^5.3.6",
+    "chart.js": "^4.4.9",
     "jquery": "^3.7.1",
     "primeicons": "^7.0.0",
     "primeng": "^18.0.2",

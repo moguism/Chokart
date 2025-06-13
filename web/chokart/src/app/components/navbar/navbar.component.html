@@ -9,7 +9,7 @@
         <a [routerLink]="'/'" (click)="closeMenu()">{{ t("home") }}</a>
       </li>
       <li>
-        <a [routerLink]="'/'" (click)="closeMenu()">{{ t("media") }}</a>
+        <a [routerLink]="'/media'" (click)="closeMenu()">{{ t("media") }}</a>
       </li>
       <li>
         @if (this.user != null || this.user != undefined) {
@@ -19,9 +19,8 @@
         }
       </li>
       <li>
-        @if(isAdmin())
-        {
-          <a [routerLink]="'/admin'" (click)="closeMenu()">Admin</a>
+        @if(isAdmin()) {
+        <a [routerLink]="'/admin'" (click)="closeMenu()">Admin</a>
         }
       </li>
     </ul>

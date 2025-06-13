@@ -56,7 +56,6 @@ public class BattleRepository : Repository<Battle, int>
     public async Task<ICollection<Battle>> GetEndedBattlesByUserAsync(int userId)
     {
         return await GetQueryable()
-            .Where(b => b.BattleStateId == 4)
             .Include(b => b.BattleUsers)
             .ThenInclude(ub => ub.User)
             .ToListAsync()

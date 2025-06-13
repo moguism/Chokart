@@ -10,4 +10,9 @@ public class UserBattleDto
     public int UserId { get; set; }
     public string UserName { get; set; }
     public string UserImage { get; set; }
+    public int  Position { get; set; }
+
+    public long TimePlayed { get; set; } = 0;
+
+    public int TotalKills { get; set; } = 0;
 }

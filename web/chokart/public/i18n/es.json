@@ -98,5 +98,47 @@
   "remove-steam": "Desvincular cuenta de Steam",
   "add-steam": "Vincular con Steam",
   "logout": "Cerrar sesión",
-  "ranking-quote": "Juega y gana para estar en el top `⎚ᴗ⎚´"
+  "ranking-quote": "Juega y gana para estar en el top `⎚ᴗ⎚´",
+  "title-chart-character": "Tus personajes estrella",
+  "profile-title": "Tu perfil",
+
+  "info-favourite": "Tu personaje favorito es ",
+  "info-ranking": "Tu puntuación en el ranking es ",
+
+  "time-played": "Veces que has jugado",
+  "average-position": "Media de tu puesto en carreras",
+
+  "no-data": "Todavía no hay datos :(",
+
+  "media-quote": "Descubre las últimas imágenes, tráilers y contenidos exclusivos de Chokart y mantente siempre en la pista.",
+  "copyright": "Esta página web y el juego presentado han sido desarrollados únicamente con fines educativos.",
+  "no-shop": "Chokart puede descargarse de manera gratuita y no contiene compras ni ningún tipo de contenido de pago.",
+  "screenshots": "Capturas de pantalla",
+
+  "followus": "¡Síguenos!",
+
+  "follow-quote": "Accede a materiales únicos y descubre cómo se construyó el juego paso a paso, combinando creatividad, diseño y programación.",
+
+  "greenShell": "Proyectil",
+  "greenShell-des": "Apunta y dispara una bala para impactar al rival y causarle daño.",
+
+  "distorsion": "Ataque distorsivo",
+  "distorsion-des": "Desorienta a tus oponentes nublando sus vistas durante unos segundos.",
+
+  "healthPotion": "Poción de Salud",
+  "healthPotion-des": "Restaura una parte de tu vida inmediatamente al consumirla.",
+
+  "invisibility": "Invisibilidad",
+  "invisibility-des": "Te oculta por un tiempo breve, haciendo difícil que los rivales te detecten o ataquen.",
+
+  "invulnerability": "Protección",
+  "invulnerability-des": "Activa un escudo temporal que bloquea cualquier tipo de daño entrante.",
+
+  "bomb": "Bomba",
+  "bomb-des": "Detona al contacto, causando daño y desviando a enemigos cercanos.",
+
+  "positionChanger": "Intercambio de Posición",
+  "positionChanger-des": "Intercambia tu ubicación con otro jugador, ideal para confundir y causar caidas a tu enemigo.",
+
+  "obj-title": "Lo que necesitas, justo cuando lo necesitas"
 }

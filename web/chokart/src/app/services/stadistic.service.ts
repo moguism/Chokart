@@ -38,6 +38,7 @@ export class StadisticService {
     for (const battle of dataRaw) {
       const userBattles: UserBattle[] = battle.usersBattles.map((ub: any) => ({
         id: ub.id,
+        userId: ub.userId,
         punctuation: ub.punctuation,
         timePlayed: ub.timePlayed ?? 0,
         battleResultId: ub.battleResultId,
@@ -51,10 +52,11 @@ export class StadisticService {
       const b: Battle = {
         id: battle.id,
         isAgainstBot: battle.isAgainstBot,
-        userBattles: battle.userBattles,
+        userBattles: userBattles,
         createdAt: battle.createdAt,
         finishedAt: battle.finishedAt,
         trackId: battle.trackId,
+        gameModeId: battle.gameModeId,
       };
       battles.push(b);
     }
