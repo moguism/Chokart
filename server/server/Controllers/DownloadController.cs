@@ -16,7 +16,7 @@ public class DownloadController : ControllerBase
         {
                 //android
             case "apk":
-                filePath = "https://drive.google.com/file/d/1Awyo15AyV2rOi65oi6I38Yx_L1-kJaJq/view?usp=sharing";
+                filePath = "https://drive.google.com/file/d/14lf-4ZT-Qf4xJeXH-FEeca4lPoCcAoi8/view?usp=drive_link";
                 break;
                 //windows
             case "exe":

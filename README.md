@@ -135,3 +135,4 @@ Disfruta de las mecánicas originales diseñadas por nosotros, juega con un roas
     Martes --> Grabamos el vídeo final. María arregla puntos del ranking.
     Miércoles --> Mauricio da los últimos toques al juego. María añade estadísticas del juego en perfil de usuario.
     Jueves --> María añade galería con capturas reales, footer, sección de objetos, arregla bugs de estadísticas y responsivo y convierte y redimensiona imágenes a webp.
+    Viernes --> FIN.
