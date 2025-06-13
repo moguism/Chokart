@@ -135,7 +135,7 @@ button {
 
 .bg-img {
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   display: block;
 }
 
@@ -350,7 +350,6 @@ button {
   }
 
   .home-content {
-    top: -70px;
     background-image: url("/home/background-blue-mobile.png");
     background-position-y: 0;
     background-size: auto;

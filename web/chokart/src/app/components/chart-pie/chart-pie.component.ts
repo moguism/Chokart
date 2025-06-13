@@ -23,14 +23,18 @@ export class ChartPieComponent {
 
   oldData = this.characterUsageStats;
 
+  chartInitialized = false;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (
+      !this.chartInitialized &&
       this.characterUsageStats &&
       Object.keys(this.characterUsageStats).length > 0 &&
       this.characterMap &&
       Object.keys(this.characterMap).length > 0
     ) {
       this.initChart();
+      this.chartInitialized = true;
     }
   }
 

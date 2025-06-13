@@ -41,7 +41,7 @@
         rgba(183, 235, 255, 0.35),
         rgba(255, 255, 255, 0.35)
       ),
-      url(/objects/bg.jpg);
+      url(/objects/bg.webp);
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
@@ -106,7 +106,7 @@
           rgba(0, 115, 255, 0.5),
           rgba(255, 242, 0, 0.5)
         ),
-        url(/objects/bg-2.jpg);
+        url(/objects/bg-2.webp);
       background-repeat: no-repeat;
       background-size: cover;
       border-radius: 50%;
